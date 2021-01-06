@@ -1,0 +1,47 @@
+{
+  "name": "psms",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rimraf dist && webpack --bail --progress --profile",
+    "server": "webpack serve --open Chrome.exe",
+    "start": "npm run server"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@uirouter/angularjs": "^1.0.28",
+    "angular": "^1.8.2",
+    "angular-animate": "^1.8.2",
+    "angular-aria": "^1.8.2",
+    "angular-cookies": "^1.4.0",
+    "angular-material": "^1.2.1",
+    "angular-material-data-table": "^0.10.10",
+    "angular-resource": "^1.4.0",
+    "angular-route": "^1.4.0",
+    "angular-sanitize": "^1.8.0",
+    "angular-touch": "^1.4.0",
+    "jquery": "^3.2",
+    "material-icons": "^0.5.1",
+    "node-sass": "^4.14.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "babel-loader": "^8.2.2",
+    "css-loader": "^5.0.0",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^4.5.0",
+    "mini-css-extract-plugin": "^1.2.1",
+    "rimraf": "^3.0.2",
+    "sass": "^1.28.0",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^2.0.0",
+    "webpack": "^5.11.0",
+    "webpack-cli": "^4.2.0",
+    "webpack-dev-server": "^3.11.0"
+  }
+}

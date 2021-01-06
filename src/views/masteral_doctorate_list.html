@@ -1,0 +1,149 @@
+<div>
+  <md-toolbar class="md-menu-toolbar" style="border-bottom: 1px solid #c7c7c7;">
+    <div layout="row">
+      <md-toolbar-filler style="display: flex;">
+        <md-icon class="material-icons">view_list</md-icon>
+      </md-toolbar-filler>
+      <div>
+        <h2 class="md-toolbar-tools">Masteral / Doctorate</h2>
+        <md-menu-bar>
+          <md-menu>
+            <button ng-click="$mdMenu.open()">
+              Go to
+            </button>
+            <md-menu-content>
+              <md-menu-item class="md-indent">
+                <md-icon class="material-icons">person_add</md-icon>
+                <md-button ng-click="ctrl.sampleAction('redo', $event)">
+                  Add scholar
+                  <span class="md-alt-text">Ctrl-B</span>
+                </md-button>
+              </md-menu-item>
+              <md-menu-item class="md-indent">
+                <md-icon class="material-icons">speaker_notes</md-icon>
+                <md-button ng-click="ctrl.sampleAction('redo', $event)">
+                  Masteral / Doctorate list
+                  <span class="md-alt-text">Ctrl-M</span>
+                </md-button>
+              </md-menu-item>
+            </md-menu-content>
+          </md-menu>
+          <md-menu>
+            <button ng-click="$mdMenu.open()">
+              View as
+            </button>
+            <md-menu-content>
+              <md-menu-item class="md-indent">
+                <md-icon class="material-icons">dns</md-icon>
+                <md-button ng-click="ctrl.sampleAction('redo', $event)">
+                  Thumbnail
+                  <span class="md-alt-text">Ctrl-B</span>
+                </md-button>
+              </md-menu-item>
+              <md-menu-item class="md-indent">
+                <md-icon class="material-icons">list</md-icon>
+                <md-button ng-click="ctrl.sampleAction('redo', $event)">
+                  List
+                  <span class="md-alt-text">Ctrl-M</span>
+                </md-button>
+              </md-menu-item>
+            </md-menu-content>
+          </md-menu>
+          <md-menu>
+            <button ng-click="$mdMenu.open()">
+              Export
+            </button>
+            <md-menu-content>
+              <md-menu-item class="md-indent">
+                <md-icon class="material-icons">person_add</md-icon>
+                <md-button ng-click="ctrl.sampleAction('redo', $event)">
+                  Masterlist
+                </md-button>
+              </md-menu-item>
+              <md-menu-item class="md-indent">
+                <md-icon class="material-icons">speaker_notes</md-icon>
+                <md-button ng-click="ctrl.sampleAction('redo', $event)">
+                  Normal
+                </md-button>
+              </md-menu-item>
+            </md-menu-content>
+          </md-menu>
+        </md-menu-bar>
+      </div>
+    </div>
+  </md-toolbar>
+        <div layout="row" layout-xs="column" layout-wrap="" style="background-color: #fff; border-right: 1px solid #c7c7c7;">
+          <div flex>
+            <div layout="row" layout-wrap="" layout-xs="column" style="background-color: #fff; border-right: 1px solid #c7c7c7;">         
+
+              <div class="demo-md-panel-content">
+                <md-table-container>
+                  <table md-table md-row-select multiple ng-model="selected" md-progress="promise">
+                    <thead md-head md-order="query.order" md-on-reorder="getDesserts">
+                      <tr md-row>
+                        <th md-column md-numeric style="background-color: #dddddd;width: 58px;"><span>No.</span></th>
+                        <th md-column md-order-by="nameToLower"><span>Lastname</span></th>
+                        <th md-column md-numeric ><span>Firstname</span></th>
+                        <th md-column md-numeric>Middlename</th>
+                        <th md-column md-numeric>Age</th>
+                        <th md-column md-numeric>Municipality</th>
+                        <th md-column md-numeric>Barangay</th>
+                        <th md-column md-numeric>Province</th>
+                        <th md-column md-numeric>School</th>
+                      </tr>
+                    </thead>
+                    <tbody md-body>
+                      <tr md-row md-select="dessert" md-select-id="name" md-auto-select >
+                        <td md-cell style="background-color: #dddddd;">1</td>
+                        <td md-cell>Painaga</td>
+                        <td md-cell>Dane Vincent</td>
+                        <td md-cell>Otayde</td>
+                        <td md-cell>29</td>
+                        <td md-cell>Belison</td>
+                        <td md-cell>Borocboroc</td>
+                        <td md-cell>Antique</td>
+                        <td md-cell>University of Antique -Main Campus</td>
+                      </tr>
+                      <tr md-row md-select="dessert" md-select-id="name" md-auto-select >
+                        <td md-cell style="background-color: #dddddd;">2</td>
+                        <td md-cell>Painaga</td>
+                        <td md-cell>Dane Vincent</td>
+                        <td md-cell>Otayde</td>
+                        <td md-cell>29</td>
+                        <td md-cell>Belison</td>
+                        <td md-cell>Borocboroc</td>
+                        <td md-cell>Antique</td>
+                        <td md-cell>University of Antique -Main Campus</td>
+                      </tr>
+                      <tr md-row md-select="dessert" md-select-id="name" md-auto-select >
+                        <td md-cell style="background-color: #dddddd;">3</td>
+                        <td md-cell>Painaga</td>
+                        <td md-cell>Dane Vincent</td>
+                        <td md-cell>Otayde</td>
+                        <td md-cell>29</td>
+                        <td md-cell>Belison</td>
+                        <td md-cell>Borocboroc</td>
+                        <td md-cell>Antique</td>
+                        <td md-cell>University of Antique -Main Campus</td>
+                      </tr>
+                      <tfoot md-foot>
+                          <tr md-row>
+                            <td md-cell></td>
+                            <td md-cell><strong>Total: </strong>{{calories.total}}</td>
+                            <td md-cell colspan="6"></td>
+                          </tr>
+                        </tfoot>
+                    </tbody>
+                  </table>
+                </md-table-container>
+
+              </div>
+
+
+
+
+            </div>
+          </div>
+        </div>
+
+</div>

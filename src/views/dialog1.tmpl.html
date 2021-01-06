@@ -1,0 +1,116 @@
+<md-dialog aria-label="Add scholar" style="min-width: 95%;min-height: 95%;">
+  <form ng-cloak>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Add scholar</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon class="material-icons" aria-label="Close dialog">close</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+      <div class="md-dialog-content">
+          <form class="md-inline-form">
+            <div layout="row">
+              <md-input-container flex="30">
+                <label>Firstname</label>
+                <md-icon class="material-icons">perm_identity</md-icon>
+                <input type="text" ng-model="user.name">
+              </md-input-container>
+
+              <md-input-container flex="30">
+                <label>Lastname</label>
+                <textarea ng-model="user.description"></textarea>
+              </md-input-container>
+
+              <md-input-container flex="30">
+                <label>Middlename</label>
+                <textarea ng-model="user.description"></textarea>
+              </md-input-container>
+
+              <md-input-container flex="10">
+                <label>Age</label>
+                <textarea ng-model="user.description"></textarea>
+              </md-input-container>
+            </div>
+            <div layout="row">
+              <md-input-container flex="40">
+                <label>Address</label>
+                <md-icon class="material-icons">home</md-icon>
+                <input type="text" ng-model="user.name">
+              </md-input-container>
+
+              <md-input-container flex="10">
+                <label>Gender</label>
+                <textarea ng-model="user.description"></textarea>
+              </md-input-container>
+
+              <md-input-container flex="30">
+                <label>School</label>
+                <textarea ng-model="user.description"></textarea>
+              </md-input-container>
+              <md-input-container flex="20">
+                <label>ID NO.</label>
+                <textarea ng-model="user.description"></textarea>
+              </md-input-container>
+
+            </div>
+            <p>Father's Details</p>
+            <div layout="row">
+               <md-input-container flex="50">
+                <label>Firstname</label>
+                <md-icon class="material-icons">accessibility_new</md-icon>
+                <input type="text" ng-model="user.name">
+              </md-input-container>
+              <md-input-container flex="50">
+                <label>Lastname</label>
+                <input type="text" ng-model="user.name">
+              </md-input-container>
+              <md-input-container flex="50">
+                <label>Middlename</label>
+                <input type="text" ng-model="user.name">
+              </md-input-container>
+            </div>    
+           <p>Mother's Details</p>
+            <div layout="row">
+               <md-input-container flex="50">
+                <label>Firstname</label>
+                <md-icon class="material-icons">pregnant_woman</md-icon>
+                <input type="text" ng-model="user.name">
+              </md-input-container>
+              <md-input-container flex="50">
+                <label>Lastname</label>
+                <input type="text" ng-model="user.name">
+              </md-input-container>
+              <md-input-container flex="50">
+                <label>Middlename</label>
+                <input type="text" ng-model="user.name">
+              </md-input-container>
+            </div>   
+            <div layout="row">
+               <md-input-container flex="50">
+                <label>IP</label>
+                <md-icon class="material-icons">pregnant_woman</md-icon>
+                <input type="text" ng-model="user.name">
+              </md-input-container>
+            </div>   
+          </form>  
+      </div>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+      <md-button href="http://en.wikipedia.org/wiki/Mango" target="_blank" md-autofocus>
+        More on Wikipedia
+      </md-button>
+      <span flex></span>
+      <md-button ng-click="answer('not useful')">
+       Not Useful
+      </md-button>
+      <md-button ng-click="answer('useful')" class="md-primary">
+        Useful
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

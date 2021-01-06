@@ -1,0 +1,154 @@
+<div>
+<md-toolbar class="md-menu-toolbar" style="border-bottom: 1px solid #c7c7c7;">
+  <div layout="row">
+    <md-toolbar-filler style="display: flex;">
+      <md-icon class="material-icons">view_list</md-icon>
+    </md-toolbar-filler>
+    <div>
+      <h2 class="md-toolbar-tools">Addresses</h2>
+      <md-menu-bar>
+        <md-menu>
+          <button ng-click="$mdMenu.open()">
+            Add new
+          </button>
+          <md-menu-content>
+            <md-menu-item class="md-indent">
+              <md-icon class="material-icons">person_add</md-icon>
+              <md-button ng-click="ctrl.sampleAction('redo', $event)">
+                  Province
+              </md-button>
+            </md-menu-item>
+            <md-menu-item class="md-indent">
+              <md-icon class="material-icons">speaker_notes</md-icon>
+              <md-button ng-click="ctrl.sampleAction('redo', $event)">
+                  Municipality
+              </md-button>
+            </md-menu-item>
+            <md-menu-item class="md-indent">
+              <md-icon class="material-icons">speaker_notes</md-icon>
+              <md-button ng-click="ctrl.sampleAction('redo', $event)">
+                  Barangay
+              </md-button>
+            </md-menu-item>
+          </md-menu-content>
+        </md-menu>
+        <md-menu>
+          <button ng-click="$mdMenu.open()">
+            Export
+          </button>
+          <md-menu-content>
+            <md-menu-item class="md-indent">
+              <md-icon class="material-icons">person_add</md-icon>
+              <md-button ng-click="ctrl.sampleAction('redo', $event)">
+                Masterlist
+              </md-button>
+            </md-menu-item>
+            <md-menu-item class="md-indent">
+              <md-icon class="material-icons">speaker_notes</md-icon>
+              <md-button ng-click="ctrl.sampleAction('redo', $event)">
+                Normal
+              </md-button>
+            </md-menu-item>
+          </md-menu-content>
+        </md-menu>
+      </md-menu-bar>
+    </div>
+  </div>
+</md-toolbar>
+  <div layout="row" layout-xs="column" layout-wrap="" style="background-color: #fff; border-right: 1px solid #c7c7c7;">
+    <div flex="60">
+      <div layout="row" layout-wrap="" layout-xs="column" style="background-color: #fff; border-right: 1px solid #c7c7c7;">         
+
+        <div class="demo-md-panel-content" flex>
+          <md-table-container >
+            <table md-table md-row-select multiple ng-model="selected" md-progress="promise">
+              <thead md-head md-order="query.order" md-on-reorder="getDesserts">
+                <tr md-row>
+                  <th md-column md-numeric style="background-color: #dddddd;width: 58px;"><span>No.</span></th>
+                  <th md-column md-order-by="nameToLower"><span>Province</span></th>
+                  <th md-column md-numeric ><span>Municipality</span></th>
+                  <th md-column md-numeric>Barangay</th>
+                  <th md-column md-numeric>Action</th>
+                </tr>
+              </thead>
+              <tbody md-body>
+                <tr md-row md-select="dessert" md-select-id="name" md-auto-select >
+                  <td md-cell style="background-color: #dddddd;">1</td>
+                  <td md-cell>Painaga</td>
+                  <td md-cell>Dane Vincent</td>
+                  <td md-cell>Otayde</td>
+                  <td md-cell>
+                  <md-button class="md-icon-button" aria-label="More">
+                    <md-icon class="material-icons">more_vert</md-icon>
+                  </md-button>
+                  </td>
+                </tr>
+                <tr md-row md-select="dessert" md-select-id="name" md-auto-select >
+                  <td md-cell style="background-color: #dddddd;">1</td>
+                  <td md-cell>Painaga</td>
+                  <td md-cell>Dane Vincent</td>
+                  <td md-cell>Otayde</td>
+                  <td md-cell>
+                  <md-button class="md-icon-button" aria-label="More">
+                    <md-icon class="material-icons">more_vert</md-icon>
+                  </md-button>
+                  </td>
+                </tr>
+                <tfoot md-foot>
+                    <tr md-row>
+                      <td md-cell></td>
+                      <td md-cell><strong>Total: </strong>{{calories.total}}</td>
+                      <td md-cell colspan="6"></td>
+                    </tr>
+                  </tfoot>
+              </tbody>
+            </table>
+          </md-table-container>
+
+        </div>
+      </div>
+    </div>
+    <div flex="40" style="padding: 5px;background-color: #eeeeee;">
+
+            <md-card style="margin: 0px;">
+              <md-card-header>
+                <md-card-avatar>
+                  <md-icon class="material-icons" style="margin-right: 15px;">groups</md-icon>
+                </md-card-avatar>
+                <md-card-header-text>
+                  <span class="md-title">Details</span>
+                  <span class="md-subhead">Udergraduate</span>
+                </md-card-header-text>
+              </md-card-header>
+              
+              <md-card-content style="padding: 0px 16px;">
+
+                <div layout="column" layout-xs="column">
+                    <md-input-container flex="">
+                      <label>Province</label>
+                      <md-icon class="material-icons">apartment</md-icon>
+                      <input type="text" ng-model="user.name">
+                    </md-input-container>
+
+                    <md-input-container flex="">
+                      <label>Municipality</label>
+                      <md-icon class="material-icons">house</md-icon>
+                      <textarea ng-model="user.description"></textarea>
+                    </md-input-container>
+
+                    <md-input-container flex="">
+                      <label>Barangay</label>
+                      <md-icon class="material-icons">place</md-icon>
+                      <textarea ng-model="user.description"></textarea>
+                    </md-input-container>
+                </div>
+
+              </md-card-content>
+            </md-card>
+
+
+    </div>
+
+  </div>
+
+</div>

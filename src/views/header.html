@@ -1,0 +1,68 @@
+<md-toolbar class="md-hue-2" class="padded" md-whiteframe="1" style="position: sticky; top: 0px;">
+  <div class="md-toolbar-tools" ng-if="logged_in">
+    <md-button class="md-icon-button" aria-label="Settings" ng-click="toggleSidenav()">
+      <md-icon class="material-icons">menu</md-icon>
+    </md-button>
+
+    <h2 flex md-truncate></h2>
+
+    <label class="md-subhead">Dane Vincent Painaga</label>
+
+
+    <md-menu md-position-mode="target-right target">
+      <md-button aria-label="Open demo menu" class="md-icon-button"
+                 ng-click="$mdMenu.open($event)">
+        <md-icon class="material-icons">power_settings_new</md-icon>
+      </md-button>
+      <md-menu-content>
+        <md-menu-item>
+          <md-button ng-click="ctrl.announceClick($index)"><span
+              md-menu-align-target>Settings</span>
+          </md-button>
+        </md-menu-item>
+        <md-menu-item >
+          <md-button ng-click="ctrl.announceClick($index)"><span
+              md-menu-align-target>Logout</span>
+          </md-button>
+        </md-menu-item>
+      </md-menu-content>
+    </md-menu>
+  </div>
+</md-toolbar>
+
+<md-sidenav class="md-sidenav-left" md-component-id="closeEventsDisabled" md-whiteframe="4" md-disable-close-events style="max-width: 270px;position:fixed;">
+
+  <md-toolbar class="md-theme-indigo">
+    <div class="md-toolbar-tools">
+      <h5 flex md-truncate>PSMS</h5>
+      <md-button aria-label="Open demo menu" class="md-icon-button" ng-click="toggleSidenav()">
+        <md-icon class="material-icons">menu</md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+
+  <md-content>
+    <md-subheader class="md-no-sticky">Menu</md-subheader>
+    <md-list-item ng-click="navigateTo(setting.extraScreen, $event)" >
+      <md-icon class="material-icons" style="margin-right: 15px;">dashboard</md-icon>
+      <p style="margin-top: 5px;"> User accounts</p>
+    </md-list-item>
+    <md-list-item ng-click="navigateTo(setting.extraScreen, $event)" >
+      <md-icon class="material-icons" style="margin-right: 15px;">group</md-icon>
+      <p style="margin-top: 5px;"> Bachelor's Degree</p>
+    </md-list-item>
+    <md-list-item ng-click="navigateTo(setting.extraScreen, $event)" >
+      <md-icon class="material-icons" style="margin-right: 15px;">school</md-icon>
+      <p style="margin-top: 5px;"> Master's Degree</p>
+    </md-list-item>
+    <md-list-item ng-click="navigateTo(setting.extraScreen, $event)" >
+      <md-icon class="material-icons" style="margin-right: 15px;">location_on</md-icon>
+      <p style="margin-top: 5px;"> Addresses</p>
+    </md-list-item>
+    <md-list-item ng-click="navigateTo(setting.extraScreen, $event)" >
+      <md-icon class="material-icons" style="margin-right: 15px;">analytics</md-icon>
+      <p style="margin-top: 5px;"> Reports</p>
+    </md-list-item>
+  </md-content>
+
+</md-sidenav>

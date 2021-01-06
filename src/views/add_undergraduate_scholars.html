@@ -1,0 +1,237 @@
+<div>
+  <md-toolbar class="md-menu-toolbar">
+    <div layout="row">
+      <md-toolbar-filler style="display: flex;">
+        <md-icon class="material-icons">content_paste</md-icon>
+      </md-toolbar-filler>
+      <div>
+        <h2 class="md-toolbar-tools">Add scholars</h2>
+        <md-menu-bar>
+          <md-menu>
+            <button ng-click="$mdMenu.open()">
+              File
+            </button>
+            <md-menu-content>
+              <md-menu-item class="md-indent">
+                <md-icon class="material-icons">save</md-icon>
+                <md-button ng-click="ctrl.sampleAction('redo', $event)">
+                  Save
+                  <span class="md-alt-text">Ctrl-S</span>
+                </md-button>
+              </md-menu-item>
+              <md-menu-item class="md-indent">
+                <md-icon class="material-icons">clear_all</md-icon>
+                <md-button ng-click="ctrl.sampleAction('redo', $event)">
+                  Clear
+                  <span class="md-alt-text">Ctrl-E</span>
+                </md-button>
+              </md-menu-item>
+            </md-menu-content>
+          </md-menu>
+          <md-menu>
+            <button ng-click="$mdMenu.open()">
+              View list
+            </button>
+            <md-menu-content>
+              <md-menu-item class="md-indent">
+                <md-icon class="material-icons">person</md-icon>
+                <md-button ng-click="ctrl.sampleAction('redo', $event)">
+                  Bachelor's list
+                  <span class="md-alt-text">Ctrl-B</span>
+                </md-button>
+              </md-menu-item>
+              <md-menu-item class="md-indent">
+                <md-icon class="material-icons">school</md-icon>
+                <md-button ng-click="ctrl.sampleAction('redo', $event)">
+                  Master's list
+                  <span class="md-alt-text">Ctrl-M</span>
+                </md-button>
+              </md-menu-item>
+            </md-menu-content>
+          </md-menu>
+          <md-menu>
+            <button ng-click="$mdMenu.open()">
+              View
+            </button>
+            <md-menu-content>
+              <md-menu-item class="md-indent">
+                <md-icon class="material-icons">save</md-icon>
+                <md-button ng-click="ctrl.sampleAction('redo', $event)">
+                  Maximize
+                  <span class="md-alt-text">F11</span>
+                </md-button>
+              </md-menu-item>
+              <md-menu-item class="md-indent">
+                <md-icon class="material-icons">clear_all</md-icon>
+                <md-button ng-click="ctrl.sampleAction('redo', $event)">
+                  Minimize
+                  <span class="md-alt-text">Ctrl-N</span>
+                </md-button>
+              </md-menu-item>
+            </md-menu-content>
+          </md-menu>
+        </md-menu-bar>
+      </div>
+    </div>
+  </md-toolbar>
+<div layout="column" style="height: 90%;">
+
+    <section layout="row" flex layout-xs="column">
+
+        <div layout="row" layout-xs="column" style="background-color: #fff; border-right: 1px solid #c7c7c7;">
+          <md-content flex layout-padding style="height: 100%;background-color: #fff; padding: 0px;">
+            <md-list flex>
+              <md-input-container style="width: 100%;margin: 25px 0px 0px 0px;">
+                <label>Search</label>
+                <input type="text" ng-model="user.name">
+              </md-input-container>
+              <md-subheader class="md-no-sticky">Udergraduate list</md-subheader>
+              <md-list-item class="md-2-line">
+                <img src="images/user-2.jpg" class="md-avatar" alt="{{todos[0].who}}" />
+                <div class="md-list-item-text" style="max-width: 210px;">
+                  <h5 style="margin: 0px;">Dane Vincent Painaga</h5>
+                  <p style="font-size: 13px;">University of Antique -Main Campus</p>
+                </div>
+                <md-icon class="material-icons" >more_horiz</md-icon>
+              </md-list-item>
+              <md-list-item class="md-2-line">
+                <img src="images/user-2.jpg" class="md-avatar" alt="{{todos[0].who}}" />
+                <div class="md-list-item-text" style="max-width: 210px;">
+                  <h5 style="margin: 0px;">Dane Vincent Painaga</h5>
+                  <p style="font-size: 13px;">University of Antique -TLMC</p>
+                </div>
+                <md-icon class="material-icons">more_horiz</md-icon>
+              </md-list-item>
+              <md-list-item class="md-2-line">
+                <img src="images/user-2.jpg" class="md-avatar" alt="{{todos[0].who}}" />
+                <div class="md-list-item-text" style="max-width: 210px;">
+                  <h5 style="margin: 0px;">Dane Vincent Painaga</h5>
+                  <p style="font-size: 13px;">Saitn Anthony's College</p>
+                </div>
+                <md-icon class="material-icons" >more_horiz</md-icon>
+              </md-list-item>
+            </md-list>
+          </md-content>    
+        </div>
+          <div flex="" layout-padding style="background: #efefef;max-height: 495px; overflow-y: auto;border-top: 1px solid #c7c7c7;">
+            <!-- <md-button class="md-primary md-raised" ng-click="showAdvanced($event)">Add scholar</md-button> -->
+
+            <md-card style="margin: 0px;">
+              <md-card-header>
+                <md-card-avatar>
+                  <md-icon class="material-icons" style="margin-right: 15px;">groups</md-icon>
+                </md-card-avatar>
+                <md-card-header-text>
+                  <span class="md-title">Details</span>
+                  <span class="md-subhead">Udergraduate</span>
+                </md-card-header-text>
+              </md-card-header>
+              
+              <md-card-content style="padding: 0px 16px;">
+
+                <div layout="row" layout-xs="column">
+                    <md-input-container flex="">
+                      <label>Firstname</label>
+                      <md-icon class="material-icons">how_to_reg</md-icon>
+                      <input type="text" ng-model="user.name">
+                    </md-input-container>
+
+                    <md-input-container flex="">
+                      <label>Lastname</label>
+                      <textarea ng-model="user.description"></textarea>
+                    </md-input-container>
+
+                    <md-input-container flex="">
+                      <label>Middlename</label>
+                      <textarea ng-model="user.description"></textarea>
+                    </md-input-container>
+                </div>
+                <div layout="row" layout-xs="column">
+                  <md-input-container flex="">
+                    <label>Address</label>
+                    <md-icon class="material-icons">place</md-icon>
+                    <input type="text" ng-model="user.name">
+                  </md-input-container>
+                  <md-input-container flex="20">
+                    <label>Date of Birth</label>
+                    <input type="date" ng-model="example.value" />
+                  </md-input-container>
+                  <md-input-container flex="10">
+                    <label>Age</label>
+                    <textarea ng-model="user.description"></textarea>
+                  </md-input-container>
+                  <md-input-container flex="20">
+                    <label>Gender</label>
+                    <md-select ng-model="ctrl.userState">
+                      <md-option><em>Male</em></md-option>
+                      <md-option><em>Female</em></md-option>
+                    </md-select>
+                  </md-input-container>
+                </div>
+                <div layout="row" layout-xs="column">
+                  <md-input-container flex="">
+                    <label>School</label>
+                    <md-icon class="material-icons">apartment</md-icon>
+                    <textarea ng-model="user.description"></textarea>
+                  </md-input-container>
+                  <md-input-container flex="">
+                    <label>ID NO.</label>
+                    <textarea ng-model="user.description"></textarea>
+                  </md-input-container>
+                  <md-input-container flex="">
+                    <label>IP.</label>
+                    <textarea ng-model="user.description"></textarea>
+                  </md-input-container>
+                </div>
+                </md-card-content>
+              </md-card>
+      
+
+            <md-card style="margin: 5px 0px;">
+              <md-card-content style="padding: 15px 16px 0px 16px;">
+
+                <p>Father's Details</p>
+                <div layout="row" layout-xs="column">
+                   <md-input-container flex="">
+                    <label>Firstname</label>
+                    <md-icon class="material-icons">accessibility_new</md-icon>
+                    <input type="text" ng-model="user.name">
+                  </md-input-container>
+                  <md-input-container flex="">
+                    <label>Lastname</label>
+                    <input type="text" ng-model="user.name">
+                  </md-input-container>
+                  <md-input-container flex="">
+                    <label>Middlename</label>
+                    <input type="text" ng-model="user.name">
+                  </md-input-container>
+                </div>    
+               <p>Mother's Details</p>
+                <div layout="row" layout-xs="column">
+                   <md-input-container flex="">
+                    <label>Firstname</label>
+                    <md-icon class="material-icons">pregnant_woman</md-icon>
+                    <input type="text" ng-model="user.name">
+                  </md-input-container>
+                  <md-input-container flex="">
+                    <label>Lastname</label>
+                    <input type="text" ng-model="user.name">
+                  </md-input-container>
+                  <md-input-container flex="">
+                    <label>Middlename</label>
+                    <input type="text" ng-model="user.name">
+                  </md-input-container>
+                </div>
+                </md-card-content>
+                <div style="width: 100%;text-align: right;">
+                  <md-button class="md-raised md-primary">Save</md-button>
+                  <md-button class="md-raised">Clear</md-button>
+                </div>
+              </md-card>  
+            </div>
+
+    </section>
+
+  </div>
+
+</div>

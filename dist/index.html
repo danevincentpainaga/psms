@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html ng-app="psmsApp">
+<head>
+	<title>PSMS</title>
+	<!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+		<!-- style sheet -->
+	<!-- <link href="node_modules/angular-material-data-table/dist/md-data-table.min.css" rel="stylesheet" type="text/css"/> -->
+	<link rel="stylesheet" href="/node_modules/material-icons/iconfont/material-icons.css">
+</head>
+<body ng-cloak ng-controller="mainCtrl">
+	
+	<ng-include src="'src/views/header.html'"></ng-include> 
+	<div class="row" ui-view=""></div>
+
+
+<script src="vendor.bundle.js"></script><script src="main.bundle.js"></script></body>
+</html>

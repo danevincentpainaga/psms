@@ -26,6 +26,7 @@
     "angular-touch": "^1.4.0",
     "jquery": "^3.2",
     "material-icons": "^0.5.1",
+    "moment": "^2.29.1",
     "node-sass": "^4.14.1",
     "xlsx": "^0.16.9"
   },

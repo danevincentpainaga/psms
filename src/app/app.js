@@ -55,6 +55,8 @@ angular
         },
         'undergraduate-view@undergraduate':{
           templateUrl: 'src/views/add_undergraduate_scholars.html',
+          controller: 'addUndergraduateCtrl',
+          controllerAs: 'ac'
         }
       },
       Authenticated: true,
@@ -91,6 +93,7 @@ angular
 .run(['$transitions', '$rootScope', '$cookies', 'loginApiService', function($transitions, $rootScope, $cookies, loginApiService){
 
   var auth = $cookies.getObject('auth');
+  console.log(auth);
 
   $transitions.onStart({}, function(transition) {
 
@@ -105,6 +108,7 @@ angular
         }
         else{
           $rootScope.logged_in = true;
+          $rootScope.token = auth.success;
         }
     }
 
@@ -133,6 +137,11 @@ require('angular-animate');
 require('angular-aria');
 
 require('../services/loginApiService.js');
+require('../services/provinceApiService.js');
+require('../services/schoolApiService.js');
+require('../services/addressApiService.js');
+require('../services/scholarApiService.js');
 
 require('../controllers/mainCtrl.js');
 require('../controllers/loginCtrl.js');
+require('../controllers/addUndergraduateCtrl.js');

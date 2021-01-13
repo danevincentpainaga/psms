@@ -9,8 +9,8 @@
  */ 
 
 var app = angular.module('psmsApp');
-app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$window', '$location', '$timeout', 'schoolApiService', 'addressApiService', 'scholarApiService', 'academicContractDetails', 'moment',
-  function ($scope, $rootScope, $cookies, $window, $location, $timeout, schoolApiService, addressApiService, scholarApiService, academicContractDetails, moment) {
+app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$window', '$location', '$timeout', 'schoolApiService', 'addressApiService', 'scholarApiService', 'academicContractDetails', 'debounce', 'moment',
+  function ($scope, $rootScope, $cookies, $window, $location, $timeout, schoolApiService, addressApiService, scholarApiService, academicContractDetails, debounce, moment) {
 
   var ac = this;
   ac.list_of_schools = [];
@@ -170,8 +170,8 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
   }
 
 
-  function getAddedScholars(){
-     scholarApiService.getAddedScholars().then(response => {
+  function getNewScholars(searched){
+     scholarApiService.getNewScholars(searched).then(response => {
       console.log(response.data);
       ac.scholars = response.data;
     }, err => {
@@ -179,8 +179,20 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
     });    
   }
 
-
-  getAddedScholars();
-  console.log(academicContractDetails);
+  $scope.$watch('ac.scholar_lastname', debounce(function() {
+    getNewScholars({ searched: ac.scholar_lastname });
+  }, 500), true);
 
 }]);
+
+app.factory('debounce', function($timeout) {
+    return function(callback, interval) {
+        var timeout = null;
+        return function() {
+            $timeout.cancel(timeout);
+            timeout = $timeout(function () { 
+                callback.apply(this, arguments); 
+            }, interval);
+        };
+    }; 
+});

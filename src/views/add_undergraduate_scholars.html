@@ -1,4 +1,4 @@
-<div>
+<div style="font-size: 14px;">
   <md-toolbar class="md-menu-toolbar">
     <div layout="row">
       <md-toolbar-filler style="display: flex;">
@@ -36,7 +36,7 @@
               <md-menu-item class="md-indent">
                 <md-icon class="material-icons">person</md-icon>
                 <md-button ng-click="ctrl.sampleAction('redo', $event)">
-                  Bachelor's list
+                  Undergraduate list
                   <span class="md-alt-text">Ctrl-B</span>
                 </md-button>
               </md-menu-item>
@@ -45,6 +45,13 @@
                 <md-button ng-click="ctrl.sampleAction('redo', $event)">
                   Master's list
                   <span class="md-alt-text">Ctrl-M</span>
+                </md-button>
+              </md-menu-item>
+              <md-menu-item class="md-indent">
+                <md-icon class="material-icons">business</md-icon>
+                <md-button ng-click="ctrl.sampleAction('redo', $event)">
+                  Doctorate list
+                  <span class="md-alt-text">Ctrl-D</span>
                 </md-button>
               </md-menu-item>
             </md-menu-content>
@@ -75,220 +82,212 @@
     </div>
   </md-toolbar>
 
-<div layout="column" style="height: 90%;">
-
+  <div layout="column" style="height: 90%;">
     <section layout="row" flex layout-xs="column">
+      <div layout="row" layout-xs="column" style="background-color: #fff; border-right: 1px solid #c7c7c7;">
+        <md-content flex layout-padding style="height: 100%;background-color: #fff; padding: 0px;">
+          <md-list flex>
+            <md-input-container style="width: 100%;margin: 25px 0px 0px 0px;">
+              <label>Search</label>
+              <input type="text" ng-model="ac.scholar_lastname" style="text-transform: uppercase;">
+            </md-input-container>
+            <md-subheader class="md-no-sticky">Udergraduate list</md-subheader>
+            <md-list-item class="md-2-line" ng-repeat="scholar in ac.scholars">
+              <img src="images/user-2.jpg" class="md-avatar" alt="" />
+              <div class="md-list-item-text" style="max-width: 210px;">
+                <h5 style="margin: 0px;">{{scholar.lastname}},&nbsp;{{scholar.firstname}}&nbsp;{{scholar.middlename}}.</h5>
+                <p style="font-size: 12px;">{{ scholar.school.school_name }}</p>
+              </div>
+              <md-icon class="material-icons" >more_horiz</md-icon>
+            </md-list-item>
+          </md-list>
+        </md-content>    
+      </div>
+      <div flex="" layout-padding style="background: #efefef;max-height: 495px; overflow-y: auto;border-top: 1px solid #c7c7c7;">
+        <md-card style="margin: 0px;">
+          <md-card-header>
+            <md-card-avatar>
+              <md-icon class="material-icons" style="margin-right: 15px;">groups</md-icon>
+            </md-card-avatar>
+            <md-card-header-text>
+              <span class="md-title">Details</span>
+              <span class="md-subhead">Udergraduate</span>
+            </md-card-header-text>
+            <md-card-header-text style="text-align: right;">
+              <span class="md-subhead">{{ ac.academic_year }}</span>
+              <span class="md-subhead">{{ ac.semester }}</span>
+            </md-card-header-text>
+          </md-card-header>
+          <md-card-content style="padding: 0px 16px;">
+            <div layout="row" layout-xs="column">
+                <md-input-container flex="">
+                  <label>Firstname</label>
+                  <md-icon class="material-icons">how_to_reg</md-icon>
+                  <input type="text" ng-model="ac.firstname">
+                </md-input-container>
 
-        <div layout="row" layout-xs="column" style="background-color: #fff; border-right: 1px solid #c7c7c7;">
-          <md-content flex layout-padding style="height: 100%;background-color: #fff; padding: 0px;">
-            <md-list flex>
-              <md-input-container style="width: 100%;margin: 25px 0px 0px 0px;">
-                <label>Search</label>
-                <input type="text" ng-model="ac.fullname">
-              </md-input-container>
-              <md-subheader class="md-no-sticky">Udergraduate list</md-subheader>
-              <md-list-item class="md-2-line" ng-repeat="scholar in ac.scholars">
-                <img src="images/user-2.jpg" class="md-avatar" alt="" />
-                <div class="md-list-item-text" style="max-width: 210px;">
-                  <h5 style="margin: 0px;">{{scholar.lastname}},&nbsp;{{scholar.firstname}}&nbsp;{{scholar.middlename}}.</h5>
-                  <p style="font-size: 13px;">{{ scholar.school.school_name }}</p>
-                </div>
-                <md-icon class="material-icons" >more_horiz</md-icon>
-              </md-list-item>
-            </md-list>
-          </md-content>    
-        </div>
-          <div flex="" layout-padding style="background: #efefef;max-height: 495px; overflow-y: auto;border-top: 1px solid #c7c7c7;">
+                <md-input-container flex="">
+                  <label>Lastname</label>
+                  <textarea ng-model="ac.lastname"></textarea>
+                </md-input-container>
 
-            <md-card style="margin: 0px;">
-              <md-card-header>
-                <md-card-avatar>
-                  <md-icon class="material-icons" style="margin-right: 15px;">groups</md-icon>
-                </md-card-avatar>
-                <md-card-header-text>
-                  <span class="md-title">Details</span>
-                  <span class="md-subhead">Udergraduate</span>
-                </md-card-header-text>
-                <md-card-header-text style="text-align: right;">
-                  <span class="md-subhead">{{ ac.academic_year }}</span>
-                  <span class="md-subhead">{{ ac.semester }}</span>
-                </md-card-header-text>
-              </md-card-header>
-              
-              <md-card-content style="padding: 0px 16px;">
-                <div layout="row" layout-xs="column">
-                    <md-input-container flex="">
-                      <label>Firstname</label>
-                      <md-icon class="material-icons">how_to_reg</md-icon>
-                      <input type="text" ng-model="ac.firstname">
-                    </md-input-container>
-
-                    <md-input-container flex="">
-                      <label>Lastname</label>
-                      <textarea ng-model="ac.lastname"></textarea>
-                    </md-input-container>
-
-                    <md-input-container flex="">
-                      <label>Middlename</label>
-                      <textarea ng-model="ac.middlename"></textarea>
-                    </md-input-container>
-                </div>
-                <div layout="row" layout-xs="column">
-                  <div style="display: flex;width: 100%;position: relative;">
-                    <md-icon class="material-icons">place</md-icon>
-                    <md-autocomplete flex required
-                      md-input-name="autocompleteField"
-                      md-input-minlength="2"
-                      md-input-maxlength="18"
-                      md-no-cache="ac.noCache"
-                      md-selected-item="ac.address"
-                      md-search-text="ac.search_address"
-                      md-delay="500"
-                      md-selected-item-change="ac.selectedAddressChange(address)"
-                      md-items="address in ac.addressSearchQuery(ac.search_address)"
-                      md-item-text="address.full_address"
-                      md-escape-options="clear"
-                      md-floating-label="Address">
-                      <md-item-template>
-                        <span md-highlight-text="ac.search_address" md-highlight-flags="^i">{{address.full_address}}</span>
-                      </md-item-template>
-                      <md-not-found>
-                        No address matching "{{ac.search_address}}" were found.
-                      </md-not-found>
-                    </md-autocomplete>
-                  </div>
-                  <md-input-container flex="20">
-                    <label>Date of Birth</label>
-                    <input type="date" ng-model="ac.date_of_birth" ng-change="ac.selectedDateOfBirth(ac.date_of_birth)"/>
-                  </md-input-container>
-                  <md-input-container flex="10">
-                    <label>Age</label>
-                    <textarea ng-model="ac.displayedAge" disabled></textarea>
-                  </md-input-container>
-                  <md-input-container flex="20">
-                    <label>Gender</label>
-                    <md-select ng-model="ac.gender">
-                      <md-option value="Male"><em>Male</em></md-option>
-                      <md-option value="Female"><em>Female</em></md-option>
-                    </md-select>
-                  </md-input-container>
-                </div>
-                <div layout="row" layout-xs="column">
-                  <md-icon class="material-icons">apartment</md-icon>
-                  <md-autocomplete flex required
-                    md-input-name="autocompleteField"
-                    md-input-minlength="2"
-                    md-input-maxlength="18"
-                    md-no-cache="ac.noCache"
-                    md-selected-item="ac.school"
-                    md-search-text-change="ac.searchSchoolChange(ac.search_school)"
-                    md-search-text="ac.search_school"
-                    md-delay="500"
-                    md-selected-item-change="ac.selectedSchoolChange(school)"
-                    md-items="school in ac.schoolSearchQuery(ac.search_school)"
-                    md-item-text="school.school_name"
-                    md-escape-options="clear"
-                    md-require-match=""
-                    md-floating-label="School">
-                    <md-item-template>
-                      <span md-highlight-text="ac.search_school" md-highlight-flags="^i">{{school.school_name}}</span>
-                    </md-item-template>
-                    <md-not-found>
-                      No states matching "{{ac.search_school}}" were found.
-                    </md-not-found>
-                  </md-autocomplete>
-                  <md-input-container flex="25">
-                    <label>ID NO.</label>
-                    <textarea ng-model="ac.student_id_number"></textarea>
-                  </md-input-container>
-                  <md-input-container flex="20">
-                    <label>IP.</label>
-                    <md-select ng-model="ac.IP">
-                      <md-option value="Yes"><em>Yes</em></md-option>
-                      <md-option value="No"><em>No</em></md-option>
-                    </md-select>
-                  </md-input-container>
-                </div>
-                </md-card-content>
-              </md-card>
-      
-
-            <md-card style="margin: 5px 0px;">
-              <md-card-content style="padding: 15px 16px 0px 16px;">
-                <p>Father's Details</p>
-                <div layout="row" layout-xs="column">
-                  <md-icon class="material-icons">accessibility_new</md-icon>
-                  <md-autocomplete flex required
-                    md-input-name="autocompleteField"
-                    md-input-minlength="2"
-                    md-input-maxlength="18"
-                    md-no-cache="ac.noCache"
-                    md-selected-item="ac.father"
-                    md-search-text="ac.search_flastname"
-                    md-delay="500"
-                    md-selected-item-change="ac.selectedFatherDetailsChange(fdetails)"
-                    md-items="fdetails in ac.fatherSearchQuery(ac.search_flastname)"
-                    md-item-text="fdetails.f_lastname"
-                    md-escape-options="clear"
-                    md-floating-label="Lastname">
-                    <md-item-template>
-                      <span md-highlight-text="ac.search_flastname">{{fdetails.f_lastname}}, {{fdetails.f_firstname}}{{fdetails.f_middlename}}</span>
-                    </md-item-template>
-                    <md-not-found>
-                      No records matching "{{ac.search_school}}" were found.
-                    </md-not-found>
-                  </md-autocomplete>
-                  <md-input-container flex="">
-                    <label>Firstname</label>
-                    <input type="text" ng-model="ac.f_firstname" required>
-                  </md-input-container>
-                  <md-input-container flex="">
-                    <label>Middlename</label>
-                    <input type="text" ng-model="ac.f_middlename" required>
-                  </md-input-container>
-                </div>    
-                <p>Mother's Details</p>
-                <div layout="row" layout-xs="column">
-                  <md-icon class="material-icons">pregnant_woman</md-icon>
-                  <md-autocomplete flex required
-                    md-input-name="autocompleteField"
-                    md-input-minlength="2"
-                    md-input-maxlength="18"
-                    md-no-cache="ac.noCache"
-                    md-selected-item="ac.mother"
-                    md-search-text="ac.search_mlastname"
-                    md-delay="500"
-                    md-selected-item-change="ac.selectedMotherDetailsChange(mdetails)"
-                    md-items="mdetails in ac.motherSearchQuery(ac.search_mlastname)"
-                    md-item-text="mdetails.m_lastname"
-                    md-escape-options="clear"
-                    md-floating-label="Lastname">
-                    <md-item-template>
-                      <span md-highlight-text="ac.search_mlastname">{{mdetails.m_lastname}}, {{mdetails.m_firstname}}{{mdetails.m_middlename}}</span>
-                    </md-item-template>
-                    <md-not-found>
-                      No records matching "{{ac.search_school}}" were found.
-                    </md-not-found>
-                  </md-autocomplete>
-                  <md-input-container flex="">
-                    <label>Firstname</label>
-                    <input type="text" ng-model="ac.m_firstname" required>
-                  </md-input-container>
-                  <md-input-container flex="">
-                    <label>Middlename</label>
-                    <input type="text" ng-model="ac.m_middlename" required>
-                  </md-input-container>
-                </div>
-                </md-card-content>
-                <div style="width: 100%;text-align: right;">
-                  <md-button class="md-raised md-primary" ng-click="ac.saveScholar()">Save</md-button>
-                  <md-button class="md-raised">Clear</md-button>
-                </div>
-              </md-card>  
+                <md-input-container flex="">
+                  <label>Middlename</label>
+                  <textarea ng-model="ac.middlename"></textarea>
+                </md-input-container>
             </div>
+            <div layout="row" layout-xs="column">
+              <div style="display: flex;width: 100%;position: relative;">
+                <md-icon class="material-icons">place</md-icon>
+                <md-autocomplete flex required
+                  md-input-name="autocompleteField"
+                  md-input-minlength="2"
+                  md-input-maxlength="18"
+                  md-no-cache="ac.noCache"
+                  md-selected-item="ac.address"
+                  md-search-text="ac.search_address"
+                  md-delay="500"
+                  md-selected-item-change="ac.selectedAddressChange(address)"
+                  md-items="address in ac.addressSearchQuery(ac.search_address)"
+                  md-item-text="address.full_address"
+                  md-escape-options="clear"
+                  md-floating-label="Address">
+                  <md-item-template>
+                    <span md-highlight-text="ac.search_address" md-highlight-flags="^i">{{address.full_address}}</span>
+                  </md-item-template>
+                  <md-not-found>
+                    No address matching "{{ac.search_address}}" were found.
+                  </md-not-found>
+                </md-autocomplete>
+              </div>
+              <md-input-container flex="20">
+                <label>Date of Birth</label>
+                <input type="date" ng-model="ac.date_of_birth" ng-change="ac.selectedDateOfBirth(ac.date_of_birth)"/>
+              </md-input-container>
+              <md-input-container flex="10">
+                <label>Age</label>
+                <textarea ng-model="ac.displayedAge" disabled></textarea>
+              </md-input-container>
+              <md-input-container flex="20">
+                <label>Gender</label>
+                <md-select ng-model="ac.gender">
+                  <md-option value="Male"><em>Male</em></md-option>
+                  <md-option value="Female"><em>Female</em></md-option>
+                </md-select>
+              </md-input-container>
+            </div>
+            <div layout="row" layout-xs="column">
+              <md-icon class="material-icons">apartment</md-icon>
+              <md-autocomplete flex required
+                md-input-name="autocompleteField"
+                md-input-minlength="2"
+                md-input-maxlength="18"
+                md-no-cache="ac.noCache"
+                md-selected-item="ac.school"
+                md-search-text-change="ac.searchSchoolChange(ac.search_school)"
+                md-search-text="ac.search_school"
+                md-delay="500"
+                md-selected-item-change="ac.selectedSchoolChange(school)"
+                md-items="school in ac.schoolSearchQuery(ac.search_school)"
+                md-item-text="school.school_name"
+                md-escape-options="clear"
+                md-require-match=""
+                md-floating-label="School">
+                <md-item-template>
+                  <span md-highlight-text="ac.search_school" md-highlight-flags="^i">{{school.school_name}}</span>
+                </md-item-template>
+                <md-not-found>
+                  No states matching "{{ac.search_school}}" were found.
+                </md-not-found>
+              </md-autocomplete>
+              <md-input-container flex="25">
+                <label>ID NO.</label>
+                <textarea ng-model="ac.student_id_number"></textarea>
+              </md-input-container>
+              <md-input-container flex="20">
+                <label>IP.</label>
+                <md-select ng-model="ac.IP">
+                  <md-option value="YES"><em>YES</em></md-option>
+                  <md-option value="NO"><em>NO</em></md-option>
+                </md-select>
+              </md-input-container>
+            </div>
+          </md-card-content>
+        </md-card>
 
+        <md-card style="margin: 5px 0px;">
+          <md-card-content style="padding: 15px 16px 0px 16px;">
+            <p>Father's Details</p>
+            <div layout="row" layout-xs="column">
+              <md-icon class="material-icons">accessibility_new</md-icon>
+              <md-autocomplete flex required
+                md-input-name="autocompleteField"
+                md-input-minlength="2"
+                md-input-maxlength="18"
+                md-no-cache="ac.noCache"
+                md-selected-item="ac.father"
+                md-search-text="ac.search_flastname"
+                md-delay="500"
+                md-selected-item-change="ac.selectedFatherDetailsChange(fdetails)"
+                md-items="fdetails in ac.fatherSearchQuery(ac.search_flastname)"
+                md-item-text="fdetails.f_lastname"
+                md-escape-options="clear"
+                md-floating-label="Lastname">
+                <md-item-template>
+                  <span md-highlight-text="ac.search_flastname">{{fdetails.f_lastname}}, {{fdetails.f_firstname}}{{fdetails.f_middlename}}</span>
+                </md-item-template>
+                <md-not-found>
+                  No records matching "{{ac.search_school}}" were found.
+                </md-not-found>
+              </md-autocomplete>
+              <md-input-container flex="">
+                <label>Firstname</label>
+                <input type="text" ng-model="ac.f_firstname" required>
+              </md-input-container>
+              <md-input-container flex="">
+                <label>Middlename</label>
+                <input type="text" ng-model="ac.f_middlename" required>
+              </md-input-container>
+            </div>    
+            <p>Mother's Details</p>
+            <div layout="row" layout-xs="column">
+              <md-icon class="material-icons">pregnant_woman</md-icon>
+              <md-autocomplete flex required
+                md-input-name="autocompleteField"
+                md-input-minlength="2"
+                md-input-maxlength="18"
+                md-no-cache="ac.noCache"
+                md-selected-item="ac.mother"
+                md-search-text="ac.search_mlastname"
+                md-delay="500"
+                md-selected-item-change="ac.selectedMotherDetailsChange(mdetails)"
+                md-items="mdetails in ac.motherSearchQuery(ac.search_mlastname)"
+                md-item-text="mdetails.m_lastname"
+                md-escape-options="clear"
+                md-floating-label="Lastname">
+                <md-item-template>
+                  <span md-highlight-text="ac.search_mlastname">{{mdetails.m_lastname}}, {{mdetails.m_firstname}}{{mdetails.m_middlename}}</span>
+                </md-item-template>
+                <md-not-found>
+                  No records matching "{{ac.search_school}}" were found.
+                </md-not-found>
+              </md-autocomplete>
+              <md-input-container flex="">
+                <label>Firstname</label>
+                <input type="text" ng-model="ac.m_firstname" required>
+              </md-input-container>
+              <md-input-container flex="">
+                <label>Middlename</label>
+                <input type="text" ng-model="ac.m_middlename" required>
+              </md-input-container>
+            </div>
+          </md-card-content>
+          <div style="width: 100%;text-align: right;">
+            <md-button class="md-raised md-primary" ng-click="ac.saveScholar()">Save</md-button>
+            <md-button class="md-raised">Clear</md-button>
+          </div>
+        </md-card>  
+      </div>
     </section>
-
   </div>
-
 </div>

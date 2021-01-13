@@ -37,10 +37,11 @@ app.factory('scholarApiService', ['$http', '$cookies', '$rootScope', '$q', funct
         }
       });
     },
-    getAddedScholars: function(){
+    getNewScholars: function(searched){
       return $http({
-        method:'GET',
-        url: baseUrl+'api/getAddedScholars',
+        method:'POST',
+        url: baseUrl+'api/getNewScholars',
+        data: searched,
         headers: {
           "Content-Type": "application/json",
           Authorization : 'Bearer '+ $rootScope.token

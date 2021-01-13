@@ -87,27 +87,11 @@
                 <input type="text" ng-model="ac.fullname">
               </md-input-container>
               <md-subheader class="md-no-sticky">Udergraduate list</md-subheader>
-              <md-list-item class="md-2-line">
+              <md-list-item class="md-2-line" ng-repeat="scholar in ac.scholars">
                 <img src="images/user-2.jpg" class="md-avatar" alt="" />
                 <div class="md-list-item-text" style="max-width: 210px;">
-                  <h5 style="margin: 0px;">Dane Vincent Painaga</h5>
-                  <p style="font-size: 13px;">University of Antique -Main Campus</p>
-                </div>
-                <md-icon class="material-icons" >more_horiz</md-icon>
-              </md-list-item>
-              <md-list-item class="md-2-line">
-                <img src="images/user-2.jpg" class="md-avatar" alt="{{todos[0].who}}" />
-                <div class="md-list-item-text" style="max-width: 210px;">
-                  <h5 style="margin: 0px;">Dane Vincent Painaga</h5>
-                  <p style="font-size: 13px;">University of Antique -TLMC</p>
-                </div>
-                <md-icon class="material-icons">more_horiz</md-icon>
-              </md-list-item>
-              <md-list-item class="md-2-line">
-                <img src="images/user-2.jpg" class="md-avatar" alt="{{todos[0].who}}" />
-                <div class="md-list-item-text" style="max-width: 210px;">
-                  <h5 style="margin: 0px;">Dane Vincent Painaga</h5>
-                  <p style="font-size: 13px;">Saitn Anthony's College</p>
+                  <h5 style="margin: 0px;">{{scholar.lastname}},&nbsp;{{scholar.firstname}}&nbsp;{{scholar.middlename}}.</h5>
+                  <p style="font-size: 13px;">{{ scholar.school.school_name }}</p>
                 </div>
                 <md-icon class="material-icons" >more_horiz</md-icon>
               </md-list-item>
@@ -124,6 +108,10 @@
                 <md-card-header-text>
                   <span class="md-title">Details</span>
                   <span class="md-subhead">Udergraduate</span>
+                </md-card-header-text>
+                <md-card-header-text style="text-align: right;">
+                  <span class="md-subhead">{{ ac.academic_year }}</span>
+                  <span class="md-subhead">{{ ac.semester }}</span>
                 </md-card-header-text>
               </md-card-header>
               
@@ -171,11 +159,11 @@
                   </div>
                   <md-input-container flex="20">
                     <label>Date of Birth</label>
-                    <input type="date" ng-model="ac.date_of_birth" />
+                    <input type="date" ng-model="ac.date_of_birth" ng-change="ac.selectedDateOfBirth(ac.date_of_birth)"/>
                   </md-input-container>
                   <md-input-container flex="10">
                     <label>Age</label>
-                    <textarea ng-model="ac.age"></textarea>
+                    <textarea ng-model="ac.displayedAge" disabled></textarea>
                   </md-input-container>
                   <md-input-container flex="20">
                     <label>Gender</label>

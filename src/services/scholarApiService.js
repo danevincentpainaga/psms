@@ -37,5 +37,15 @@ app.factory('scholarApiService', ['$http', '$cookies', '$rootScope', '$q', funct
         }
       });
     },
+    getAddedScholars: function(){
+      return $http({
+        method:'GET',
+        url: baseUrl+'api/getAddedScholars',
+        headers: {
+          "Content-Type": "application/json",
+          Authorization : 'Bearer '+ $rootScope.token
+        }
+      });
+    },
 	}
 }]);

@@ -12,4 +12,4 @@ import 'angular-sanitize/angular-sanitize.min.js';
 import 'angular-touch/angular-touch.min.js';
 import 'angular-resource/angular-resource.min.js';
 import 'angular-resource/angular-resource.min.js';
-import 'angular-material-data-table/dist/md-data-table.min.js'
+import 'angular-material-data-table/dist/md-data-table.min.js';

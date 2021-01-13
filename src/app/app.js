@@ -59,6 +59,15 @@ angular
           controllerAs: 'ac'
         }
       },
+      resolve:{
+        academicContractDetails: function(academicContractService){
+          return academicContractService.getAcademicContractDetails().then(response => {
+            return response.data[0]; 
+          }, err=> {
+            return err;
+          });
+        }
+      },
       Authenticated: true,
     })
     .state('masteral_doctorate.add_masteral_doctorate_scholars', {
@@ -131,16 +140,17 @@ angular
 }]);
 
 
-
 require('angular-material');
 require('angular-animate');
 require('angular-aria');
 
+require('../factories/momentFactory.js');
 require('../services/loginApiService.js');
 require('../services/provinceApiService.js');
 require('../services/schoolApiService.js');
 require('../services/addressApiService.js');
 require('../services/scholarApiService.js');
+require('../services/academicContractService.js');
 
 require('../controllers/mainCtrl.js');
 require('../controllers/loginCtrl.js');

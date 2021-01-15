@@ -1,5 +1,5 @@
 <div>
-  <md-toolbar class="md-menu-toolbar" style="border-bottom: 1px solid #c7c7c7;">
+  <md-toolbar class="md-menu-toolbar" style="border-bottom: 1px solid #c7c7c7;box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);">
     <div layout="row">
       <md-toolbar-filler style="display: flex;">
         <md-icon class="material-icons">view_list</md-icon>
@@ -74,73 +74,52 @@
   </md-toolbar>
         <div layout="row" layout-xs="column" layout-wrap="" style="background-color: #fff; border-right: 1px solid #c7c7c7;">
           <div flex>
-            <div layout="row" layout-wrap="" layout-xs="column" style="background-color: #fff; border-right: 1px solid #c7c7c7;">         
-
+            <div layout="row" layout-wrap="" layout-xs="column" style="background-color: #fff; border-right: 1px solid #c7c7c7;overflow: auto;">         
               <div class="demo-md-panel-content">
                 <md-table-container>
-                  <table md-table md-row-select multiple ng-model="selected" md-progress="promise">
-                    <thead md-head md-order="query.order" md-on-reorder="getDesserts">
+                  <table md-table>
+                    <thead md-head md-order="myOrder" style="background: #dddddd;box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);">
                       <tr md-row>
-                        <th md-column md-numeric style="background-color: #dddddd;width: 58px;"><span>No.</span></th>
-                        <th md-column md-order-by="nameToLower"><span>Lastname</span></th>
-                        <th md-column md-numeric ><span>Firstname</span></th>
-                        <th md-column md-numeric>Middlename</th>
+                        <th md-column md-numeric style="background-color: #dddddd;min-width: 50px;"><span>No.</span></th>
+                        <th md-column md-numeric>
+                          <input type="text" ng-model="ac.scholar_lastname" style="width: 75%;height: 18px;outline: none;" placeholder="Name">
+<!--                           <md-input-container style="width: 100%;margin: 25px 0px 0px 0px;height: 40px;">
+                            <label>Search</label>
+                            <input type="text" ng-model="ac.scholar_lastname" style="text-transform: uppercase;">
+                          </md-input-container> -->
+                        </th>
+                        <th md-column md-numeric>Date of Birth</th>
                         <th md-column md-numeric>Age</th>
-                        <th md-column md-numeric>Municipality</th>
-                        <th md-column md-numeric>Barangay</th>
-                        <th md-column md-numeric>Province</th>
+                        <th md-column md-numeric>Gender</th>
+                        <th md-column md-numeric >Address</th>
                         <th md-column md-numeric>School</th>
                         <th md-column md-numeric>Student ID NO.</th>
                         <th md-column md-numeric>Mother</th>
                         <th md-column md-numeric>Father</th>
-                        <th md-column md-numeric>IP.</th>
+                        <th md-column md-numeric>Status</th>
+                        <th md-column md-numeric>scholar_asc_id</th>
+                        <th md-column md-numeric style="min-width: 55px;">IP.</th>
+                        <th md-column md-numeric>Date Created</th>
+                        <th md-column md-numeric>Date Updated</th>
                       </tr>
                     </thead>
                     <tbody md-body>
-                      <tr md-row md-select="dessert" md-select-id="name" md-auto-select >
-                        <td md-cell style="background-color: #dddddd;">1</td>
-                        <td md-cell>Painaga</td>
-                        <td md-cell>Dane Vincent</td>
-                        <td md-cell>Otayde</td>
-                        <td md-cell>29</td>
-                        <td md-cell>Belison</td>
-                        <td md-cell>Borocboroc</td>
-                        <td md-cell>Antique</td>
-                        <td md-cell>University of Antique -Main Campus</td>
-                        <td md-cell>IT-2014-A</td>
-                        <td md-cell>Yolinda Painaga</td>
-                        <td md-cell>Manuelo Painaga</td>
-                        <td md-cell>No</td>
-                      </tr>
-                      <tr md-row md-select="dessert" md-select-id="name" md-auto-select >
-                        <td md-cell style="background-color: #dddddd;">2</td>
-                        <td md-cell>Painaga</td>
-                        <td md-cell>Dane Vincent</td>
-                        <td md-cell>Otayde</td>
-                        <td md-cell>29</td>
-                        <td md-cell>Belison</td>
-                        <td md-cell>Borocboroc</td>
-                        <td md-cell>Antique</td>
-                        <td md-cell>University of Antique -Main Campus</td>
-                        <td md-cell>IT-2014-A</td>
-                        <td md-cell>Yolinda Painaga</td>
-                        <td md-cell>Manuelo Painaga</td>
-                        <td md-cell>No</td>
-                      </tr>
-                      <tr md-row md-select="dessert" md-select-id="name" md-auto-select >
-                        <td md-cell style="background-color: #dddddd;">3</td>
-                        <td md-cell>Painaga</td>
-                        <td md-cell>Dane Vincent</td>
-                        <td md-cell>Otayde</td>
-                        <td md-cell>29</td>
-                        <td md-cell>Belison</td>
-                        <td md-cell>Borocboroc</td>
-                        <td md-cell>Antique</td>
-                        <td md-cell>University of Antique -Main Campus</td>
-                        <td md-cell>IT-2014-A</td>
-                        <td md-cell>Yolinda Painaga</td>
-                        <td md-cell>Manuelo Painaga</td>
-                        <td md-cell>No</td>
+                      <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="scholar in uc.scholars | orderBy: myOrder track by $index">
+                        <td md-cell style="background-color: #f6c08e;">{{ $index+1 }}</td>
+                        <td md-cell>{{ scholar.lastname }}, {{ scholar.firstname }} {{ scholar.middlename }}</td>
+                        <td md-cell>{{ scholar.date_of_birth }}</td>
+                        <td md-cell>{{ scholar.age }}</td>
+                        <td md-cell><span>{{ scholar.gender }}</span></td>
+                        <td md-cell>{{ scholar.addressId }}</td>
+                        <td md-cell>{{ scholar.school.school_name }}</td>
+                        <td md-cell>{{ scholar.student_id_number }}</td>
+                        <td md-cell>{{ scholar.motherId }}</td>
+                        <td md-cell>{{ scholar.fatherId }}</td>
+                        <td md-cell><span style="background: #47cd47;padding: 2px 8px;border-radius: 5px; color: #ffff;">{{ scholar.scholar_status }}</span></td>
+                        <td md-cell>{{ scholar.scholar_asc_id }}</td>
+                        <td md-cell>{{ scholar.IP }}</td>
+                        <td md-cell>{{ scholar.created_at }}</td>
+                        <td md-cell>{{ scholar.updated_at }}</td>
                       </tr>
                       <tfoot md-foot>
                           <tr md-row>

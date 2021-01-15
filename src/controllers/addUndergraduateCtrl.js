@@ -9,13 +9,17 @@
  */ 
 
 var app = angular.module('psmsApp');
-app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$window', '$location', '$timeout', 'schoolApiService', 'addressApiService', 'scholarApiService', 'academicContractDetails', 'debounce', 'moment',
-  function ($scope, $rootScope, $cookies, $window, $location, $timeout, schoolApiService, addressApiService, scholarApiService, academicContractDetails, debounce, moment) {
+app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$window', '$location', '$timeout', 'schoolApiService', 'addressApiService', 'scholarApiService', 'academicContractDetails', 'debounce', 'moment', 'swalert',
+  function ($scope, $rootScope, $cookies, $window, $location, $timeout, schoolApiService, addressApiService, scholarApiService, academicContractDetails, debounce, moment, swalert) {
 
   var ac = this;
   ac.list_of_schools = [];
   ac.semester = academicContractDetails.semester.semester;
   ac.academic_year = academicContractDetails.academic_year;
+
+  ac.clear = function(){
+    clearInputs();
+  }  
 
   ac.saveScholar = function(){
     ac.degree = "Undergraduate";
@@ -29,12 +33,15 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
       age: ac.age,
       gender: ac.gender,
       schoolId: ac.schoolId,
+      course_section: ac.course_section.toUpperCase(),
+      year_level: ac.year_level.toUpperCase(),
       student_id_number: ac.student_id_number,
       IP: ac.IP,
       fatherId: ac.fatherId,
       motherId: ac.motherId,
       degree: ac.degree,
       scholar_status: 'NEW',
+      contract_status: 'Approved',
       scholar_asc_id: academicContractDetails.asc_id,
       father:{ f_firstname: ac.f_firstname.toUpperCase(), f_lastname: ac.search_flastname.toUpperCase(), f_middlename: ac.f_middlename.toUpperCase() },
       mother:{ m_firstname: ac.m_firstname.toUpperCase(), m_lastname: ac.search_mlastname.toUpperCase(), m_middlename: ac.m_middlename.toUpperCase() },
@@ -42,7 +49,7 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
 
     console.log(scholar_details);
     saveScholar(scholar_details);
-
+    // swalert.toastSuccess("User successfully saved!", "success", 2000);
   }
 
   ac.selectedFatherDetailsChange = function(fdetails){
@@ -164,6 +171,8 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
   function saveScholar(scholarDetails){
      scholarApiService.saveScholar(scholarDetails).then(response => {
       console.log(response.data);
+      clearInputs();
+      swalert.successAlert("User successfully saved!");
     }, err => {
       console.log(err);
     });
@@ -182,6 +191,31 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
   $scope.$watch('ac.scholar_lastname', debounce(function() {
     getNewScholars({ searched: ac.scholar_lastname });
   }, 500), true);
+
+  function clearInputs(){
+    ac.firstname = "";
+    ac.lastname = "";
+    ac.middlename = "";
+    ac.addressId = "";
+    ac.address = "";
+    ac.school = "";
+    ac.date_of_birth = "";
+    ac.age = "";
+    ac.gender = "";
+    ac.schoolId = "";
+    ac.course_section = "";
+    ac.year_level = "";
+    ac.student_id_number = "";
+    ac.IP = "";
+    ac.fatherId = "";
+    ac.motherId = "";
+    ac.search_flastname = "";
+    ac.f_firstname = "";
+    ac.f_middlename = "";
+    ac.search_mlastname = "";
+    ac.m_firstname = "";
+    ac.m_middlename = "";
+  }
 
 }]);
 

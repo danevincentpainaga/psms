@@ -31,8 +31,11 @@ angular
         },
         'undergraduate-view@undergraduate':{
           templateUrl: 'src/views/undergraduate_list.html',
+          controller: 'undergraduateCtrl',
+          controllerAs: 'uc'
         }
       },
+
       Authenticated: true,
     })
     .state('masteral_doctorate', {
@@ -139,11 +142,11 @@ angular
 
 }]);
 
-
 require('angular-material');
 require('angular-animate');
 require('angular-aria');
 
+require('../services/alertDialog.js');
 require('../factories/momentFactory.js');
 require('../services/loginApiService.js');
 require('../services/provinceApiService.js');
@@ -155,3 +158,4 @@ require('../services/academicContractService.js');
 require('../controllers/mainCtrl.js');
 require('../controllers/loginCtrl.js');
 require('../controllers/addUndergraduateCtrl.js');
+require('../controllers/undergraduateCtrl.js');

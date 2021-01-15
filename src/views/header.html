@@ -1,6 +1,6 @@
 <md-toolbar class="md-hue-2" class="padded" md-whiteframe="1" style="position: sticky; top: 0px;">
   <div class="md-toolbar-tools" ng-if="logged_in">
-    <md-button class="md-icon-button" aria-label="Settings" ng-click="toggleSidenav()">
+    <md-button class="md-icon-button" aria-label="Settings" ng-click="toggleSidenav()" ng-hide="isOpenRight()">
       <md-icon class="material-icons">menu</md-icon>
     </md-button>
 
@@ -30,7 +30,7 @@
   </div>
 </md-toolbar>
 
-<md-sidenav class="md-sidenav-left" md-component-id="closeEventsDisabled" md-whiteframe="4" md-disable-close-events style="max-width: 270px;position:fixed;">
+<md-sidenav class="md-sidenav-left" md-component-id="left" md-whiteframe="4" style="max-width: 270px;position:fixed;">
 
   <md-toolbar class="md-theme-indigo">
     <div class="md-toolbar-tools">

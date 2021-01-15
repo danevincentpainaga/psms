@@ -41,7 +41,7 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
       motherId: ac.motherId,
       degree: ac.degree,
       scholar_status: 'NEW',
-      contract_status: 'Approved',
+      contract_status: 'Pre-Approved',
       scholar_asc_id: academicContractDetails.asc_id,
       father:{ f_firstname: ac.f_firstname.toUpperCase(), f_lastname: ac.search_flastname.toUpperCase(), f_middlename: ac.f_middlename.toUpperCase() },
       mother:{ m_firstname: ac.m_firstname.toUpperCase(), m_lastname: ac.search_mlastname.toUpperCase(), m_middlename: ac.m_middlename.toUpperCase() },
@@ -183,12 +183,14 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
      scholarApiService.getNewScholars(searched).then(response => {
       console.log(response.data);
       ac.scholars = response.data;
+      ac.scholars_loaded = true;
     }, err => {
       console.log(err);
     });    
   }
 
   $scope.$watch('ac.scholar_lastname', debounce(function() {
+    ac.scholars_loaded = false;
     getNewScholars({ searched: ac.scholar_lastname });
   }, 500), true);
 

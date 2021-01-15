@@ -84,7 +84,7 @@
 
   <div layout="column" style="height: 90%;">
     <section layout="row" flex layout-xs="column">
-      <div layout="row" layout-xs="column" style="background-color: #fff; border-right: 1px solid #c7c7c7;">
+      <div layout="row" layout-xs="column" style="background-color: #fff; border-right: 1px solid #c7c7c7;min-width: 355px;">
         <md-content flex layout-padding style="height: 100%;background-color: #fff; padding: 0px;;">
           <md-list flex>
             <md-input-container style="width: 100%;margin: 25px 0px 0px 0px;height: 40px;">
@@ -93,7 +93,10 @@
             </md-input-container>
             <md-subheader class="md-no-sticky">Udergraduate list</md-subheader>
             <div style="height: 355px; overflow-y: auto;">
-              <md-list-item class="md-2-line" ng-repeat="scholar in ac.scholars">
+            <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top: 10px;" ng-if="!ac.scholars_loaded">
+              <md-progress-circular md-diameter="25px"></md-progress-circular>
+            </div>
+              <md-list-item class="md-2-line" ng-repeat="scholar in ac.scholars" ng-if="ac.scholars_loaded">
                 <img src="images/user-2.jpg" class="md-avatar" alt="" />
                 <div class="md-list-item-text" style="max-width: 210px;">
                   <h5 style="margin: 0px;">{{scholar.lastname}},&nbsp;{{scholar.firstname}}&nbsp;{{scholar.middlename}}.</h5>
@@ -103,7 +106,7 @@
               </md-list-item>
             </div>
           </md-list>
-        </md-content>    
+        </md-content>
       </div>
       <div flex="" layout-padding style="background: #efefef;max-height: 495px; overflow-y: auto;border-top: 1px solid #c7c7c7;">
         <md-card style="margin: 0px;">

@@ -48,5 +48,16 @@ app.factory('scholarApiService', ['$http', '$cookies', '$rootScope', '$q', funct
         }
       });
     },
+    getScholars: function(searched_details){
+      return $http({
+        method:'POST',
+        url: baseUrl+'api/getScholars',
+        data: searched_details,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization : 'Bearer '+ $rootScope.token
+        }
+      });
+    },
 	}
 }]);

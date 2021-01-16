@@ -112,7 +112,7 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
   }
 
   ac.schoolSearchQuery = function(searched){
-    return getSchools(searched);
+    return getSearchedSchool(searched);
   }
 
   ac.addressSearchQuery = function(searched){
@@ -128,8 +128,8 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
   }
 
 
-  function getSchools(searched){
-    return schoolApiService.getSchools(searched).then(response=>{
+  function getSearchedSchool(searched){
+    return schoolApiService.getSearchedSchool(searched).then(response=>{
       return response.data;
     }, err => {
       console.log(err);

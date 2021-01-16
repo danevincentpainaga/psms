@@ -1,0 +1,33 @@
+<md-dialog aria-label="List dialog" style="width: 30%;padding: 25px;">
+  <md-dialog-content>
+    <div layout="column" style="padding: 20px;">
+      <md-input-container>
+        <label>School name</label>
+        <input type="text" ng-model="as.school_name">
+      </md-input-container>
+      <md-autocomplete
+          ng-disabled="as.isDisabled"
+          md-no-cache="as.noCache"
+          md-selected-item="as.selectedProvince"
+          md-search-text-change="as.searchTextChange(searched_province)"
+          md-search-text="as.searched_province"
+          md-selected-item-change="as.selectedProvinceChange(province)"
+          md-items="province in as.queryProvince(as.searched_province)"
+          md-item-text="province.province_name"
+          md-escape-options="clear"
+          md-min-length="0"
+          placeholder="Search province name">
+        <md-item-template>
+          <span md-highlight-text="as.searched_province" md-highlight-flags="^i">{{province.province_name}}</span>
+        </md-item-template>
+        <md-not-found>
+          No states matching "{{as.searched_province}}" were found.
+        </md-not-found>
+      </md-autocomplete>
+    </div>
+  </md-dialog-content>
+  <md-dialog-actions>
+    <md-button ng-click="closeDialog()" class="md-primary">Close Dialog</md-button>
+    <md-button ng-click="as.save('testing')" class="md-primary">Save</md-button>
+  </md-dialog-actions>
+</md-dialog>

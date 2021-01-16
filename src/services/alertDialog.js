@@ -2,14 +2,14 @@ var Swal = require('sweetalert2');
 angular.module('psmsApp')
   .factory('swalert', ['$http', function($http){
     return{
-      toastSuccess: function(message, nofitificationType, timeExpire){
+      toastInfo: function(message, nofitificationType, position, timeExpire){
         let time;
         timeExpire != undefined ? time = timeExpire : time = false;
         const Toast = Swal.mixin({
           toast: true,
-          position: 'top-end',
+          position: position,
           showConfirmButton: false,
-          timer: time
+          timer: timeExpire
         });
 
         Toast.fire({

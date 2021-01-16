@@ -119,7 +119,7 @@
                     </thead>
                     <tbody md-body >
                       <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="scholar in uc.scholars | orderBy: myOrder track by $index">
-                        <td md-cell style="background-color: #f6c08e;">{{ $index+1 }}</td>
+                        <td md-cell style="background-color: #f6c08e;">{{ $index+1 }}.</td>
                         <td md-cell>
                           <img ng-src="images/avatarmale.svg" style="max-width:27px;">
                           {{ scholar.lastname }}, {{ scholar.firstname }} {{ scholar.middlename }}

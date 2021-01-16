@@ -97,7 +97,13 @@ angular
       },
       Authenticated: true,
     })
-
+    .state('schools', {
+      url: '/schools',
+      templateUrl: 'src/views/schools.html',
+      controller: 'schoolsCtrl',
+      controllerAs: 'sc',
+      Authenticated: true,
+    })
 
   $urlRouterProvider.otherwise('/');
 
@@ -115,12 +121,13 @@ angular
 
     if (transition.to().Authenticated) {
         if (!loginApiService.AuthenticatedUser()) {
-            $rootScope.logged_in = false;
+            $rootScope.authenticated = false;
             $state.go('base');
         }
         else{
-          $rootScope.logged_in = true;
+          $rootScope.authenticated = true;
           $rootScope.token = auth.success;
+          $rootScope.logging_in = false;
         }
     }
 
@@ -159,3 +166,6 @@ require('../controllers/mainCtrl.js');
 require('../controllers/loginCtrl.js');
 require('../controllers/addUndergraduateCtrl.js');
 require('../controllers/undergraduateCtrl.js');
+require('../controllers/schoolsCtrl.js');
+require('../controllers/addSchoolCtrl.js');
+

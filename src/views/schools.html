@@ -15,7 +15,7 @@
       <div flex="20"></div>
       <div flex="">
           <br />
-          <md-content flex layout-padding style="height: 100%;background-color: #fff; padding: 0px;">
+          <md-content flex layout-padding style="height: 100%;background-color: #fff; padding: 0px;" ng-if="!sc.editing_state">
               <md-list class="fixedRows">
                   <div>
                 <md-input-container style="width: 40%;margin: 25px 0px 0px 0px;height: 40px;">
@@ -23,7 +23,7 @@
                   <input type="text" ng-model="sc.searched_school" style="text-transform: uppercase;" autocomplete="off">
                   <md-progress-circular class="md-hue-2" md-diameter="15px" style="position: absolute;right: 0px;top: 10px;" ng-if="!sc.school_list_loaded"></md-progress-circular>
                 </md-input-container>
-                <md-button class="md-fab md-mini md-primary" ng-click="sc.showDialog($event)" style="float: right;">
+                <md-button class="md-fab md-mini md-primary" ng-click="sc.showDialog($event)" ng-if="sc.disable_linear_loader" style="float: right;">
                   <md-icon class="material-icons">add</md-icon>
                 </md-button>
                   </div>
@@ -35,13 +35,33 @@
                         <h5 style="margin: 0px;">{{school.school_name}}</h5>
                         <p style="font-size: 12px;">{{ school.province.province_name }}</p>
                       </div>
-                      <md-icon class="material-icons" >more_horiz</md-icon>
+                      <md-menu>
+                        <md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdMenu.open($event)" style="padding: 0px;margin: 0;">
+                          <md-icon class="material-icons" >more_horiz</md-icon>
+                        </md-button>
+                        <md-menu-content width="3">
+                          <md-menu-item>
+                            <md-button ng-click="sc.edit(school)">
+                              <md-icon class="material-icons">edit</md-icon>
+                              Edit
+                            </md-button>
+                          </md-menu-item>
+                          <md-menu-item>
+                            <md-button ng-click="ctrl.redial($event)">
+                              <md-icon class="material-icons">delete_outline</md-icon>
+                              Delete
+                            </md-button>
+                          </md-menu-item>
+                        </md-menu-content>
+                      </md-menu>
                     </md-list-item>
                   </div>
               </md-list>
           </md-content>
+          <add-school-directive schooldetails="sc.school_to_update" ng-if="sc.editing_state" editing="sc.editing_state"></add-school-directive>
       </div>
       <div flex="20"></div>
     </div>
   </div>
 </div>
+

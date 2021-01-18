@@ -14,6 +14,14 @@ app.controller('schoolsCtrl',['$scope', '$rootScope', '$cookies', '$window', '$l
 
   var sc = this;
 
+  $scope.$on('successful_update_emit_from_updateSchoolCtrl', function(){
+    getListOfSchool();
+  });
+
+  $rootScope.$on('successful_add_emit_from_addSchoolCtrl', function(){
+    getListOfSchool();
+  });
+
   function getListOfSchool(searched){
      schoolApiService.getListOfSchool(searched).then(response => {
       sc.disable_linear_loader = true;
@@ -36,8 +44,6 @@ app.controller('schoolsCtrl',['$scope', '$rootScope', '$cookies', '$window', '$l
 
   }, 500), true);
 
-
-
   sc.showDialog = function (ev) {
     $mdDialog.show({
       controller: 'addSchoolCtrl',
@@ -56,7 +62,10 @@ app.controller('schoolsCtrl',['$scope', '$rootScope', '$cookies', '$window', '$l
   };
 
 
-
+  sc.edit = function(school_data){
+    sc.editing_state = true;
+    sc.school_to_update = { school_id: school_data.school_id, school_name: school_data.school_name, s_province_id: school_data.s_province_id };
+  }
 
 }]);
 

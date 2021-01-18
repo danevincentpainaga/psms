@@ -9,40 +9,59 @@
  */ 
 
 var app = angular.module('psmsApp');
-app.controller('addSchoolCtrl', ['$scope', '$mdDialog', 'provinceApiService',
-  function ($scope, $mdDialog, provinceApiService) {
+app.controller('addSchoolCtrl', ['$scope', '$rootScope', '$mdDialog', 'provinceApiService', 'schoolApiService', 'swalert',
+  function ($scope, $rootScope, $mdDialog, provinceApiService, schoolApiService, swalert) {
 
   var as = this;
 
-  as.addNewSchool =function(){
-  
+  as.cancelEditing = function(){
+    $scope.editing = false;
   }
 
-  as.hide = function () {
-    $mdDialog.hide();
-  };
-
-  as.cancel = function () {
+  as.closeDialog = function () {
     $mdDialog.cancel();
   };
 
   as.save = function (answer) {
-    $mdDialog.hide(answer);
+    if (as.school_name && as.province_id) {
+      as.saving = true;
+      let new_school_name = { school_name: as.school_name.toUpperCase(), s_province_id: as.province_id };
+      saveSchoolDetails(new_school_name);
+    }
+
   };
 
-  as.queryProvince = function(searchedText){
-    console.log(searchedText);
-    return getProvinces(searchedText);
+  as.selectedProvinceChange = function(){
+    as.province_id = as.selected_province.province_id;
   }
 
-  function getProvinces(searchedText){
-    let searched = { searched_province: searchedText };
-    return provinceApiService.getProvinces(searched).then(response => {
+  function getProvinces(){
+    provinceApiService.getProvinces().then(response => {
       console.log(response.data);
-      return response.data;
+      as.provinces = response.data;
+      as.provinces_loaded = true;
     }, err => {
       console.log(err);
     });
   }
+
+  function saveSchoolDetails(details){
+    schoolApiService.saveSchoolDetails(details).then(response => {
+      console.log(response.data);
+      clearInputs();
+      swalert.successAlert("Successful!");
+      $rootScope.$emit('successful_add_emit_from_addSchoolCtrl');
+    }, err => {
+      console.log(err);
+    });
+  }
+
+  function clearInputs(){
+    as.school_name ="";
+    as.selected_province = "";
+  }
+
+  getProvinces();
+
 
 }]);

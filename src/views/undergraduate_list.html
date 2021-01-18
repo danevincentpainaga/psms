@@ -56,13 +56,13 @@
             <md-menu-content>
               <md-menu-item class="md-indent">
                 <md-icon class="material-icons">person_add</md-icon>
-                <md-button ng-click="ctrl.sampleAction('redo', $event)">
+                <md-button ng-click="uc.exportMasterlist()">
                   Masterlist
                 </md-button>
               </md-menu-item>
               <md-menu-item class="md-indent">
                 <md-icon class="material-icons">speaker_notes</md-icon>
-                <md-button ng-click="ctrl.sampleAction('redo', $event)">
+                <md-button ng-click="uc.exportNormal()">
                   Normal
                 </md-button>
               </md-menu-item>
@@ -72,7 +72,7 @@
       </div>
     </div>
   </md-toolbar>
-        <div id="cover-spin" ng-if="!uc.hide_spinner" ></div>
+        <!-- <div id="cover-spin" ng-if="!uc.hide_spinner" ></div> -->
         <md-progress-linear md-mode="indeterminate" ng-if="!uc.scholars_loaded"></md-progress-linear>
         <div layout="row" layout-xs="column" layout-wrap="" style="background-color: #fff; border-right: 1px solid #c7c7c7;">
           <div flex>

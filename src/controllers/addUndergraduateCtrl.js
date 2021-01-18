@@ -49,7 +49,6 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
 
     console.log(scholar_details);
     saveScholar(scholar_details);
-    // swalert.toastSuccess("User successfully saved!", "success", 2000);
   }
 
   ac.selectedFatherDetailsChange = function(fdetails){
@@ -127,7 +126,6 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
     return getFatherList(searched);
   }
 
-
   function getSearchedSchool(searched){
     return schoolApiService.getSearchedSchool(searched).then(response=>{
       return response.data;
@@ -177,7 +175,6 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
       console.log(err);
     });
   }
-
 
   function getNewScholars(searched){
      scholarApiService.getNewScholars(searched).then(response => {

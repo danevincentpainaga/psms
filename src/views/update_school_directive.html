@@ -1,0 +1,34 @@
+<div layout="row">
+  <div flex="25"></div>
+  <div flex>
+    <div layout="column" style="padding: 1px; min-height: 270px;margin: 20px 0px;background: #fff;margin-top: 3em;border: 1px solid #e2d2d2;box-shadow: 1px 0 5px rgba(0,0,0,.1);position: relative;">
+      <div style="display: flex; align-items: center;justify-content: center; height: 50px;background: #3f51b5;align-items: center; color: #ffff;">
+        Update
+      </div>
+        <div style="display: flex;justify-content: center;align-items: center;height: 100%;position: absolute;width: 100%;" ng-if="!up.provinces_loaded">
+          <md-progress-circular md-diameter="25px"></md-progress-circular>
+        </div>
+        <div ng-if="up.provinces_loaded">
+          <div layout="column" style="padding: 20px 27px 20px 17px; " >
+            <md-input-container>
+              <md-icon class="material-icons">roofing</md-icon>
+              <label>School name</label>
+              <input type="text" ng-model="up.school_name" required>
+            </md-input-container>
+            <md-input-container>
+              <md-icon class="material-icons">place</md-icon>
+              <label>Items</label>
+              <md-select ng-model="up.selected_province" ng-change="up.selectedProvinceChange()" required>
+                <md-option ng-repeat="province in up.provinces" ng-value="province" >{{ province.province_name }}</md-option>
+              </md-select>
+            </md-input-container>
+          </div>
+          <div style="display: flex; justify-content: center;margin-top: 3em;">
+            <md-button class="md-raised md-primary" style="min-width: 45%;" ng-click="up.update()" ng-disabled="up.updating">Update</md-button>
+            <md-button class="md-raised" style="min-width: 45%;" ng-click="up.cancelEditing()">Cancel</md-button>
+          </div>
+        </div>
+        </div>
+  </div>
+  <div flex="25"></div>
+</div>

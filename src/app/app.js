@@ -153,6 +153,9 @@ require('angular-material');
 require('angular-animate');
 require('angular-aria');
 
+require('../directives/addSchoolDirective.js');
+
+
 require('../services/alertDialog.js');
 require('../factories/momentFactory.js');
 require('../services/loginApiService.js');
@@ -168,4 +171,5 @@ require('../controllers/addUndergraduateCtrl.js');
 require('../controllers/undergraduateCtrl.js');
 require('../controllers/schoolsCtrl.js');
 require('../controllers/addSchoolCtrl.js');
+require('../controllers/updateSchoolCtrl.js');
 

@@ -26,6 +26,28 @@ app.factory('schoolApiService', ['$http', '$cookies', '$rootScope', '$q', functi
         }
       });
     },
+    saveSchoolDetails: function(details){
+      return $http({
+        method:'POST',
+        url: baseUrl+'api/saveSchoolDetails',
+        data: details,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization : 'Bearer '+ $rootScope.token
+        }
+      });
+    },
+    updateSchoolDetails: function(details){
+      return $http({
+        method:'POST',
+        url: baseUrl+'api/updateSchoolDetails',
+        data: details,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization : 'Bearer '+ $rootScope.token
+        }
+      });
+    },
 
 	}
 }]);

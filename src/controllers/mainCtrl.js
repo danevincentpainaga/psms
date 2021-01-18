@@ -11,7 +11,8 @@ app.controller('mainCtrl',['$scope', '$rootScope', '$mdSidenav', '$mdDialog', fu
 
     $scope.toggleSidenav = buildToggler('left');
 
-    $scope.toppings = [{name:'Admin'},{name:'User'}]
+
+    $scope.toppings = [{name:'Admin'},{name:'User'}];
 
     function buildToggler(componentId) {
       return function() {
@@ -33,8 +34,8 @@ app.directive('addDobSlashes', function() {
         isDelete = e.keyCode === 8; // if we hit delete
       });
       // store regex patterns
-      var mmRegEx = /^(0?[23456789]|01|10|12)$/;
-      var mmDDRegEx = /^(0?[23456789]|01|10|12|1)[\/.](0[1-9]|[12][0-9]|3[01])$/;
+      var mmRegEx = /^(0?[23456789]|01|10|12|11)$/;
+      var mmDDRegEx = /^(0?[23456789]|01|10|12|1|11)[\/.](0[1-9]|[12][0-9]|3[01])$/;
 
       function inputValue(val) {
         if (isDelete) {

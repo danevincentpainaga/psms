@@ -110,6 +110,7 @@
                         <th md-column md-numeric>Mother</th>
                         <th md-column md-numeric>School</th>
                         <th md-column md-numeric>Student ID NO.</th>
+                        <th md-column md-numeric>Year level</th>
                         <th md-column md-numeric>Semester</th>
                         <th md-column md-numeric>Academic year</th>
                         <th md-column md-numeric style="min-width: 55px;">IP.</th>
@@ -140,6 +141,7 @@
                         <td md-cell>{{ scholar.mother.m_firstname }} {{ scholar.mother.m_lastname }}, {{ scholar.mother.m_middlename }}</td>
                         <td md-cell>{{ scholar.school.school_name }}</td>
                         <td md-cell>{{ scholar.student_id_number }}</td>
+                        <td md-cell>{{ scholar.year_level }}</td>
                         <td md-cell>{{ scholar.academicyear_semester_contract.semester }}</td>
                         <td md-cell>{{ scholar.academicyear_semester_contract.academic_year }}</td>
                         <td md-cell>{{ scholar.IP }}</td>

@@ -9,18 +9,11 @@
       </div>
     </md-toolbar>
   <md-dialog-content>
-    <div layout="column" style="padding: 20px 27px 20px 17px; min-height: 270px;margin: 20px 0px;">
+    <div layout="column" style="padding: 10px 27px 20px 17px; min-height: 200px;margin: 20px 0px;">
         <md-input-container>
           <md-icon class="material-icons">roofing</md-icon>
           <label>School name</label>
           <input type="text" ng-model="as.school_name" required>
-        </md-input-container>
-        <md-input-container>
-          <md-icon class="material-icons">place</md-icon>
-          <label>Items</label>
-          <md-select ng-model="as.selected_province" ng-change="as.selectedProvinceChange()" required>
-            <md-option ng-repeat="province in as.provinces" ng-value="province" >{{ province.province_name }}</md-option>
-          </md-select>
         </md-input-container>
     </div>
   </md-dialog-content>

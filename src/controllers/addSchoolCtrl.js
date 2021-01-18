@@ -9,8 +9,8 @@
  */ 
 
 var app = angular.module('psmsApp');
-app.controller('addSchoolCtrl', ['$scope', '$rootScope', '$mdDialog', 'provinceApiService', 'schoolApiService', 'swalert',
-  function ($scope, $rootScope, $mdDialog, provinceApiService, schoolApiService, swalert) {
+app.controller('addSchoolCtrl', ['$scope', '$rootScope', '$mdDialog', 'schoolApiService', 'swalert',
+  function ($scope, $rootScope, $mdDialog, schoolApiService, swalert) {
 
   var as = this;
 
@@ -23,27 +23,12 @@ app.controller('addSchoolCtrl', ['$scope', '$rootScope', '$mdDialog', 'provinceA
   };
 
   as.save = function (answer) {
-    if (as.school_name && as.province_id) {
+    if (as.school_name) {
       as.saving = true;
-      let new_school_name = { school_name: as.school_name.toUpperCase(), s_province_id: as.province_id };
+      let new_school_name = { school_name: as.school_name.toUpperCase() };
       saveSchoolDetails(new_school_name);
     }
-
   };
-
-  as.selectedProvinceChange = function(){
-    as.province_id = as.selected_province.province_id;
-  }
-
-  function getProvinces(){
-    provinceApiService.getProvinces().then(response => {
-      console.log(response.data);
-      as.provinces = response.data;
-      as.provinces_loaded = true;
-    }, err => {
-      console.log(err);
-    });
-  }
 
   function saveSchoolDetails(details){
     schoolApiService.saveSchoolDetails(details).then(response => {
@@ -60,8 +45,5 @@ app.controller('addSchoolCtrl', ['$scope', '$rootScope', '$mdDialog', 'provinceA
     as.school_name ="";
     as.selected_province = "";
   }
-
-  getProvinces();
-
 
 }]);

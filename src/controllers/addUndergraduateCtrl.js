@@ -14,8 +14,6 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
 
   var ac = this;
   ac.list_of_schools = [];
-  ac.semester = academicContractDetails.semester.semester;
-  ac.academic_year = academicContractDetails.academic_year;
 
   ac.clear = function(){
     clearInputs();
@@ -34,7 +32,7 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
       gender: ac.gender,
       schoolId: ac.schoolId,
       course_section: ac.course_section.toUpperCase(),
-      year_level: ac.year_level.toUpperCase(),
+      year_level: ac.year_level,
       student_id_number: ac.student_id_number,
       IP: ac.IP,
       fatherId: ac.fatherId,
@@ -215,6 +213,20 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
     ac.m_firstname = "";
     ac.m_middlename = "";
   }
+
+  function hasSemester(){
+    if (academicContractDetails) {
+      ac.semester = academicContractDetails.semester.semester;
+      ac.academic_year = academicContractDetails.academic_year;
+      ac.has_semester = true;
+    }
+    else{
+      ac.has_semester = false;
+    }
+    console.log(academicContractDetails);
+  }
+
+  hasSemester();
 
 }]);
 

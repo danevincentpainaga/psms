@@ -65,9 +65,9 @@ angular
       resolve:{
         academicContractDetails: function(academicContractService){
           return academicContractService.getAcademicContractDetails().then(response => {
-            return response.data[0]; 
+            return response.data[0];
           }, err=> {
-            return err;
+            return false;
           });
         }
       },
@@ -159,7 +159,6 @@ require('../directives/addSchoolDirective.js');
 require('../services/alertDialog.js');
 require('../factories/momentFactory.js');
 require('../services/loginApiService.js');
-require('../services/provinceApiService.js');
 require('../services/schoolApiService.js');
 require('../services/addressApiService.js');
 require('../services/scholarApiService.js');

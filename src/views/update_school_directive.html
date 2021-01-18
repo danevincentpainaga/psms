@@ -5,22 +5,15 @@
       <div style="display: flex; align-items: center;justify-content: center; height: 50px;background: #3f51b5;align-items: center; color: #ffff;">
         Update
       </div>
-        <div style="display: flex;justify-content: center;align-items: center;height: 100%;position: absolute;width: 100%;" ng-if="!up.provinces_loaded">
+        <div style="display: flex;justify-content: center;align-items: center;height: 100%;position: absolute;width: 100%;" ng-if="!up.has_school_name">
           <md-progress-circular md-diameter="25px"></md-progress-circular>
         </div>
-        <div ng-if="up.provinces_loaded">
-          <div layout="column" style="padding: 20px 27px 20px 17px; " >
+        <div ng-if="up.has_school_name">
+          <div layout="column" style="padding: 25px 27px 15px 17px; " >
             <md-input-container>
               <md-icon class="material-icons">roofing</md-icon>
               <label>School name</label>
               <input type="text" ng-model="up.school_name" required>
-            </md-input-container>
-            <md-input-container>
-              <md-icon class="material-icons">place</md-icon>
-              <label>Items</label>
-              <md-select ng-model="up.selected_province" ng-change="up.selectedProvinceChange()" required>
-                <md-option ng-repeat="province in up.provinces" ng-value="province" >{{ province.province_name }}</md-option>
-              </md-select>
             </md-input-container>
           </div>
           <div style="display: flex; justify-content: center;margin-top: 3em;">

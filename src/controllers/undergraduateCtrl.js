@@ -38,7 +38,7 @@ app.controller('undergraduateCtrl',['$scope', '$rootScope', '$cookies', '$window
     };
 
      scholarApiService.getScholars(searched).then(response => {
-      // console.log(response.data);
+      console.log(response.data);
       uc.scholars = response.data;
       uc.scholars_loaded = true;
       uc.hide_spinner = true;
@@ -259,15 +259,3 @@ app.controller('undergraduateCtrl',['$scope', '$rootScope', '$cookies', '$window
 
 
 }]);
-
-app.factory('debounce', function($timeout) {
-    return function(callback, interval) {
-        var timeout = null;
-        return function() {
-            $timeout.cancel(timeout);
-            timeout = $timeout(function () { 
-                callback.apply(this, arguments); 
-            }, interval);
-        };
-    }; 
-});

@@ -27,7 +27,7 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
       lastname: ac.lastname.toUpperCase(),  
       middlename: ac.middlename.toUpperCase(),
       addressId: ac.addressId,
-      date_of_birth: moment.changeFormat(ac.date_of_birth),
+      date_of_birth: ac.date_of_birth,
       age: ac.age,
       gender: ac.gender,
       schoolId: ac.schoolId,

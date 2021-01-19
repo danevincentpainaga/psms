@@ -1,0 +1,106 @@
+<div style="font-size: 14px;">
+  <md-toolbar class="md-menu-toolbar">
+    <div layout="row">
+      <md-toolbar-filler style="display: flex;">
+        <md-icon class="material-icons">content_paste</md-icon>
+      </md-toolbar-filler>
+      <div>
+        <h2 class="md-toolbar-tools">Add scholars</h2>
+        <md-menu-bar>
+          <md-menu>
+            <button ng-click="$mdMenu.open()">
+              Accounts
+            </button>
+            <md-menu-content>
+              <md-menu-item class="md-indent">
+                <md-icon class="material-icons">save</md-icon>
+                <md-button ng-click="ctrl.sampleAction('redo', $event)">
+                  Add new
+                </md-button>
+              </md-menu-item>
+              <md-menu-item class="md-indent">
+                <md-icon class="material-icons">clear_all</md-icon>
+                <md-button ng-click="ctrl.sampleAction('redo', $event)">
+                  User accounts
+                </md-button>
+              </md-menu-item>
+            </md-menu-content>
+          </md-menu>
+          <md-menu>
+            <button ng-click="$mdMenu.open()">
+              User types
+            </button>
+            <md-menu-content>
+              <md-menu-item class="md-indent">
+                <md-icon class="material-icons">person</md-icon>
+                <md-button ng-click="ctrl.sampleAction('redo', $event)">
+                  Add user type
+                  <span class="md-alt-text">Ctrl-B</span>
+                </md-button>
+              </md-menu-item>
+              <md-menu-item class="md-indent">
+                <md-icon class="material-icons">school</md-icon>
+                <md-button ng-click="ctrl.sampleAction('redo', $event)">
+                  View user types
+                  <span class="md-alt-text">Ctrl-M</span>
+                </md-button>
+              </md-menu-item>
+            </md-menu-content>
+          </md-menu>
+        </md-menu-bar>
+      </div>
+    </div>
+  </md-toolbar>
+  <md-progress-linear md-mode="indeterminate" ng-if="!u.disable_linear_loader"></md-progress-linear>
+  <div layout="column">
+    <div layout="row">
+      <div flex="20"></div>
+      <div flex="">
+          <br />
+          <md-content flex layout-padding style="height: 100%;background-color: #fff; padding: 0px;" ng-if="!u.editing_state">
+              <md-list class="fixedRows">
+                  <div>
+                    <md-input-container style="width: 40%;margin: 25px 0px 0px 0px;height: 40px;">
+                      <label>Search</label>
+                      <input type="text" ng-model="u.searched_user" style="text-transform: uppercase;" autocomplete="off">
+                      <md-progress-circular class="md-hue-2" md-diameter="15px" style="position: absolute;right: 0px;top: 10px;" ng-if="!u.users_list_loaded"></md-progress-circular>
+                    </md-input-container>
+                  </div>
+                  <md-subheader class="md-no-sticky">List of users</md-subheader>
+                  <div layout="row" style="flex-wrap: wrap;">
+                    <md-list-item class="md-2-line" flex="33" ng-repeat="user in u.users_list">
+                      <img src="images/user-2.jpg" class="md-avatar" alt="" />
+                      <div class="md-list-item-text" style="max-width: 210px;">
+                        <h5 style="margin: 0px;">{{user.name}}</h5>
+                        <p style="font-size: 12px;">{{ user.status }}</p>
+                      </div>
+                      <md-menu>
+                        <md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdMenu.open($event)" style="padding: 0px;margin: 0;">
+                          <md-icon class="material-icons" >more_horiz</md-icon>
+                        </md-button>
+                        <md-menu-content width="3">
+                          <md-menu-item>
+                            <md-button ng-click="u.edit(school)">
+                              <md-icon class="material-icons">edit</md-icon>
+                              Edit
+                            </md-button>
+                          </md-menu-item>
+                          <md-menu-item>
+                            <md-button ng-click="ctrl.redial($event)">
+                              <md-icon class="material-icons">delete_outline</md-icon>
+                              Delete
+                            </md-button>
+                          </md-menu-item>
+                        </md-menu-content>
+                      </md-menu>
+                    </md-list-item>
+                  </div>
+              </md-list>
+          </md-content>
+          <add-school-directive schooldetails="u.school_to_update" ng-if="u.editing_state" editing="u.editing_state"></add-school-directive>
+      </div>
+      <div flex="20"></div>
+    </div>
+  </div>
+</div>
+

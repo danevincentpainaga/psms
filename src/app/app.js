@@ -104,6 +104,13 @@ angular
       controllerAs: 'sc',
       Authenticated: true,
     })
+    .state('user_accounts', {
+      url: '/user_accounts',
+      templateUrl: 'src/views/user_accounts.html',
+      controller: 'userAccountsCtrl',
+      controllerAs: 'u',
+      Authenticated: true,
+    })
 
   $urlRouterProvider.otherwise('/');
 
@@ -155,14 +162,18 @@ require('angular-aria');
 
 require('../directives/addSchoolDirective.js');
 
+require('../factories/debounce.js');
+require('../factories/momentFactory.js');
+
 
 require('../services/alertDialog.js');
-require('../factories/momentFactory.js');
 require('../services/loginApiService.js');
 require('../services/schoolApiService.js');
 require('../services/addressApiService.js');
 require('../services/scholarApiService.js');
 require('../services/academicContractService.js');
+require('../services/usersApiService.js');
+
 
 require('../controllers/mainCtrl.js');
 require('../controllers/loginCtrl.js');
@@ -171,4 +182,5 @@ require('../controllers/undergraduateCtrl.js');
 require('../controllers/schoolsCtrl.js');
 require('../controllers/addSchoolCtrl.js');
 require('../controllers/updateSchoolCtrl.js');
+require('../controllers/userAccountsCtrl.js');
 

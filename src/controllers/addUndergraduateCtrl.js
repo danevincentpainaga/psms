@@ -19,7 +19,8 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
     clearInputs();
   }  
 
-  ac.saveScholar = function(){
+  ac.saveNewScholarDetails = function(){
+    
     ac.degree = "Undergraduate";
 
     let scholar_details = {
@@ -38,15 +39,13 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
       fatherId: ac.fatherId,
       motherId: ac.motherId,
       degree: ac.degree,
-      scholar_status: 'NEW',
-      contract_status: 'Pre-Approved',
       scholar_asc_id: academicContractDetails.asc_id,
       father:{ f_firstname: ac.f_firstname.toUpperCase(), f_lastname: ac.search_flastname.toUpperCase(), f_middlename: ac.f_middlename.toUpperCase() },
       mother:{ m_firstname: ac.m_firstname.toUpperCase(), m_lastname: ac.search_mlastname.toUpperCase(), m_middlename: ac.m_middlename.toUpperCase() },
     }
 
     console.log(scholar_details);
-    saveScholar(scholar_details);
+    saveNewScholarDetails(scholar_details);
   }
 
   ac.selectedFatherDetailsChange = function(fdetails){
@@ -164,8 +163,8 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
     });
   }
 
-  function saveScholar(scholarDetails){
-     scholarApiService.saveScholar(scholarDetails).then(response => {
+  function saveNewScholarDetails(scholarDetails){
+     scholarApiService.saveNewScholarDetails(scholarDetails).then(response => {
       console.log(response.data);
       clearInputs();
       swalert.successAlert("User successfully saved!");
@@ -174,8 +173,8 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
     });
   }
 
-  function getNewScholars(searched){
-     scholarApiService.getNewScholars(searched).then(response => {
+  function getNewUndergraduateScholars(searched){
+     scholarApiService.getNewUndergraduateScholars(searched).then(response => {
       console.log(response.data);
       ac.scholars = response.data;
       ac.scholars_loaded = true;
@@ -186,7 +185,7 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
 
   $scope.$watch('ac.scholar_lastname', debounce(function() {
     ac.scholars_loaded = false;
-    getNewScholars({ searched: ac.scholar_lastname });
+    getNewUndergraduateScholars({ searched: ac.scholar_lastname });
   }, 500), true);
 
   function clearInputs(){

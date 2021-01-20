@@ -5,7 +5,7 @@
         <md-icon class="material-icons">view_list</md-icon>
       </md-toolbar-filler>
       <div style="width: 50%;">
-        <h2 class="md-toolbar-tools">Undergraduate</h2>
+        <h2 class="md-toolbar-tools">Scholars</h2>
         <md-menu-bar>
           <md-menu>
             <button ng-click="$mdMenu.open()">
@@ -30,39 +30,18 @@
           </md-menu>
           <md-menu>
             <button ng-click="$mdMenu.open()">
-              View as
-            </button>
-            <md-menu-content>
-              <md-menu-item class="md-indent">
-                <md-icon class="material-icons">dns</md-icon>
-                <md-button ng-click="ctrl.sampleAction('redo', $event)">
-                  Thumbnail
-                  <span class="md-alt-text">Ctrl-B</span>
-                </md-button>
-              </md-menu-item>
-              <md-menu-item class="md-indent">
-                <md-icon class="material-icons">list</md-icon>
-                <md-button ng-click="ctrl.sampleAction('redo', $event)">
-                  List
-                  <span class="md-alt-text">Ctrl-M</span>
-                </md-button>
-              </md-menu-item>
-            </md-menu-content>
-          </md-menu>
-          <md-menu>
-            <button ng-click="$mdMenu.open()">
               Export
             </button>
             <md-menu-content>
               <md-menu-item class="md-indent">
                 <md-icon class="material-icons">person_add</md-icon>
-                <md-button ng-click="uc.exportMasterlist()">
+                <md-button ng-click="sc.exportMasterlist()">
                   Masterlist
                 </md-button>
               </md-menu-item>
               <md-menu-item class="md-indent">
                 <md-icon class="material-icons">speaker_notes</md-icon>
-                <md-button ng-click="uc.exportNormal()">
+                <md-button ng-click="sc.exportNormal()">
                   Normal
                 </md-button>
               </md-menu-item>
@@ -72,8 +51,8 @@
       </div>
     </div>
   </md-toolbar>
-        <!-- <div id="cover-spin" ng-if="!uc.hide_spinner" ></div> -->
-        <md-progress-linear md-mode="indeterminate" ng-if="!uc.scholars_loaded"></md-progress-linear>
+        <!-- <div id="cover-spin" ng-if="!sc.hide_spinner" ></div> -->
+        <md-progress-linear md-mode="indeterminate" ng-if="!sc.scholars_loaded"></md-progress-linear>
         <div layout="row" layout-xs="column" layout-wrap="" style="background-color: #fff; border-right: 1px solid #c7c7c7;">
           <div flex>
             <div layout="row" layout-wrap="" layout-xs="column" style="background-color: #fff; border-right: 1px solid #c7c7c7;overflow: auto;">         
@@ -84,20 +63,20 @@
                       <tr md-row>
                         <th md-column md-numeric style="background-color: #dddddd;"><span>No.</span></th>
                         <th md-column md-numeric style="min-width: 310px;">
-                          <input type="text" ng-model="uc.scholar_lastname" style="width:80%;height: 18px;outline: none;" placeholder="Name">
+                          <input type="text" ng-model="sc.scholar_lastname" style="width:80%;height: 18px;outline: none;" placeholder="Name">
                         </th>
                         <th md-column md-numeric>Date of Birth</th>
                         <th md-column md-numeric>Age</th>
                         <th md-column md-numeric>Gender</th>
                         <th md-column md-numeric style="min-width: 75px;">
-                          <select ng-model="uc.status" style="width: 100%;height: 22px;outline: none;" ng-change="uc.selectedStatus(uc.status)">
+                          <select ng-model="sc.status" style="width: 100%;height: 22px;outline: none;" ng-change="sc.selectedStatus(sc.status)">
                             <option>Status</option>
                             <option value="NEW">NEW</option>
                             <option value="OLD">OLD</option>
                           </select>
                         </th>
                         <th md-column md-numeric style="min-width: 117px;">
-                          <select ng-model="uc.contract_status" style="width: 90%;height: 22px;outline: none;" ng-change="uc.selectedContractStatus(uc.contract_status)">
+                          <select ng-model="sc.contract_status" style="width: 90%;height: 22px;outline: none;" ng-change="sc.selectedContractStatus(sc.contract_status)">
                             <option>Contract status</option>
                             <option value="Pre-Approved">Pre-Approved</option>
                             <option value="Approved">Approved</option>
@@ -106,8 +85,21 @@
                           </select>
                         </th>
                         <th md-column md-numeric >Address</th>
+                        <th md-column md-numeric style="min-width: 117px;">
+                          <select ng-model="sc.municipality" style="width: 90%;height: 22px;outline: none;" ng-change="sc.selectedMunicipality(sc.municipality)">
+                            <option>Municipality</option>
+                            <option ng-value="mun.municipality" ng-repeat="mun in sc.municipalities">{{ mun.municipality }}</option>
+                          </select>
+                        </th>
                         <th md-column md-numeric>Father</th>
                         <th md-column md-numeric>Mother</th>
+                        <th md-column md-numeric style="min-width: 117px;">
+                          <select ng-model="sc.degree" style="width: 90%;height: 22px;outline: none;" ng-change="sc.selectedDegree(sc.degree)">
+                            <option>Degree</option>
+                            <option ng-value="degree" ng-repeat="degree in sc.access_degree">{{ degree }}</option>
+                          </select>
+                        </th>
+                        <th md-column md-numeric>Course</th>
                         <th md-column md-numeric>School</th>
                         <th md-column md-numeric>Student ID NO.</th>
                         <th md-column md-numeric>Year level</th>
@@ -119,7 +111,7 @@
                       </tr>
                     </thead>
                     <tbody md-body >
-                      <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="scholar in uc.scholars | orderBy: myOrder track by $index">
+                      <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="scholar in sc.scholars | orderBy: myOrder track by $index">
                         <td md-cell style="background-color: #f6c08e;">{{ $index+1 }}.</td>
                         <td md-cell>
                           <img ng-src="images/avatarmale.svg" style="max-width:27px;">
@@ -129,24 +121,33 @@
                         <td md-cell>{{ scholar.age }}</td>
                         <td md-cell><span>{{ scholar.gender }}</span></td>
                         <td md-cell>
-                          <span style="background: #47cd47;padding: 2px 8px;border-radius: 5px; color: #ffff;">{{ scholar.scholar_status }}
+                          <span style="background: #47cd47;padding: 2px 8px;border-radius: 5px; color: #ffff;">
+                            {{ scholar.scholar_status }}
                           </span>
                         </td>
                         <td md-cell>
-                          <span style="background: #007bff;padding: 2px 8px;border-radius: 5px; color: #ffff;">{{ scholar.contract_status }}
+                          <span style="background: #007bff;padding: 2px 8px;border-radius: 5px; color: #ffff;">
+                            {{ scholar.contract_status }}
                           </span>
                         </td>
                         <td md-cell>{{ scholar.address.barangay_name }} {{ scholar.address.municipality }}, ANTIQUE</td>
+                        <td md-cell>{{ scholar.address.municipality }}</td>
                         <td md-cell>{{ scholar.father.f_firstname }} {{ scholar.father.f_lastname }}, {{ scholar.father.f_middlename }}</td>
                         <td md-cell>{{ scholar.mother.m_firstname }} {{ scholar.mother.m_lastname }}, {{ scholar.mother.m_middlename }}</td>
+                        <td md-cell>
+                          <span style="background: #428933;padding: 2px 8px;border-radius: 5px; color: #ffff;">
+                            {{ scholar.degree }}
+                          </span>
+                        </td>
+                        <td md-cell>{{ scholar.course_section }}</td>
                         <td md-cell>{{ scholar.school.school_name }}</td>
                         <td md-cell>{{ scholar.student_id_number }}</td>
                         <td md-cell>{{ scholar.year_level }}</td>
                         <td md-cell>{{ scholar.academicyear_semester_contract.semester }}</td>
                         <td md-cell>{{ scholar.academicyear_semester_contract.academic_year }}</td>
                         <td md-cell>{{ scholar.IP }}</td>
-                        <td md-cell>{{ scholar.created_at }}</td>
-                        <td md-cell>{{ scholar.updated_at }}</td>
+                        <td md-cell>{{ scholar.created_at | formatDate }}</td>
+                        <td md-cell>{{ scholar.updated_at | formatDate }}</td>
                       </tr>
                       <tfoot md-foot>
                           <tr md-row>

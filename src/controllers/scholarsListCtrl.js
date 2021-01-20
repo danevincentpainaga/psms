@@ -2,64 +2,61 @@
 
 /**
  * @ngdoc function
- * @name psmsApp.controller:addUndergraduateCtrl
+ * @name psmsApp.controller:scholarsListCtrl
  * @description
- * # addUndergraduateCtrl
+ * # scholarsListCtrl
  * Controller of the psmsApp
  */ 
 
 var app = angular.module('psmsApp');
-app.controller('undergraduateCtrl',['$scope', '$rootScope', '$cookies', '$window', '$location', '$timeout', 'schoolApiService', 'addressApiService', 'scholarApiService', 'debounce', 'moment',
-  function ($scope, $rootScope, $cookies, $window, $location, $timeout, schoolApiService, addressApiService, scholarApiService, debounce, moment) {
+app.controller('scholarsListCtrl',['$scope', '$rootScope', '$cookies', '$window', '$location', '$timeout', 'schoolApiService', 'addressApiService', 'scholarApiService', 'municipalitiesApiService', 'debounce', 'moment',
+  function ($scope, $rootScope, $cookies, $window, $location, $timeout, schoolApiService, addressApiService, scholarApiService, municipalitiesApiService, debounce, moment) {
 
-  var uc = this;
-  uc.status = "Status";
-  uc.contract_status = "Contract status";
+  var sc = this;
 
-  uc.selectedStatus = function(selected){
-    uc.scholars_loaded = false;
-    uc.selected_status = selected == 'Status'? undefined : selected;
-    getScholars();
-  }
+  sc.status = "Status";
+  sc.contract_status = "Contract status";
+  sc.degree = "Degree";
+  sc.municipality = "Municipality";
 
-  uc.selectedContractStatus = function(selected){
-    uc.scholars_loaded = false;
-    uc.selected_contract_status = selected == 'Contract status'? undefined : selected;
-    getScholars();
-  }
 
-  function getScholars(){
+  $scope.$watch('sc.scholar_lastname', debounce(function() {
 
-     let searched = { 
-        searched_name: uc.scholar_lastname,
-        scholar_status: uc.selected_status,
-        contract_status: uc.selected_contract_status,
-        degree: 'Undergraduate'
-    };
-
-     scholarApiService.getScholars(searched).then(response => {
-      console.log(response.data);
-      uc.scholars = response.data;
-      uc.scholars_loaded = true;
-      uc.hide_spinner = true;
-    }, err => {
-      console.log(err);
-    });    
-  }
-
-  $scope.$watch('uc.scholar_lastname', debounce(function() {
-
-    uc.scholars_loaded = false;
+    sc.scholars_loaded = false;
     getScholars();
 
   }, 500), true);
+  
 
+  sc.selectedStatus = function(selected){
+    sc.scholars_loaded = false;
+    sc.selected_status = selected == 'Status'? undefined : selected;
+    getScholars();
+  }
 
-  uc.exportNormal = function(){
+  sc.selectedContractStatus = function(selected){
+    sc.scholars_loaded = false;
+    sc.selected_contract_status = selected == 'Contract status'? undefined : selected;
+    getScholars();
+  }
+
+  sc.selectedDegree = function(selected){
+    sc.scholars_loaded = false;
+    sc.selected_degree = selected == 'Degree'? undefined : selected;
+    getScholars();
+  }
+
+  sc.selectedMunicipality = function(selected){
+    sc.scholars_loaded = false;
+    sc.selected_municipality = selected;
+    getScholars();
+  }
+
+  sc.exportNormal = function(){
 
     var scholar = [];;
 
-    angular.forEach(uc.scholars, function(val, i){
+    angular.forEach(sc.scholars, function(val, i){
 
         let new_data  = {
           Lastname: val.lastname,
@@ -96,7 +93,7 @@ app.controller('undergraduateCtrl',['$scope', '$rootScope', '$cookies', '$window
 
   }
 
-  uc.exportMasterlist = function(){
+  sc.exportMasterlist = function(){
 
     let municipalities = {
       'ANINI-Y':[],
@@ -119,7 +116,7 @@ app.controller('undergraduateCtrl',['$scope', '$rootScope', '$cookies', '$window
       'CALUYA':[],
     };
 
-    angular.forEach(uc.scholars, function(val, i){
+    angular.forEach(sc.scholars, function(val, i){
 
         let scholar = {
           Lastname: val.lastname,
@@ -159,43 +156,47 @@ app.controller('undergraduateCtrl',['$scope', '$rootScope', '$cookies', '$window
     XLSX.writeFile(wb, "Masterlist.xlsx");
 
     console.log(wb);
+    
+  }
 
-    // var wb = {
-    //   adddress: [
-    //       {"name":"John", "city": "Seattle"},
-    //       {"name":"Mike", "city": "Los Angeles"},
-    //       {"name":"Zach", "city": "New York"}     
-    //   ]
-    // };
+  function getScholars(){
 
+     let searched = { 
+        searched_name: sc.scholar_lastname,
+        scholar_status: sc.selected_status,
+        contract_status: sc.selected_contract_status,
+        degree: sc.selected_degree,
+        municipality: sc.selected_municipality,
+    };
 
-    // var data = [
-    //     {"name":"John", "city": "Seattle"},
-    //     {"name":"Mike", "city": "Los Angeles"},
-    //     {"name":"Zach", "city": "New York"}
-    // ];
+     scholarApiService.getScholars(searched).then(response => {
+      console.log(response.data);
+      sc.scholars = response.data;
+      sc.scholars_loaded = true;
+      sc.hide_spinner = true;
+    }, err => {
+      console.log(err);
+    });    
+  }
 
-    // /* this line is only needed if you are not adding a script tag reference */
-    // if(typeof XLSX == 'undefined') XLSX = require('xlsx');
+  function getMunicipalities(){
+    municipalitiesApiService.getMunicipalities()
+      .then(response=>{
+        console.log(response);
+        sc.municipalities = response.data;
+      }, err=> {
+        console.log(err);
+      });
+  }
 
-    // /* make the worksheet */
-    // var ws = XLSX.utils.json_to_sheet(data);
-
-    // /* add to workbook */
-    // var wb = XLSX.utils.book_new();
-    // XLSX.utils.book_append_sheet(wb, ws, "People");
-
-    /* generate an XLSX file */
-    // XLSX.writeFile(wb, "sheetjs.xlsx");
-    // /* bookType can be any supported output type */
-    // var wopts = { bookType:'xlsx', bookSST:false, type:'array' };
-
-    // var wbout = XLSX.write(ws, wopts);
-
-    // /* the saveAs call downloads a file on the local machine */
-    // saveAs(new Blob([wbout],{type:"application/octet-stream"}), "test.xlsx");
-
-
+  function getDegrees(){
+    scholarApiService.getDegrees()
+      .then(response=>{
+        console.log(response);
+        sc.access_degree = response.data;
+      }, err=> {
+        console.log(err);
+      });
   }
 
   function checkMunicipality(municipality, municipalities, scholar){
@@ -255,7 +256,11 @@ app.controller('undergraduateCtrl',['$scope', '$rootScope', '$cookies', '$window
                 municipalities['CALUYA'].push(scholar);
                 break;
       }      
+
   }
 
+  getDegrees();
+  getMunicipalities();
 
 }]);
+

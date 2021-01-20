@@ -12,7 +12,7 @@ var app = angular.module('psmsApp');
 app.controller('schoolsCtrl',['$scope', '$rootScope', '$cookies', '$window', '$location', '$timeout', 'schoolApiService', 'debounce', 'moment', '$mdDialog',
   function ($scope, $rootScope, $cookies, $window, $location, $timeout, schoolApiService, debounce, moment, $mdDialog) {
 
-  var sc = this;
+  var s = this;
 
   $scope.$on('successful_update_emit_from_updateSchoolCtrl', function(){
     getListOfSchool();
@@ -24,27 +24,27 @@ app.controller('schoolsCtrl',['$scope', '$rootScope', '$cookies', '$window', '$l
 
   function getListOfSchool(searched){
      schoolApiService.getListOfSchool(searched).then(response => {
-      sc.disable_linear_loader = true;
+      s.disable_linear_loader = true;
       console.log(response.data);
-      sc.school_list_loaded = true;
-      sc.hide_spinner = true;
-      sc.list_of_schools = response.data;
+      s.school_list_loaded = true;
+      s.hide_spinner = true;
+      s.list_of_schools = response.data;
     }, err => {
       console.log(err);
     });
 
   }
 
-  $scope.$watch('sc.searched_school', debounce(function() {
+  $scope.$watch('s.searched_school', debounce(function() {
 
-    let schoolName = { searched_school: sc.searched_school };
+    let schoolName = { searched_school: s.searched_school };
 
-    sc.school_list_loaded = false;
+    s.school_list_loaded = false;
     getListOfSchool(schoolName);
 
   }, 500), true);
 
-  sc.showDialog = function (ev) {
+  s.showDialog = function (ev) {
     $mdDialog.show({
       controller: 'addSchoolCtrl',
       controllerAs: 'as',
@@ -53,18 +53,18 @@ app.controller('schoolsCtrl',['$scope', '$rootScope', '$cookies', '$window', '$l
       targetEvent: ev,
       clickOutsideToClose: true,
     }).then(function (answer) {
-      sc.status = 'You said the information was "' + answer + '".';
-      console.log(sc.status);
+      s.status = 'You said the information was "' + answer + '".';
+      console.log(s.status);
     }, function () {
-      sc.status = 'You cancelled the dialog.';
-      console.log(sc.status);
+      s.status = 'You cancelled the dialog.';
+      console.log(s.status);
     });
   };
 
 
-  sc.edit = function(school_data){
-    sc.editing_state = true;
-    sc.school_to_update = { school_id: school_data.school_id, school_name: school_data.school_name, s_province_id: school_data.s_province_id };
+  s.edit = function(school_data){
+    s.editing_state = true;
+    s.school_to_update = { school_id: school_data.school_id, school_name: school_data.school_name, s_province_id: school_data.s_province_id };
   }
 
 }]);

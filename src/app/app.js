@@ -23,45 +23,18 @@ angular
       templateUrl: 'src/views/dashboard.html',
       Authenticated: true,
     })
-    .state('undergraduate', {
-      url: '/undergraduate',
-      views:{
-        '':{
-          templateUrl: 'src/views/undergraduate.html',
-        },
-        'undergraduate-view@undergraduate':{
-          templateUrl: 'src/views/undergraduate_list.html',
-          controller: 'undergraduateCtrl',
-          controllerAs: 'uc'
-        }
-      },
-
+    .state('scholars_list', {
+      url: '/scholars_list',
+      templateUrl: 'src/views/scholars_list.html',
+      controller: 'scholarsListCtrl',
+      controllerAs: 'sc',
       Authenticated: true,
     })
-    .state('masteral_doctorate', {
-      url: '/masteral_doctorate',
-      views:{
-        '':{
-          templateUrl: 'src/views/masteral_doctorate.html',
-        },
-        'masteral_doctorate-view@masteral_doctorate':{
-          templateUrl: 'src/views/masteral_doctorate_list.html',
-        }
-      },
-      Authenticated: true,
-    })
-    .state('undergraduate.add_undergraduate_scholars', {
+    .state('add_undergraduate_scholars', {
       url: '/add_undergraduate_scholars',
-      views:{
-        '':{
-          templateUrl: 'src/views/undergraduate.html',
-        },
-        'undergraduate-view@undergraduate':{
-          templateUrl: 'src/views/add_undergraduate_scholars.html',
-          controller: 'addUndergraduateCtrl',
-          controllerAs: 'ac'
-        }
-      },
+      templateUrl: 'src/views/add_undergraduate_scholars.html',
+      controller: 'addUndergraduateCtrl',
+      controllerAs: 'ac',
       resolve:{
         academicContractDetails: function(academicContractService){
           return academicContractService.getAcademicContractDetails().then(response => {
@@ -69,18 +42,6 @@ angular
           }, err=> {
             return false;
           });
-        }
-      },
-      Authenticated: true,
-    })
-    .state('masteral_doctorate.add_masteral_doctorate_scholars', {
-      url: '/add_masteral_doctorate_scholars',
-      views:{
-        '':{
-          templateUrl: 'src/views/masteral_doctorate.html',
-        },
-        'masteral_doctorate-view@masteral_doctorate':{
-          templateUrl: 'src/views/add_masteral_doctorate_scholars.html',
         }
       },
       Authenticated: true,
@@ -101,7 +62,7 @@ angular
       url: '/schools',
       templateUrl: 'src/views/schools.html',
       controller: 'schoolsCtrl',
-      controllerAs: 'sc',
+      controllerAs: 's',
       Authenticated: true,
     })
     .state('user_accounts', {
@@ -161,11 +122,15 @@ require('angular-animate');
 require('angular-aria');
 
 require('../directives/addSchoolDirective.js');
+require('../directives/addDoubleSlashesDirective.js');
+
+require('../filters/filters.js');
 
 require('../factories/debounce.js');
 require('../factories/momentFactory.js');
 
 
+require('../services/municipalitiesApiService.js');
 require('../services/alertDialog.js');
 require('../services/loginApiService.js');
 require('../services/schoolApiService.js');
@@ -178,7 +143,7 @@ require('../services/usersApiService.js');
 require('../controllers/mainCtrl.js');
 require('../controllers/loginCtrl.js');
 require('../controllers/addUndergraduateCtrl.js');
-require('../controllers/undergraduateCtrl.js');
+require('../controllers/scholarsListCtrl.js');
 require('../controllers/schoolsCtrl.js');
 require('../controllers/addSchoolCtrl.js');
 require('../controllers/updateSchoolCtrl.js');

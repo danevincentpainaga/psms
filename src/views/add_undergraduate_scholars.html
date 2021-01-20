@@ -84,7 +84,7 @@
 
   <div layout="column" style="height: 90%;">
     <section layout="row" flex layout-xs="column">
-      <div layout="row" layout-xs="column" style="background-color: #fff; border-right: 1px solid #c7c7c7;min-width: 355px;">
+      <div layout="row" layout-xs="column" style="background-color: #fff; border-right: 1px solid #c7c7c7;min-width: 340px;">
         <md-content flex layout-padding style="height: 100%;background-color: #fff; padding: 0px;;">
           <md-list flex>
             <md-input-container style="width: 100%;margin: 25px 0px 0px 0px;height: 40px;">
@@ -97,7 +97,7 @@
               <md-progress-circular md-diameter="25px"></md-progress-circular>
             </div>
               <md-list-item class="md-2-line" ng-repeat="scholar in ac.scholars" ng-if="ac.scholars_loaded">
-                <img src="images/user-2.jpg" class="md-avatar" alt="" />
+                <img src="images/avatarmale.svg" class="md-avatar" alt="" />
                 <div class="md-list-item-text" style="max-width: 210px;">
                   <h5 style="margin: 0px;">{{scholar.lastname}},&nbsp;{{scholar.firstname}}&nbsp;{{scholar.middlename}}.</h5>
                   <p style="font-size: 12px;">{{ scholar.school.school_name }}</p>
@@ -121,7 +121,7 @@
                 <span class="md-subhead">Udergraduate</span>
               </md-card-header-text>
               <md-card-header-text style="text-align: right;">
-                <span class="md-subhead">{{ ac.academic_year }}</span>
+                <span class="md-subhead" style="color: #008300;">AY - {{ ac.academic_year }}</span>
                 <span class="md-subhead">{{ ac.semester }}</span>
               </md-card-header-text>
             </md-card-header>
@@ -170,7 +170,7 @@
                   </div>
                   <md-input-container flex="20">
                     <label>Date of Birth</label>
-                    <input type="text" ng-model="ac.date_of_birth" ng-change="ac.selectedDateOfBirth(ac.date_of_birth)" add-dob-slashes />                </md-input-container>
+                    <input type="text" ng-model="ac.date_of_birth" ng-change="ac.selectedDateOfBirth(ac.date_of_birth)" add-double-slashes-directive />                </md-input-container>
                   <md-input-container flex="10">
                     <label>Age</label>
                     <textarea ng-model="ac.displayedAge" disabled></textarea>
@@ -306,7 +306,7 @@
               </div>
             </md-card-content>
             <div style="width: 100%;text-align: right;">
-              <md-button class="md-raised md-primary" ng-click="ac.saveScholar()">Save</md-button>
+              <md-button class="md-raised md-primary" ng-click="ac.saveNewScholarDetails()">Save</md-button>
               <md-button class="md-raised" ng-click="ac.clear()">Clear</md-button>
             </div>
           </md-card>  

@@ -4,10 +4,10 @@ app.factory('scholarApiService', ['$http', '$cookies', '$rootScope', '$q', funct
   var baseUrl = "http://localhost:8000/";
 
   return{
-    saveScholar: function(scholar_details){
+    saveNewScholarDetails: function(scholar_details){
       return $http({
         method:'POST',
-        url: baseUrl+'api/saveScholar',
+        url: baseUrl+'api/saveNewScholarDetails',
         data: scholar_details,
         headers: {
           "Content-Type": "application/json",
@@ -37,10 +37,10 @@ app.factory('scholarApiService', ['$http', '$cookies', '$rootScope', '$q', funct
         }
       });
     },
-    getNewScholars: function(searched){
+    getNewUndergraduateScholars: function(searched){
       return $http({
         method:'POST',
-        url: baseUrl+'api/getNewScholars',
+        url: baseUrl+'api/getNewUndergraduateScholars',
         data: searched,
         headers: {
           "Content-Type": "application/json",
@@ -59,5 +59,17 @@ app.factory('scholarApiService', ['$http', '$cookies', '$rootScope', '$q', funct
         }
       });
     },
+
+    
+    getDegrees: function(){
+      return $http.get(baseUrl+'api/getDegrees', {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization : 'Bearer '+ $rootScope.token
+        }
+      });
+    },
+
+
 	}
 }]);

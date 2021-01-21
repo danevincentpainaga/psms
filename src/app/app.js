@@ -46,6 +46,22 @@ angular
       },
       Authenticated: true,
     })
+    .state('add_masteral_doctorate_scholars', {
+      url: '/add_masteral_doctorate_scholars',
+      templateUrl: 'src/views/add_masteral_doctorate_scholars.html',
+      controller: 'addMastersDoctorateCtrl',
+      controllerAs: 'md',
+      resolve:{
+        academicContractDetails: function(academicContractService){
+          return academicContractService.getAcademicContractDetails().then(response => {
+            return response.data[0];
+          }, err=> {
+            return false;
+          });
+        }
+      },
+      Authenticated: true,
+    })
     .state('address', {
       url: '/address',
       views:{
@@ -76,7 +92,7 @@ angular
   $urlRouterProvider.otherwise('/');
 
 })
-.run(['$transitions', '$rootScope', '$cookies', 'loginApiService', function($transitions, $rootScope, $cookies, loginApiService){
+.run(['$transitions', '$rootScope', '$cookies', 'authApiService', function($transitions, $rootScope, $cookies, authApiService){
 
   var auth = $cookies.getObject('auth');
   console.log(auth);
@@ -88,8 +104,7 @@ angular
     
 
     if (transition.to().Authenticated) {
-        if (!loginApiService.AuthenticatedUser()) {
-            $rootScope.authenticated = false;
+        if (!authApiService.AuthenticatedUser()) {
             $state.go('base');
         }
         else{
@@ -100,20 +115,17 @@ angular
     }
 
     if (!transition.to().Authenticated) {
-       if (loginApiService.AuthenticatedUser()) {
+       if (authApiService.AuthenticatedUser()) {
           transition.abort();
        }
     }    
 
   });
 
-  // $transitions.onStart({ to: 'dashboard'}, function(transition) {
-
-  //   const $state = transition.router.stateService;
-    
-  //   if (!auth) $state.go('base');
-
-  // });
+  $transitions.onStart({ to: 'base'}, function(transition) {
+      $rootScope.authenticated = false;
+      $rootScope.loggged_out = false;
+  });
 
 }]);
 
@@ -121,31 +133,33 @@ require('angular-material');
 require('angular-animate');
 require('angular-aria');
 
-require('../directives/addSchoolDirective.js');
-require('../directives/addDoubleSlashesDirective.js');
+require('../directives/addSchoolDirective');
+require('../directives/addDoubleSlashesDirective');
+require('../directives/colorDegreeDirective');
 
-require('../filters/filters.js');
+require('../filters/filters');
 
-require('../factories/debounce.js');
-require('../factories/momentFactory.js');
+require('../factories/debounce');
+require('../factories/momentFactory');
 
 
-require('../services/municipalitiesApiService.js');
-require('../services/alertDialog.js');
-require('../services/loginApiService.js');
-require('../services/schoolApiService.js');
-require('../services/addressApiService.js');
-require('../services/scholarApiService.js');
-require('../services/academicContractService.js');
-require('../services/usersApiService.js');
+require('../services/municipalitiesApiService');
+require('../services/alertDialog');
+require('../services/authApiService');
+require('../services/schoolApiService');
+require('../services/addressApiService');
+require('../services/scholarApiService');
+require('../services/academicContractService');
+require('../services/usersApiService');
 
 
 require('../controllers/mainCtrl.js');
 require('../controllers/loginCtrl.js');
 require('../controllers/addUndergraduateCtrl.js');
-require('../controllers/scholarsListCtrl.js');
-require('../controllers/schoolsCtrl.js');
-require('../controllers/addSchoolCtrl.js');
-require('../controllers/updateSchoolCtrl.js');
-require('../controllers/userAccountsCtrl.js');
+require('../controllers/addMastersDoctorateCtrl');
+require('../controllers/scholarsListCtrl');
+require('../controllers/schoolsCtrl');
+require('../controllers/addSchoolCtrl');
+require('../controllers/updateSchoolCtrl');
+require('../controllers/userAccountsCtrl');
 

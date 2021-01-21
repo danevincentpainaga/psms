@@ -1,11 +1,11 @@
-<div>
+<div style="font-size: 14px;">
   <md-toolbar class="md-menu-toolbar">
     <div layout="row">
       <md-toolbar-filler style="display: flex;">
         <md-icon class="material-icons">content_paste</md-icon>
       </md-toolbar-filler>
       <div>
-        <h2 class="md-toolbar-tools">Add scholars</h2>
+        <h2 class="md-toolbar-tools">Masteral/Doctorate</h2>
         <md-menu-bar>
           <md-menu>
             <button ng-click="$mdMenu.open()">
@@ -36,15 +36,22 @@
               <md-menu-item class="md-indent">
                 <md-icon class="material-icons">person</md-icon>
                 <md-button ng-click="ctrl.sampleAction('redo', $event)">
-                  Bachelor's list
+                  Addresses
                   <span class="md-alt-text">Ctrl-B</span>
                 </md-button>
               </md-menu-item>
               <md-menu-item class="md-indent">
                 <md-icon class="material-icons">school</md-icon>
                 <md-button ng-click="ctrl.sampleAction('redo', $event)">
-                  Master's list
+                  Schools
                   <span class="md-alt-text">Ctrl-M</span>
+                </md-button>
+              </md-menu-item>
+              <md-menu-item class="md-indent">
+                <md-icon class="material-icons">business</md-icon>
+                <md-button ng-click="ctrl.sampleAction('redo', $event)">
+                  Courses
+                  <span class="md-alt-text">Ctrl-D</span>
                 </md-button>
               </md-menu-item>
             </md-menu-content>
@@ -74,160 +81,252 @@
       </div>
     </div>
   </md-toolbar>
-<div layout="column" style="height: 90%;">
 
+  <div layout="column" style="height: 90%;">
     <section layout="row" flex layout-xs="column">
-
-        <div layout="row" layout-xs="column" style="background-color: #fff; border-right: 1px solid #c7c7c7;">
-          <md-content flex layout-padding style="height: 100%;background-color: #fff; padding: 0px;">
-            <md-list flex>
-              <md-input-container style="width: 100%;margin: 25px 0px 0px 0px;">
-                <label>Search</label>
-                <input type="text" ng-model="user.name">
-              </md-input-container>
-              <md-subheader class="md-no-sticky">Master's / Doctorate list</md-subheader>
-              <md-list-item class="md-2-line">
-                <img src="images/user-2.jpg" class="md-avatar" alt="{{todos[0].who}}" />
+      <div layout="row" layout-xs="column" style="background-color: #fff; border-right: 1px solid #c7c7c7;min-width: 340px;">
+        <md-content flex layout-padding style="height: 100%;background-color: #fff; padding: 0px;;">
+          <md-list flex>
+            <md-input-container style="width: 100%;margin: 25px 0px 0px 0px;height: 40px;">
+              <label>Search</label>
+              <input type="text" ng-model="md.scholar_lastname" style="text-transform: uppercase;">
+            </md-input-container>
+            <md-subheader class="md-no-sticky">Masteral/Doctorate list</md-subheader>
+            <div style="height: 355px; overflow-y: auto;">
+            <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top: 10px;" ng-if="!md.scholars_loaded">
+              <md-progress-circular md-diameter="25px"></md-progress-circular>
+            </div>
+              <md-list-item class="md-2-line" ng-repeat="scholar in md.scholars" ng-if="md.scholars_loaded">
+                <img src="images/avatarmale.svg" class="md-avatar" alt="" />
                 <div class="md-list-item-text" style="max-width: 210px;">
-                  <h5 style="margin: 0px;">Dane Vincent Painaga</h5>
-                  <p style="font-size: 13px;">University of Antique -Main Campus</p>
+                  <h5 style="margin: 0px;">{{scholar.lastname}},&nbsp;{{scholar.firstname}}&nbsp;{{scholar.middlename}}.</h5>
+                  <p style="font-size: 12px;">{{ scholar.school.school_name }} - {{ scholar.degree }}</p>
                 </div>
                 <md-icon class="material-icons" >more_horiz</md-icon>
               </md-list-item>
-              <md-list-item class="md-2-line">
-                <img src="images/user-2.jpg" class="md-avatar" alt="{{todos[0].who}}" />
-                <div class="md-list-item-text" style="max-width: 210px;">
-                  <h5 style="margin: 0px;">Dane Vincent Painaga</h5>
-                  <p style="font-size: 13px;">University of Antique -TLMC</p>
+            </div>
+          </md-list>
+        </md-content>
+      </div>
+      <div flex="" layout-padding style="background: #efefef;max-height: 495px; overflow-y: auto;border-top: 1px solid #c7c7c7;" >
+        <h3 ng-if="!md.has_semester">Contract not set.</h3>
+        <div ng-if="md.has_semester">
+          <md-card style="margin: 0px;">
+            <md-card-header>
+              <md-card-avatar>
+                <md-icon class="material-icons" style="margin-right: 15px; background-color: #616dc3;">groups</md-icon>
+              </md-card-avatar>
+              <md-card-header-text>
+                <span class="md-title">Details</span>
+                <span class="md-subhead">Masteral/Doctorate</span>
+              </md-card-header-text>
+              <md-card-header-text flex="40">
+                <div layout="row">
+                  <div flex style="display: flex;justify-content: flex-end;">
+                    <md-input-container flex style="margin-bottom: 0px;">
+                      <label>Select degree</label>
+                      <md-select ng-model="md.degree" ng-change="md.selectedDegree()">
+                        <md-option value="Masters"><em>Masters</em></md-option>
+                        <md-option value="Doctorate"><em>Doctorate</em></md-option>
+                      </md-select>
+                    </md-input-container>
+                  </div>
+                  <div flex="35" style="display: flex;justify-content: flex-end;">
+                    <div layout="column"style="text-align: right;">
+                      <span class="md-subhead" style="color: #008300;">AY - {{ md.academic_year }}</span>
+                      <span class="md-subhead">{{ md.semester }}</span> 
+                    </div>
+                  </div>
                 </div>
-                <md-icon class="material-icons">more_horiz</md-icon>
-              </md-list-item>
-              <md-list-item class="md-2-line">
-                <img src="images/user-2.jpg" class="md-avatar" alt="{{todos[0].who}}" />
-                <div class="md-list-item-text" style="max-width: 210px;">
-                  <h5 style="margin: 0px;">Dane Vincent Painaga</h5>
-                  <p style="font-size: 13px;">Saitn Anthony's College</p>
-                </div>
-                <md-icon class="material-icons" >more_horiz</md-icon>
-              </md-list-item>
-            </md-list>
-          </md-content>    
-        </div>
-          <div flex="" layout-padding style="background: #efefef;max-height: 495px; overflow-y: auto;border-top: 1px solid #c7c7c7;">
-            <!-- <md-button class="md-primary md-raised" ng-click="showAdvanced($event)">Add scholar</md-button> -->
-
-            <md-card style="margin: 0px;">
-              <md-card-header>
-                <md-card-avatar>
-                  <md-icon class="material-icons" style="margin-right: 15px;">groups</md-icon>
-                </md-card-avatar>
-                <md-card-header-text>
-                  <span class="md-title">Details</span>
-                  <span class="md-subhead">Master's / Doctorate Degree</span>
-                </md-card-header-text>
-              </md-card-header>
-              
-              <md-card-content style="padding: 0px 16px;">
-
+              </md-card-header-text>
+            </md-card-header>
+            <md-card-content style="padding: 0px 16px;" >
+              <form name="primary_details">
                 <div layout="row" layout-xs="column">
                     <md-input-container flex="">
                       <label>Firstname</label>
                       <md-icon class="material-icons">how_to_reg</md-icon>
-                      <input type="text" ng-model="user.name">
+                      <input type="text" ng-model="md.firstname" ng-disabled="!md.degree_has_selected">
                     </md-input-container>
-
                     <md-input-container flex="">
                       <label>Lastname</label>
-                      <textarea ng-model="user.description"></textarea>
+                      <textarea ng-model="md.lastname" ng-disabled="!md.degree_has_selected"></textarea>
                     </md-input-container>
 
                     <md-input-container flex="">
                       <label>Middlename</label>
-                      <textarea ng-model="user.description"></textarea>
+                      <textarea ng-model="md.middlename" ng-disabled="!md.degree_has_selected"></textarea>
                     </md-input-container>
                 </div>
                 <div layout="row" layout-xs="column">
-                  <md-input-container flex="">
-                    <label>Address</label>
+                  <div style="display: flex;width: 100%;position: relative;">
                     <md-icon class="material-icons">place</md-icon>
-                    <input type="text" ng-model="user.name">
-                  </md-input-container>
+                    <md-autocomplete flex
+                      md-input-name="autocompleteField"
+                      md-input-minlength="1"
+                      md-no-cache="md.noCache"
+                      md-selected-item="md.address"
+                      md-search-text="md.search_address"
+                      md-delay="500"
+                      md-selected-item-change="md.selectedAddressChange(address)"
+                      md-items="address in md.addressSearchQuery(md.search_address)"
+                      md-item-text="address.full_address"
+                      md-escape-options="clear"
+                      md-require-match=""
+                      md-floating-label="Address" ng-disabled="!md.degree_has_selected">
+                      <md-item-template>
+                        <span md-highlight-text="md.search_address" md-highlight-flags="^i">{{address.full_address}}</span>
+                      </md-item-template>
+                      <md-not-found>
+                        No address matching "{{md.search_address}}" were found.
+                      </md-not-found>
+                    </md-autocomplete>
+                  </div>
                   <md-input-container flex="20">
+                    <label>Date of Birth</label>
+                    <input type="text" ng-model="md.date_of_birth" ng-change="md.selectedDateOfBirth(md.date_of_birth)" add-double-slashes-directive ng-disabled="!md.degree_has_selected"/>
+                  </md-input-container>
+                  <md-input-container flex="10">
                     <label>Age</label>
-                    <textarea ng-model="user.description"></textarea>
+                    <textarea ng-model="md.displayedAge" disabled></textarea>
                   </md-input-container>
                   <md-input-container flex="20">
                     <label>Gender</label>
-                    <md-select ng-model="ctrl.userState">
-                      <md-option><em>Male</em></md-option>
-                      <md-option><em>Female</em></md-option>
+                    <md-select ng-model="md.gender" ng-disabled="!md.degree_has_selected">
+                      <md-option value="Male"><em>Male</em></md-option>
+                      <md-option value="Female"><em>Female</em></md-option>
                     </md-select>
                   </md-input-container>
                 </div>
                 <div layout="row" layout-xs="column">
-                  <md-input-container flex="">
-                    <label>School</label>
-                    <md-icon class="material-icons">apartment</md-icon>
-                    <textarea ng-model="user.description"></textarea>
+                  <md-icon class="material-icons">apartment</md-icon>
+                  <md-autocomplete flex
+                    md-input-name="autocompleteField"
+                    md-input-minlength="1"
+                    md-no-cache="md.noCache"
+                    md-selected-item="md.school"
+                    md-search-text-change="md.searchSchoolChange(md.search_school)"
+                    md-search-text="md.search_school"
+                    md-delay="500"
+                    md-selected-item-change="md.selectedSchoolChange(school)"
+                    md-items="school in md.schoolSearchQuery(md.search_school)"
+                    md-item-text="school.school_name"
+                    md-escape-options="clear"
+                    md-require-match=""
+                    md-floating-label="School" ng-disabled="!md.degree_has_selected">
+                    <md-item-template>
+                      <span md-highlight-text="md.search_school" md-highlight-flags="^i">{{school.school_name}}</span>
+                    </md-item-template>
+                    <md-not-found>
+                      No states matching "{{md.search_school}}" were found.
+                    </md-not-found>
+                  </md-autocomplete>
+                  <md-input-container flex="40">
+                    <label>Course & Section</label>
+                    <textarea ng-model="md.course_section" ng-disabled="!md.degree_has_selected"></textarea>
                   </md-input-container>
-                  <md-input-container flex="">
+                </div>
+                <div layout="row" layout-xs="column">
+                  <md-input-container flex>
+                    <label>Year level.</label>
+                    <md-select ng-model="md.year_level" ng-disabled="!md.degree_has_selected">
+                      <md-option value="1st year"><em>1st year</em></md-option>
+                      <md-option value="2nd year"><em>2nd year</em></md-option>
+                      <md-option value="3rd year"><em>3rd year</em></md-option>
+                      <md-option value="4th year"><em>4th year</em></md-option>
+                      <md-option value="5th year"><em>5th year</em></md-option>
+                      <md-option value="6th year"><em>6th year</em></md-option>
+                      <md-option value="7th year"><em>7th year</em></md-option>
+                    </md-select>
+                  </md-input-container>
+                  <md-input-container flex="30">
                     <label>ID NO.</label>
-                    <textarea ng-model="user.description"></textarea>
+                    <textarea ng-model="md.student_id_number" ng-disabled="!md.degree_has_selected"></textarea>
                   </md-input-container>
-                  <md-input-container flex="">
+                  <md-input-container flex="20">
                     <label>IP.</label>
-                    <textarea ng-model="user.description"></textarea>
+                    <md-select ng-model="md.IP" ng-disabled="!md.degree_has_selected">
+                      <md-option value="YES"><em>YES</em></md-option>
+                      <md-option value="NO"><em>NO</em></md-option>
+                    </md-select>
                   </md-input-container>
                 </div>
-                </md-card-content>
-              </md-card>
-      
+              </form>
+            </md-card-content>
+          </md-card>
 
-            <md-card style="margin: 5px 0px;">
-              <md-card-content style="padding: 15px 16px 0px 16px;">
-
-                <p>Father's Details</p>
-                <div layout="row" layout-xs="column">
-                   <md-input-container flex="">
-                    <label>Firstname</label>
-                    <md-icon class="material-icons">accessibility_new</md-icon>
-                    <input type="text" ng-model="user.name">
-                  </md-input-container>
-                  <md-input-container flex="">
-                    <label>Lastname</label>
-                    <input type="text" ng-model="user.name">
-                  </md-input-container>
-                  <md-input-container flex="">
-                    <label>Middlename</label>
-                    <input type="text" ng-model="user.name">
-                  </md-input-container>
-                </div>    
-               <p>Mother's Details</p>
-                <div layout="row" layout-xs="column">
-                   <md-input-container flex="">
-                    <label>Firstname</label>
-                    <md-icon class="material-icons">pregnant_woman</md-icon>
-                    <input type="text" ng-model="user.name">
-                  </md-input-container>
-                  <md-input-container flex="">
-                    <label>Lastname</label>
-                    <input type="text" ng-model="user.name">
-                  </md-input-container>
-                  <md-input-container flex="">
-                    <label>Middlename</label>
-                    <input type="text" ng-model="user.name">
-                  </md-input-container>
-                </div>
-                </md-card-content>
-                <div style="width: 100%;text-align: right;">
-                  <md-button class="md-raised md-primary">Save</md-button>
-                  <md-button class="md-raised">Clear</md-button>
-                </div>
-              </md-card>  
+          <md-card style="margin: 5px 0px;">
+            <md-card-content style="padding: 15px 16px 0px 16px;">
+              <p>Father's Details</p>
+              <div layout="row" layout-xs="column">
+                <md-icon class="material-icons">accessibility_new</md-icon>
+                <md-autocomplete flex 
+                  md-input-name="autocompleteField"
+                  md-input-minlength="2"
+                  md-no-cache="md.noCache"
+                  md-selected-item="md.father"
+                  md-search-text="md.search_flastname"
+                  md-delay="500"
+                  md-selected-item-change="md.selectedFatherDetailsChange(fdetails)"
+                  md-items="fdetails in md.fatherSearchQuery(md.search_flastname)"
+                  md-item-text="fdetails.f_lastname"
+                  md-escape-options="clear"
+                  md-floating-label="Lastname" ng-disabled="!md.degree_has_selected">
+                  <md-item-template>
+                    <span md-highlight-text="md.search_flastname">{{fdetails.f_lastname}}, {{fdetails.f_firstname}}{{fdetails.f_middlename}}</span>
+                  </md-item-template>
+                  <md-not-found>
+                    No records matching "{{md.search_school}}" were found.
+                  </md-not-found>
+                </md-autocomplete>
+                <md-input-container flex="">
+                  <label>Firstname</label>
+                  <input type="text" ng-model="md.f_firstname" ng-disabled="!md.degree_has_selected">
+                </md-input-container>
+                <md-input-container flex="">
+                  <label>Middlename</label>
+                  <input type="text" ng-model="md.f_middlename" ng-disabled="!md.degree_has_selected">
+                </md-input-container>
+              </div>    
+              <p>Mother's Details</p>
+              <div layout="row" layout-xs="column">
+                <md-icon class="material-icons">pregnant_woman</md-icon>
+                <md-autocomplete flex 
+                  md-input-name="autocompleteField"
+                  md-input-minlength="2"
+                  md-no-cache="md.noCache"
+                  md-selected-item="md.mother"
+                  md-search-text="md.search_mlastname"
+                  md-delay="500"
+                  md-selected-item-change="md.selectedMotherDetailsChange(mdetails)"
+                  md-items="mdetails in md.motherSearchQuery(md.search_mlastname)"
+                  md-item-text="mdetails.m_lastname"
+                  md-escape-options="clear"
+                  md-floating-label="Lastname" ng-disabled="!md.degree_has_selected">
+                  <md-item-template>
+                    <span md-highlight-text="md.search_mlastname">{{mdetails.m_lastname}}, {{mdetails.m_firstname}}{{mdetails.m_middlename}}</span>
+                  </md-item-template>
+                  <md-not-found>
+                    No records matching "{{md.search_school}}" were found.
+                  </md-not-found>
+                </md-autocomplete>
+                <md-input-container flex="">
+                  <label>Firstname</label>
+                  <input type="text" ng-model="md.m_firstname" ng-disabled="!md.degree_has_selected">
+                </md-input-container>
+                <md-input-container flex="">
+                  <label>Middlename</label>
+                  <input type="text" ng-model="md.m_middlename" ng-disabled="!md.degree_has_selected">
+                </md-input-container>
+              </div>
+            </md-card-content>
+            <div style="width: 100%;text-align: right;">
+              <md-button class="md-raised md-primary" ng-click="md.saveNewMasterDoctorateDetails()">Save</md-button>
+              <md-button class="md-raised" ng-click="md.clear()">Clear</md-button>
             </div>
-
+          </md-card>  
+        </div>
+      </div>
     </section>
-
   </div>
-
 </div>

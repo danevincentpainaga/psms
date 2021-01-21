@@ -1,5 +1,5 @@
 angular.module('psmsApp')
-  .factory('loginApiService', ['$http', '$cookies', '$rootScope', '$q', function($http, $cookies, $rootScope, $q){
+  .factory('authApiService', ['$http', '$cookies', '$rootScope', '$q', function($http, $cookies, $rootScope, $q){
 	 
   var baseUrl = "http://localhost:8000/";
 
@@ -21,7 +21,17 @@ angular.module('psmsApp')
         }else{
           return false;
         }
-    }
+    },
+    logout: function(credData){
+      return $http({
+        method:'POST',
+        url: baseUrl+'api/logout',
+        data: credData,
+        headers: {
+          Authorization : 'Bearer '+ $rootScope.token
+        }
+      });
+    },
 
 	}
 }]);

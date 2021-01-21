@@ -9,8 +9,8 @@
  */ 
 
 var app = angular.module('psmsApp');
-app.controller('loginCtrl',['$scope', '$rootScope', '$cookies', '$window', '$location', '$timeout', 'loginApiService', 'swalert',
-  function ($scope, $rootScope, $cookies, $window, $location, $timeout, loginApiService, swalert) {
+app.controller('loginCtrl',['$scope', '$rootScope', '$cookies', '$window', '$location', '$timeout', 'authApiService', 'swalert',
+  function ($scope, $rootScope, $cookies, $window, $location, $timeout, authApiService, swalert) {
 
   var lg = this;
 
@@ -36,7 +36,7 @@ app.controller('loginCtrl',['$scope', '$rootScope', '$cookies', '$window', '$loc
       }
 
       console.log(credentials);
-      loginApiService.validateLogin(credentials)
+      authApiService.validateLogin(credentials)
         .then(function(response){
           console.log(response);
           $cookies.putObject('auth', response.data);

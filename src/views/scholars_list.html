@@ -9,20 +9,20 @@
         <md-menu-bar>
           <md-menu>
             <button ng-click="$mdMenu.open()">
-              Go to
+              Add
             </button>
             <md-menu-content>
               <md-menu-item class="md-indent">
                 <md-icon class="material-icons">person_add</md-icon>
                 <md-button ng-click="ctrl.sampleAction('redo', $event)">
-                  Add scholar
+                  Undergraduate
                   <span class="md-alt-text">Ctrl-B</span>
                 </md-button>
               </md-menu-item>
               <md-menu-item class="md-indent">
                 <md-icon class="material-icons">speaker_notes</md-icon>
                 <md-button ng-click="ctrl.sampleAction('redo', $event)">
-                  Bachelor's list
+                  Master's/Doctorate
                   <span class="md-alt-text">Ctrl-M</span>
                 </md-button>
               </md-menu-item>
@@ -135,7 +135,7 @@
                         <td md-cell>{{ scholar.father.f_firstname }} {{ scholar.father.f_lastname }}, {{ scholar.father.f_middlename }}</td>
                         <td md-cell>{{ scholar.mother.m_firstname }} {{ scholar.mother.m_lastname }}, {{ scholar.mother.m_middlename }}</td>
                         <td md-cell>
-                          <span style="background: #428933;padding: 2px 8px;border-radius: 5px; color: #ffff;">
+                          <span color-degree degree={{scholar.degree}}>
                             {{ scholar.degree }}
                           </span>
                         </td>

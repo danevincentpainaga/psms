@@ -6,11 +6,12 @@
  * # mainCtrl
  * Controller of the psmsApp
  */
-var app = angular.module('psmsApp');
-app.controller('mainCtrl',['$scope', '$rootScope', '$mdSidenav', '$mdDialog', '$location', '$timeout', function ($scope, $rootScope, $mdSidenav, $mdDialog, $location, $timeout) {
+
+angular.module('psmsApp')
+  .controller('mainCtrl',['$scope', '$rootScope', '$mdSidenav', '$mdDialog', '$cookies', '$location', '$timeout', 'authApiService',
+     function ($scope, $rootScope, $mdSidenav, $mdDialog, $cookies, $location, $timeout, authApiService) {
 
     $scope.toggleSidenav = buildToggler('left');
-
 
     $scope.toppings = [{name:'Admin'},{name:'User'}];
 
@@ -22,7 +23,18 @@ app.controller('mainCtrl',['$scope', '$rootScope', '$mdSidenav', '$mdDialog', '$
 
     $scope.navigateTo = function(destination){
       $location.path(destination);
-      $timeout($scope.toggleSidenav(), 1000);
+      $timeout($scope.toggleSidenav(), 1200);
     }
+
+    $scope.logout = function(){
+      $rootScope.loggged_out = true;
+      authApiService.logout().then(response => {
+        $cookies.remove('auth');
+        $location.path('/');
+      }, err =>{
+        console.log(err);
+      })
+    }
+
 
 }]);

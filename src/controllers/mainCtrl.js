@@ -36,5 +36,29 @@ angular.module('psmsApp')
       })
     }
 
+}]);
 
+angular
+.module('psmsApp').directive('printDoc',[ function(){
+
+    var docDefinition = {
+      content: [
+        'First paragraph',
+        'Another paragraph, this time a little bit longer to make sure, this line will be divided into at least two lines'
+      ]
+    };
+
+  return{
+    restrict:'A',
+    link: function(scope, elem, atrrs){
+      elem.on('click', function(){
+        // pdfMake.createPdf(docDefinition).open({}, window.frames['printPdf']);
+        // setTimeout(function() {
+        //     window.frames['printPdf'].focus();
+        //     window.frames['printPdf'].print();
+        // }, 500)
+        pdfMake.createPdf(docDefinition).print({}, window.frames['printPdf']);
+      })
+    }
+  }
 }]);

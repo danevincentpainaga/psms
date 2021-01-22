@@ -25,6 +25,21 @@ angular.module('psmsApp')
           text: message,
         });
       },
+      updateInfo: function(obj, method){
+        Swal.fire({
+          title: 'Update Details',
+          text: "Proceed to set contract?...",
+          type: 'info',
+          showCancelButton: true,
+          confirmButtonText: 'Yes',
+          cancelButtonColor: '#d33',
+          cancelButtonText: 'No'
+        }).then((result) => {
+          if (result.value) {
+            method(obj);
+          }
+        });
+      },
       deleteInfo: function(obj, method){
         Swal.fire({
           title: 'Are you sure?',

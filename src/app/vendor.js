@@ -13,3 +13,6 @@ import 'angular-touch/angular-touch.min.js';
 import 'angular-resource/angular-resource.min.js';
 import 'angular-resource/angular-resource.min.js';
 import 'angular-material-data-table/dist/md-data-table.min.js';
+import pdfMake from "pdfmake/build/pdfmake";
+import pdfFonts from "pdfmake/build/vfs_fonts";
+pdfMake.vfs = pdfFonts.pdfMake.vfs;

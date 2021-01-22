@@ -121,12 +121,12 @@
                         <td md-cell>{{ scholar.age }}</td>
                         <td md-cell><span>{{ scholar.gender }}</span></td>
                         <td md-cell>
-                          <span style="background: #47cd47;padding: 2px 8px;border-radius: 5px; color: #ffff;">
+                          <span color-scholar-status="{{scholar.scholar_status}}">
                             {{ scholar.scholar_status }}
                           </span>
                         </td>
                         <td md-cell>
-                          <span style="background: #007bff;padding: 2px 8px;border-radius: 5px; color: #ffff;">
+                          <span color-contract-status="{{scholar.contract_status}}" >
                             {{ scholar.contract_status }}
                           </span>
                         </td>

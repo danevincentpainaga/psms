@@ -14,6 +14,17 @@ app.factory('academicContractService', ['$http', '$cookies', '$rootScope', '$q',
         }
       });
     },
-
+    setContract: function(details){
+      return $http({
+        method:'POST',
+        url: baseUrl+'api/setContract',
+        data: details,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization : 'Bearer '+ $rootScope.token
+        }
+      });
+    }
+      
 	}
 }]);

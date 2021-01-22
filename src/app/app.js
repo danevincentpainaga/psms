@@ -88,7 +88,13 @@ angular
       controllerAs: 'u',
       Authenticated: true,
     })
-
+    .state('contract', {
+      url: '/contract',
+      templateUrl: 'src/views/contract.html',
+      controller: 'contractCtrl',
+      controllerAs: 'c',
+      Authenticated: true,
+    })
   $urlRouterProvider.otherwise('/');
 
 })
@@ -136,6 +142,8 @@ require('angular-aria');
 require('../directives/addSchoolDirective');
 require('../directives/addDoubleSlashesDirective');
 require('../directives/colorDegreeDirective');
+require('../directives/colorScholarStatusDirective');
+require('../directives/colorContractStatusDirective');
 
 require('../filters/filters');
 
@@ -151,15 +159,16 @@ require('../services/addressApiService');
 require('../services/scholarApiService');
 require('../services/academicContractService');
 require('../services/usersApiService');
+require('../services/academicSemesterYearApiService');
 
 
 require('../controllers/mainCtrl.js');
 require('../controllers/loginCtrl.js');
-require('../controllers/addUndergraduateCtrl.js');
+require('../controllers/addUndergraduateCtrl');
 require('../controllers/addMastersDoctorateCtrl');
 require('../controllers/scholarsListCtrl');
 require('../controllers/schoolsCtrl');
 require('../controllers/addSchoolCtrl');
 require('../controllers/updateSchoolCtrl');
 require('../controllers/userAccountsCtrl');
-
+require('../controllers/contractCtrl');

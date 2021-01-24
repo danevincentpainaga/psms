@@ -11,7 +11,9 @@
 	
 	<md-progress-linear md-mode="indeterminate" ng-if="loggged_out"></md-progress-linear>
 	<ng-include src="'src/views/header.html'" ng-if="authenticated"></ng-include> 
-	<div class="row" ui-view=""></div>
+	<div class="row" ui-view="" style="background: #efefef !important;"></div>
+  
+  <iframe id="printPdf" name="printPdf" style="display: none;"></iframe>
 
 	<script type="text/javascript" src="/node_modules/xlsx/dist/xlsx.full.min.js"></script>
 
@@ -21,7 +23,7 @@
   width: 100%;
   height: 100%;
   top: 0px;
-  background: #0000008f;z-index: 2;overflow: auto;">
+  background: #0000008f;z-index: 2;overflow: auto;z-index: 3;">
   	<div style="margin: 1.75rem auto;
   max-width: 85%;">
   		<div style="background-color: #6fc76f;">
@@ -246,8 +248,8 @@
 </div>
   		</div>
   	</div>
-  </div>
- -->
+  </div> -->
+
 <!-- 
 
 	  <div style="position: fixed;

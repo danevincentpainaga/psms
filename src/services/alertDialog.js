@@ -17,11 +17,11 @@ angular.module('psmsApp')
           title: message
         });
       },
-      successAlert: function(message){
+      dialogBox: function(message, icon, title){
         Swal.fire({
           position: 'center',
-          icon: 'success',
-          title: 'Success!',
+          icon: icon,
+          title: title,
           text: message,
         });
       },

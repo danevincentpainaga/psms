@@ -41,7 +41,7 @@
                 </md-button>
               </md-menu-item>
               <md-menu-item class="md-indent">
-                <md-icon class="material-icons">school</md-icon>
+                <md-icon class="material-icons">account_balance</md-icon>
                 <md-button ng-click="ctrl.sampleAction('redo', $event)">
                   Schools
                   <span class="md-alt-text">Ctrl-M</span>
@@ -109,7 +109,7 @@
         </md-content>
       </div>
       <div flex="" layout-padding style="background: #efefef;max-height: 495px; overflow-y: auto;border-top: 1px solid #c7c7c7;" >
-        <h3 ng-if="!md.has_semester">Contract not set.</h3>
+        <h3 ng-if="!md.has_semester">Contract closed.</h3>
         <div ng-if="md.has_semester">
           <md-card style="margin: 0px;">
             <md-card-header>

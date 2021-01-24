@@ -41,7 +41,7 @@
                 </md-button>
               </md-menu-item>
               <md-menu-item class="md-indent">
-                <md-icon class="material-icons">school</md-icon>
+                <md-icon class="material-icons">account_balance</md-icon>
                 <md-button ng-click="ctrl.sampleAction('redo', $event)">
                   Schools
                   <span class="md-alt-text">Ctrl-M</span>
@@ -96,20 +96,37 @@
             <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top: 10px;" ng-if="!ac.scholars_loaded">
               <md-progress-circular md-diameter="25px"></md-progress-circular>
             </div>
-              <md-list-item class="md-2-line" ng-repeat="scholar in ac.scholars" ng-if="ac.scholars_loaded">
+              <md-list-item class="md-2-line" ng-repeat="scholar in ac.scholars track by $index" ng-if="ac.scholars_loaded">
                 <img src="images/avatarmale.svg" class="md-avatar" alt="" />
                 <div class="md-list-item-text" style="max-width: 210px;">
                   <h5 style="margin: 0px;">{{scholar.lastname}},&nbsp;{{scholar.firstname}}&nbsp;{{scholar.middlename}}.</h5>
                   <p style="font-size: 12px;">{{ scholar.school.school_name }}</p>
                 </div>
-                <md-icon class="material-icons" >more_horiz</md-icon>
+                <span ng-if="$index===ac.selectedIndex" style="margin: 7px 0px;">opening..</span>
+                <md-menu ng-if="$index!==ac.selectedIndex">
+                  <md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdMenu.open($event)" style="padding: 0px;margin: 0;">
+                    <md-icon class="material-icons" >more_horiz</md-icon>
+                  </md-button>
+                  <md-menu-content width="2">
+                    <md-menu-item>
+                      <md-button ng-click="ac.edit(scholar)">
+                        Edit
+                      </md-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                      <md-button ng-click="ac.print(scholar, $index)">
+                        Print
+                      </md-button>
+                    </md-menu-item>
+                  </md-menu-content>
+                </md-menu>
               </md-list-item>
             </div>
           </md-list>
         </md-content>
       </div>
       <div flex="" layout-padding style="background: #efefef;max-height: 495px; overflow-y: auto;border-top: 1px solid #c7c7c7;" >
-        <h3 ng-if="!ac.has_semester">Contract not set.</h3>
+        <h3 ng-if="!ac.has_semester">Contract closed.</h3>
         <div ng-if="ac.has_semester">
           <md-card style="margin: 0px;">
             <md-card-header>

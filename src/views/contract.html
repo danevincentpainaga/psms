@@ -18,17 +18,18 @@
           <div layout="column">
             <section layout="row" flex layout-xs="column">
               <div layout="row" layout-xs="column" style="background-color: #fff; border-right: 1px solid #c7c7c7;;border: 1px solid #c7c7c7;">
-                <md-content flex layout-padding style="height: 100%;background-color: #fff; padding: 0px;max-height: 365px;;max-width: 650px;">
+                <md-content flex layout-padding style="height: 100%;background-color: #fff; padding: 0px;;max-width: 650px;">
                 <md-table-container>
-                  <div style="min-height: 325px;overflow: auto;">
+                  <div style="max-height: 707px;overflow: auto;">
                     <table md-table>
                       <thead md-head md-order="myOrder" style="background: #dddddd;box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);">
                         <tr md-row>
                           <th md-column md-numeric style="background-color: #dddddd;"><span>No.</span></th>
                           <th md-column md-numeric style="background-color: #dddddd;"><span>Semester.</span></th>
-                          <th md-column md-numeric style="background-color: #dddddd;"><span>Academic year.</span></th>
-                          <th md-column md-numeric style="background-color: #dddddd;"><span>Date created.</span></th>
-                          <th md-column md-numeric style="background-color: #dddddd;"><span>Date updated.</span></th>
+                          <th md-column md-numeric style="background-color: #dddddd;"><span>State</span></th>
+                          <th md-column md-numeric style="background-color: #dddddd;"><span>Academic year</span></th>
+                          <th md-column md-numeric style="background-color: #dddddd;"><span>Date created</span></th>
+                          <th md-column md-numeric style="background-color: #dddddd;"><span>Date updated</span></th>
                         </tr>
                       </thead>
                       <tbody md-body >
@@ -37,7 +38,7 @@
                           <td md-cell>
                             <md-icon class="material-icons" style="font-size: 17px; box-sizing: border-box;padding: 3px;cursor: pointer;outline-style: none;" ng-click="c.setContract(ay)">
                               <md-tooltip>Set as Contract.</md-tooltip>
-                              save
+                              system_update
                             </md-icon>
                             <md-icon class="material-icons" style="font-size: 17px; box-sizing: border-box;padding: 3px;cursor: pointer;outline-style: none;" ng-click="c.edit(ay)">
                               <md-tooltip>Edit</md-tooltip>
@@ -45,11 +46,12 @@
                             </md-icon>
                             <md-icon class="material-icons" style="font-size: 17px; box-sizing: border-box;padding: 3px;cursor: pointer;outline-style: none;">
                               <md-tooltip>Delete</md-tooltip>
-                              delete
+                              close
                             </md-icon>
                             &nbsp;&nbsp;
                             <span>{{ ay.semester }}</span>
                           </td>
+                          <td md-cell><span>{{ ay.state }}</span></td>
                           <td md-cell><span>{{ ay.academic_year }}</span></td>
                           <td md-cell><span>{{ ay.created_at | formatDate }}</span></td>
                           <td md-cell><span>{{ ay.updated_at | formatDate }}</span></td>
@@ -60,7 +62,7 @@
                 </md-table-container>
                 </md-content>
               </div>
-              <div flex="" layout-padding style="background: #efefef;max-height: 495px; overflow-y: auto;border: 1px solid #c7c7c7;" >
+              <div flex="" layout-padding style="background: #efefef;border: 1px solid #c7c7c7;" >
                 <div>
                   <md-card style="margin: 5px 0px;">
                     <md-card-header>
@@ -84,13 +86,59 @@
                           <label>Academic year</label>
                           <input type="text" ng-model="c.academic_year" >
                         </md-input-container>
-                      </div>    
+                      </div>
+                      <div style="margin-bottom: 1.5em">
+                        <md-button class="md-raised md-primary" ng-click="c.saveOrUpdateAcademicYearList()" style="width: 100%;margin: 10px 0px !important;">{{ c.buttonText }}</md-button>
+                        <md-button class="md-raised" ng-click="c.clear()" style="width: 100%;margin: 0px !important;">Clear</md-button>
+                      </div>
                     </md-card-content>
-                    <div style="width: 100%;text-align: right;">
-                      <md-button class="md-raised md-primary" ng-click="c.saveOrUpdateAcademicYearList()">{{ c.buttonText }}</md-button>
-                      <md-button class="md-raised" ng-click="c.clear()">Clear</md-button>
-                    </div>
-                  </md-card>  
+                  </md-card>
+                </div>
+                <div>
+                  <md-card style="margin: 5px 0px;">
+                    <md-card-header style="padding-bottom: 0px !important;">
+                      <md-card-header-text>
+                        <span class="md-title">Contract</span>
+                        <span class="md-subhead" style="font-size: 12px;">
+                          Details
+                        </span>
+                      </md-card-header-text>
+                    </md-card-header>
+                    <md-card-content style="padding: 15px 16px 0px 16px; font-size: 13px;">
+                      <div class="demo-md-panel-content" ng-repeat="contract in c.contract_details">
+                        <p>
+                          State: 
+                          &nbsp;
+                          <span  color-contract={{c.contract_status}}>{{ c.contract_status }}</span>
+                        </p>
+                        <p>
+                          Semester: 
+                          &nbsp;
+                          <span style="background: #48d448;color: #ffff;padding: 2px 5px;border-radius: 3pt;">{{ contract.academic_year_semester.semester }}</span>
+                        </p>
+                        <p>
+                          Academic year:
+                          &nbsp;
+                          <span style="background: #d641b7;color: #ffff;padding: 2px 5px;border-radius: 3pt;">{{ contract.academic_year_semester.academic_year }}</span>
+                        </p>
+                        <p>
+                          <span style="color: rgb(17 207 38);">Date started:</span>
+                        </p>
+                        <p>{{ contract.created_at | formatDate }}</p>
+                        <p>
+                          <span style="color:rgb(104 125 220)">Date Updated:</span>
+                        </p>
+                        <p> 
+                          <span>{{ contract.updated_at | formatDate }}</span>
+                        </p>
+                      </div>
+                      <div style="margin: 3em 0px 1.5em;">
+                        <md-button class="md-raised md-primary" ng-click="c.updateContract()" style="width: 100%;margin: 10px 0px !important;">Update</md-button>
+                        <md-button class="md-accent md-raised" ng-click="c.openContract()" style="width: 100%;margin: 10px 0px !important;color: #ffff;">Open contract</md-button>
+                        <md-button class="md-raised md-warn" ng-click="c.closeContract()" style="width: 100%;margin: 0px !important;color: #ffff;">Close contract</md-button>
+                      </div>
+                    </md-card-content>
+                  </md-card>
                 </div>
               </div>
             </section>

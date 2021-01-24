@@ -100,31 +100,30 @@ angular
 })
 .run(['$transitions', '$rootScope', '$cookies', 'authApiService', function($transitions, $rootScope, $cookies, authApiService){
 
-  var auth = $cookies.getObject('auth');
-  console.log(auth);
-
   $transitions.onStart({}, function(transition) {
 
     var $state = transition.router.stateService;
-    var auth = $cookies.getObject('auth');
     
-
     if (transition.to().Authenticated) {
-        if (!authApiService.AuthenticatedUser()) {
-            $state.go('base');
-        }
-        else{
-          $rootScope.authenticated = true;
-          $rootScope.token = auth.success;
-          $rootScope.logging_in = false;
-        }
+
+      var auth = $cookies.getObject('auth');
+
+      if (!authApiService.AuthenticatedUser()) {
+          $state.go('base');
+      }
+      else{
+        $rootScope.authenticated = true;
+        $rootScope.token = auth.success;
+        $rootScope.logging_in = false;
+      }
+      
     }
 
     if (!transition.to().Authenticated) {
        if (authApiService.AuthenticatedUser()) {
           transition.abort();
        }
-    }    
+    }
 
   });
 
@@ -144,6 +143,7 @@ require('../directives/addDoubleSlashesDirective');
 require('../directives/colorDegreeDirective');
 require('../directives/colorScholarStatusDirective');
 require('../directives/colorContractStatusDirective');
+require('../directives/colorContractDirective');
 
 require('../filters/filters');
 

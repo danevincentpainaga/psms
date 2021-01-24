@@ -39,7 +39,7 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
       fatherId: md.fatherId,
       motherId: md.motherId,
       degree: md.degree,
-      scholar_asc_id: academicContractDetails.asc_id,
+      asc_id: academicContractDetails.ascId,
       father:{ f_firstname: md.f_firstname.toUpperCase(), f_lastname: md.search_flastname.toUpperCase(), f_middlename: md.f_middlename.toUpperCase() },
       mother:{ m_firstname: md.m_firstname.toUpperCase(), m_lastname: md.search_mlastname.toUpperCase(), m_middlename: md.m_middlename.toUpperCase() },
     }
@@ -173,7 +173,7 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
       md.degree_has_selected = false;
       console.log(response.data);
       clearInputs();
-      swalert.successAlert("User successfully saved!");
+      swalert.dialogBox('Scholar saved!', 'success', 'Success');
     }, err => {
       console.log(err);
     });
@@ -220,9 +220,9 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
   }
 
   function hasSemester(){
-    if (academicContractDetails) {
-      md.semester = academicContractDetails.semester.semester;
-      md.academic_year = academicContractDetails.academic_year;
+    if (academicContractDetails && academicContractDetails.contract_state != 'Closed') {
+      md.semester = academicContractDetails.academic_year_semester.semester
+      md.academic_year = academicContractDetails.academic_year_semester.academic_year;
       md.has_semester = true;
     }
     else{

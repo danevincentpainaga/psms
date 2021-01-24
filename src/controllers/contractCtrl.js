@@ -36,6 +36,14 @@ app.controller('contractCtrl',['$scope', 'academicSemesterYearApiService', 'acad
     swalert.updateInfo({ ascId: selected.asc_id }, setContract);
   }
 
+  c.closeContract = function(){
+    closeContract();
+  }
+
+  c.openContract = function(){
+    openContract();
+  }
+
   c.clear = function(){
     clearInputs();
   }
@@ -52,28 +60,67 @@ app.controller('contractCtrl',['$scope', 'academicSemesterYearApiService', 'acad
     });
   }
 
-  function saveAcademicYearList(details, message){
+  function saveAcademicYearList(details){
      academicSemesterYearApiService.saveAcademicYearList(details).then(response => {
       clearInputs()
       console.log(response.data);
       getAcademicYearList();
-      swalert.successAlert(message);
+      swalert.dialogBox(response.data.message, 'success', 'Success');
     }, err => {
       console.log(err);
+      swalert.dialogBox(err.data.message, 'error', 'Failed');
     });
   }
 
-  function setContract(details){
-     academicContractService.setContract(details).then(response => {
-      console.log(response.data);
+  function updateAcademicYearList(details){
+     academicSemesterYearApiService.updateAcademicYearList(details).then(response => {
       clearInputs()
+      console.log(response.data);
       getAcademicYearList();
-      swalert.successAlert('Contract Updated!');
+      swalert.dialogBox(response.data.message, 'success', 'Success');
+    }, err => {
+      console.log(err);
+      swalert.dialogBox(err.data.message, 'error', 'Failed');
+    });
+  }
+
+  function getAcademicContractDetails(){
+     academicContractService.getAcademicContractDetails().then(response => {
+        c.contract_details = response.data;
+        c.contract_status = c.contract_details[0].contract_state;
+        console.log(c.contract_details);
     }, err => {
       console.log(err);
     });
   } 
 
+  function setContract(details){
+     academicContractService.setContract(details).then(response => {
+      console.log(response.data);
+      swalert.dialogBox(response.data.message, 'success', 'Success');
+    }, err => {
+      console.log(err);
+      swalert.dialogBox(err.data.message, 'error', 'Failed');
+    });
+  } 
+
+  function closeContract(){
+     academicContractService.closeContract().then(response => {
+      console.log(response.data);
+      swalert.dialogBox(response.data.message, 'success', 'Success');
+    }, err => {
+      console.log(err);
+      swalert.dialogBox(err.data.message, 'error', 'Failed');
+    });
+  } 
+
+  function openContract(){
+     academicContractService.openContract().then(response => {
+      swalert.dialogBox(response.data.message, 'success', 'Success');
+    }, err => {
+      swalert.dialogBox(err.data.message, 'error', 'Failed');
+    });
+  } 
 
   function clearInputs(){
     c.asc_id = "";
@@ -84,9 +131,10 @@ app.controller('contractCtrl',['$scope', 'academicSemesterYearApiService', 'acad
   }
 
   function updateOrSave(){
-    c.buttonText == 'ADD'? saveAcademicYearList({ semester: c.semester, academic_year: c.academic_year }, 'Saved successfully!') : updateAcademicYearList({ asc_id: c.asc_id, semester: c.semester, academic_year: c.academic_year }, 'Updated successfully!');
+    c.buttonText == 'ADD'? saveAcademicYearList({ semester: c.semester, academic_year: c.academic_year }) : updateAcademicYearList({ asc_id: c.asc_id, semester: c.semester, academic_year: c.academic_year });
   }
 
   getAcademicYearList();
+  getAcademicContractDetails();
 
 }]);

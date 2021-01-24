@@ -24,7 +24,26 @@ app.factory('academicContractService', ['$http', '$cookies', '$rootScope', '$q',
           Authorization : 'Bearer '+ $rootScope.token
         }
       });
-    }
-      
+    },
+    closeContract: function(){
+      return $http({
+        method:'POST',
+        url: baseUrl+'api/closeContract',
+        headers: {
+          "Content-Type": "application/json",
+          Authorization : 'Bearer '+ $rootScope.token
+        }
+      });
+    },
+    openContract: function(){
+      return $http({
+        method:'POST',
+        url: baseUrl+'api/openContract',
+        headers: {
+          "Content-Type": "application/json",
+          Authorization : 'Bearer '+ $rootScope.token
+        }
+      });
+    } 
 	}
 }]);

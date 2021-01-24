@@ -62,3 +62,21 @@ angular
     }
   }
 }]);
+
+// angular.module('psmsApp').directive('showActionBtn',[ function(){
+//   return{
+//     restrict:'A',
+//     link: function(scope, elem, atrrs){
+
+//         let target = elem.find("span").eq(0);
+
+//         elem.on('mouseover', function(){
+//           $(target).css({'display': 'inline'});
+//         });
+
+//         elem.on('mouseout', function(){
+//           $(target).css({'display': 'none'});
+//         });
+//     }
+//   }
+// }]);

@@ -40,7 +40,7 @@ app.controller('updateSchoolCtrl', ['$scope', '$rootScope', '$mdDialog', 'school
     schoolApiService.updateSchoolDetails(details).then(response => {
       console.log(response.data);
       up.updating = false;
-      swalert.successAlert("Successful!");
+      swalert.dialogBox('School details updated', 'success', 'Success');
       $scope.$emit('successful_update_emit_from_updateSchoolCtrl');
     }, err => {
       console.log(err);

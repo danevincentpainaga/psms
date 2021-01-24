@@ -34,7 +34,7 @@ app.controller('addSchoolCtrl', ['$scope', '$rootScope', '$mdDialog', 'schoolApi
     schoolApiService.saveSchoolDetails(details).then(response => {
       console.log(response.data);
       clearInputs();
-      swalert.successAlert("Successful!");
+      swalert.dialogBox('School saved!', 'success', 'Success');
       $rootScope.$emit('successful_add_emit_from_addSchoolCtrl');
     }, err => {
       console.log(err);

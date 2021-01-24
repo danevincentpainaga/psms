@@ -21,31 +21,63 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
 
   ac.saveNewScholarDetails = function(){
     
-    ac.degree = "Undergraduate";
+    if (
+          ac.firstname && ac.lastname && ac.middlename && ac.addressId && ac.date_of_birth
+          && ac.age && ac.gender && ac.schoolId && ac.course_section && ac.year_level && ac.student_id_number
+          && ac.IP && ac.degree && academicContractDetails.ascId || ac.fatherId || ac.motherId
+      ) {
 
-    let scholar_details = {
-      firstname: ac.firstname.toUpperCase(),
-      lastname: ac.lastname.toUpperCase(),  
-      middlename: ac.middlename.toUpperCase(),
-      addressId: ac.addressId,
-      date_of_birth: ac.date_of_birth,
-      age: ac.age,
-      gender: ac.gender,
-      schoolId: ac.schoolId,
-      course_section: ac.course_section.toUpperCase(),
-      year_level: ac.year_level,
-      student_id_number: ac.student_id_number,
-      IP: ac.IP,
-      fatherId: ac.fatherId,
-      motherId: ac.motherId,
-      degree: ac.degree,
-      scholar_asc_id: academicContractDetails.asc_id,
-      father:{ f_firstname: ac.f_firstname.toUpperCase(), f_lastname: ac.search_flastname.toUpperCase(), f_middlename: ac.f_middlename.toUpperCase() },
-      mother:{ m_firstname: ac.m_firstname.toUpperCase(), m_lastname: ac.search_mlastname.toUpperCase(), m_middlename: ac.m_middlename.toUpperCase() },
+          ac.degree = "Undergraduate";
+
+          let scholar_details = {
+            firstname: ac.firstname.toUpperCase(),
+            lastname: ac.lastname.toUpperCase(),
+            middlename: ac.middlename.toUpperCase(),
+            addressId: ac.addressId,
+            date_of_birth: ac.date_of_birth,
+            age: ac.age,
+            gender: ac.gender,
+            schoolId: ac.schoolId,
+            course_section: ac.course_section.toUpperCase(),
+            year_level: ac.year_level,
+            student_id_number: ac.student_id_number,
+            IP: ac.IP,
+            fatherId: ac.fatherId,
+            motherId: ac.motherId,
+            degree: ac.degree,
+            asc_id: academicContractDetails.ascId,
+            father:{ f_firstname: ac.f_firstname.toUpperCase(), f_lastname: ac.search_flastname.toUpperCase(), f_middlename: ac.f_middlename.toUpperCase() },
+            mother:{ m_firstname: ac.m_firstname.toUpperCase(), m_lastname: ac.search_mlastname.toUpperCase(), m_middlename: ac.m_middlename.toUpperCase() },
+          }
+
+          console.log(scholar_details);
+          saveNewScholarDetails(scholar_details);
+
     }
+    else{
+      swalert.toastInfo('please complete the form', 'error', 'top-right', 4000);
+    }
+  }
 
-    console.log(scholar_details);
-    saveNewScholarDetails(scholar_details);
+  ac.edit = function(){
+
+  }
+
+  ac.print = function(scholarDetails, idx){
+    ac.selectedIndex = idx;
+
+    let docDefinition = {
+        content: [
+          {text: 'NAME: '+scholarDetails.firstname.toUpperCase()+" "+scholarDetails.lastname.toUpperCase()+", "+scholarDetails.middlename.toUpperCase()},
+        ]
+      };
+
+    let pdfDocGenerator = pdfMake.createPdf(docDefinition);
+    pdfDocGenerator.print({}, window.frames['printPdf']);
+    
+    pdfDocGenerator.getDataUrl((dataUrl) => {
+      $timeout(()=>{ ac.selectedIndex = undefined }, 1000);
+    });
   }
 
   ac.selectedFatherDetailsChange = function(fdetails){
@@ -167,7 +199,7 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
      scholarApiService.saveNewScholarDetails(scholarDetails).then(response => {
       console.log(response.data);
       clearInputs();
-      swalert.successAlert("User successfully saved!");
+      swalert.dialogBox('Scholar saved!', 'success', 'Success');
     }, err => {
       console.log(err);
     });
@@ -214,9 +246,9 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
   }
 
   function hasSemester(){
-    if (academicContractDetails) {
-      ac.semester = academicContractDetails.semester.semester;
-      ac.academic_year = academicContractDetails.academic_year;
+    if (academicContractDetails && academicContractDetails.contract_state != 'Closed') {
+      ac.semester = academicContractDetails.academic_year_semester.semester
+      ac.academic_year = academicContractDetails.academic_year_semester.academic_year;
       ac.has_semester = true;
     }
     else{

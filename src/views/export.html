@@ -2,32 +2,11 @@
   <md-toolbar class="md-menu-toolbar" style="border-bottom: 1px solid #c7c7c7;box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);">
     <div layout="row">
       <md-toolbar-filler style="display: flex;">
-        <md-icon class="material-icons">source</md-icon>
+        <md-icon class="material-icons">system_update_alt</md-icon>
       </md-toolbar-filler>
       <div style="width: 50%;">
-        <h2 class="md-toolbar-tools">Scholars</h2>
+        <h2 class="md-toolbar-tools">Export scholars</h2>
         <md-menu-bar>
-          <md-menu>
-            <button ng-click="$mdMenu.open()">
-              Add
-            </button>
-            <md-menu-content>
-              <md-menu-item class="md-indent">
-                <md-icon class="material-icons">person_add</md-icon>
-                <md-button ng-click="ctrl.sampleAction('redo', $event)">
-                  Undergraduate
-                  <span class="md-alt-text">Ctrl-B</span>
-                </md-button>
-              </md-menu-item>
-              <md-menu-item class="md-indent">
-                <md-icon class="material-icons">speaker_notes</md-icon>
-                <md-button ng-click="ctrl.sampleAction('redo', $event)">
-                  Master's/Doctorate
-                  <span class="md-alt-text">Ctrl-M</span>
-                </md-button>
-              </md-menu-item>
-            </md-menu-content>
-          </md-menu>
           <md-menu>
             <button ng-click="$mdMenu.open()">
               Export
@@ -51,12 +30,9 @@
       </div>
     </div>
   </md-toolbar>
-        <!-- <div id="cover-spin" ng-if="!sc.hide_spinner" ></div> -->
         <md-progress-linear md-mode="indeterminate" ng-if="!sc.scholars_loaded"></md-progress-linear>
         <div layout="column" layout-xs="column" style="background-color: #fff; border-right: 1px solid #c7c7c7; overflow: auto;">
           <div flex>
-            <!-- <div layout="row" layout-wrap="" layout-xs="column" style="background-color: #fff; border-right: 1px solid #c7c7c7;">          -->
-              <!-- <div class="demo-md-panel-content"> -->
                 <md-table-container  ng-style="resizeDiv()" resize-div>
                   <table md-table>
                     <thead md-head md-order="myOrder" style="background: #dddddd;box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);">
@@ -152,20 +128,13 @@
                       <tfoot md-foot>
                           <tr md-row>
                             <td md-cell></td>
-                            <td md-cell style="text-align: left;"><strong>Total: </strong>{{sc.scholars.length}}</td>
-                            <td md-cell colspan="19"></td>
+                            <td md-cell><strong>Total: </strong>{{calories.total}}</td>
+                            <td md-cell colspan="6"></td>
                           </tr>
                         </tfoot>
                     </tbody>
                   </table>
                 </md-table-container>
-
-              <!-- </div> -->
-
-
-
-
-            <!-- </div> -->
           </div>
         </div>
 

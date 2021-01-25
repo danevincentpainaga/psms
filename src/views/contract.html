@@ -51,7 +51,7 @@
                             &nbsp;&nbsp;
                             <span>{{ ay.semester }}</span>
                           </td>
-                          <td md-cell><span>{{ ay.state }}</span></td>
+                          <td md-cell><span color-contract={{c.contract_status}}>{{ ay.state }}</span></td>
                           <td md-cell><span>{{ ay.academic_year }}</span></td>
                           <td md-cell><span>{{ ay.created_at | formatDate }}</span></td>
                           <td md-cell><span>{{ ay.updated_at | formatDate }}</span></td>
@@ -134,8 +134,8 @@
                       </div>
                       <div style="margin: 3em 0px 1.5em;">
                         <md-button class="md-raised md-primary" ng-click="c.updateContract()" style="width: 100%;margin: 10px 0px !important;">Update</md-button>
-                        <md-button class="md-accent md-raised" ng-click="c.openContract()" style="width: 100%;margin: 10px 0px !important;color: #ffff;">Open contract</md-button>
-                        <md-button class="md-raised md-warn" ng-click="c.closeContract()" style="width: 100%;margin: 0px !important;color: #ffff;">Close contract</md-button>
+                        <md-button class="md-accent md-raised" ng-click="c.openContract()" ng-if="c.showOpenContractBtn" style="width: 100%;margin: 10px 0px !important;color: #ffff;">Open contract</md-button>
+                        <md-button class="md-raised md-warn" ng-click="c.closeContract()" ng-if="!c.showOpenContractBtn" style="width: 100%;margin: 0px !important;color: #ffff;">Close contract</md-button>
                       </div>
                     </md-card-content>
                   </md-card>

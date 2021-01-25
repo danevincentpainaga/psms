@@ -82,9 +82,9 @@
     </div>
   </md-toolbar>
 
-  <div layout="column" style="height: 90%;">
+  <div layout="column" style="height: 90%;" ng-style="resize()" resize-add-scholars-div>
     <section layout="row" flex layout-xs="column">
-      <div layout="row" layout-xs="column" style="background-color: #fff; border-right: 1px solid #c7c7c7;min-width: 340px;">
+      <div layout="row" layout-xs="column" style="background-color: #fff; border-right: 1px solid #c7c7c7;min-width: 340px;" >
         <md-content flex layout-padding style="height: 100%;background-color: #fff; padding: 0px;;">
           <md-list flex>
             <md-input-container style="width: 100%;margin: 25px 0px 0px 0px;height: 40px;">
@@ -108,8 +108,8 @@
           </md-list>
         </md-content>
       </div>
-      <div flex="" layout-padding style="background: #efefef;max-height: 495px; overflow-y: auto;border-top: 1px solid #c7c7c7;" >
-        <h3 ng-if="!md.has_semester">Contract closed.</h3>
+      <div flex="" layout-padding style="background: #efefef; overflow-y: auto;border-top: 1px solid #c7c7c7;">
+        <h3 ng-if="!md.has_semester" >Contract closed.</h3>
         <div ng-if="md.has_semester">
           <md-card style="margin: 0px;">
             <md-card-header>
@@ -171,6 +171,7 @@
                       md-selected-item-change="md.selectedAddressChange(address)"
                       md-items="address in md.addressSearchQuery(md.search_address)"
                       md-item-text="address.full_address"
+                      md-autoselect="true"
                       md-escape-options="clear"
                       md-require-match=""
                       md-floating-label="Address" ng-disabled="!md.degree_has_selected">
@@ -199,7 +200,7 @@
                   </md-input-container>
                 </div>
                 <div layout="row" layout-xs="column">
-                  <md-icon class="material-icons">apartment</md-icon>
+                  <md-icon class="material-icons">account_balance</md-icon>
                   <md-autocomplete flex
                     md-input-name="autocompleteField"
                     md-input-minlength="1"
@@ -211,6 +212,7 @@
                     md-selected-item-change="md.selectedSchoolChange(school)"
                     md-items="school in md.schoolSearchQuery(md.search_school)"
                     md-item-text="school.school_name"
+                    md-autoselect="true"
                     md-escape-options="clear"
                     md-require-match=""
                     md-floating-label="School" ng-disabled="!md.degree_has_selected">
@@ -270,6 +272,7 @@
                   md-selected-item-change="md.selectedFatherDetailsChange(fdetails)"
                   md-items="fdetails in md.fatherSearchQuery(md.search_flastname)"
                   md-item-text="fdetails.f_lastname"
+                  md-autoselect="true"
                   md-escape-options="clear"
                   md-floating-label="Lastname" ng-disabled="!md.degree_has_selected">
                   <md-item-template>
@@ -301,6 +304,7 @@
                   md-selected-item-change="md.selectedMotherDetailsChange(mdetails)"
                   md-items="mdetails in md.motherSearchQuery(md.search_mlastname)"
                   md-item-text="mdetails.m_lastname"
+                  md-autoselect="true"
                   md-escape-options="clear"
                   md-floating-label="Lastname" ng-disabled="!md.degree_has_selected">
                   <md-item-template>

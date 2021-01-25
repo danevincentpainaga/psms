@@ -95,6 +95,13 @@ angular
       controllerAs: 'c',
       Authenticated: true,
     })
+    .state('export', {
+      url: '/export',
+      templateUrl: 'src/views/export.html',
+      controller: 'scholarsListCtrl',
+      controllerAs: 'sc',
+      Authenticated: true,
+    })
   $urlRouterProvider.otherwise('/');
 
 })
@@ -147,9 +154,10 @@ require('../directives/colorContractDirective');
 
 require('../filters/filters');
 
+
+require('../factories/addScholarsService');
 require('../factories/debounce');
 require('../factories/momentFactory');
-
 
 require('../services/municipalitiesApiService');
 require('../services/alertDialog');

@@ -82,9 +82,9 @@
     </div>
   </md-toolbar>
 
-  <div layout="column" style="height: 90%;">
+  <div layout="column" ng-style="resize()" resize-add-scholars-div>
     <section layout="row" flex layout-xs="column">
-      <div layout="row" layout-xs="column" style="background-color: #fff; border-right: 1px solid #c7c7c7;min-width: 340px;">
+      <div layout="row" layout-xs="column" style="background-color: #fff; border-right: 1px solid #c7c7c7;min-width: 340px;" >
         <md-content flex layout-padding style="height: 100%;background-color: #fff; padding: 0px;;">
           <md-list flex>
             <md-input-container style="width: 100%;margin: 25px 0px 0px 0px;height: 40px;">
@@ -92,7 +92,7 @@
               <input type="text" ng-model="ac.scholar_lastname" style="text-transform: uppercase;">
             </md-input-container>
             <md-subheader class="md-no-sticky">Udergraduate list</md-subheader>
-            <div style="height: 355px; overflow-y: auto;">
+            <div style="overflow-y: auto;" ng-style="resizeList()" resize-md-list>
             <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top: 10px;" ng-if="!ac.scholars_loaded">
               <md-progress-circular md-diameter="25px"></md-progress-circular>
             </div>
@@ -174,6 +174,7 @@
                       md-selected-item-change="ac.selectedAddressChange(address)"
                       md-items="address in ac.addressSearchQuery(ac.search_address)"
                       md-item-text="address.full_address"
+                      md-autoselect="true"
                       md-escape-options="clear"
                       md-require-match=""
                       md-floating-label="Address">
@@ -201,7 +202,7 @@
                   </md-input-container>
                 </div>
                 <div layout="row" layout-xs="column">
-                  <md-icon class="material-icons">apartment</md-icon>
+                  <md-icon class="material-icons">account_balance</md-icon>
                   <md-autocomplete flex
                     md-input-name="autocompleteField"
                     md-input-minlength="1"
@@ -213,6 +214,7 @@
                     md-selected-item-change="ac.selectedSchoolChange(school)"
                     md-items="school in ac.schoolSearchQuery(ac.search_school)"
                     md-item-text="school.school_name"
+                    md-autoselect="true"
                     md-escape-options="clear"
                     md-require-match=""
                     md-floating-label="School">
@@ -272,6 +274,7 @@
                   md-selected-item-change="ac.selectedFatherDetailsChange(fdetails)"
                   md-items="fdetails in ac.fatherSearchQuery(ac.search_flastname)"
                   md-item-text="fdetails.f_lastname"
+                  md-autoselect="true"
                   md-escape-options="clear"
                   md-floating-label="Lastname">
                   <md-item-template>
@@ -303,6 +306,7 @@
                   md-selected-item-change="ac.selectedMotherDetailsChange(mdetails)"
                   md-items="mdetails in ac.motherSearchQuery(ac.search_mlastname)"
                   md-item-text="mdetails.m_lastname"
+                  md-autoselect="true"
                   md-escape-options="clear"
                   md-floating-label="Lastname">
                   <md-item-template>

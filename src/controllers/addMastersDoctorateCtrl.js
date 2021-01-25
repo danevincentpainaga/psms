@@ -9,43 +9,59 @@
  */ 
 
 var app = angular.module('psmsApp');
-app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$window', '$location', '$timeout', 'schoolApiService', 'addressApiService', 'scholarApiService', 'academicContractDetails', 'debounce', 'moment', 'swalert',
-  function ($scope, $rootScope, $cookies, $window, $location, $timeout, schoolApiService, addressApiService, scholarApiService, academicContractDetails, debounce, moment, swalert) {
+app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$window', '$location', '$timeout', 'schoolApiService', 'addressApiService', 'scholarApiService', 'academicContractDetails', 'debounce', 'moment', 'swalert', 'addScholarsService',
+  function ($scope, $rootScope, $cookies, $window, $location, $timeout, schoolApiService, addressApiService, scholarApiService, academicContractDetails, debounce, moment, swalert, addScholarsService) {
 
   var md = this;
   md.list_of_schools = [];
   md.degree = "";
 
+  $scope.$watch('md.scholar_lastname', debounce(function() {
+    md.scholars_loaded = false;
+    getNewMastersDoctorateScholars({ searched: md.scholar_lastname });
+  }, 500), true);
+
   md.clear = function(){
     md.degree = "";
-    clearInputs();
+    addScholarsService.clearInputs();
   }  
 
   md.saveNewMasterDoctorateDetails = function(){
 
-    let scholar_details = {
-      firstname: md.firstname.toUpperCase(),
-      lastname: md.lastname.toUpperCase(),  
-      middlename: md.middlename.toUpperCase(),
-      addressId: md.addressId,
-      date_of_birth: md.date_of_birth,
-      age: md.age,
-      gender: md.gender,
-      schoolId: md.schoolId,
-      course_section: md.course_section.toUpperCase(),
-      year_level: md.year_level,
-      student_id_number: md.student_id_number,
-      IP: md.IP,
-      fatherId: md.fatherId,
-      motherId: md.motherId,
-      degree: md.degree,
-      asc_id: academicContractDetails.ascId,
-      father:{ f_firstname: md.f_firstname.toUpperCase(), f_lastname: md.search_flastname.toUpperCase(), f_middlename: md.f_middlename.toUpperCase() },
-      mother:{ m_firstname: md.m_firstname.toUpperCase(), m_lastname: md.search_mlastname.toUpperCase(), m_middlename: md.m_middlename.toUpperCase() },
-    }
+    if (
+          md.firstname && md.lastname && md.middlename && md.addressId && md.date_of_birth
+          && md.age && md.gender && md.schoolId && md.course_section && md.year_level && md.student_id_number
+          && md.IP && academicContractDetails.ascId && md.search_flastname 
+          && md.f_firstname && md.f_middlename && md.search_mlastname && md.m_firstname && md.m_middlename
+      ) {
+        let scholar_details = {
+          firstname: md.firstname.toUpperCase(),
+          lastname: md.lastname.toUpperCase(),  
+          middlename: md.middlename.toUpperCase(),
+          addressId: md.addressId,
+          date_of_birth: md.date_of_birth,
+          age: md.age,
+          gender: md.gender,
+          schoolId: md.schoolId,
+          course_section: md.course_section.toUpperCase(),
+          year_level: md.year_level,
+          student_id_number: md.student_id_number,
+          IP: md.IP,
+          fatherId: md.fatherId,
+          motherId: md.motherId,
+          degree: md.degree,
+          asc_id: academicContractDetails.ascId,
+          father:{ f_firstname: md.f_firstname.toUpperCase(), f_lastname: md.search_flastname.toUpperCase(), f_middlename: md.f_middlename.toUpperCase() },
+          mother:{ m_firstname: md.m_firstname.toUpperCase(), m_lastname: md.search_mlastname.toUpperCase(), m_middlename: md.m_middlename.toUpperCase() },
+        }
+            
+        console.log(scholar_details);
+        saveNewScholarDetails(scholar_details);    
 
-    console.log(scholar_details);
-    saveNewScholarDetails(scholar_details);
+    }
+    else{
+      swalert.toastInfo('please complete the form', 'error', 'top-right', 4000);
+    }
   }
 
   md.selectedDegree = function(){
@@ -63,7 +79,6 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
       md.f_firstname = "";
       md.f_middlename = "";
     }
-    console.log(fdetails);
   }
 
   md.selectedMotherDetailsChange = function(mdetails){
@@ -76,7 +91,6 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
       md.m_firstname = "";
       md.m_middlename = "";
     }
-    console.log(mdetails);
   }
 
 
@@ -88,7 +102,6 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
       md.schoolId = null;
       md.search_school = "";
     }
-    console.log(school);
   }
 
   md.selectedAddressChange = function(address){
@@ -99,7 +112,6 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
       md.addressId = null;
       md.search_address = "";
     }
-    console.log(address);
   }
 
   md.searchSchoolChange = function(searched){
@@ -107,64 +119,24 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
   }
 
   md.selectedDateOfBirth = function(dateOfBirth){
-    md.age = calcAge(dateOfBirth);
+    md.age = addScholarsService.calcAge(dateOfBirth);
     md.displayedAge = md.age;
   }
 
   md.schoolSearchQuery = function(searched){
-    return getSearchedSchool(searched);
+     return addScholarsService.getSearchedSchool(searched);
   }
 
   md.addressSearchQuery = function(searched){
-    return getAddresses(searched);
+    return addScholarsService.getAddresses(searched);
   }
 
   md.motherSearchQuery = function(searched){
-    return getMotherList(searched);
+    return addScholarsService.getMotherList(searched);
   }
 
   md.fatherSearchQuery = function(searched){
-    return getFatherList(searched);
-  }
-
-  function getSearchedSchool(searched){
-    return schoolApiService.getSearchedSchool(searched).then(response=>{
-      return response.data;
-    }, err => {
-      console.log(err);
-    });
-  }
-
-  function calcAge(dateString) {
-    let birthday = +new Date(dateString);
-    return ~~((Date.now() - birthday) / (31557600000));
-  }
-
-  function getAddresses(data){
-    return addressApiService.getAddresses({searched: data}).then(response=>{
-      console.log(response.data);
-      return response.data;
-    }, err => {
-      console.log(err);
-    });
-  }
-
-  function getMotherList(data){
-    return scholarApiService.getMotherList({searched: data}).then(response=>{
-      console.log(response.data);
-      return response.data;
-    }, err => {
-      console.log(err);
-    });
-  }
-
-  function getFatherList(data){
-    return scholarApiService.getFatherList({searched: data}).then(response=>{
-      console.log(response.data);
-      return response.data;
-    }, err => {
-      console.log(err);
-    });
+    return addScholarsService.getFatherList(searched);
   }
 
   function saveNewScholarDetails(scholarDetails){
@@ -172,7 +144,7 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
       md.degree = "";
       md.degree_has_selected = false;
       console.log(response.data);
-      clearInputs();
+      addScholarsService.clearInputs();
       swalert.dialogBox('Scholar saved!', 'success', 'Success');
     }, err => {
       console.log(err);
@@ -187,36 +159,6 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
     }, err => {
       console.log(err);
     });    
-  }
-
-  $scope.$watch('md.scholar_lastname', debounce(function() {
-    md.scholars_loaded = false;
-    getNewMastersDoctorateScholars({ searched: md.scholar_lastname });
-  }, 500), true);
-
-  function clearInputs(){
-    md.firstname = "";
-    md.lastname = "";
-    md.middlename = "";
-    md.addressId = "";
-    md.address = "";
-    md.school = "";
-    md.date_of_birth = "";
-    md.age = "";
-    md.gender = "";
-    md.schoolId = "";
-    md.course_section = "";
-    md.year_level = "";
-    md.student_id_number = "";
-    md.IP = "";
-    md.fatherId = "";
-    md.motherId = "";
-    md.search_flastname = "";
-    md.f_firstname = "";
-    md.f_middlename = "";
-    md.search_mlastname = "";
-    md.m_firstname = "";
-    md.m_middlename = "";
   }
 
   function hasSemester(){
@@ -234,15 +176,3 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
   hasSemester();
 
 }]);
-
-app.factory('debounce', function($timeout) {
-    return function(callback, interval) {
-        var timeout = null;
-        return function() {
-            $timeout.cancel(timeout);
-            timeout = $timeout(function () { 
-                callback.apply(this, arguments); 
-            }, interval);
-        };
-    }; 
-});

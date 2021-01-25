@@ -86,6 +86,7 @@ app.controller('contractCtrl',['$scope', 'academicSemesterYearApiService', 'acad
 
   function getAcademicContractDetails(){
      academicContractService.getAcademicContractDetails().then(response => {
+        checkContractState(response.data[0].contract_state);
         c.contract_details = response.data;
         c.contract_status = c.contract_details[0].contract_state;
         console.log(c.contract_details);
@@ -96,7 +97,7 @@ app.controller('contractCtrl',['$scope', 'academicSemesterYearApiService', 'acad
 
   function setContract(details){
      academicContractService.setContract(details).then(response => {
-      console.log(response.data);
+      getAcademicYearList();
       swalert.dialogBox(response.data.message, 'success', 'Success');
     }, err => {
       console.log(err);
@@ -106,7 +107,7 @@ app.controller('contractCtrl',['$scope', 'academicSemesterYearApiService', 'acad
 
   function closeContract(){
      academicContractService.closeContract().then(response => {
-      console.log(response.data);
+      getAcademicYearList();
       swalert.dialogBox(response.data.message, 'success', 'Success');
     }, err => {
       console.log(err);
@@ -116,6 +117,7 @@ app.controller('contractCtrl',['$scope', 'academicSemesterYearApiService', 'acad
 
   function openContract(){
      academicContractService.openContract().then(response => {
+      getAcademicYearList();
       swalert.dialogBox(response.data.message, 'success', 'Success');
     }, err => {
       swalert.dialogBox(err.data.message, 'error', 'Failed');
@@ -132,6 +134,11 @@ app.controller('contractCtrl',['$scope', 'academicSemesterYearApiService', 'acad
 
   function updateOrSave(){
     c.buttonText == 'ADD'? saveAcademicYearList({ semester: c.semester, academic_year: c.academic_year }) : updateAcademicYearList({ asc_id: c.asc_id, semester: c.semester, academic_year: c.academic_year });
+  }
+
+  function checkContractState(contract_state){
+    c.showOpenContractBtn = contract_state == 'Open'? false : true;
+
   }
 
   getAcademicYearList();

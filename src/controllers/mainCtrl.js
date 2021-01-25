@@ -63,20 +63,89 @@ angular
   }
 }]);
 
-// angular.module('psmsApp').directive('showActionBtn',[ function(){
-//   return{
-//     restrict:'A',
-//     link: function(scope, elem, atrrs){
+angular
+  .module('psmsApp').directive('resizeDiv', ['$window', function ($window) {
+    return function (scope, element) {
+        var w = angular.element($window);
+        scope.getWindowDimensions = function () {
+            return {
+                'h': $window.innerHeight,
+                'w': $window.innerwidth,
+            };
+        };
+        scope.$watch(scope.getWindowDimensions, function (newValue, oldValue) {
+            scope.windowHeight = newValue.h;
+            scope.windowWidth = newValue.w;
+            console.log(scope.windowHeight);
+            
+            scope.resizeDiv = function () {
+                return {
+                  'min-height': (newValue.h - 170) + 'px',
+                  'max-height': (newValue.h - 170) + 'px'
+                };
+            };
+        }, true);
 
-//         let target = elem.find("span").eq(0);
+        w.bind('resizeDiv', function () {
+            scope.$apply();
+        });
+    }
+}]);
 
-//         elem.on('mouseover', function(){
-//           $(target).css({'display': 'inline'});
-//         });
+angular
+  .module('psmsApp').directive('resizeAddScholarsDiv', ['$window', function ($window) {
+    return function (scope, element) {
+        var w = angular.element($window);
+        scope.getWindowDimensions = function () {
+            return {
+                'h': $window.innerHeight,
+                'w': $window.innerwidth,
+            };
+        };
+        scope.$watch(scope.getWindowDimensions, function (newValue, oldValue) {
+            scope.windowHeight = newValue.h;
+            scope.windowWidth = newValue.w;
+            console.log(scope.windowHeight);
+            
+            scope.resize = function () {
+                return {
+                  'min-height': (newValue.h - 162) + 'px',
+                  'max-height': (newValue.h - 162) + 'px'
+                };
+            };
+        }, true);
 
-//         elem.on('mouseout', function(){
-//           $(target).css({'display': 'none'});
-//         });
-//     }
-//   }
-// }]);
+        w.bind('resize', function () {
+            scope.$apply();
+        });
+    }
+}]);
+
+angular
+  .module('psmsApp').directive('resizeMdList', ['$window', function ($window) {
+    return function (scope, element) {
+        var w = angular.element($window);
+        scope.getWindowDimensions = function () {
+            return {
+                'h': $window.innerHeight,
+                'w': $window.innerwidth,
+            };
+        };
+        scope.$watch(scope.getWindowDimensions, function (newValue, oldValue) {
+            scope.windowHeight = newValue.h;
+            scope.windowWidth = newValue.w;
+            console.log(scope.windowHeight);
+            
+            scope.resizeList = function () {
+                return {
+                  'min-height': (newValue.h - 297) + 'px',
+                  'max-height': (newValue.h - 297) + 'px'
+                };
+            };
+        }, true);
+
+        w.bind('resizeList', function () {
+            scope.$apply();
+        });
+    }
+}]);

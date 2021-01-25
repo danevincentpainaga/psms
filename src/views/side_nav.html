@@ -41,9 +41,13 @@
       <md-icon class="material-icons" style="margin-right: 15px;">leaderboard</md-icon>
       <p style="margin-top: 5px;"> Reports</p>
     </md-list-item>
-    <md-list-item ng-click="navigateTo(setting.extraScreen, $event)" >
+    <md-list-item ng-click="navigateTo('/schools')">
       <md-icon class="material-icons" style="margin-right: 15px;">cloud_upload</md-icon>
       <p style="margin-top: 5px;"> Import</p>
+    </md-list-item>
+    <md-list-item ng-click="navigateTo('/export')">
+      <md-icon class="material-icons" style="margin-right: 15px;">system_update_alt</md-icon>
+      <p style="margin-top: 5px;"> Export</p>
     </md-list-item>
   </md-content>
 </md-sidenav>

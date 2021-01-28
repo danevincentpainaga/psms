@@ -173,13 +173,13 @@
                       md-delay="500"
                       md-selected-item-change="ac.selectedAddressChange(address)"
                       md-items="address in ac.addressSearchQuery(ac.search_address)"
-                      md-item-text="address.full_address"
+                      md-item-text="address.address"
                       md-autoselect="true"
                       md-escape-options="clear"
                       md-require-match=""
                       md-floating-label="Address">
                       <md-item-template>
-                        <span md-highlight-text="ac.search_address" md-highlight-flags="^i">{{address.full_address}}</span>
+                        <span md-highlight-text="ac.search_address" md-highlight-flags="^i">{{address.address}}</span>
                       </md-item-template>
                       <md-not-found>
                         No address matching "{{ac.search_address}}" were found.
@@ -272,15 +272,15 @@
                   md-delay="500"
                   md-selected-item-change="ac.selectedFatherDetailsChange(fdetails)"
                   md-items="fdetails in ac.fatherSearchQuery(ac.search_flastname)"
-                  md-item-text="fdetails.f_lastname"
+                  md-item-text="fdetails.lastname"
                   md-autoselect="true"
                   md-escape-options="clear"
                   md-floating-label="Lastname">
                   <md-item-template>
-                    <span md-highlight-text="ac.search_flastname">{{fdetails.f_lastname}}, {{fdetails.f_firstname}}{{fdetails.f_middlename}}</span>
+                    <span md-highlight-text="ac.search_flastname">{{fdetails.lastname}}, {{fdetails.firstname}}{{fdetails.middlename}}</span>
                   </md-item-template>
                   <md-not-found>
-                    No records matching "{{ac.search_school}}" were found.
+                    No records matching "{{ac.search_flastname}}" were found.
                   </md-not-found>
                 </md-autocomplete>
                 <md-input-container flex="">
@@ -304,12 +304,12 @@
                   md-delay="500"
                   md-selected-item-change="ac.selectedMotherDetailsChange(mdetails)"
                   md-items="mdetails in ac.motherSearchQuery(ac.search_mlastname)"
-                  md-item-text="mdetails.m_lastname"
+                  md-item-text="mdetails.lastname"
                   md-autoselect="true"
                   md-escape-options="clear"
                   md-floating-label="Lastname">
                   <md-item-template>
-                    <span md-highlight-text="ac.search_mlastname">{{mdetails.m_lastname}}, {{mdetails.m_firstname}}{{mdetails.m_middlename}}</span>
+                    <span md-highlight-text="ac.search_mlastname">{{mdetails.lastname}}, {{mdetails.firstname}}{{mdetails.middlename}}</span>
                   </md-item-template>
                   <md-not-found>
                     No records matching "{{ac.search_school}}" were found.

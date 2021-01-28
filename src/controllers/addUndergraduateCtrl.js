@@ -48,14 +48,13 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
             year_level: ac.year_level,
             student_id_number: ac.student_id_number.toUpperCase(),
             IP: ac.IP,
-            fatherId: ac.fatherId,
-            motherId: ac.motherId,
             degree: "Undergraduate",
             asc_id: academicContractDetails.ascId,
-            father:{ f_firstname: ac.f_firstname.toUpperCase(), f_lastname: ac.search_flastname.toUpperCase(), f_middlename: ac.f_middlename.toUpperCase() },
-            mother:{ m_firstname: ac.m_firstname.toUpperCase(), m_lastname: ac.search_mlastname.toUpperCase(), m_middlename: ac.m_middlename.toUpperCase() },
+            father_details:{ firstname: ac.f_firstname.toUpperCase(), lastname: ac.search_flastname.toUpperCase(), middlename: ac.f_middlename.toUpperCase(), occupation: "" },
+            mother_details:{ firstname: ac.m_firstname.toUpperCase(), lastname: ac.search_mlastname.toUpperCase(), middlename: ac.m_middlename.toUpperCase(), occupation: "" },
           }
 
+          console.log(scholar_details);
           saveNewScholarDetails(scholar_details);
 
     }
@@ -75,9 +74,8 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
 
   ac.selectedFatherDetailsChange = function(fdetails){
     if (ac.father) {
-      ac.fatherId = fdetails.father_details_id;
-      ac.f_firstname = fdetails.f_firstname;
-      ac.f_middlename = fdetails.f_middlename;
+      ac.f_firstname = fdetails.firstname;
+      ac.f_middlename = fdetails.middlename;
     }
     else{
       ac.f_firstname = "";
@@ -87,9 +85,8 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
 
   ac.selectedMotherDetailsChange = function(mdetails){
     if (ac.mother) {
-      ac.motherId = mdetails.mother_details_id;
-      ac.m_firstname = mdetails.m_firstname;
-      ac.m_middlename = mdetails.m_middlename;
+      ac.m_firstname = mdetails.firstname;
+      ac.m_middlename = mdetails.middlename;
     }
     else{
       ac.m_firstname = "";
@@ -141,11 +138,13 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
 
   function saveNewScholarDetails(scholarDetails){
      scholarApiService.saveNewScholarDetails(scholarDetails).then(response => {
-      addScholarsService.clearInputs(this);
+      addScholarsService.clearInputs(ac);
       ac.buttonText = 'Save';
       swalert.dialogBox('Scholar saved!', 'success', 'Success');
       print(scholarDetails);
     }, err => {
+      ac.buttonText = 'Save';
+      swalert.dialogBox('Failed!', 'error', 'error');
       console.log(err);
     });
   }

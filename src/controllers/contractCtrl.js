@@ -97,6 +97,7 @@ app.controller('contractCtrl',['$scope', 'academicSemesterYearApiService', 'acad
 
   function setContract(details){
      academicContractService.setContract(details).then(response => {
+      console.log(response.data);
       getAcademicYearList();
       swalert.dialogBox(response.data.message, 'success', 'Success');
     }, err => {

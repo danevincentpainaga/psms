@@ -8,21 +8,19 @@
 
     <label class="md-subhead">Dane Vincent Painaga</label>
 
-
     <md-menu md-position-mode="target-right target">
-      <md-button aria-label="Open demo menu" class="md-icon-button"
-                 ng-click="$mdMenu.open($event)">
-        <md-icon class="material-icons">power_settings_new</md-icon>
+      <md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdMenu.open($event)" style="padding: 6px !important;">
+        <img ng-src="images/user-10.jpg" style="max-width: 30px;border-radius: 100%;border: 2px solid #ffff;">
       </md-button>
       <md-menu-content>
         <md-menu-item>
-          <md-button ng-click="ctrl.announceClick($index)"><span
-              md-menu-align-target>Settings</span>
+          <md-button ng-click="ctrl.announceClick($index)">
+            <span md-menu-align-target>Settings</span>
           </md-button>
         </md-menu-item>
         <md-menu-item >
-          <md-button ng-click="logout()"><span
-              md-menu-align-target>Logout</span>
+          <md-button ng-click="logout()">
+            <span md-menu-align-target>Logout</span>
           </md-button>
         </md-menu-item>
       </md-menu-content>

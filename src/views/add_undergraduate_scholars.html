@@ -2,7 +2,7 @@
   <md-toolbar class="md-menu-toolbar">
     <div layout="row">
       <md-toolbar-filler style="display: flex;">
-        <md-icon class="material-icons">content_paste</md-icon>
+        <md-icon class="material-icons">group</md-icon>
       </md-toolbar-filler>
       <div>
         <h2 class="md-toolbar-tools">Undergraduate</h2>
@@ -208,7 +208,6 @@
                     md-input-minlength="1"
                     md-no-cache="ac.noCache"
                     md-selected-item="ac.school"
-                    md-search-text-change="ac.searchSchoolChange(ac.search_school)"
                     md-search-text="ac.search_school"
                     md-delay="500"
                     md-selected-item-change="ac.selectedSchoolChange(school)"
@@ -327,7 +326,7 @@
               </div>
             </md-card-content>
             <div style="width: 100%;text-align: right;">
-              <md-button class="md-raised md-primary" ng-click="ac.saveNewScholarDetails()">Save</md-button>
+              <md-button class="md-raised md-primary" ng-click="ac.saveNewScholarDetails()">{{ ac.buttonText }}</md-button>
               <md-button class="md-raised" ng-click="ac.clear()">Clear</md-button>
             </div>
           </md-card>  
@@ -336,3 +335,4 @@
     </section>
   </div>
 </div>
+<edit-scholar scholar="ac.scholar_to_edit"></edit-scholar>

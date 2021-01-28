@@ -98,8 +98,8 @@ angular
     .state('export', {
       url: '/export',
       templateUrl: 'src/views/export.html',
-      controller: 'scholarsListCtrl',
-      controllerAs: 'sc',
+      controller: 'exportScholarsCtrl',
+      controllerAs: 'ex',
       Authenticated: true,
     })
   $urlRouterProvider.otherwise('/');
@@ -145,6 +145,7 @@ require('angular-material');
 require('angular-animate');
 require('angular-aria');
 
+require('../directives/fixedColumnTableDirective');
 require('../directives/addSchoolDirective');
 require('../directives/addDoubleSlashesDirective');
 require('../directives/colorDegreeDirective');
@@ -180,3 +181,5 @@ require('../controllers/addSchoolCtrl');
 require('../controllers/updateSchoolCtrl');
 require('../controllers/userAccountsCtrl');
 require('../controllers/contractCtrl');
+require('../controllers/exportScholarsCtrl');
+require('../controllers/editScholarCtrl');

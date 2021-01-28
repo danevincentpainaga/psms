@@ -149,3 +149,17 @@ angular
         });
     }
 }]);
+
+
+angular
+.module('psmsApp').directive('editScholar',[ function($mdSidenav){
+  return{
+    restrict:'E',
+    scope:{
+      scholar:"="
+    },
+    controller:'editScholarCtrl',
+    controllerAs: 'ec',
+    templateUrl: 'src/views/edit_scholar.html',
+  }
+}]);

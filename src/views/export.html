@@ -14,13 +14,13 @@
             <md-menu-content>
               <md-menu-item class="md-indent">
                 <md-icon class="material-icons">person_add</md-icon>
-                <md-button ng-click="sc.exportMasterlist()">
+                <md-button ng-click="ex.exportMasterlist()">
                   Masterlist
                 </md-button>
               </md-menu-item>
               <md-menu-item class="md-indent">
                 <md-icon class="material-icons">speaker_notes</md-icon>
-                <md-button ng-click="sc.exportNormal()">
+                <md-button ng-click="ex.exportNormal()">
                   Normal
                 </md-button>
               </md-menu-item>
@@ -30,29 +30,29 @@
       </div>
     </div>
   </md-toolbar>
-        <md-progress-linear md-mode="indeterminate" ng-if="!sc.scholars_loaded"></md-progress-linear>
+        <md-progress-linear md-mode="indeterminate" ng-if="!ex.scholars_loaded"></md-progress-linear>
         <div layout="column" layout-xs="column" style="background-color: #fff; border-right: 1px solid #c7c7c7; overflow: auto;">
           <div flex>
-                <md-table-container  ng-style="resizeDiv()" resize-div>
+                <md-table-container  ng-style="resizeDiv()" resize-div  class="container" fixed-column-table>
                   <table md-table>
-                    <thead md-head md-order="myOrder" style="background: #dddddd;box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);">
+                    <thead md-head md-order="myOrder" style="background: #dddddd;box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12); position: relative; z-index: 1;">
                       <tr md-row>
                         <th md-column md-numeric style="background-color: #dddddd;"><span>No.</span></th>
                         <th md-column md-numeric style="min-width: 310px;">
-                          <input type="text" ng-model="sc.scholar_lastname" style="width:80%;height: 18px;outline: none;" placeholder="Name">
+                          <input type="text" ng-model="ex.scholar_lastname" style="width:80%;height: 18px;outline: none;" placeholder="Name">
                         </th>
                         <th md-column md-numeric>Date of Birth</th>
                         <th md-column md-numeric>Age</th>
                         <th md-column md-numeric>Gender</th>
                         <th md-column md-numeric style="min-width: 75px;">
-                          <select ng-model="sc.status" style="width: 100%;height: 22px;outline: none;" ng-change="sc.selectedStatus(sc.status)">
+                          <select ng-model="ex.status" style="width: 100%;height: 22px;outline: none;" ng-change="ex.selectedStatus(ex.status)">
                             <option>Status</option>
                             <option value="NEW">NEW</option>
                             <option value="OLD">OLD</option>
                           </select>
                         </th>
                         <th md-column md-numeric style="min-width: 117px;">
-                          <select ng-model="sc.contract_status" style="width: 90%;height: 22px;outline: none;" ng-change="sc.selectedContractStatus(sc.contract_status)">
+                          <select ng-model="ex.contract_status" style="width: 90%;height: 22px;outline: none;" ng-change="ex.selectedContractStatus(ex.contract_status)">
                             <option>Contract status</option>
                             <option value="Pre-Approved">Pre-Approved</option>
                             <option value="Approved">Approved</option>
@@ -62,17 +62,17 @@
                         </th>
                         <th md-column md-numeric >Address</th>
                         <th md-column md-numeric style="min-width: 117px;">
-                          <select ng-model="sc.municipality" style="width: 90%;height: 22px;outline: none;" ng-change="sc.selectedMunicipality(sc.municipality)">
+                          <select ng-model="ex.municipality" style="width: 90%;height: 22px;outline: none;" ng-change="ex.selectedMunicipality(ex.municipality)">
                             <option>Municipality</option>
-                            <option ng-value="mun.municipality" ng-repeat="mun in sc.municipalities">{{ mun.municipality }}</option>
+                            <option ng-value="mun.municipality" ng-repeat="mun in ex.municipalities">{{ mun.municipality }}</option>
                           </select>
                         </th>
                         <th md-column md-numeric>Father</th>
                         <th md-column md-numeric>Mother</th>
                         <th md-column md-numeric style="min-width: 117px;">
-                          <select ng-model="sc.degree" style="width: 90%;height: 22px;outline: none;" ng-change="sc.selectedDegree(sc.degree)">
+                          <select ng-model="ex.degree" style="width: 90%;height: 22px;outline: none;" ng-change="ex.selectedDegree(ex.degree)">
                             <option>Degree</option>
-                            <option ng-value="degree" ng-repeat="degree in sc.access_degree">{{ degree }}</option>
+                            <option ng-value="degree" ng-repeat="degree in ex.access_degree">{{ degree }}</option>
                           </select>
                         </th>
                         <th md-column md-numeric>Course</th>
@@ -87,7 +87,7 @@
                       </tr>
                     </thead>
                     <tbody md-body >
-                      <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="scholar in sc.scholars | orderBy: myOrder track by $index">
+                      <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="scholar in ex.scholars | filter:{ lastname: ex.scholar_lastname } track by $index">
                         <td md-cell style="background-color: #f6c08e;">{{ $index+1 }}.</td>
                         <td md-cell>
                           <img ng-src="images/avatarmale.svg" style="max-width:27px;">

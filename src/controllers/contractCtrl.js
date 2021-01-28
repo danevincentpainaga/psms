@@ -138,7 +138,6 @@ app.controller('contractCtrl',['$scope', 'academicSemesterYearApiService', 'acad
 
   function checkContractState(contract_state){
     c.showOpenContractBtn = contract_state == 'Open'? false : true;
-
   }
 
   getAcademicYearList();

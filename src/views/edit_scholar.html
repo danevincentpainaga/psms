@@ -1,0 +1,215 @@
+<md-sidenav class="md-sidenav-right" md-component-id="right" md-disable-close-events style="min-width: 70%;">
+  <md-toolbar class="md-theme-light">
+    <h1 class="md-toolbar-tools">Edit</h1>
+  </md-toolbar>
+  <md-content layout-padding style="background-color: #efefef;font-size: 13px;">
+    <md-card style="margin: 0px; padding: 8px;">
+      <md-card-header>
+        <md-card-avatar>
+          <md-icon class="material-icons" style="margin-right: 15px; background-color: #616dc3;">groups</md-icon>
+        </md-card-avatar>
+        <md-card-header-text>
+          <span class="md-title">Details</span>
+          <span class="md-subhead">Undergraduate</span>
+        </md-card-header-text>
+        <md-card-header-text style="text-align: right;">
+          <span class="md-subhead" style="color: #008300;">AY - {{ ec.academic_year }}</span>
+          <span class="md-subhead">{{ ec.semester }}</span>
+        </md-card-header-text>
+      </md-card-header>
+      <md-card-content style="padding: 0px 16px;" >
+        <form name="primary_details">
+          <div layout="row" layout-xs="column">
+              <div flex="15">
+              <div layout="column">
+                <img src="images/user-4.jpg" style="max-width: 100px;border: 2px solid #e3e3e3;">
+              </div>
+              </div>
+              <md-input-container flex="">
+                <label>Firstname</label>
+                <md-icon class="material-icons">how_to_reg</md-icon>
+                <input type="text" ng-model="ec.firstname">
+              </md-input-container>
+
+              <md-input-container flex="">
+                <label>Lastname</label>
+                <textarea ng-model="ec.lastname"></textarea>
+              </md-input-container>
+
+              <md-input-container flex="">
+                <label>Middlename</label>
+                <textarea ng-model="ec.middlename"></textarea>
+              </md-input-container>
+          </div>
+          <div layout="row" layout-xs="column">
+            <div style="display: flex;width: 100%;position: relative;">
+              <md-icon class="material-icons">place</md-icon>
+              <md-autocomplete flex
+                md-input-name="autocompleteField"
+                md-input-minlength="1"
+                md-no-cache="ec.noCache"
+                md-selected-item="ec.address"
+                md-search-text="ec.search_address"
+                md-delay="500"
+                md-selected-item-change="ec.selectedAddressChange(address)"
+                md-items="address in ec.addressSearchQuery(ec.search_address)"
+                md-item-text="address.full_address"
+                md-escape-options="clear"
+                md-require-match=""
+                md-floating-label="Address">
+                <md-item-template>
+                  <span md-highlight-text="ec.search_address" md-highlight-flags="^i">{{address.full_address}}</span>
+                </md-item-template>
+                <md-not-found>
+                  No address matching "{{ec.search_address}}" were found.
+                </md-not-found>
+              </md-autocomplete>
+            </div>
+            <md-input-container flex="20">
+              <label>Date of Birth</label>
+              <input type="text" ng-model="ec.date_of_birth" add-double-slashes-directive />
+            </md-input-container>
+            <md-input-container flex="10">
+              <label>Age</label>
+              <textarea ng-model="ec.displayedAge" disabled></textarea>
+            </md-input-container>
+            <md-input-container flex="20">
+              <label>Gender</label>
+              <md-select ng-model="ec.gender">
+                <md-option value="Male"><em>Male</em></md-option>
+                <md-option value="Female"><em>Female</em></md-option>
+              </md-select>
+            </md-input-container>
+          </div>
+          <div layout="row" layout-xs="column">
+            <md-icon class="material-icons">apartment</md-icon>
+            <md-autocomplete flex
+              md-input-name="autocompleteField"
+              md-input-minlength="1"
+              md-no-cache="ec.noCache"
+              md-selected-item="ec.school"
+              md-search-text="ec.search_school"
+              md-delay="500"
+              md-selected-item-change="ec.selectedSchoolChange(school)"
+              md-items="school in ec.schoolSearchQuery(ec.search_school)"
+              md-item-text="school.school_name"
+              md-escape-options="clear"
+              md-require-match=""
+              md-floating-label="School">
+              <md-item-template>
+                <span md-highlight-text="ec.search_school" md-highlight-flags="^i">{{school.school_name}}</span>
+              </md-item-template>
+              <md-not-found>
+                No states matching "{{ec.search_school}}" were found.
+              </md-not-found>
+            </md-autocomplete>
+            <md-input-container flex="40">
+              <label>Course & Section</label>
+              <textarea ng-model="ec.course_section"></textarea>
+            </md-input-container>
+          </div>
+          <div layout="row" layout-xs="column">
+            <md-input-container flex>
+              <label>Year level.</label>
+              <md-select ng-model="ec.year_level">
+                <md-option value="1st year"><em>1st year</em></md-option>
+                <md-option value="2nd year"><em>2nd year</em></md-option>
+                <md-option value="3rd year"><em>3rd year</em></md-option>
+                <md-option value="4th year"><em>4th year</em></md-option>
+                <md-option value="5th year"><em>5th year</em></md-option>
+                <md-option value="6th year"><em>6th year</em></md-option>
+                <md-option value="7th year"><em>7th year</em></md-option>
+              </md-select>
+            </md-input-container>
+            <md-input-container flex="30">
+              <label>ID NO.</label>
+              <textarea ng-model="ec.student_id_number"></textarea>
+            </md-input-container>
+            <md-input-container flex="20">
+              <label>IP.</label>
+              <md-select ng-model="ec.IP">
+                <md-option value="YES"><em>YES</em></md-option>
+                <md-option value="NO"><em>NO</em></md-option>
+              </md-select>
+            </md-input-container>
+          </div>
+        </form>
+      </md-card-content>
+      <div style="width: 100%;text-align: right;">
+        <md-button class="md-raised md-primary" ng-click="ec.updateScholarPrimaryDetails()">Update</md-button>
+      </div>
+    </md-card>
+    <md-card style="margin: 5px 0px;">
+      <md-card-content style="padding: 15px 16px 0px 16px;">
+        <p>Father's Details</p>
+        <div layout="row" layout-xs="column">
+          <md-icon class="material-icons">accessibility_new</md-icon>
+          <md-autocomplete flex 
+            md-input-name="autocompleteField"
+            md-input-minlength="2"
+            md-no-cache="ec.noCache"
+            md-selected-item="ec.father"
+            md-search-text="ec.search_flastname"
+            md-delay="500"
+            md-selected-item-change="ec.selectedFatherDetailsChange(fdetails)"
+            md-items="fdetails in ec.fatherSearchQuery(ec.search_flastname)"
+            md-item-text="fdetails.f_lastname"
+            md-escape-options="clear"
+            md-floating-label="Lastname">
+            <md-item-template>
+              <span md-highlight-text="ec.search_flastname">{{fdetails.f_lastname}}, {{fdetails.f_firstname}}{{fdetails.f_middlename}}</span>
+            </md-item-template>
+            <md-not-found>
+              No records matching "{{ec.search_school}}" were found.
+            </md-not-found>
+          </md-autocomplete>
+          <md-input-container flex="">
+            <label>Firstname</label>
+            <input type="text" ng-model="ec.f_firstname" >
+          </md-input-container>
+          <md-input-container flex="">
+            <label>Middlename</label>
+            <input type="text" ng-model="ec.f_middlename" >
+          </md-input-container>
+        </div>    
+        <p>Mother's Details</p>
+        <div layout="row" layout-xs="column">
+          <md-icon class="material-icons">pregnant_woman</md-icon>
+          <md-autocomplete flex 
+            md-input-name="autocompleteField"
+            md-input-minlength="2"
+            md-no-cache="ec.noCache"
+            md-selected-item="ec.mother"
+            md-search-text="ec.search_mlastname"
+            md-delay="500"
+            md-selected-item-change="ec.selectedMotherDetailsChange(mdetails)"
+            md-items="mdetails in ec.motherSearchQuery(ec.search_mlastname)"
+            md-item-text="mdetails.m_lastname"
+            md-escape-options="clear"
+            md-floating-label="Lastname">
+            <md-item-template>
+              <span md-highlight-text="ec.search_mlastname">{{mdetails.m_lastname}}, {{mdetails.m_firstname}}{{mdetails.m_middlename}}</span>
+            </md-item-template>
+            <md-not-found>
+              No records matching "{{ec.search_school}}" were found.
+            </md-not-found>
+          </md-autocomplete>
+          <md-input-container flex="">
+            <label>Firstname</label>
+            <input type="text" ng-model="ec.m_firstname" >
+          </md-input-container>
+          <md-input-container flex="">
+            <label>Middlename</label>
+            <input type="text" ng-model="ec.m_middlename" >
+          </md-input-container>
+        </div>
+      </md-card-content>
+      <div style="width: 100%;text-align: right;">
+        <md-button class="md-raised md-primary" ng-click="ec.updateScholarParentsDetails()">Update</md-button>
+      </div>
+    </md-card>  
+    <md-button ng-click="ec.close()" class="md-warn">
+      Close
+    </md-button>
+  </md-content>
+</md-sidenav>

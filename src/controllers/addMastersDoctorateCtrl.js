@@ -2,9 +2,9 @@
 
 /**
  * @ngdoc function
- * @name psmsApp.controller:addUndergraduateCtrl
+ * @name psmsApp.controller:addMastersDoctorateCtrl
  * @description
- * # addUndergraduateCtrl
+ * # addMastersDoctorateCtrl
  * Controller of the psmsApp
  */ 
 
@@ -23,7 +23,8 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
 
   md.clear = function(){
     md.degree = "";
-    addScholarsService.clearInputs();
+    md.degree_has_selected = false;
+    addScholarsService.clearInputs(this);
   }  
 
   md.saveNewMasterDoctorateDetails = function(){
@@ -55,7 +56,6 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
           mother:{ m_firstname: md.m_firstname.toUpperCase(), m_lastname: md.search_mlastname.toUpperCase(), m_middlename: md.m_middlename.toUpperCase() },
         }
             
-        console.log(scholar_details);
         saveNewScholarDetails(scholar_details);    
 
     }
@@ -114,10 +114,6 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
     }
   }
 
-  md.searchSchoolChange = function(searched){
-    console.log(searched);
-  }
-
   md.selectedDateOfBirth = function(dateOfBirth){
     md.age = addScholarsService.calcAge(dateOfBirth);
     md.displayedAge = md.age;
@@ -143,8 +139,8 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
      scholarApiService.saveNewScholarDetails(scholarDetails).then(response => {
       md.degree = "";
       md.degree_has_selected = false;
-      console.log(response.data);
-      addScholarsService.clearInputs();
+      addScholarsService.clearInputs(this);
+      ac.buttonText = 'Save';
       swalert.dialogBox('Scholar saved!', 'success', 'Success');
     }, err => {
       console.log(err);
@@ -153,7 +149,6 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
 
   function getNewMastersDoctorateScholars(searched){
      scholarApiService.getNewMastersDoctorateScholars(searched).then(response => {
-      console.log(response.data);
       md.scholars = response.data;
       md.scholars_loaded = true;
     }, err => {

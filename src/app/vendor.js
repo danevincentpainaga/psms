@@ -4,6 +4,7 @@ import $ from 'jquery';
 window.jQuery = $;
 window.$ = $;
 
+// import 'jquery/dist/jquery.min.js';
 import angular from 'angular';
 import '@uirouter/angularjs/release/angular-ui-router.min.js';
 import '@uirouter/angularjs/lib/legacy/stateEvents.js';

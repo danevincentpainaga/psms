@@ -15,30 +15,7 @@ md-backdrop{
 	position: fixed;
 }
 
-table{
-	thead{
-		&:nth-child(1){
-			th{
-				padding: 0 15px 0px 7px !important;
-				text-align: left !important;
-			}
-		}
-	}
-	th{
-	    padding: 0 10px !important;
-        text-align: center !important;
-	}
-	tbody{
-		td{
-			&:not(:nth-child(1)){
-				padding: 0 35px 0px 7px !important;
-				text-align: left !important;
-				font-size: 12px !important;
-			}
-			white-space:nowrap;
-		}
-	}
-}
+
 
 .spinner-loader{
 	height: 100%;
@@ -82,4 +59,70 @@ table{
     border-radius:50%;
     -webkit-animation: spin .8s linear infinite;
     animation: spin .8s linear infinite;
+}
+
+
+.container {
+  position: relative;
+}
+/*
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+  position: absolute;
+  width: 100%;
+}
+*/
+
+table{
+  thead{
+    background: #dddddd;
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
+    position: relative; 
+    z-index: 1;
+
+    tr{
+      th{
+        &:nth-child(1){
+            padding: 0 15px 0px 7px !important;
+            text-align: center !important;
+        }
+        &:nth-child(1), &:nth-child(2){
+          border-right: 1px solid #ccc !important;
+        }
+      }
+    }
+  }
+  tbody{
+    tr{
+      th{
+        padding: 0 10px !important;
+        text-align: center !important;
+
+        &:nth-child(1), &:nth-child(2){
+          border-right: 1px solid #ccc !important;
+        }
+      }
+      td {
+        background: #fff;
+        &:nth-child(1){
+          text-align: center !important;
+        }
+        &:nth-child(1), &:nth-child(2){
+          border-right: 1px solid #ccc !important;
+        }
+        &:not(:nth-child(1)){
+          padding: 0 35px 0px 7px !important;
+          text-align: left !important;
+          font-size: 12px !important;
+        }
+        white-space:nowrap;
+      }
+    }
+  }
+}
+
+th,
+.fixed-cell {
+  background: #eee;
 }

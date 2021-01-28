@@ -182,7 +182,6 @@ app.controller('scholarsListCtrl',['$scope', '$rootScope', '$cookies', '$window'
   function getMunicipalities(){
     municipalitiesApiService.getMunicipalities()
       .then(response=>{
-        console.log(response);
         sc.municipalities = response.data;
       }, err=> {
         console.log(err);
@@ -192,7 +191,6 @@ app.controller('scholarsListCtrl',['$scope', '$rootScope', '$cookies', '$window'
   function getDegrees(){
     scholarApiService.getDegrees()
       .then(response=>{
-        console.log(response);
         sc.access_degree = response.data;
       }, err=> {
         console.log(err);

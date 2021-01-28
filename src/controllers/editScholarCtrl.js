@@ -30,15 +30,16 @@ app.controller('editScholarCtrl', ['$scope', '$rootScope', '$mdDialog', 'addScho
     	ec.year_level = n.year_level;
     	ec.student_id_number = n.student_id_number;
     	ec.IP = n.IP;
-    	ec.search_address = n.address.barangay_name+' '+n.address.municipality;
+    	ec.search_address = n.address.address;
     	ec.search_school = n.school.school_name;
     	ec.course_section = n.course_section;
-    	ec.search_flastname = n.father.f_lastname;
-    	ec.f_firstname = n.father.f_firstname;
-    	ec.f_middlename = n.father.f_middlename;
-    	ec.search_mlastname = n.mother.m_lastname;
-    	ec.m_firstname = n.mother.m_firstname;
-    	ec.m_middlename = n.mother.m_middlename;
+    	ec.search_flastname = n.father_details.lastname;
+    	ec.f_firstname = n.father_details.firstname;
+    	ec.f_middlename = n.father_details.middlename;
+    	ec.search_mlastname = n.mother_details.lastname;
+    	ec.m_firstname = n.mother_details.firstname;
+    	ec.m_middlename = n.mother_details.middlename;
+      ec.degree = n.degree;
 
 		  $mdSidenav('right').toggle();
     }
@@ -50,63 +51,27 @@ app.controller('editScholarCtrl', ['$scope', '$rootScope', '$mdDialog', 'addScho
   }, true);  
 
   ec.updateScholarPrimaryDetails = function(){
-    
-    if (
-          ec.firstname && ec.lastname && ec.middlename && ec.addressId && ec.date_of_birth
-          && ec.age && ec.gender && ec.schoolId && ec.course_section && ec.year_level && ec.student_id_number
-          && ec.IP
-      ) {
 
-      let primary_scholar_details = {
-        firstname: ec.firstname.toUpperCase(),
-        lastname: ec.lastname.toUpperCase(),
-        middlename: ec.middlename.toUpperCase(),
-        addressId: ec.addressId,
-        date_of_birth: ec.date_of_birth,
-        age: ec.age,
-        gender: ec.gender,
-        schoolId: ec.schoolId,
-        course_section: ec.course_section.toUpperCase(),
-        year_level: ec.year_level,
-        student_id_number: ec.student_id_number.toUpperCase(),
-        IP: ec.IP,
-      }
-      console.log(primary_scholar_details);
+    let primary_scholar_details = {
+      firstname: ec.firstname.toUpperCase(),
+      lastname: ec.lastname.toUpperCase(),
+      middlename: ec.middlename.toUpperCase(),
+      addressId: ec.addressId,
+      date_of_birth: ec.date_of_birth,
+      age: ec.age,
+      gender: ec.gender,
+      schoolId: ec.schoolId,
+      course_section: ec.course_section.toUpperCase(),
+      year_level: ec.year_level,
+      student_id_number: ec.student_id_number.toUpperCase(),
+      IP: ec.IP,
     }
+    console.log(primary_scholar_details);
+
   }
 
   ec.updateScholarParentsDetails = function(){
 
-    // if (ec.search_flastname && ec.f_firstname && ec.f_middlename && ec.search_mlastname && ec.m_firstname && ec.m_middlename) {
-
-    // }
-
-    var parentsDetails ={
-      mother_details: validateMother(),
-      fatherr_details: validateFather(),
-    }
-
-    console.log(parentsDetails);
-  }
-
-  function validateMother(){
-
-    var details = {
-       motherId: ec.motherId,
-       mother:{ m_firstname: ec.m_firstname.toUpperCase(), m_lastname: ec.search_mlastname.toUpperCase(), m_middlename: ec.m_middlename.toUpperCase() },
-    }
-
-    return details;
-  }
-
-  function validateFather(){
-
-    var details = {
-       fatherId: ec.fatherId,
-       father:{ f_firstname: ec.f_firstname.toUpperCase(), f_lastname: ec.search_flastname.toUpperCase(), f_middlename: ec.f_middlename.toUpperCase() },
-    }
-
-    return details;
   }
 
   ec.close = function(){

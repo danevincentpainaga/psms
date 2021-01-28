@@ -15,6 +15,7 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
   var md = this;
   md.list_of_schools = [];
   md.degree = "";
+  md.buttonText = 'Save';
 
   $scope.$watch('md.scholar_lastname', debounce(function() {
     md.scholars_loaded = false;
@@ -48,12 +49,10 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
           year_level: md.year_level,
           student_id_number: md.student_id_number,
           IP: md.IP,
-          fatherId: md.fatherId,
-          motherId: md.motherId,
           degree: md.degree,
           asc_id: academicContractDetails.ascId,
-          father:{ f_firstname: md.f_firstname.toUpperCase(), f_lastname: md.search_flastname.toUpperCase(), f_middlename: md.f_middlename.toUpperCase() },
-          mother:{ m_firstname: md.m_firstname.toUpperCase(), m_lastname: md.search_mlastname.toUpperCase(), m_middlename: md.m_middlename.toUpperCase() },
+          father_details:{ firstname: md.f_firstname.toUpperCase(), lastname: md.search_flastname.toUpperCase(), middlename: md.f_middlename.toUpperCase(), occupation: "" },
+          mother_details:{ firstname: md.m_firstname.toUpperCase(), lastname: md.search_mlastname.toUpperCase(), middlename: md.m_middlename.toUpperCase(), occupation: "" },
         }
             
         saveNewScholarDetails(scholar_details);    
@@ -64,16 +63,23 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
     }
   }
 
+  md.edit = function(scholarDetails){
+    md.scholar_to_edit = scholarDetails;
+  }
+
+  md.print = function(scholarDetails, idx){
+    md.selectedIndex = idx;
+    print(scholarDetails);
+  }
+
   md.selectedDegree = function(){
     md.degree_has_selected = md.degree ?  true : false;
-    console.log(md.degree_has_selected);
   }
 
   md.selectedFatherDetailsChange = function(fdetails){
     if (md.father) {
-      md.fatherId = fdetails.father_details_id;
-      md.f_firstname = fdetails.f_firstname;
-      md.f_middlename = fdetails.f_middlename;
+      md.f_firstname = fdetails.firstname;
+      md.f_middlename = fdetails.middlename;
     }
     else{
       md.f_firstname = "";
@@ -83,9 +89,8 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
 
   md.selectedMotherDetailsChange = function(mdetails){
     if (md.mother) {
-      md.motherId = mdetails.mother_details_id;
-      md.m_firstname = mdetails.m_firstname;
-      md.m_middlename = mdetails.m_middlename;
+      md.m_firstname = mdetails.firstname;
+      md.m_middlename = mdetails.middlename;
     }
     else{
       md.m_firstname = "";
@@ -139,11 +144,12 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
      scholarApiService.saveNewScholarDetails(scholarDetails).then(response => {
       md.degree = "";
       md.degree_has_selected = false;
-      addScholarsService.clearInputs(this);
-      ac.buttonText = 'Save';
+      addScholarsService.clearInputs(md);
+      md.buttonText = 'Save';
       swalert.dialogBox('Scholar saved!', 'success', 'Success');
     }, err => {
       console.log(err);
+      swalert.dialogBox(err.data.message, 'success', 'Success');
     });
   }
 
@@ -154,6 +160,22 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
     }, err => {
       console.log(err);
     });    
+  }
+
+  function print(scholarDetails){
+
+    let docDefinition = {
+        content: [
+          {text: 'NAME: '+scholarDetails.firstname.toUpperCase()+" "+scholarDetails.lastname.toUpperCase()+", "+scholarDetails.middlename.toUpperCase()},
+        ]
+      };
+
+    let pdfDocGenerator = pdfMake.createPdf(docDefinition);
+    pdfDocGenerator.print({}, window.frames['printPdf']);
+    
+    pdfDocGenerator.getDataUrl((dataUrl) => {
+      $timeout(()=>{ md.selectedIndex = undefined }, 1000);
+    });
   }
 
   function hasSemester(){

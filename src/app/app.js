@@ -5,7 +5,6 @@ angular
   'ui.router',
   'ui.router.state.events',
   'ngSanitize',
-  'ngTouch',
   'ngMaterial',
   'md.data.table'
 ])

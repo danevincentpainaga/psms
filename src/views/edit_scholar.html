@@ -10,7 +10,7 @@
         </md-card-avatar>
         <md-card-header-text>
           <span class="md-title">Details</span>
-          <span class="md-subhead">Undergraduate</span>
+          <span class="md-subhead">{{ ec.degree }}</span>
         </md-card-header-text>
         <md-card-header-text style="text-align: right;">
           <span class="md-subhead" style="color: #008300;">AY - {{ ec.academic_year }}</span>
@@ -53,12 +53,12 @@
                 md-delay="500"
                 md-selected-item-change="ec.selectedAddressChange(address)"
                 md-items="address in ec.addressSearchQuery(ec.search_address)"
-                md-item-text="address.full_address"
+                md-item-text="address.address"
                 md-escape-options="clear"
                 md-require-match=""
                 md-floating-label="Address">
                 <md-item-template>
-                  <span md-highlight-text="ec.search_address" md-highlight-flags="^i">{{address.full_address}}</span>
+                  <span md-highlight-text="ec.search_address" md-highlight-flags="^i">{{address.address}}</span>
                 </md-item-template>
                 <md-not-found>
                   No address matching "{{ec.search_address}}" were found.
@@ -153,11 +153,11 @@
             md-delay="500"
             md-selected-item-change="ec.selectedFatherDetailsChange(fdetails)"
             md-items="fdetails in ec.fatherSearchQuery(ec.search_flastname)"
-            md-item-text="fdetails.f_lastname"
+            md-item-text="fdetails.lastname"
             md-escape-options="clear"
             md-floating-label="Lastname">
             <md-item-template>
-              <span md-highlight-text="ec.search_flastname">{{fdetails.f_lastname}}, {{fdetails.f_firstname}}{{fdetails.f_middlename}}</span>
+              <span md-highlight-text="ec.search_flastname">{{fdetails.lastname}}, {{fdetails.firstname}}{{fdetails.middlename}}</span>
             </md-item-template>
             <md-not-found>
               No records matching "{{ec.search_school}}" were found.
@@ -184,11 +184,11 @@
             md-delay="500"
             md-selected-item-change="ec.selectedMotherDetailsChange(mdetails)"
             md-items="mdetails in ec.motherSearchQuery(ec.search_mlastname)"
-            md-item-text="mdetails.m_lastname"
+            md-item-text="mdetails.lastname"
             md-escape-options="clear"
             md-floating-label="Lastname">
             <md-item-template>
-              <span md-highlight-text="ec.search_mlastname">{{mdetails.m_lastname}}, {{mdetails.m_firstname}}{{mdetails.m_middlename}}</span>
+              <span md-highlight-text="ec.search_mlastname">{{mdetails.lastname}}, {{mdetails.firstname}}{{mdetails.middlename}}</span>
             </md-item-template>
             <md-not-found>
               No records matching "{{ec.search_school}}" were found.

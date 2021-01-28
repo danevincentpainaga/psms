@@ -26,7 +26,7 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
     addScholarsService.clearInputs(this);
   }  
 
-  ac.saveNewScholarDetails = function(){
+  ac.saveNewUndergraduateDetails = function(){
     
     if (
           ac.firstname && ac.lastname && ac.middlename && ac.addressId && ac.date_of_birth
@@ -144,13 +144,14 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
       print(scholarDetails);
     }, err => {
       ac.buttonText = 'Save';
-      swalert.dialogBox('Failed!', 'error', 'error');
+      swalert.dialogBox(err.data.message, 'error', 'Failed');
       console.log(err);
     });
   }
 
   function getNewUndergraduateScholars(searched){
      scholarApiService.getNewUndergraduateScholars(searched).then(response => {
+      console.log(response.data);
       ac.scholars = response.data;
       ac.scholars_loaded = true;
     }, err => {

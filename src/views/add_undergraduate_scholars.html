@@ -81,7 +81,6 @@
       </div>
     </div>
   </md-toolbar>
-
   <div layout="column" ng-style="resize()" resize-add-scholars-div>
     <section layout="row" flex layout-xs="column">
       <div layout="row" layout-xs="column" style="background-color: #fff; border-right: 1px solid #c7c7c7;min-width: 340px;" >
@@ -257,7 +256,6 @@
               </form>
             </md-card-content>
           </md-card>
-
           <md-card style="margin: 5px 0px;">
             <md-card-content style="padding: 15px 16px 0px 16px;">
               <p>Father's Details</p>
@@ -277,7 +275,7 @@
                   md-escape-options="clear"
                   md-floating-label="Lastname">
                   <md-item-template>
-                    <span md-highlight-text="ac.search_flastname">{{fdetails.lastname}}, {{fdetails.firstname}}{{fdetails.middlename}}</span>
+                    <span md-highlight-text="ac.search_flastname">{{fdetails.lastname}}, {{fdetails.firstname}} {{fdetails.middlename}}</span>
                   </md-item-template>
                   <md-not-found>
                     No records matching "{{ac.search_flastname}}" were found.
@@ -307,9 +305,9 @@
                   md-item-text="mdetails.lastname"
                   md-autoselect="true"
                   md-escape-options="clear"
-                  md-floating-label="Lastname">
+                  md-floating-label="Maiden name">
                   <md-item-template>
-                    <span md-highlight-text="ac.search_mlastname">{{mdetails.lastname}}, {{mdetails.firstname}}{{mdetails.middlename}}</span>
+                    <span md-highlight-text="ac.search_mlastname">{{mdetails.lastname}}, {{mdetails.firstname}} {{mdetails.middlename}}</span>
                   </md-item-template>
                   <md-not-found>
                     No records matching "{{ac.search_school}}" were found.
@@ -326,7 +324,7 @@
               </div>
             </md-card-content>
             <div style="width: 100%;text-align: right;">
-              <md-button class="md-raised md-primary" ng-click="ac.saveNewScholarDetails()">{{ ac.buttonText }}</md-button>
+              <md-button class="md-raised md-primary" ng-click="ac.saveNewUndergraduateDetails()">{{ ac.buttonText }}</md-button>
               <md-button class="md-raised" ng-click="ac.clear()">Clear</md-button>
             </div>
           </md-card>  

@@ -96,13 +96,30 @@
             <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top: 10px;" ng-if="!md.scholars_loaded">
               <md-progress-circular md-diameter="25px"></md-progress-circular>
             </div>
-              <md-list-item class="md-2-line" ng-repeat="scholar in md.scholars" ng-if="md.scholars_loaded">
+              <md-list-item class="md-2-line" ng-repeat="scholar in md.scholars track by $index" ng-if="md.scholars_loaded">
                 <img src="images/avatarmale.svg" class="md-avatar" alt="" />
                 <div class="md-list-item-text" style="max-width: 210px;">
                   <h5 style="margin: 0px;">{{scholar.lastname}},&nbsp;{{scholar.firstname}}&nbsp;{{scholar.middlename}}.</h5>
-                  <p style="font-size: 12px;">{{ scholar.school.school_name }} - {{ scholar.degree }}</p>
+                  <p style="font-size: 12px;">{{ scholar.school.school_name }}</p>
                 </div>
-                <md-icon class="material-icons" >more_horiz</md-icon>
+                <span ng-if="$index===md.selectedIndex" style="margin: 7px 0px;">opening..</span>
+                <md-menu ng-if="$index!==md.selectedIndex">
+                  <md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdMenu.open($event)" style="padding: 0px;margin: 0;">
+                    <md-icon class="material-icons" >more_horiz</md-icon>
+                  </md-button>
+                  <md-menu-content width="2">
+                    <md-menu-item>
+                      <md-button ng-click="md.edit(scholar)">
+                        Edit
+                      </md-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                      <md-button ng-click="md.print(scholar, $index)">
+                        Print
+                      </md-button>
+                    </md-menu-item>
+                  </md-menu-content>
+                </md-menu>
               </md-list-item>
             </div>
           </md-list>
@@ -148,6 +165,7 @@
                       <md-icon class="material-icons">how_to_reg</md-icon>
                       <input type="text" ng-model="md.firstname" ng-disabled="!md.degree_has_selected">
                     </md-input-container>
+
                     <md-input-container flex="">
                       <label>Lastname</label>
                       <textarea ng-model="md.lastname" ng-disabled="!md.degree_has_selected"></textarea>
@@ -170,13 +188,13 @@
                       md-delay="500"
                       md-selected-item-change="md.selectedAddressChange(address)"
                       md-items="address in md.addressSearchQuery(md.search_address)"
-                      md-item-text="address.full_address"
+                      md-item-text="address.address"
                       md-autoselect="true"
                       md-escape-options="clear"
                       md-require-match=""
                       md-floating-label="Address" ng-disabled="!md.degree_has_selected">
                       <md-item-template>
-                        <span md-highlight-text="md.search_address" md-highlight-flags="^i">{{address.full_address}}</span>
+                        <span md-highlight-text="md.search_address" md-highlight-flags="^i">{{address.address}}</span>
                       </md-item-template>
                       <md-not-found>
                         No address matching "{{md.search_address}}" were found.
@@ -270,15 +288,15 @@
                   md-delay="500"
                   md-selected-item-change="md.selectedFatherDetailsChange(fdetails)"
                   md-items="fdetails in md.fatherSearchQuery(md.search_flastname)"
-                  md-item-text="fdetails.f_lastname"
+                  md-item-text="fdetails.lastname"
                   md-autoselect="true"
                   md-escape-options="clear"
                   md-floating-label="Lastname" ng-disabled="!md.degree_has_selected">
                   <md-item-template>
-                    <span md-highlight-text="md.search_flastname">{{fdetails.f_lastname}}, {{fdetails.f_firstname}}{{fdetails.f_middlename}}</span>
+                    <span md-highlight-text="md.search_flastname">{{fdetails.lastname}}, {{fdetails.firstname}} {{fdetails.middlename}}</span>
                   </md-item-template>
                   <md-not-found>
-                    No records matching "{{md.search_school}}" were found.
+                    No records matching "{{md.search_flastname}}" were found.
                   </md-not-found>
                 </md-autocomplete>
                 <md-input-container flex="">
@@ -302,12 +320,12 @@
                   md-delay="500"
                   md-selected-item-change="md.selectedMotherDetailsChange(mdetails)"
                   md-items="mdetails in md.motherSearchQuery(md.search_mlastname)"
-                  md-item-text="mdetails.m_lastname"
+                  md-item-text="mdetails.lastname"
                   md-autoselect="true"
                   md-escape-options="clear"
-                  md-floating-label="Lastname" ng-disabled="!md.degree_has_selected">
+                  md-floating-label="Maiden name" ng-disabled="!md.degree_has_selected">
                   <md-item-template>
-                    <span md-highlight-text="md.search_mlastname">{{mdetails.m_lastname}}, {{mdetails.m_firstname}}{{mdetails.m_middlename}}</span>
+                    <span md-highlight-text="md.search_mlastname">{{mdetails.lastname}}, {{mdetails.firstname}} {{mdetails.middlename}}</span>
                   </md-item-template>
                   <md-not-found>
                     No records matching "{{md.search_school}}" were found.
@@ -324,7 +342,7 @@
               </div>
             </md-card-content>
             <div style="width: 100%;text-align: right;">
-              <md-button class="md-raised md-primary" ng-click="md.saveNewMasterDoctorateDetails()">Save</md-button>
+              <md-button class="md-raised md-primary" ng-click="md.saveNewMasterDoctorateDetails()">{{ md.buttonText }}</md-button>
               <md-button class="md-raised" ng-click="md.clear()">Clear</md-button>
             </div>
           </md-card>  
@@ -333,3 +351,4 @@
     </section>
   </div>
 </div>
+<edit-scholar scholar="md.scholar_to_edit"></edit-scholar>

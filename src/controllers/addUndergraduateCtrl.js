@@ -31,10 +31,11 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
     if (
           ac.firstname && ac.lastname && ac.middlename && ac.addressId && ac.date_of_birth
           && ac.age && ac.gender && ac.schoolId && ac.course_section && ac.year_level && ac.student_id_number
-          && ac.IP && academicContractDetails.ascId && ac.search_flastname 
-          && ac.f_firstname && ac.f_middlename && ac.search_mlastname && ac.m_firstname && ac.m_middlename
+          && ac.IP && academicContractDetails.ascId
       ) {
+
         ac.buttonText = 'Saving...';
+      
           let scholar_details = {
             firstname: ac.firstname.toUpperCase(),
             lastname: ac.lastname.toUpperCase(),
@@ -50,8 +51,18 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
             IP: ac.IP,
             degree: "Undergraduate",
             asc_id: academicContractDetails.ascId,
-            father_details:{ firstname: ac.f_firstname.toUpperCase(), lastname: ac.search_flastname.toUpperCase(), middlename: ac.f_middlename.toUpperCase(), occupation: "" },
-            mother_details:{ firstname: ac.m_firstname.toUpperCase(), lastname: ac.search_mlastname.toUpperCase(), middlename: ac.m_middlename.toUpperCase(), occupation: "" },
+            father_details:{ 
+              firstname: (ac.f_firstname || "").toUpperCase(),
+              lastname: (ac.search_flastname || "").toUpperCase(),
+              middlename: (ac.f_middlename || "").toUpperCase(),
+              occupation: ""
+            },
+            mother_details:{ 
+              firstname: (ac.m_firstname || "").toUpperCase(),
+              lastname: (ac.search_mlastname || "").toUpperCase(),
+              middlename: (ac.m_middlename || "").toUpperCase(),
+              occupation: ""
+            },
           }
 
           console.log(scholar_details);
@@ -141,6 +152,7 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
      scholarApiService.saveNewScholarDetails(scholarDetails).then(response => {
       addScholarsService.clearInputs(ac);
       ac.buttonText = 'Save';
+      getNewUndergraduateScholars({ searched: ac.scholar_lastname });
       swalert.dialogBox('Scholar saved!', 'success', 'Success');
       print(scholarDetails);
     }, err => {

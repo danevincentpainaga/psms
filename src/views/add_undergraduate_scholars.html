@@ -147,17 +147,17 @@
                     <md-input-container flex="">
                       <label>Firstname</label>
                       <md-icon class="material-icons">how_to_reg</md-icon>
-                      <input type="text" ng-model="ac.firstname">
+                      <input type="text" ng-model="ac.firstname" autocomplete="off">
                     </md-input-container>
 
                     <md-input-container flex="">
                       <label>Lastname</label>
-                      <textarea ng-model="ac.lastname"></textarea>
+                      <input type="text" ng-model="ac.lastname" >
                     </md-input-container>
 
                     <md-input-container flex="">
                       <label>Middlename</label>
-                      <textarea ng-model="ac.middlename"></textarea>
+                      <input type="text" ng-model="ac.middlename">
                     </md-input-container>
                 </div>
                 <div layout="row" layout-xs="column">
@@ -187,10 +187,11 @@
                   </div>
                   <md-input-container flex="20">
                     <label>Date of Birth</label>
-                    <input type="text" ng-model="ac.date_of_birth" ng-change="ac.selectedDateOfBirth(ac.date_of_birth)" add-double-slashes-directive />                </md-input-container>
+                    <input type="text" ng-model="ac.date_of_birth" ng-change="ac.selectedDateOfBirth(ac.date_of_birth)" add-double-slashes-directive />
+                  </md-input-container>
                   <md-input-container flex="10">
                     <label>Age</label>
-                    <textarea ng-model="ac.displayedAge" disabled></textarea>
+                    <input ng-model="ac.displayedAge" disabled>
                   </md-input-container>
                   <md-input-container flex="20">
                     <label>Gender</label>
@@ -225,7 +226,7 @@
                   </md-autocomplete>
                   <md-input-container flex="40">
                     <label>Course & Section</label>
-                    <textarea ng-model="ac.course_section"></textarea>
+                    <input ng-model="ac.course_section">
                   </md-input-container>
                 </div>
                 <div layout="row" layout-xs="column">
@@ -243,7 +244,7 @@
                   </md-input-container>
                   <md-input-container flex="30">
                     <label>ID NO.</label>
-                    <textarea ng-model="ac.student_id_number"></textarea>
+                    <input ng-model="ac.student_id_number">
                   </md-input-container>
                   <md-input-container flex="20">
                     <label>IP.</label>

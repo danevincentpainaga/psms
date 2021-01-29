@@ -9,8 +9,8 @@
  */ 
 
 var app = angular.module('psmsApp');
-app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$window', '$location', '$timeout', 'schoolApiService', 'addressApiService', 'scholarApiService', 'academicContractDetails', 'debounce', 'moment', 'swalert', 'addScholarsService',
-  function ($scope, $rootScope, $cookies, $window, $location, $timeout, schoolApiService, addressApiService, scholarApiService, academicContractDetails, debounce, moment, swalert, addScholarsService) {
+app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$window', '$location', '$timeout', '$mdSidenav', 'schoolApiService', 'addressApiService', 'scholarApiService', 'academicContractDetails', 'debounce', 'moment', 'swalert', 'addScholarsService',
+  function ($scope, $rootScope, $cookies, $window, $location, $timeout, $mdSidenav, schoolApiService, addressApiService, scholarApiService, academicContractDetails, debounce, moment, swalert, addScholarsService) {
 
   var md = this;
   md.list_of_schools = [];
@@ -33,9 +33,11 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
     if (
           md.firstname && md.lastname && md.middlename && md.addressId && md.date_of_birth
           && md.age && md.gender && md.schoolId && md.course_section && md.year_level && md.student_id_number
-          && md.IP && academicContractDetails.ascId && md.search_flastname 
-          && md.f_firstname && md.f_middlename && md.search_mlastname && md.m_firstname && md.m_middlename
+          && md.IP && academicContractDetails.ascId
       ) {
+
+        md.buttonText = 'Saving...';
+
         let scholar_details = {
           firstname: md.firstname.toUpperCase(),
           lastname: md.lastname.toUpperCase(),  
@@ -51,8 +53,18 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
           IP: md.IP,
           degree: md.degree,
           asc_id: academicContractDetails.ascId,
-          father_details:{ firstname: md.f_firstname.toUpperCase(), lastname: md.search_flastname.toUpperCase(), middlename: md.f_middlename.toUpperCase(), occupation: "" },
-          mother_details:{ firstname: md.m_firstname.toUpperCase(), lastname: md.search_mlastname.toUpperCase(), middlename: md.m_middlename.toUpperCase(), occupation: "" },
+          father_details:{ 
+            firstname: (md.f_firstname || "").toUpperCase(),
+            lastname: (md.search_flastname || "").toUpperCase(),
+            middlename: (md.f_middlename || "").toUpperCase(),
+            occupation: ""
+          },
+          mother_details:{ 
+            firstname: (md.m_firstname || "").toUpperCase(),
+            lastname: (md.search_mlastname || "").toUpperCase(),
+            middlename: (md.m_middlename || "").toUpperCase(),
+            occupation: ""
+          },
         }
             
         saveNewScholarDetails(scholar_details);    
@@ -65,6 +77,7 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
 
   md.edit = function(scholarDetails){
     md.scholar_to_edit = scholarDetails;
+    $mdSidenav('right').toggle();
   }
 
   md.print = function(scholarDetails, idx){
@@ -146,6 +159,8 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
       md.degree_has_selected = false;
       addScholarsService.clearInputs(md);
       md.buttonText = 'Save';
+      getNewMastersDoctorateScholars({ searched: md.scholar_lastname });
+      print(scholarDetails);
       swalert.dialogBox('Scholar saved!', 'success', 'Success');
     }, err => {
       console.log(err);

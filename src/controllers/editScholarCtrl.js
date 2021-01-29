@@ -45,6 +45,8 @@ app.controller('editScholarCtrl', ['$scope', '$rootScope', '$mdDialog', '$q', '$
     	ec.m_firstname = n.mother_details.firstname;
     	ec.m_middlename = n.mother_details.middlename;
       ec.degree = n.degree;
+      ec.f_occupation = n.father_details.occupation;
+      ec.m_occupation = n.mother_details.occupation;
     }
   }, true);
 
@@ -77,7 +79,7 @@ app.controller('editScholarCtrl', ['$scope', '$rootScope', '$mdDialog', '$q', '$
 
   ec.updateScholarPrimaryDetails = function(){
 
-    ec.primaryButtonText = 'Updating';
+    ec.primaryButtonText = 'Updating...';
 
     let primary_scholar_details = {
       scholar_id: ec.copy.scholar_id,
@@ -100,12 +102,22 @@ app.controller('editScholarCtrl', ['$scope', '$rootScope', '$mdDialog', '$q', '$
 
   ec.updateScholarParentsDetails = function(){
 
-    ec.parentsButtonText = 'Updating';
+    ec.parentsButtonText = 'Updating...';
     
     let parentsDetails = {
       scholar_id: ec.copy.scholar_id,
-      father_details:{ firstname: ec.f_firstname.toUpperCase(), lastname: ec.search_flastname.toUpperCase(), middlename: ec.f_middlename.toUpperCase(), occupation: "" },
-      mother_details:{ firstname: ec.m_firstname.toUpperCase(), lastname: ec.search_mlastname.toUpperCase(), middlename: ec.m_middlename.toUpperCase(), occupation: "" },
+      father_details:{ 
+          firstname: (ec.f_firstname || "").toUpperCase(),
+          lastname: (ec.search_flastname || "").toUpperCase(),
+          middlename: (ec.f_middlename || "").toUpperCase(),
+          occupation: (ec.f_occupation || "").toUpperCase(),
+      },
+      mother_details:{ 
+          firstname: (ec.m_firstname || "").toUpperCase(), 
+          lastname: (ec.search_mlastname || "").toUpperCase(), 
+          middlename: (ec.m_middlename || "").toUpperCase(), 
+          occupation: (ec.m_occupation || "").toUpperCase(),
+      },
     }
 
     updateScholarParentsDetails(parentsDetails);
@@ -117,6 +129,8 @@ app.controller('editScholarCtrl', ['$scope', '$rootScope', '$mdDialog', '$q', '$
  	  $mdSidenav('right').toggle();
     ec.primary_details = false;
     ec.parents_details = false;
+    ec.enablePrimaryButtonText = 'Enable';
+    ec.enableParentsButtonText = 'Enable';
   }
 
   ec.selectedSchoolChange = function(school){
@@ -184,6 +198,7 @@ app.controller('editScholarCtrl', ['$scope', '$rootScope', '$mdDialog', '$q', '$
 
   function updateScholarParentsDetails(parentsDetails){
     scholarApiService.updateScholarParentsDetails(parentsDetails).then(response => {
+      console.log(response.data);
 
       ec.binded_copy.father_details = response.data.father_details;
       ec.binded_copy.mother_details = response.data.mother_details;

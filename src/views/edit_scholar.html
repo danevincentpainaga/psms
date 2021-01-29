@@ -147,7 +147,7 @@
           <md-icon class="material-icons">accessibility_new</md-icon>
           <md-autocomplete flex 
             md-input-name="autocompleteField"
-            md-input-minlength="2"
+            md-input-minlength="1"
             md-no-cache="ec.noCache"
             md-selected-item="ec.father"
             md-search-text="ec.search_flastname"
@@ -172,13 +172,20 @@
             <label>Middlename</label>
             <input type="text" ng-model="ec.f_middlename" ng-disabled="!ec.parents_details">
           </md-input-container>
-        </div>    
+        </div> 
+        <div layout="row" layout-xs="column">
+           <md-input-container flex="70">
+            <md-icon class="material-icons">work_outline</md-icon>
+            <label>Occupation</label>
+            <input type="text" ng-model="ec.f_occupation" ng-disabled="!ec.parents_details">
+          </md-input-container>         
+        </div>
         <p>Mother's Details</p>
         <div layout="row" layout-xs="column">
           <md-icon class="material-icons">pregnant_woman</md-icon>
           <md-autocomplete flex 
             md-input-name="autocompleteField"
-            md-input-minlength="2"
+            md-input-minlength="1"
             md-no-cache="ec.noCache"
             md-selected-item="ec.mother"
             md-search-text="ec.search_mlastname"
@@ -203,6 +210,13 @@
             <label>Middlename</label>
             <input type="text" ng-model="ec.m_middlename" ng-disabled="!ec.parents_details">
           </md-input-container>
+        </div>
+        <div layout="row" layout-xs="column">
+           <md-input-container flex="70">
+            <md-icon class="material-icons">work_outline</md-icon>
+            <label>Occupation</label>
+            <input type="text" ng-model="ec.m_occupation" ng-disabled="!ec.parents_details">
+          </md-input-container>         
         </div>
       </md-card-content>
       <div style="width: 100%;text-align: right;">

@@ -6,7 +6,8 @@ angular
   'ui.router.state.events',
   'ngSanitize',
   'ngMaterial',
-  'md.data.table'
+  'md.data.table',
+  'chart.js'
 ])
 .config(function ($stateProvider, $urlRouterProvider) {
   $stateProvider

@@ -6,6 +6,8 @@ window.$ = $;
 
 // import 'jquery/dist/jquery.min.js';
 import angular from 'angular';
+import 'chart.js/dist/chart';
+import 'angular-chart.js/dist/angular-chart';
 import '@uirouter/angularjs/release/angular-ui-router.min.js';
 import '@uirouter/angularjs/lib/legacy/stateEvents.js';
 import 'angular-cookies/angular-cookies.min.js';

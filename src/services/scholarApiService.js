@@ -15,6 +15,28 @@ app.factory('scholarApiService', ['$http', '$cookies', '$rootScope', '$q', funct
         }
       });
     },
+    updateScholarDetails: function(scholar_details){
+      return $http({
+        method:'POST',
+        url: baseUrl+'api/updateScholarDetails',
+        data: scholar_details,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization : 'Bearer '+ $rootScope.token
+        }
+      });
+    },
+    updateScholarParentsDetails: function(parents_details){
+      return $http({
+        method:'POST',
+        url: baseUrl+'api/updateScholarParentsDetails',
+        data: parents_details,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization : 'Bearer '+ $rootScope.token
+        }
+      });
+    },
     getMotherList: function(searched){
       return $http({
         method:'POST',
@@ -70,8 +92,6 @@ app.factory('scholarApiService', ['$http', '$cookies', '$rootScope', '$q', funct
         }
       });
     },
-
-    
     getDegrees: function(){
       return $http.get(baseUrl+'api/getDegrees', {
         headers: {

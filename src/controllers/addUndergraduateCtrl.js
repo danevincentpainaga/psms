@@ -65,6 +65,7 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
 
   ac.edit = function(scholarDetails){
     ac.scholar_to_edit = scholarDetails;
+    $mdSidenav('right').toggle();
   }
 
   ac.print = function(scholarDetails, idx){

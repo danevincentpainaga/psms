@@ -36,6 +36,26 @@ angular.module('psmsApp')
       })
     }
 
+    $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
+    $scope.series = ['Series A', 'Series B'];
+    $scope.data = [
+      [65, 59, 80, 81, 56, 55, 40],
+      [28, 48, 40, 19, 86, 27, 90]
+    ];
+    $scope.onClick = function (points, evt) {
+      console.log(points, evt);
+    };
+    
+    // Simulate async data update
+    $timeout(function () {
+      $scope.data = [
+        [28, 48, 40, 19, 86, 27, 90],
+        [65, 59, 80, 81, 56, 55, 40]
+      ];
+    }, 3000);
+
+
+
 }]);
 
 angular
@@ -76,7 +96,6 @@ angular
         scope.$watch(scope.getWindowDimensions, function (newValue, oldValue) {
             scope.windowHeight = newValue.h;
             scope.windowWidth = newValue.w;
-            console.log(scope.windowHeight);
             
             scope.resizeDiv = function () {
                 return {
@@ -105,7 +124,6 @@ angular
         scope.$watch(scope.getWindowDimensions, function (newValue, oldValue) {
             scope.windowHeight = newValue.h;
             scope.windowWidth = newValue.w;
-            console.log(scope.windowHeight);
             
             scope.resize = function () {
                 return {
@@ -134,7 +152,6 @@ angular
         scope.$watch(scope.getWindowDimensions, function (newValue, oldValue) {
             scope.windowHeight = newValue.h;
             scope.windowWidth = newValue.w;
-            console.log(scope.windowHeight);
             
             scope.resizeList = function () {
                 return {
@@ -156,7 +173,8 @@ angular
   return{
     restrict:'E',
     scope:{
-      scholar:"="
+      scholar:'=',
+      updated:'='
     },
     controller:'editScholarCtrl',
     controllerAs: 'ec',

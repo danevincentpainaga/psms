@@ -21,6 +21,8 @@ angular
     .state('dashboard', {
       url: '/dashboard',
       templateUrl: 'src/views/dashboard.html',
+      controller: 'dashboardCtrl',
+      controllerAs: 'dc',
       Authenticated: true,
     })
     .state('scholars_list', {
@@ -29,6 +31,7 @@ angular
       controller: 'scholarsListCtrl',
       controllerAs: 'sc',
       Authenticated: true,
+      Authorized: true,
     })
     .state('add_undergraduate_scholars', {
       url: '/add_undergraduate_scholars',
@@ -102,44 +105,109 @@ angular
       controllerAs: 'ex',
       Authenticated: true,
     })
+    
   $urlRouterProvider.otherwise('/');
 
 })
 .run(['$transitions', '$rootScope', '$cookies', 'authApiService', function($transitions, $rootScope, $cookies, authApiService){
 
+  $transitions.onBefore({}, function(transition) {
+
+      if (transition.to().Authenticated && !authApiService.AuthenticatedUser()) {
+          return transition.router.stateService.target('base');
+      }
+
+      if (!transition.to().Authenticated && authApiService.AuthenticatedUser()) {
+          return false;
+      }
+  })
+
   $transitions.onStart({}, function(transition) {
 
-    var $state = transition.router.stateService;
-    
     if (transition.to().Authenticated) {
-
+      
+      var adminCannotAccess = [];
+      var usersCannotAccess = ['user_accounts', 'contract', 'export'];
+      var $state = transition.router.stateService;
       var auth = $cookies.getObject('auth');
 
-      if (!authApiService.AuthenticatedUser()) {
-          $state.go('base');
-      }
-      else{
-        $rootScope.authenticated = true;
+      // if (!authApiService.AuthenticatedUser()) {
+      //     $state.target('base');
+      // }
+      // else{
+
         $rootScope.token = auth.success;
-        $rootScope.logging_in = false;
-      }
+        $rootScope.route_loader = true;
+
+        console.log('Running...');
+
+        return authApiService.getAuthenticatedUser().then(response=>{
+
+          let degree_access = JSON.parse(response.data.degree_access);
+
+          if (response.data.user_type === 'User') {
+
+            validateDegree(degree_access, usersCannotAccess);
+            validateRoute(usersCannotAccess);
+
+          }
+          else{
+            validateDegree(degree_access, adminCannotAccess);
+            validateRoute(adminCannotAccess);
+            $rootScope.isAdmin = true;
+          }
+
+          console.log(usersCannotAccess);
+          $rootScope.authenticated = true;
+          $rootScope.logging_in = false;
+
+        });
+
+      // }
+
+        function validateDegree(degree_access, protected_route) {
+            if (degree_access.indexOf('Masters') == -1 || degree_access.indexOf('Doctorate') == -1) {
+
+                protected_route.push('add_masteral_doctorate_scholars');
+                return;
+            }
+            
+            return $rootScope.master_doctorate_access = true;
+        }
+
+        function validateRoute(protected_route) {
+          if (protected_route.indexOf(transition.to().name) > -1) {
+              $rootScope.route_loader = false;
+              transition.abort();
+              $state.$current.name ? $state.go($state.$current.name) : $state.go('dashboard') ;
+          }
+        }
       
     }
 
-    if (!transition.to().Authenticated) {
-       if (authApiService.AuthenticatedUser()) {
-          transition.abort();
-       }
-    }
+    // if (!transition.to().Authenticated) {
+    //    if (authApiService.AuthenticatedUser()) {
+    //       transition.abort();
+    //    }
+    // }
 
   });
 
   $transitions.onStart({ to: 'base'}, function(transition) {
       $rootScope.authenticated = false;
-      $rootScope.loggged_out = false;
+      $rootScope.route_loader = false;
   });
 
+  $transitions.onSuccess({}, function(transition) {
+      $rootScope.route_loader = false;
+  });
+
+
 }]);
+
+
+
+
 
 require('angular-material');
 require('angular-animate');
@@ -171,8 +239,9 @@ require('../services/usersApiService');
 require('../services/academicSemesterYearApiService');
 
 
-require('../controllers/mainCtrl.js');
-require('../controllers/loginCtrl.js');
+require('../controllers/mainCtrl');
+require('../controllers/dashboardCtrl');
+require('../controllers/loginCtrl');
 require('../controllers/addUndergraduateCtrl');
 require('../controllers/addMastersDoctorateCtrl');
 require('../controllers/scholarsListCtrl');

@@ -27,7 +27,7 @@ angular.module('psmsApp')
     }
 
     $scope.logout = function(){
-      $rootScope.loggged_out = true;
+      $rootScope.route_loader = true;
       authApiService.logout().then(response => {
         $cookies.remove('auth');
         $location.path('/');
@@ -99,8 +99,8 @@ angular
             
             scope.resizeDiv = function () {
                 return {
-                  'min-height': (newValue.h - 170) + 'px',
-                  'max-height': (newValue.h - 170) + 'px'
+                  'min-height': (newValue.h - 181) + 'px',
+                  'max-height': (newValue.h - 181) + 'px'
                 };
             };
         }, true);
@@ -179,5 +179,19 @@ angular
     controller:'editScholarCtrl',
     controllerAs: 'ec',
     templateUrl: 'src/views/edit_scholar.html',
+  }
+}]);
+
+angular
+.module('psmsApp').directive('hideBtnActions',[ function(){
+  return{
+    restrict:'A',
+    link: function(scope, elem, atrrs){
+      atrrs.$observe('hideBtnActions', function(n, o) {
+        if (n === 'Closed' || n === 'Selected') {
+          $(elem).hide();
+        }
+      });
+    }
   }
 }]);

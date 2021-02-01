@@ -50,6 +50,7 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
             student_id_number: ac.student_id_number.toUpperCase(),
             IP: ac.IP,
             degree: "Undergraduate",
+            contract_id: academicContractDetails.activated_contract_id,
             asc_id: academicContractDetails.ascId,
             father_details:{ 
               firstname: (ac.f_firstname || "").toUpperCase(),

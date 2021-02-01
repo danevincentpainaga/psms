@@ -21,6 +21,7 @@ app.controller('editScholarCtrl', ['$scope', '$rootScope', '$mdDialog', '$q', '$
   $scope.$watch('scholar', function(n, o){
     if (n) {
     	console.log(n);
+      ec.icon = (n.degree === 'Masters' || n.degree === 'Doctorate')  ? 'school' : 'groups';
       ec.binded_copy = n;
       ec.copy = angular.copy(n);
       ec.addressId = n.addressId;
@@ -79,6 +80,7 @@ app.controller('editScholarCtrl', ['$scope', '$rootScope', '$mdDialog', '$q', '$
 
   ec.updateScholarPrimaryDetails = function(){
 
+    ec.updatingPrimaryDetails = true;
     ec.primaryButtonText = 'Updating...';
 
     let primary_scholar_details = {
@@ -102,6 +104,7 @@ app.controller('editScholarCtrl', ['$scope', '$rootScope', '$mdDialog', '$q', '$
 
   ec.updateScholarParentsDetails = function(){
 
+    ec.updatingParentsDetails = true;
     ec.parentsButtonText = 'Updating...';
     
     let parentsDetails = {
@@ -188,6 +191,7 @@ app.controller('editScholarCtrl', ['$scope', '$rootScope', '$mdDialog', '$q', '$
       console.log(response.data);
       updatePrimaryDetails(response.data);
       ec.primaryButtonText = 'Update';
+      ec.updatingPrimaryDetails = false;
       swalert.dialogBox('Scholar updated!', 'success', 'Success');
     }, err => {
       ec.primaryButtonText = 'Update';
@@ -205,6 +209,7 @@ app.controller('editScholarCtrl', ['$scope', '$rootScope', '$mdDialog', '$q', '$
       ec.binded_copy.updated_at = response.data.updated_at;
 
       ec.parentsButtonText = 'Update';
+      ec.updatingParentsDetails = false;
       swalert.dialogBox('Parents details updated!', 'success', 'Success');
 
     }, err => {

@@ -52,6 +52,7 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
           student_id_number: md.student_id_number,
           IP: md.IP,
           degree: md.degree,
+          contract_id: academicContractDetails.activated_contract_id,
           asc_id: academicContractDetails.ascId,
           father_details:{ 
             firstname: (md.f_firstname || "").toUpperCase(),

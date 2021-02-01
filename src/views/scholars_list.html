@@ -51,11 +51,10 @@
       </div>
     </div>
   </md-toolbar>
-      <!-- <div id="cover-spin" ng-if="!sc.hide_spinner" ></div> -->
-  <md-progress-linear md-mode="indeterminate" ng-if="!sc.scholars_loaded"></md-progress-linear>
-  <div layout="column" layout-xs="column" style="background-color: #fff; border-right: 1px solid #c7c7c7;">
-    <div flex>
-      <md-table-container style="overflow: auto;" ng-style="resizeDiv()" resize-div  class="container" fixed-column-table>
+  <div layout="column" layout-xs="column" style="background-color: #fff; border-right: 1px solid #c7c7c7;padding: 5px;">
+    <div flex style="display: flex;justify-content: center;align-items: center;">
+      <md-progress-circular md-mode="indeterminate" ng-if="!sc.scholars_loaded" style="position: absolute;"></md-progress-circular>
+      <md-table-container style="overflow: auto;border: 1px solid #b0b1b3;" ng-style="resizeDiv()" resize-div  class="container" fixed-column-table>
         <table md-table>
           <thead md-head md-order="myOrder">
             <tr md-row>
@@ -101,8 +100,7 @@
               <th md-column md-numeric>School</th>
               <th md-column md-numeric>Student ID NO.</th>
               <th md-column md-numeric>Year level</th>
-              <th md-column md-numeric>Semester</th>
-              <th md-column md-numeric>Academic year</th>
+              <th md-column md-numeric>Last Renewed</th>
               <th md-column md-numeric style="min-width: 55px;">IP.</th>
               <th md-column md-numeric>Date Created</th>
               <th md-column md-numeric>Date Updated</th>
@@ -141,8 +139,7 @@
               <td md-cell>{{ scholar.school.school_name }}</td>
               <td md-cell>{{ scholar.student_id_number }}</td>
               <td md-cell>{{ scholar.year_level }}</td>
-              <td md-cell>{{ scholar.academicyear_semester_contract.semester }}</td>
-              <td md-cell>{{ scholar.academicyear_semester_contract.academic_year }}</td>
+              <td md-cell>{{ scholar.academicyear_semester_contract.semester }} - {{ scholar.academicyear_semester_contract.academic_year }}</td>
               <td md-cell>{{ scholar.IP }}</td>
               <td md-cell>{{ scholar.created_at | formatDate }}</td>
               <td md-cell>{{ scholar.updated_at | formatDate }}</td>

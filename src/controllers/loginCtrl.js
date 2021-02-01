@@ -38,14 +38,13 @@ app.controller('loginCtrl',['$scope', '$rootScope', '$cookies', '$window', '$loc
       console.log(credentials);
       authApiService.validateLogin(credentials)
         .then(function(response){
-          console.log(response);
           $cookies.putObject('auth', response.data);
           $location.path('/dashboard');
       }, function(err){
           lg.buttonMessage = 'LOGIN';
           lg.disableLogginBtn = false;
           $rootScope.logging_in = false;
-          swalert.toastInfo(err.data.email, 'error', 'top');
+          swalert.toastInfo(err.data.errors.email, 'error', 'top');
           console.log(err);
       });
         

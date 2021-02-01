@@ -44,6 +44,17 @@ app.factory('academicContractService', ['$http', '$cookies', '$rootScope', '$q',
           Authorization : 'Bearer '+ $rootScope.token
         }
       });
+    },
+    confirmPassword: function(password){
+      return $http({
+        method:'POST',
+        url: baseUrl+'api/confirmPassword',
+        data: password,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization : 'Bearer '+ $rootScope.token
+        }
+      });
     } 
 	}
 }]);

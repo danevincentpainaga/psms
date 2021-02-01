@@ -9,8 +9,8 @@
  */ 
 
 var app = angular.module('psmsApp');
-app.controller('contractCtrl',['$scope', 'academicSemesterYearApiService', 'academicContractService', 'debounce', 'moment', 'swalert', 
-  function ($scope, academicSemesterYearApiService, academicContractService, debounce, moment, swalert) {
+app.controller('contractCtrl',['$scope', 'academicSemesterYearApiService', 'academicContractService', 'debounce', 'moment', 'swalert', '$mdSidenav', '$mdDialog',
+  function ($scope, academicSemesterYearApiService, academicContractService, debounce, moment, swalert, $mdSidenav, $mdDialog) {
 
   var c = this;
 
@@ -20,8 +20,9 @@ app.controller('contractCtrl',['$scope', 'academicSemesterYearApiService', 'acad
   c.semester_list = [{semester: "1st Semester"}, {semester: "2nd Semester"}, {semester: "3rd Semester"}, {semester: "4th Semester"}];
 
   c.saveOrUpdateAcademicYearList = function(){
-    if (c.semester && c.academic_year)
+    if (c.semester && c.academic_year){
       updateOrSave();
+    }
   }
 
   c.edit = function(selected){
@@ -30,10 +31,15 @@ app.controller('contractCtrl',['$scope', 'academicSemesterYearApiService', 'acad
     c.academic_year = selected.academic_year;
     c.buttonText = "UPDATE";
     c.labelText = "Update";
+    $mdSidenav('addUpdateContract').toggle();
+  }
+
+  c.add = function(){
+    $mdSidenav('addUpdateContract').toggle();
   }
 
   c.setContract = function(selected){
-    swalert.updateInfo({ ascId: selected.asc_id }, setContract);
+    showPrompt(selected);
   }
 
   c.closeContract = function(){
@@ -44,7 +50,8 @@ app.controller('contractCtrl',['$scope', 'academicSemesterYearApiService', 'acad
     openContract();
   }
 
-  c.clear = function(){
+  c.close = function(){
+    $mdSidenav('addUpdateContract').toggle();
     clearInputs();
   }
 
@@ -53,7 +60,6 @@ app.controller('contractCtrl',['$scope', 'academicSemesterYearApiService', 'acad
       c.disable_linear_loader = true;
       console.log(response.data);
       c.school_list_loaded = true;
-      c.hide_spinner = true;
       c.academic_year_sem = response.data;
     }, err => {
       console.log(err);
@@ -89,6 +95,7 @@ app.controller('contractCtrl',['$scope', 'academicSemesterYearApiService', 'acad
         checkContractState(response.data[0].contract_state);
         c.contract_details = response.data;
         c.contract_status = c.contract_details[0].contract_state;
+        c.contract_loaded = true;
         console.log(c.contract_details);
     }, err => {
       console.log(err);
@@ -98,6 +105,7 @@ app.controller('contractCtrl',['$scope', 'academicSemesterYearApiService', 'acad
   function setContract(details){
      academicContractService.setContract(details).then(response => {
       console.log(response.data);
+      getAcademicContractDetails();
       getAcademicYearList();
       swalert.dialogBox(response.data.message, 'success', 'Success');
     }, err => {
@@ -108,6 +116,7 @@ app.controller('contractCtrl',['$scope', 'academicSemesterYearApiService', 'acad
 
   function closeContract(){
      academicContractService.closeContract().then(response => {
+      c.showOpenContractBtn = true;
       getAcademicYearList();
       swalert.dialogBox(response.data.message, 'success', 'Success');
     }, err => {
@@ -118,6 +127,7 @@ app.controller('contractCtrl',['$scope', 'academicSemesterYearApiService', 'acad
 
   function openContract(){
      academicContractService.openContract().then(response => {
+      c.showOpenContractBtn = false;
       getAcademicYearList();
       swalert.dialogBox(response.data.message, 'success', 'Success');
     }, err => {
@@ -139,6 +149,38 @@ app.controller('contractCtrl',['$scope', 'academicSemesterYearApiService', 'acad
 
   function checkContractState(contract_state){
     c.showOpenContractBtn = contract_state == 'Open'? false : true;
+  }
+
+  function showPrompt(selected) {
+    console.log(selected)
+    var confirm = $mdDialog.prompt()
+      .title('Set as contract?')
+      .textContent('Confirm your password to update.')
+      .placeholder('password')
+      .ariaLabel('Password')
+      .targetEvent(selected)
+      .required(true)
+      .ok('Confirm')
+      .cancel('Cancel');
+
+    $mdDialog.show(confirm).then(function (password) {
+      c.show_spinner = true;
+      confirmPassword({password: password}, selected);
+    }, function(err){
+      console.log(err);
+    });
+  }
+
+  function confirmPassword(password, selected) {
+    academicContractService.confirmPassword(password).then(response => {
+      console.log(response);
+      c.show_spinner = false;
+      swalert.updateInfo({ ascId: selected.asc_id }, setContract);
+    }, err =>{
+      console.log(err);
+      c.show_spinner = false;
+      swalert.dialogBox(err.data.errors.message, 'error', 'Failed!');
+    });
   }
 
   getAcademicYearList();

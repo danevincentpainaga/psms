@@ -1,3 +1,4 @@
+<div id="cover-spin" ng-if="c.show_spinner" ></div>
 <div style="font-size: 14px;">
   <md-toolbar class="md-menu-toolbar" style="box-shadow: 1px 0 5px rgba(0,0,0,.1);">
     <div layout="row" style="min-height: 64px;">
@@ -18,9 +19,9 @@
           <div layout="column">
             <section layout="row" flex layout-xs="column">
               <div layout="row" layout-xs="column" style="background-color: #fff; border-right: 1px solid #c7c7c7;;border: 1px solid #c7c7c7;">
-                <md-content flex layout-padding style="height: 100%;background-color: #fff; padding: 0px;;max-width: 650px;">
+                <md-content flex layout-padding style="height: 100%;background-color: #fff; padding: 0px;max-width: 650px;">
                 <md-table-container>
-                  <div style="max-height: 707px;overflow: auto;">
+                  <div style="max-height: 475px;overflow: auto;">
                     <table md-table>
                       <thead md-head md-order="myOrder" style="background: #dddddd;box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);">
                         <tr md-row>
@@ -36,22 +37,21 @@
                         <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="ay in c.academic_year_sem track by $index">
                           <td md-cell style="background-color: #f6c08e;">{{ $index+1 }}.</td>
                           <td md-cell>
-                            <md-icon class="material-icons" style="font-size: 17px; box-sizing: border-box;padding: 3px;cursor: pointer;outline-style: none;" ng-click="c.setContract(ay)">
+                            <md-icon class="material-icons" style="font-size: 17px; box-sizing: border-box;padding: 3px;cursor: pointer;outline-style: none;" ng-click="c.setContract(ay)" hide-btn-actions="{{ ay.state }}">
                               <md-tooltip>Set as Contract.</md-tooltip>
                               system_update
                             </md-icon>
-                            <md-icon class="material-icons" style="font-size: 17px; box-sizing: border-box;padding: 3px;cursor: pointer;outline-style: none;" ng-click="c.edit(ay)">
+                            <md-icon class="material-icons" style="font-size: 17px; box-sizing: border-box;padding: 3px;cursor: pointer;outline-style: none;" ng-click="c.edit(ay)" hide-btn-actions="{{ ay.state }}">
                               <md-tooltip>Edit</md-tooltip>
                               edit
                             </md-icon>
-                            <md-icon class="material-icons" style="font-size: 17px; box-sizing: border-box;padding: 3px;cursor: pointer;outline-style: none;">
+                            <md-icon class="material-icons" style="font-size: 17px; box-sizing: border-box;padding: 3px;cursor: pointer;outline-style: none;" hide-btn-actions="{{ ay.state }}">
                               <md-tooltip>Delete</md-tooltip>
                               close
                             </md-icon>
-                            &nbsp;&nbsp;
                             <span>{{ ay.semester }}</span>
                           </td>
-                          <td md-cell><span color-contract={{c.contract_status}}>{{ ay.state }}</span></td>
+                          <td md-cell><span color-contract={{ay.state}}>{{ ay.state }}</span></td>
                           <td md-cell><span>{{ ay.academic_year }}</span></td>
                           <td md-cell><span>{{ ay.created_at | formatDate }}</span></td>
                           <td md-cell><span>{{ ay.updated_at | formatDate }}</span></td>
@@ -62,39 +62,11 @@
                 </md-table-container>
                 </md-content>
               </div>
-              <div flex="" layout-padding style="background: #efefef;border: 1px solid #c7c7c7;" >
+              <div flex="" layout-padding style="background: #efefef;border: 1px solid #c7c7c7;position: relative;" >
                 <div>
-                  <md-card style="margin: 5px 0px;">
-                    <md-card-header>
-                      <md-card-avatar>
-                        <md-icon class="material-icons" style="margin-right: 15px; background-color: #616dc3;">groups</md-icon>
-                      </md-card-avatar>
-                      <md-card-header-text>
-                        <span class="md-title">{{ c.labelText }}</span>
-                        <span class="md-subhead">Academic year</span>
-                      </md-card-header-text>
-                    </md-card-header>
-                    <md-card-content style="padding: 15px 16px 0px 16px;">
-                      <div layout="column" >
-                        <md-input-container flex="">
-                          <label>Semester</label>
-                          <md-select ng-model="c.semester">
-                            <md-option ng-value="sem.semester" ng-repeat="sem in c.semester_list"><em>{{ sem.semester }}</em></md-option>
-                          </md-select>
-                        </md-input-container>
-                        <md-input-container flex="">
-                          <label>Academic year</label>
-                          <input type="text" ng-model="c.academic_year" >
-                        </md-input-container>
-                      </div>
-                      <div style="margin-bottom: 1.5em">
-                        <md-button class="md-raised md-primary" ng-click="c.saveOrUpdateAcademicYearList()" style="width: 100%;margin: 10px 0px !important;">{{ c.buttonText }}</md-button>
-                        <md-button class="md-raised" ng-click="c.clear()" style="width: 100%;margin: 0px !important;">Clear</md-button>
-                      </div>
-                    </md-card-content>
-                  </md-card>
-                </div>
-                <div>
+                <md-button class="md-fab md-mini md-primary" ng-click="c.add()" style="position: absolute;top: 0;right: 0;">
+                  <md-icon class="material-icons">add</md-icon>
+                </md-button>
                   <md-card style="margin: 5px 0px;">
                     <md-card-header style="padding-bottom: 0px !important;">
                       <md-card-header-text>
@@ -104,8 +76,11 @@
                         </span>
                       </md-card-header-text>
                     </md-card-header>
-                    <md-card-content style="padding: 15px 16px 0px 16px; font-size: 13px;">
-                      <div class="demo-md-panel-content" ng-repeat="contract in c.contract_details">
+                    <md-card-content style="padding: 16px; font-size: 13px;">
+                      <div layout="row" layout-sm="column" layout-align="space-around" style="margin: 20px 0px;" ng-if="!c.contract_loaded">
+                        <md-progress-circular md-diameter="25px"></md-progress-circular>
+                      </div>
+                      <div class="demo-md-panel-content" ng-repeat="contract in c.contract_details" ng-if="c.contract_loaded">
                         <p>
                           State: 
                           &nbsp;
@@ -132,7 +107,7 @@
                           <span>{{ contract.updated_at | formatDate }}</span>
                         </p>
                       </div>
-                      <div style="margin: 3em 0px 1.5em;">
+                      <div style="margin: 3em 0px 1.5em;" ng-if="c.contract_loaded">
                         <md-button class="md-raised md-primary" ng-click="c.updateContract()" style="width: 100%;margin: 10px 0px !important;">Update</md-button>
                         <md-button class="md-accent md-raised" ng-click="c.openContract()" ng-if="c.showOpenContractBtn" style="width: 100%;margin: 10px 0px !important;color: #ffff;">Open contract</md-button>
                         <md-button class="md-raised md-warn" ng-click="c.closeContract()" ng-if="!c.showOpenContractBtn" style="width: 100%;margin: 0px !important;color: #ffff;">Close contract</md-button>
@@ -149,4 +124,5 @@
     <br />
   </div>
 </div>
+<ng-include src="'src/views/add_update_contract.html'"></ng-include>
 

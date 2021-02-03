@@ -81,16 +81,24 @@ app.factory('scholarApiService', ['$http', '$cookies', '$rootScope', '$q', funct
         }
       });
     },
-    getScholars: function(searched_details){
-      return $http({
-        method:'POST',
-        url: baseUrl+'api/getScholars',
-        data: searched_details,
+    getScholars: function(searched_details, page){
+      // return $http({
+      //   method:'POST',
+      //   url: baseUrl+'api/getScholars',
+      //   data: searched_details,
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //     Authorization : 'Bearer '+ $rootScope.token
+      //   }
+      // });
+      return $http.get(baseUrl+'api/getScholars?page='+page, {
+        params: searched_details,
         headers: {
           "Content-Type": "application/json",
           Authorization : 'Bearer '+ $rootScope.token
         }
       });
+
     },
     getDegrees: function(){
       return $http.get(baseUrl+'api/getDegrees', {

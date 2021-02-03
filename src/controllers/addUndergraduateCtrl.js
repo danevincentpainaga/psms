@@ -166,7 +166,7 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
   function getNewUndergraduateScholars(searched){
      scholarApiService.getNewUndergraduateScholars(searched).then(response => {
       console.log(response.data);
-      ac.scholars = response.data;
+      ac.scholars = response.data.data;
       ac.scholars_loaded = true;
     }, err => {
       console.log(err);

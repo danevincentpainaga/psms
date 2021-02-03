@@ -21,13 +21,12 @@
         <form name="primary_details">
           <div layout="row" layout-xs="column">
               <div flex="15">
-              <div layout="column">
+              <div layout="column" style="margin-bottom: 15px;">
                 <img src="images/user-4.jpg" style="max-width: 100px;border: 2px solid #e3e3e3;">
               </div>
               </div>
               <md-input-container flex="">
                 <label>Firstname</label>
-                <md-icon class="material-icons">how_to_reg</md-icon>
                 <input type="text" ng-model="ec.firstname" ng-disabled="!ec.primary_details">
               </md-input-container>
 
@@ -43,7 +42,6 @@
           </div>
           <div layout="row" layout-xs="column">
             <div style="display: flex;width: 100%;position: relative;">
-              <md-icon class="material-icons">place</md-icon>
               <md-autocomplete flex
                 md-input-name="autocompleteField"
                 md-input-minlength="1"
@@ -82,7 +80,6 @@
             </md-input-container>
           </div>
           <div layout="row" layout-xs="column">
-            <md-icon class="material-icons">apartment</md-icon>
             <md-autocomplete flex
               md-input-name="autocompleteField"
               md-input-minlength="1"
@@ -144,7 +141,6 @@
       <md-card-content style="padding: 15px 16px 0px 16px;">
         <p>Father's Details</p>
         <div layout="row" layout-xs="column">
-          <md-icon class="material-icons">accessibility_new</md-icon>
           <md-autocomplete flex 
             md-input-name="autocompleteField"
             md-input-minlength="1"
@@ -175,14 +171,12 @@
         </div> 
         <div layout="row" layout-xs="column">
            <md-input-container flex="70">
-            <md-icon class="material-icons">work_outline</md-icon>
             <label>Occupation</label>
             <input type="text" ng-model="ec.f_occupation" ng-disabled="!ec.parents_details">
           </md-input-container>         
         </div>
         <p>Mother's Details</p>
         <div layout="row" layout-xs="column">
-          <md-icon class="material-icons">pregnant_woman</md-icon>
           <md-autocomplete flex 
             md-input-name="autocompleteField"
             md-input-minlength="1"
@@ -213,7 +207,6 @@
         </div>
         <div layout="row" layout-xs="column">
            <md-input-container flex="70">
-            <md-icon class="material-icons">work_outline</md-icon>
             <label>Occupation</label>
             <input type="text" ng-model="ec.m_occupation" ng-disabled="!ec.parents_details">
           </md-input-container>         

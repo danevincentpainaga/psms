@@ -129,7 +129,7 @@
         <h3 ng-if="!md.has_semester" >Contract closed.</h3>
         <div ng-if="md.has_semester">
           <md-card style="margin: 0px;">
-            <md-card-header>
+            <md-card-header style="padding: 22px 25px 0px;">
               <md-card-avatar>
                 <md-icon class="material-icons" style="margin-right: 15px; background-color: #616dc3;">school</md-icon>
               </md-card-avatar>
@@ -157,12 +157,11 @@
                 </div>
               </md-card-header-text>
             </md-card-header>
-            <md-card-content style="padding: 0px 16px;" >
+            <md-card-content style="padding: 0px 30px;" >
               <form name="primary_details">
                 <div layout="row" layout-xs="column">
                     <md-input-container flex="">
                       <label>Firstname</label>
-                      <md-icon class="material-icons">how_to_reg</md-icon>
                       <input type="text" ng-model="md.firstname" ng-disabled="!md.degree_has_selected">
                     </md-input-container>
 
@@ -178,7 +177,6 @@
                 </div>
                 <div layout="row" layout-xs="column">
                   <div style="display: flex;width: 100%;position: relative;">
-                    <md-icon class="material-icons">place</md-icon>
                     <md-autocomplete flex
                       md-input-name="autocompleteField"
                       md-input-minlength="1"
@@ -218,7 +216,6 @@
                   </md-input-container>
                 </div>
                 <div layout="row" layout-xs="column">
-                  <md-icon class="material-icons">account_balance</md-icon>
                   <md-autocomplete flex
                     md-input-name="autocompleteField"
                     md-input-minlength="1"
@@ -275,10 +272,9 @@
           </md-card>
 
           <md-card style="margin: 5px 0px;">
-            <md-card-content style="padding: 15px 16px 0px 16px;">
+            <md-card-content style="padding: 20px 25px 0px;">
               <p>Father's Details</p>
               <div layout="row" layout-xs="column">
-                <md-icon class="material-icons">accessibility_new</md-icon>
                 <md-autocomplete flex 
                   md-input-name="autocompleteField"
                   md-input-minlength="2"
@@ -310,7 +306,6 @@
               </div>    
               <p>Mother's Details</p>
               <div layout="row" layout-xs="column">
-                <md-icon class="material-icons">pregnant_woman</md-icon>
                 <md-autocomplete flex 
                   md-input-name="autocompleteField"
                   md-input-minlength="2"

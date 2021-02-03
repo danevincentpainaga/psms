@@ -26,7 +26,8 @@ app.controller('loginCtrl',['$scope', '$rootScope', '$cookies', '$window', '$loc
     }else{
 
       swalert.toastInfo('Please wait...', 'info', 'top', 2000);
-      $rootScope.logging_in = true;
+      $rootScope.route_loader = true;
+      // $rootScope.logging_in = true;
       lg.buttonMessage = 'Logging In...';
       lg.disableLogginBtn = true;
       
@@ -43,7 +44,7 @@ app.controller('loginCtrl',['$scope', '$rootScope', '$cookies', '$window', '$loc
       }, function(err){
           lg.buttonMessage = 'LOGIN';
           lg.disableLogginBtn = false;
-          $rootScope.logging_in = false;
+          // $rootScope.logging_in = false;
           swalert.toastInfo(err.data.errors.email, 'error', 'top');
           console.log(err);
       });

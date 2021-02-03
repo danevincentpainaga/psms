@@ -1,114 +1,82 @@
-<div>
-<md-toolbar class="md-menu-toolbar" style="border-bottom: 1px solid #c7c7c7;">
-  <div layout="row">
-    <md-toolbar-filler style="display: flex;">
-      <md-icon class="material-icons">view_list</md-icon>
-    </md-toolbar-filler>
-    <div>
-      <h2 class="md-toolbar-tools">Addresses</h2>
-      <md-menu-bar>
-        <md-menu>
-          <button ng-click="$mdMenu.open()">
-            Add new
-          </button>
-          <md-menu-content>
-            <md-menu-item class="md-indent">
-              <md-icon class="material-icons">person_add</md-icon>
-              <md-button ng-click="ctrl.sampleAction('redo', $event)">
-                  Province
-              </md-button>
-            </md-menu-item>
-            <md-menu-item class="md-indent">
-              <md-icon class="material-icons">speaker_notes</md-icon>
-              <md-button ng-click="ctrl.sampleAction('redo', $event)">
-                  Municipality
-              </md-button>
-            </md-menu-item>
-            <md-menu-item class="md-indent">
-              <md-icon class="material-icons">speaker_notes</md-icon>
-              <md-button ng-click="ctrl.sampleAction('redo', $event)">
-                  Barangay
-              </md-button>
-            </md-menu-item>
-          </md-menu-content>
-        </md-menu>
-        <md-menu>
-          <button ng-click="$mdMenu.open()">
-            Export
-          </button>
-          <md-menu-content>
-            <md-menu-item class="md-indent">
-              <md-icon class="material-icons">person_add</md-icon>
-              <md-button ng-click="ctrl.sampleAction('redo', $event)">
-                Masterlist
-              </md-button>
-            </md-menu-item>
-            <md-menu-item class="md-indent">
-              <md-icon class="material-icons">speaker_notes</md-icon>
-              <md-button ng-click="ctrl.sampleAction('redo', $event)">
-                Normal
-              </md-button>
-            </md-menu-item>
-          </md-menu-content>
-        </md-menu>
-      </md-menu-bar>
+<div style="font-size: 14px;">
+  <md-toolbar class="md-menu-toolbar" style="box-shadow: 1px 0 5px rgba(0,0,0,.1);">
+    <div layout="row" style="min-height: 64px;">
+      <md-toolbar-filler style="display: flex;">
+        <md-icon class="material-icons">account_balance</md-icon>
+      </md-toolbar-filler>
+      <h2 class="md-toolbar-tools" style="padding: 20px;">
+        <span>School</span>
+      </h2>
     </div>
-  </div>
-</md-toolbar>
-  <div layout="row" layout-xs="column" layout-wrap="" style="background-color: #fff; border-right: 1px solid #c7c7c7;display: flex;justify-content: center;">
-    <div flex="60" flex-xs="100" flex-sm="100" style="padding: 5px;background-color: #eeeeee;">
-      <div layout="row" layout-wrap="" layout-xs="column" style="background-color: #fff; border-right: 1px solid #c7c7c7;">         
-
-        <div class="demo-md-panel-content" flex>
-          <md-table-container >
-            <table md-table md-row-select multiple ng-model="selected" md-progress="promise">
-              <thead md-head md-order="query.order" md-on-reorder="getDesserts">
-                <tr md-row>
-                  <th md-column md-numeric style="background-color: #dddddd;width: 58px;"><span>No.</span></th>
-                  <th md-column md-order-by="nameToLower"><span>Province</span></th>
-                  <th md-column md-numeric ><span>Municipality</span></th>
-                  <th md-column md-numeric>Barangay</th>
-                  <th md-column md-numeric>Action</th>
-                </tr>
-              </thead>
-              <tbody md-body>
-                <tr md-row md-select="dessert" md-select-id="name" md-auto-select >
-                  <td md-cell style="background-color: #dddddd;">1</td>
-                  <td md-cell>Antique</td>
-                  <td md-cell>Culasi</td>
-                  <td md-cell>Poblacion, Centro Norte</td>
-                  <td md-cell>
-                  <md-button class="md-icon-button" aria-label="More">
-                    <md-icon class="material-icons">more_vert</md-icon>
+  </md-toolbar>
+  <div layout="column">
+    <div layout="row">
+      <div flex="20"></div>
+      <div flex="">
+          <br />
+          <md-content flex layout-padding style="height: 100%;background-color: #fff; padding: 0px;" ng-if="!s.editing_state">
+              <md-list>
+                <div>
+                  <md-button class="md-fab md-mini md-primary" ng-click="s.showDialog($event)" ng-if="!s.disable_linear_loader" style="float: right;">
+                    <md-icon class="material-icons">add</md-icon>
                   </md-button>
-                  </td>
-                </tr>
-                <tr md-row md-select="dessert" md-select-id="name" md-auto-select >
-                  <td md-cell style="background-color: #dddddd;">1</td>
-                  <td md-cell>Antique</td>
-                  <td md-cell>Culasi</td>
-                  <td md-cell>Poblacion, Centro Norte</td>
-                  <td md-cell>
-                  <md-button class="md-icon-button" aria-label="More">
-                    <md-icon class="material-icons">more_vert</md-icon>
-                  </md-button>
-                  </td>
-                </tr>
-                <tfoot md-foot>
-                    <tr md-row>
-                      <td md-cell></td>
-                      <td md-cell><strong>Total: </strong>{{calories.total}}</td>
-                      <td md-cell colspan="6"></td>
-                    </tr>
-                  </tfoot>
-              </tbody>
-            </table>
-          </md-table-container>
-
-        </div>
+                </div>
+                <md-subheader class="md-no-sticky">List of Addresses</md-subheader>
+                <md-input-container style="width: 40%;margin: 25px 0px 0px 0px;height: 40px;">
+                  <label>Search</label>
+                  <input type="text" ng-model="s.searched_school" style="text-transform: uppercase;" autocomplete="off">
+                  <md-progress-circular class="md-hue-2" md-diameter="15px" style="position: absolute;right: 0px;top: 10px;" ng-if="!s.school_list_loaded"></md-progress-circular>
+                </md-input-container>
+                <div>
+                  <!-- <md-progress-circular md-mode="indeterminate" ng-if="!s.disable_linear_loader" style="margin: 50px 0px;"></md-progress-circular> -->
+                </div>
+                <md-content flex style="height: 100%;background-color: #fff;" >
+                    <div style="max-height: 300px;min-height: 300px;overflow: auto;border: 1px solid rgb(176, 177, 179);" class="container" fixed-column-table>
+                      <table>
+                        <thead style="background: #dddddd;box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);">
+                          <tr>
+                            <th style="background-color: #dddddd;"><span>No.</span></th>
+                            <th style="background-color: #dddddd;"><span>Semester/Academic yea</span></th>
+                            <th style="background-color: #dddddd;"><span>State</span></th>
+                            <th style="background-color: #dddddd;"><span>Date created</span></th>
+                            <th style="background-color: #dddddd;"><span>Date updated</span></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr ng-repeat="ay in c.academic_year_sem track by $index">
+                            <td style="background-color: #f6c08e;">{{ $index+1 }}.</td>
+                            <td>
+                              <span>{{ ay.semester }} - {{ ay.academic_year }}</span>
+                            </td>
+                            <td><span color-contract={{ay.state}}>{{ ay.state }}</span></td>
+                            <td><span>{{ ay.created_at | formatDate }}</span></td>
+                            <td style="display: flex;align-items: center;">
+                              <span style="margin-right: 20px;">{{ ay.updated_at | formatDate }}</span>
+                              <md-icon class="material-icons" style="font-size: 17px; box-sizing: border-box;padding: 3px;cursor: pointer;outline-style: none;" ng-click="c.setContract(ay)" hide-btn-actions="{{ ay.state }}">
+                                <md-tooltip>Set as Contract.</md-tooltip>
+                                system_update
+                              </md-icon>
+                              <md-icon class="material-icons" style="font-size: 17px; box-sizing: border-box;padding: 3px;cursor: pointer;outline-style: none;" ng-click="c.edit(ay)" hide-btn-actions="{{ ay.state }}">
+                                <md-tooltip>Edit</md-tooltip>
+                                edit
+                              </md-icon>
+                              <md-icon class="material-icons" style="font-size: 17px; box-sizing: border-box;padding: 3px;cursor: pointer;outline-style: none;" hide-btn-actions="{{ ay.state }}">
+                                <md-tooltip>Delete</md-tooltip>
+                                close
+                              </md-icon>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                  </div>
+                </md-content>
+            </md-list>
+          </md-content>
+          <add-school-directive schooldetails="s.school_to_update" ng-if="s.editing_state" editing="s.editing_state"></add-school-directive>
       </div>
+      <div flex="20"></div>
     </div>
-
   </div>
-
 </div>
+
+

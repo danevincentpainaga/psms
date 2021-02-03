@@ -6,7 +6,7 @@ angular
   'ui.router.state.events',
   'ngSanitize',
   'ngMaterial',
-  'md.data.table',
+  // 'md.data.table',
   'chart.js'
 ])
 .config(function ($stateProvider, $urlRouterProvider) {
@@ -73,6 +73,8 @@ angular
         },
         'address-view@address':{
           templateUrl: 'src/views/address_list.html',
+          controller: 'contractCtrl',
+          controllerAs: 'c',
         }
       },
       Authenticated: true,
@@ -125,7 +127,7 @@ angular
   $transitions.onStart({}, function(transition) {
 
     if (transition.to().Authenticated) {
-      
+      $rootScope.route_loader = true;
       var adminCannotAccess = [];
       var usersCannotAccess = ['user_accounts', 'contract', 'export'];
       var $state = transition.router.stateService;
@@ -137,12 +139,13 @@ angular
       // else{
 
         $rootScope.token = auth.success;
-        $rootScope.route_loader = true;
 
         console.log('Running...');
 
         return authApiService.getAuthenticatedUser().then(response=>{
-
+          
+          $rootScope.access_degree = JSON.parse(response.data.degree_access);
+          $rootScope.username = response.data.name;
           let degree_access = JSON.parse(response.data.degree_access);
 
           if (response.data.user_type === 'User') {
@@ -159,7 +162,6 @@ angular
 
           console.log(usersCannotAccess);
           $rootScope.authenticated = true;
-          $rootScope.logging_in = false;
 
         });
 
@@ -177,8 +179,8 @@ angular
 
         function validateRoute(protected_route) {
           if (protected_route.indexOf(transition.to().name) > -1) {
-              $rootScope.route_loader = false;
               transition.abort();
+              $rootScope.route_loader = false;
               $state.$current.name ? $state.go($state.$current.name) : $state.go('dashboard') ;
           }
         }

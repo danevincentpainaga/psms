@@ -27,8 +27,10 @@
                 </md-button>
                   </div>
                   <md-subheader class="md-no-sticky">List of School</md-subheader>
-                  <div layout="row" style="flex-wrap: wrap;display: flex;justify-content: center;">
+                  <div style="display: flex;justify-content: center;align-items: center;">
                     <md-progress-circular md-mode="indeterminate" ng-if="!s.disable_linear_loader" style="margin: 50px 0px;"></md-progress-circular>
+                  </div>
+                  <div layout="row" style="flex-wrap: wrap;">
                     <md-list-item class="md-2-line" flex="33" ng-repeat="school in s.list_of_schools">
                       <img src="images/school.png" class="md-avatar" alt="" />
                       <div class="md-list-item-text" style="max-width: 210px;">

@@ -171,7 +171,7 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
 
   function getNewMastersDoctorateScholars(searched){
      scholarApiService.getNewMastersDoctorateScholars(searched).then(response => {
-      md.scholars = response.data;
+      md.scholars = response.data.data;
       md.scholars_loaded = true;
     }, err => {
       console.log(err);

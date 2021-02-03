@@ -18,48 +18,46 @@
           <br />
           <div layout="column">
             <section layout="row" flex layout-xs="column">
-              <div layout="row" layout-xs="column" style="background-color: #fff; border-right: 1px solid #c7c7c7;;border: 1px solid #c7c7c7;">
-                <md-content flex layout-padding style="height: 100%;background-color: #fff; padding: 0px;max-width: 650px;">
-                <md-table-container>
-                  <div style="max-height: 475px;overflow: auto;">
-                    <table md-table>
-                      <thead md-head md-order="myOrder" style="background: #dddddd;box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);">
-                        <tr md-row>
-                          <th md-column md-numeric style="background-color: #dddddd;"><span>No.</span></th>
-                          <th md-column md-numeric style="background-color: #dddddd;"><span>Semester.</span></th>
-                          <th md-column md-numeric style="background-color: #dddddd;"><span>State</span></th>
-                          <th md-column md-numeric style="background-color: #dddddd;"><span>Academic year</span></th>
-                          <th md-column md-numeric style="background-color: #dddddd;"><span>Date created</span></th>
-                          <th md-column md-numeric style="background-color: #dddddd;"><span>Date updated</span></th>
-                        </tr>
-                      </thead>
-                      <tbody md-body >
-                        <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="ay in c.academic_year_sem track by $index">
-                          <td md-cell style="background-color: #f6c08e;">{{ $index+1 }}.</td>
-                          <td md-cell>
-                            <md-icon class="material-icons" style="font-size: 17px; box-sizing: border-box;padding: 3px;cursor: pointer;outline-style: none;" ng-click="c.setContract(ay)" hide-btn-actions="{{ ay.state }}">
-                              <md-tooltip>Set as Contract.</md-tooltip>
-                              system_update
-                            </md-icon>
-                            <md-icon class="material-icons" style="font-size: 17px; box-sizing: border-box;padding: 3px;cursor: pointer;outline-style: none;" ng-click="c.edit(ay)" hide-btn-actions="{{ ay.state }}">
-                              <md-tooltip>Edit</md-tooltip>
-                              edit
-                            </md-icon>
-                            <md-icon class="material-icons" style="font-size: 17px; box-sizing: border-box;padding: 3px;cursor: pointer;outline-style: none;" hide-btn-actions="{{ ay.state }}">
-                              <md-tooltip>Delete</md-tooltip>
-                              close
-                            </md-icon>
-                            <span>{{ ay.semester }}</span>
-                          </td>
-                          <td md-cell><span color-contract={{ay.state}}>{{ ay.state }}</span></td>
-                          <td md-cell><span>{{ ay.academic_year }}</span></td>
-                          <td md-cell><span>{{ ay.created_at | formatDate }}</span></td>
-                          <td md-cell><span>{{ ay.updated_at | formatDate }}</span></td>
-                        </tr>
-                      </tbody>
-                    </table>
+              <div flex="70" layout-xs="column" style="background-color: #fff; border-right: 1px solid #c7c7c7;;border: 1px solid #c7c7c7;">
+                <md-content flex style="height: 100%;background-color: #fff; padding: 8px;" class="container" >
+                    <div style="max-height: 475px;min-height: 475px;overflow: auto;border: 1px solid rgb(176, 177, 179);" class="container" fixed-column-table>
+                      <table>
+                        <thead style="background: #dddddd;box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);">
+                          <tr>
+                            <th style="background-color: #dddddd;"><span>No.</span></th>
+                            <th style="background-color: #dddddd;"><span>Semester/Academic yea</span></th>
+                            <th style="background-color: #dddddd;"><span>State</span></th>
+                            <th style="background-color: #dddddd;"><span>Date created</span></th>
+                            <th style="background-color: #dddddd;"><span>Date updated</span></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr ng-repeat="ay in c.academic_year_sem track by $index">
+                            <td style="background-color: #f6c08e;">{{ $index+1 }}.</td>
+                            <td>
+                              <span>{{ ay.semester }} - {{ ay.academic_year }}</span>
+                            </td>
+                            <td><span color-contract={{ay.state}}>{{ ay.state }}</span></td>
+                            <td><span>{{ ay.created_at | formatDate }}</span></td>
+                            <td style="display: flex;align-items: center;">
+                              <span style="margin-right: 20px;">{{ ay.updated_at | formatDate }}</span>
+                              <md-icon class="material-icons" style="font-size: 17px; box-sizing: border-box;padding: 3px;cursor: pointer;outline-style: none;" ng-click="c.setContract(ay)" hide-btn-actions="{{ ay.state }}">
+                                <md-tooltip>Set as Contract.</md-tooltip>
+                                system_update
+                              </md-icon>
+                              <md-icon class="material-icons" style="font-size: 17px; box-sizing: border-box;padding: 3px;cursor: pointer;outline-style: none;" ng-click="c.edit(ay)" hide-btn-actions="{{ ay.state }}">
+                                <md-tooltip>Edit</md-tooltip>
+                                edit
+                              </md-icon>
+                              <md-icon class="material-icons" style="font-size: 17px; box-sizing: border-box;padding: 3px;cursor: pointer;outline-style: none;" hide-btn-actions="{{ ay.state }}">
+                                <md-tooltip>Delete</md-tooltip>
+                                close
+                              </md-icon>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
                   </div>
-                </md-table-container>
                 </md-content>
               </div>
               <div flex="" layout-padding style="background: #efefef;border: 1px solid #c7c7c7;position: relative;" >

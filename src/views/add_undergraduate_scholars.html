@@ -128,7 +128,7 @@
         <h3 ng-if="!ac.has_semester">Contract closed.</h3>
         <div ng-if="ac.has_semester">
           <md-card style="margin: 0px;">
-            <md-card-header>
+            <md-card-header style="padding: 22px 25px 0px;">
               <md-card-avatar>
                 <md-icon class="material-icons" style="margin-right: 15px; background-color: #616dc3;">groups</md-icon>
               </md-card-avatar>
@@ -141,20 +141,18 @@
                 <span class="md-subhead">{{ ac.semester }}</span>
               </md-card-header-text>
             </md-card-header>
-            <md-card-content style="padding: 0px 16px;" >
+            <md-card-content style="padding: 0px 30px;" >
               <form name="primary_details">
                 <div layout="row" layout-xs="column">
                     <md-input-container flex="">
                       <label>Firstname</label>
-                      <md-icon class="material-icons">how_to_reg</md-icon>
+      
                       <input type="text" ng-model="ac.firstname" autocomplete="off">
                     </md-input-container>
-
                     <md-input-container flex="">
                       <label>Lastname</label>
                       <input type="text" ng-model="ac.lastname" >
                     </md-input-container>
-
                     <md-input-container flex="">
                       <label>Middlename</label>
                       <input type="text" ng-model="ac.middlename">
@@ -162,7 +160,7 @@
                 </div>
                 <div layout="row" layout-xs="column">
                   <div style="display: flex;width: 100%;position: relative;">
-                    <md-icon class="material-icons">place</md-icon>
+
                     <md-autocomplete flex
                       md-input-name="autocompleteField"
                       md-input-minlength="1"
@@ -187,6 +185,7 @@
                   </div>
                   <md-input-container flex="20">
                     <label>Date of Birth</label>
+
                     <input type="text" ng-model="ac.date_of_birth" ng-change="ac.selectedDateOfBirth(ac.date_of_birth)" add-double-slashes-directive />
                   </md-input-container>
                   <md-input-container flex="10">
@@ -195,6 +194,7 @@
                   </md-input-container>
                   <md-input-container flex="20">
                     <label>Gender</label>
+        
                     <md-select ng-model="ac.gender">
                       <md-option value="Male"><em>Male</em></md-option>
                       <md-option value="Female"><em>Female</em></md-option>
@@ -202,7 +202,7 @@
                   </md-input-container>
                 </div>
                 <div layout="row" layout-xs="column">
-                  <md-icon class="material-icons">account_balance</md-icon>
+        
                   <md-autocomplete flex
                     md-input-name="autocompleteField"
                     md-input-minlength="1"
@@ -226,12 +226,14 @@
                   </md-autocomplete>
                   <md-input-container flex="40">
                     <label>Course & Section</label>
+            
                     <input ng-model="ac.course_section">
                   </md-input-container>
                 </div>
                 <div layout="row" layout-xs="column">
                   <md-input-container flex>
                     <label>Year level.</label>
+    
                     <md-select ng-model="ac.year_level">
                       <md-option value="1st year"><em>1st year</em></md-option>
                       <md-option value="2nd year"><em>2nd year</em></md-option>
@@ -244,10 +246,12 @@
                   </md-input-container>
                   <md-input-container flex="30">
                     <label>ID NO.</label>
+    
                     <input ng-model="ac.student_id_number">
                   </md-input-container>
                   <md-input-container flex="20">
                     <label>IP.</label>
+    
                     <md-select ng-model="ac.IP">
                       <md-option value="YES"><em>YES</em></md-option>
                       <md-option value="NO"><em>NO</em></md-option>
@@ -258,10 +262,10 @@
             </md-card-content>
           </md-card>
           <md-card style="margin: 5px 0px;">
-            <md-card-content style="padding: 15px 16px 0px 16px;">
+            <md-card-content style="padding: 20px 25px 0px;">
               <p>Father's Details</p>
               <div layout="row" layout-xs="column">
-                <md-icon class="material-icons">accessibility_new</md-icon>
+        
                 <md-autocomplete flex 
                   md-input-name="autocompleteField"
                   md-input-minlength="2"
@@ -293,7 +297,7 @@
               </div>    
               <p>Mother's Details</p>
               <div layout="row" layout-xs="column">
-                <md-icon class="material-icons">pregnant_woman</md-icon>
+    
                 <md-autocomplete flex 
                   md-input-name="autocompleteField"
                   md-input-minlength="2"

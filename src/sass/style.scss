@@ -1,10 +1,19 @@
 @import "~angular-material/angular-material";
-@import '~angular-material-data-table/dist/md-data-table.min.css';
+/*@import '~angular-material-data-table/dist/md-data-table.min.css';*/
 /*@import '~material-design-icons/iconfont/material-icons.css';*/
+
+/*background: linear-gradient(to bottom,#F8F8F8 0,#eeeeee 100%);*/
 
 body{
 	font-family: century gothic !important;
 	background: #efefef !important;
+}
+
+md-progress-linear{
+  height: 2.5px !important;
+  .md-container {
+    height: 2.5px !important;
+  }
 }
 
 .custom-md-toolbar{
@@ -15,7 +24,18 @@ md-backdrop{
 	position: fixed;
 }
 
+md-sidenav{
+  font-size: 14px !important;
+}
 
+md-input-container{
+  input {
+    /*text-transform: uppercase;*/
+  }
+  md-icon{
+    color: #676767;
+  }
+}
 
 .spinner-loader{
 	height: 100%;
@@ -75,16 +95,25 @@ table {
 */
 
 table{
+  /*border-collapse: collapse;*/
+  position: absolute;
+  border-spacing: 0px !important;
+  width: 100%;
+  font-size: 12px;
   thead{
-    background: #dddddd;
+    background: linear-gradient(to bottom,#F8F8F8 0,#eeeeee 100%);
+    color: #636363;
     box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
     position: relative; 
     z-index: 1;
 
     tr{
       th{
+        height: 37px;
+        text-align: left;
+        padding: 0 15px 0px 7px;
         &:nth-child(1){
-            padding: 0 15px 0px 7px !important;
+            padding: 0 15px 0px 15px !important;
             text-align: center !important;
         }
         &:nth-child(1), &:nth-child(2){
@@ -92,9 +121,40 @@ table{
         }
       }
     }
+
+    .scholars{
+      th{
+        &:nth-child(2){
+          min-width: 340px;
+        }
+        &:nth-child(3){
+          min-width: 94px;
+        }
+        &:nth-child(6){
+          select{
+            min-width: 73px;
+          }
+        }
+        &:nth-child(7), &:nth-child(9), &:nth-child(12){
+          select{
+            min-width: 115px;
+          }
+        }
+        input{
+          border: 1px solid #ccc;
+          border-radius: 4px;
+        }
+        select{
+          border: 1px solid #ccc;
+          border-radius: 4px;
+        }
+      }
+    }
+
   }
   tbody{
     tr{
+      /*border-bottom: 1px solid #e1e1e1;*/
       th{
         padding: 0 10px !important;
         text-align: center !important;
@@ -104,6 +164,7 @@ table{
         }
       }
       td {
+        height: 37px;
         background: #fff;
         &:nth-child(1){
           text-align: center !important;
@@ -111,8 +172,17 @@ table{
         &:nth-child(1), &:nth-child(2){
           border-right: 1px solid #ccc !important;
         }
+        &:nth-child(2){
+          span{
+            display: flex;
+            align-items: center;
+            img{
+              margin-right: 5px;
+            }
+          }
+        };
         &:not(:nth-child(1)){
-          padding: 0 35px 0px 7px !important;
+          padding: 0px 45px 0px 7px !important;
           text-align: left !important;
           font-size: 12px !important;
         }
@@ -124,5 +194,7 @@ table{
 
 th,
 .fixed-cell {
-  background: #eee;
+  background: linear-gradient(to bottom,#F8F8F8 0,#eeeeee 100%);
+  /*background-color: red !important;*/
+  /*background-color: #f6c08e !important;*/
 }

@@ -9,8 +9,8 @@
  */ 
 
 var app = angular.module('psmsApp');
-app.controller('scholarsListCtrl',['$scope', '$rootScope', '$cookies', '$window', '$location', '$timeout', 'schoolApiService', 'addressApiService', 'scholarApiService', 'municipalitiesApiService', 'debounce', 'moment',
-  function ($scope, $rootScope, $cookies, $window, $location, $timeout, schoolApiService, addressApiService, scholarApiService, municipalitiesApiService, debounce, moment) {
+app.controller('scholarsListCtrl',['$scope', '$rootScope', '$cookies', '$window', '$location', '$timeout', '$mdSidenav', 'schoolApiService', 'addressApiService', 'scholarApiService', 'municipalitiesApiService', 'debounce', 'moment',
+  function ($scope, $rootScope, $cookies, $window, $location, $timeout, $mdSidenav, schoolApiService, addressApiService, scholarApiService, municipalitiesApiService, debounce, moment) {
 
   var sc = this;
 
@@ -27,6 +27,10 @@ app.controller('scholarsListCtrl',['$scope', '$rootScope', '$cookies', '$window'
 
   }, 500), true);
   
+  sc.edit = function(scholarDetails){
+    sc.scholar_to_edit = scholarDetails;
+    $mdSidenav('right').toggle();
+  }
 
   sc.selectedStatus = function(selected){
     sc.scholars_loaded = false;
@@ -173,7 +177,8 @@ app.controller('scholarsListCtrl',['$scope', '$rootScope', '$cookies', '$window'
 
      scholarApiService.getScholars(searched).then(response => {
       console.log(response.data);
-      sc.scholars = response.data;
+      sc.pagination_data = response.data;
+      sc.scholars = response.data.data;
       sc.scholars_loaded = true;
       sc.hide_spinner = true;
     }, err => {
@@ -190,14 +195,14 @@ app.controller('scholarsListCtrl',['$scope', '$rootScope', '$cookies', '$window'
       });
   }
 
-  function getDegrees(){
-    scholarApiService.getDegrees()
-      .then(response=>{
-        sc.access_degree = response.data;
-      }, err=> {
-        console.log(err);
-      });
-  }
+  // function getDegrees(){
+  //   scholarApiService.getDegrees()
+  //     .then(response=>{
+  //       sc.access_degree = response.data;
+  //     }, err=> {
+  //       console.log(err);
+  //     });
+  // }
 
   function checkMunicipality(municipality, municipalities, scholar){
       switch(municipality){
@@ -259,7 +264,7 @@ app.controller('scholarsListCtrl',['$scope', '$rootScope', '$cookies', '$window'
 
   }
 
-  getDegrees();
+  // getDegrees();
   getMunicipalities();
 
 }]);

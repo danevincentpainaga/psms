@@ -54,7 +54,11 @@ angular.module('psmsApp')
       ];
     }, 3000);
 
-
+  // $scope.query = {
+  //   order: 'name',
+  //   limit: 5,
+  //   page: 1
+  // };
 
 }]);
 
@@ -188,7 +192,7 @@ angular
     restrict:'A',
     link: function(scope, elem, atrrs){
       atrrs.$observe('hideBtnActions', function(n, o) {
-        if (n === 'Closed' || n === 'Selected') {
+        if (n === 'Closed') {
           $(elem).hide();
         }
       });

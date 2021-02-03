@@ -129,7 +129,7 @@ angular
     if (transition.to().Authenticated) {
       $rootScope.route_loader = true;
       var adminCannotAccess = [];
-      var usersCannotAccess = ['user_accounts', 'contract', 'export'];
+      var usersCannotAccess = ['user_accounts', 'contract'];
       var $state = transition.router.stateService;
       var auth = $cookies.getObject('auth');
 
@@ -229,6 +229,7 @@ require('../filters/filters');
 require('../factories/addScholarsService');
 require('../factories/debounce');
 require('../factories/momentFactory');
+require('../factories/exportScholars');
 
 require('../services/municipalitiesApiService');
 require('../services/alertDialog');

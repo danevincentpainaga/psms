@@ -5,10 +5,8 @@ app.factory('addressApiService', ['$http', '$cookies', '$rootScope', '$q', funct
 
   return{
     getAddresses: function(searched){
-      return $http({
-        method:'POST',
-        url: baseUrl+'api/getAddresses',
-        data: searched,
+      return $http.get(baseUrl+'api/getAddresses', {
+        params: searched,
         headers: {
           "Content-Type": "application/json",
           Authorization : 'Bearer '+ $rootScope.token

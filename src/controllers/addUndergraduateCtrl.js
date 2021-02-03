@@ -134,7 +134,7 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
   }
 
   ac.schoolSearchQuery = function(searched){
-     return addScholarsService.getSearchedSchool(searched);
+     return addScholarsService.getListOfSchool({searched_school: searched});
   }
 
   ac.addressSearchQuery = function(searched){

@@ -139,7 +139,7 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
   }
 
   md.schoolSearchQuery = function(searched){
-     return addScholarsService.getSearchedSchool(searched);
+     return addScholarsService.getListOfSchool({searched_school: searched});
   }
 
   md.addressSearchQuery = function(searched){

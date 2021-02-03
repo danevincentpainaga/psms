@@ -1,8 +1,8 @@
 angular.module('psmsApp')
 	.factory('addScholarsService',['schoolApiService', 'addressApiService', 'scholarApiService', function(schoolApiService, addressApiService, scholarApiService){
 	  return {
-	    getSearchedSchool: function(searched){
-			return schoolApiService.getSearchedSchool(searched).then(response=>{
+	    getListOfSchool: function(searched){
+			return schoolApiService.getListOfSchool(searched).then(response=>{
 				return response.data;
 				}, err => {
 				console.log(err);

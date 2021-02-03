@@ -44,7 +44,7 @@ app.controller('loginCtrl',['$scope', '$rootScope', '$cookies', '$window', '$loc
       }, function(err){
           lg.buttonMessage = 'LOGIN';
           lg.disableLogginBtn = false;
-          // $rootScope.logging_in = false;
+          $rootScope.route_loader = false;
           swalert.toastInfo(err.data.errors.email, 'error', 'top');
           console.log(err);
       });

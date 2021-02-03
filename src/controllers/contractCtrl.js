@@ -62,6 +62,7 @@ app.controller('contractCtrl',['$scope', 'academicSemesterYearApiService', 'acad
       c.school_list_loaded = true;
       c.academic_year_sem = response.data;
     }, err => {
+      c.disable_linear_loader = true;
       console.log(err);
     });
   }
@@ -157,7 +158,7 @@ app.controller('contractCtrl',['$scope', 'academicSemesterYearApiService', 'acad
       .title('Set as contract?')
       .textContent('Confirm your password to update.')
       .placeholder('password')
-      .ariaLabel('Password')
+      .ariaLabel('password')
       .targetEvent(selected)
       .required(true)
       .ok('Confirm')

@@ -30,112 +30,175 @@
       </div>
     </div>
   </md-toolbar>
-        <md-progress-linear md-mode="indeterminate" ng-if="!ex.scholars_loaded"></md-progress-linear>
-        <div layout="column" layout-xs="column" style="background-color: #fff; border-right: 1px solid #c7c7c7; overflow: auto;">
-          <div flex>
-                <md-table-container  ng-style="resizeDiv()" resize-div  class="container" fixed-column-table>
-                  <table md-table>
-                    <thead md-head md-order="myOrder" style="background: #dddddd;box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12); position: relative; z-index: 1;">
-                      <tr md-row>
-                        <th md-column md-numeric style="background-color: #dddddd;"><span>No.</span></th>
-                        <th md-column md-numeric style="min-width: 310px;">
-                          <input type="text" ng-model="ex.scholar_lastname" style="width:80%;height: 18px;outline: none;" placeholder="Name">
-                        </th>
-                        <th md-column md-numeric>Date of Birth</th>
-                        <th md-column md-numeric>Age</th>
-                        <th md-column md-numeric>Gender</th>
-                        <th md-column md-numeric style="min-width: 75px;">
-                          <select ng-model="ex.status" style="width: 100%;height: 22px;outline: none;" ng-change="ex.selectedStatus(ex.status)">
-                            <option>Status</option>
-                            <option value="NEW">NEW</option>
-                            <option value="OLD">OLD</option>
-                          </select>
-                        </th>
-                        <th md-column md-numeric style="min-width: 117px;">
-                          <select ng-model="ex.contract_status" style="width: 90%;height: 22px;outline: none;" ng-change="ex.selectedContractStatus(ex.contract_status)">
-                            <option>Contract status</option>
-                            <option value="Pre-Approved">Pre-Approved</option>
-                            <option value="Approved">Approved</option>
-                            <option value="Pending">Pending</option>
-                            <option value="In-Active">In-Active</option>
-                          </select>
-                        </th>
-                        <th md-column md-numeric >Address</th>
-                        <th md-column md-numeric style="min-width: 117px;">
-                          <select ng-model="ex.municipality" style="width: 90%;height: 22px;outline: none;" ng-change="ex.selectedMunicipality(ex.municipality)">
-                            <option>Municipality</option>
-                            <option ng-value="mun.municipality" ng-repeat="mun in ex.municipalities">{{ mun.municipality }}</option>
-                          </select>
-                        </th>
-                        <th md-column md-numeric>Father</th>
-                        <th md-column md-numeric>Mother</th>
-                        <th md-column md-numeric style="min-width: 117px;">
-                          <select ng-model="ex.degree" style="width: 90%;height: 22px;outline: none;" ng-change="ex.selectedDegree(ex.degree)">
-                            <option>Degree</option>
-                            <option ng-value="degree" ng-repeat="degree in ex.access_degree">{{ degree }}</option>
-                          </select>
-                        </th>
-                        <th md-column md-numeric>Course</th>
-                        <th md-column md-numeric>School</th>
-                        <th md-column md-numeric>Student ID NO.</th>
-                        <th md-column md-numeric>Year level</th>
-                        <th md-column md-numeric>Semester</th>
-                        <th md-column md-numeric>Academic year</th>
-                        <th md-column md-numeric style="min-width: 55px;">IP.</th>
-                        <th md-column md-numeric>Date Created</th>
-                        <th md-column md-numeric>Date Updated</th>
-                      </tr>
-                    </thead>
-                    <tbody md-body >
-                      <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="scholar in ex.scholars | filter:{ lastname: ex.scholar_lastname } track by $index">
-                        <td md-cell style="background-color: #f6c08e;">{{ $index+1 }}.</td>
-                        <td md-cell>
-                          <img ng-src="images/avatarmale.svg" style="max-width:27px;">
-                          {{ scholar.lastname }}, {{ scholar.firstname }} {{ scholar.middlename }}
-                        </td>
-                        <td md-cell>{{ scholar.date_of_birth }}</td>
-                        <td md-cell>{{ scholar.age }}</td>
-                        <td md-cell><span>{{ scholar.gender }}</span></td>
-                        <td md-cell>
-                          <span color-scholar-status="{{scholar.scholar_status}}">
-                            {{ scholar.scholar_status }}
-                          </span>
-                        </td>
-                        <td md-cell>
-                          <span color-contract-status="{{scholar.contract_status}}" >
-                            {{ scholar.contract_status }}
-                          </span>
-                        </td>
-                        <td md-cell>{{ scholar.address.barangay_name }} {{ scholar.address.municipality }}, ANTIQUE</td>
-                        <td md-cell>{{ scholar.address.municipality }}</td>
-                        <td md-cell>{{ scholar.father.f_firstname }} {{ scholar.father.f_lastname }}, {{ scholar.father.f_middlename }}</td>
-                        <td md-cell>{{ scholar.mother.m_firstname }} {{ scholar.mother.m_lastname }}, {{ scholar.mother.m_middlename }}</td>
-                        <td md-cell>
-                          <span color-degree degree={{scholar.degree}}>
-                            {{ scholar.degree }}
-                          </span>
-                        </td>
-                        <td md-cell>{{ scholar.course_section }}</td>
-                        <td md-cell>{{ scholar.school.school_name }}</td>
-                        <td md-cell>{{ scholar.student_id_number }}</td>
-                        <td md-cell>{{ scholar.year_level }}</td>
-                        <td md-cell>{{ scholar.academicyear_semester_contract.semester }}</td>
-                        <td md-cell>{{ scholar.academicyear_semester_contract.academic_year }}</td>
-                        <td md-cell>{{ scholar.IP }}</td>
-                        <td md-cell>{{ scholar.created_at | formatDate }}</td>
-                        <td md-cell>{{ scholar.updated_at | formatDate }}</td>
-                      </tr>
-                      <tfoot md-foot>
-                          <tr md-row>
-                            <td md-cell></td>
-                            <td md-cell><strong>Total: </strong>{{calories.total}}</td>
-                            <td md-cell colspan="6"></td>
-                          </tr>
-                        </tfoot>
-                    </tbody>
-                  </table>
-                </md-table-container>
-          </div>
-        </div>
+  <md-progress-linear md-mode="indeterminate" ng-if="!ex.scholars_loaded" style="position: absolute;"></md-progress-linear>
+  <div layout="column" layout-xs="column" style="background-color: #fff; padding: 5px;">
+    <div flex style="overflow: auto;border: 1px solid #b0b1b3;"  ng-style="resizeDiv()" resize-div  class="container" fixed-column-table >
+    <table>
+      <thead>
+        <tr class="scholars">
+          <th><span>No.</span></th>
+          <th>
+            Name
+          </th>
+          <th>Date of Birth</th>
+          <th>Age</th>
+          <th>Gender</th>
+          <th>Status</th>
+          <th>Contract status</th>
+          <th>Address</th>
+          <th>Municipality</th>
+          <th>Father</th>
+          <th>Mother</th>
+          <th>Degree</th>
+          <th>Course</th>
+          <th>School</th>
+          <th>Student ID NO.</th>
+          <th>Year Level</th>
+          <th>Semester</th>
+          <th>Academic year</th>
+          <th>IP.</th>
+          <th>Date Created</th>
+          <th>Date Updated</th>
+        </tr>
+        <tr class="scholars">
+          <th></th>
+          <th>
+            <input type="text" ng-model="ex.scholar_lastname" style="width:80%;height: 18px;outline: none;">
+          </th>
+          <th></th>
+          <th>
+            <input type="text" ng-model="ex.age" style="width:80%;height: 18px;outline: none;">
+          </th>
+          <th>
+            <select ng-model="ex.gender" style="width: 100%;height: 22px;outline: none;" >
+              <option></option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+          </th>
+          <th>
+            <select ng-model="ex.scholar_status" style="width: 100%;height: 22px;outline: none;" >
+              <option></option>
+              <option value="NEW">NEW</option>
+              <option value="OLD">OLD</option>
+            </select>
+          </th>
+          <th>
+            <select ng-model="ex.contract_status" style="width: 90%;height: 22px;outline: none;" >
+              <option></option>
+              <option value="Pre-Approved">Pre-Approved</option>
+              <option value="Approved">Approved</option>
+              <option value="Pending">Pending</option>
+              <option value="In-Active">In-Active</option>
+            </select>
+          </th>
+          <th>
+            <input type="text" ng-model="ex.address" style="width:80%;height: 18px;outline: none;" >
+          </th>
+          <th>
+            <select ng-model="ex.municipality" style="width: 90%;height: 22px;outline: none;" >
+              <option></option>
+              <option ng-value="mun.municipality" ng-repeat="mun in ex.municipalities">{{ mun.municipality }}</option>
+            </select>
+          </th>
+          <th></th>
+          <th></th>
+          <th>
+            <select ng-model="ex.degree" style="width: 90%;height: 22px;outline: none;">
+              <option></option>
+              <option ng-value="degree" ng-repeat="degree in access_degree">{{ degree }}</option>
+            </select>
+          </th>
+          <th>
+            <input type="text" ng-model="ex.course_section" style="width:80%;height: 18px;outline: none;">
+          </th>
+          <th>
+            <select ng-model="ex.school" style="width: 90%;height: 22px;outline: none;">
+              <option></option>
+              <option ng-value="school.school_id" ng-repeat="school in ex.schools">{{ school.school_name }}</option>
+            </select>
+          </th>
+          <th>
+            <input type="text" ng-model="ex.student_id_number" style="width:80%;height: 18px;outline: none;">
+          </th>
+          <th>
+            <select ng-model="ex.year_level">
+              <option></option>
+              <option value="1st year"><em>1st year</em></option>
+              <option value="2nd year"><em>2nd year</em></option>
+              <option value="3rd year"><em>3rd year</em></option>
+              <option value="4th year"><em>4th year</em></option>
+              <option value="5th year"><em>5th year</em></option>
+              <option value="6th year"><em>6th year</em></option>
+              <option value="7th year"><em>7th year</em></option>
+            </select>
+          </th>
+          <th>
+            <select ng-model="ex.semester" style="width: 90%;height: 22px;outline: none;">
+              <option></option>
+              <option ng-value="sem.semester" ng-repeat="sem in ex.semester_list">{{ sem.semester }}</option>
+            </select>
+          </th>
+          <th>
+            <input type="text" ng-model="ex.academic_year" style="width:80%;height: 18px;outline: none;">
+          </th>
+          <th>
+            <select ng-model="ex.IP" style="width: 90%;height: 22px;outline: none;">
+              <option></option>
+              <option value="YES"><em>YES</em></option>
+              <option value="NO"><em>NO</em></option>
+            </select>
+          </th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="scholar in ex.scholars track by $index">
+          <td style="background-color: #f6c08e;">{{ $index+1 }}.</td>
+          <td>
+            <span>
+            <img ng-src="images/avatarmale.svg" style="max-width:27px;">
+            {{ scholar.lastname }}, {{ scholar.firstname }} {{ scholar.middlename }}
+            </span>
+          </td>
+          <td>{{ scholar.date_of_birth }}</td>
+          <td>{{ scholar.age }}</td>
+          <td><span>{{ scholar.gender }}</span></td>
+          <td>
+            <span color-scholar-status="{{scholar.scholar_status}}">
+              {{ scholar.scholar_status }}
+            </span>
+          </td>
+          <td>
+            <span color-contract-status="{{scholar.contract_status}}" >
+              {{ scholar.contract_status }}
+            </span>
+          </td>
+          <td>{{ scholar.address.address }}</td>
+          <td>{{ scholar.address.municipality }}</td>
+          <td>{{ scholar.father_details.firstname }} {{ scholar.father_details.lastname }}, {{ scholar.father_details.middlename }}</td>
+          <td>{{ scholar.mother_details.firstname }} {{ scholar.mother_details.lastname }}, {{ scholar.mother_details.middlename }}</td>
+          <td>
+            <span color-degree degree={{scholar.degree}}>
+              {{ scholar.degree }}
+            </span>
+          </td>
+          <td>{{ scholar.course_section }}</td>
+          <td>{{ scholar.school.school_name }}</td>
+          <td>{{ scholar.student_id_number }}</td>
+          <td>{{ scholar.year_level }}</td>
+          <td>{{ scholar.academicyear_semester_contract.semester }}</td>
+          <td>{{ scholar.academicyear_semester_contract.academic_year }}</td>
+          <td>{{ scholar.IP }}</td>
+          <td>{{ scholar.created_at | formatDate }}</td>
+          <td style="display: flex;align-items: center;">
+            <span style="margin-right: 20px;">{{ scholar.updated_at | formatDate }}</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  </div>
 
 </div>

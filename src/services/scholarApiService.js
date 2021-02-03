@@ -38,10 +38,8 @@ app.factory('scholarApiService', ['$http', '$cookies', '$rootScope', '$q', funct
       });
     },
     getMotherList: function(searched){
-      return $http({
-        method:'POST',
-        url: baseUrl+'api/getMotherList/',
-        data: searched,
+      return $http.get(baseUrl+'api/getMotherList', {
+        params: searched,
         headers: {
           "Content-Type": "application/json",
           Authorization : 'Bearer '+ $rootScope.token
@@ -49,10 +47,8 @@ app.factory('scholarApiService', ['$http', '$cookies', '$rootScope', '$q', funct
       });
     },
     getFatherList: function(searched){
-      return $http({
-        method:'POST',
-        url: baseUrl+'api/getFatherList/',
-        data: searched,
+      return $http.get(baseUrl+'api/getFatherList', {
+        params: searched,
         headers: {
           "Content-Type": "application/json",
           Authorization : 'Bearer '+ $rootScope.token
@@ -60,10 +56,8 @@ app.factory('scholarApiService', ['$http', '$cookies', '$rootScope', '$q', funct
       });
     },
     getNewUndergraduateScholars: function(searched){
-      return $http({
-        method:'POST',
-        url: baseUrl+'api/getNewUndergraduateScholars',
-        data: searched,
+      return $http.get(baseUrl+'api/getNewUndergraduateScholars', {
+        params: searched,
         headers: {
           "Content-Type": "application/json",
           Authorization : 'Bearer '+ $rootScope.token
@@ -71,10 +65,8 @@ app.factory('scholarApiService', ['$http', '$cookies', '$rootScope', '$q', funct
       });
     },
     getNewMastersDoctorateScholars: function(searched){
-      return $http({
-        method:'POST',
-        url: baseUrl+'api/getNewMastersDoctorateScholars',
-        data: searched,
+      return $http.get(baseUrl+'api/getNewMastersDoctorateScholars', {
+        params: searched,
         headers: {
           "Content-Type": "application/json",
           Authorization : 'Bearer '+ $rootScope.token
@@ -82,15 +74,6 @@ app.factory('scholarApiService', ['$http', '$cookies', '$rootScope', '$q', funct
       });
     },
     getScholars: function(searched_details, page){
-      // return $http({
-      //   method:'POST',
-      //   url: baseUrl+'api/getScholars',
-      //   data: searched_details,
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //     Authorization : 'Bearer '+ $rootScope.token
-      //   }
-      // });
       return $http.get(baseUrl+'api/getScholars?page='+page, {
         params: searched_details,
         headers: {
@@ -98,7 +81,15 @@ app.factory('scholarApiService', ['$http', '$cookies', '$rootScope', '$q', funct
           Authorization : 'Bearer '+ $rootScope.token
         }
       });
-
+    },
+    getScholarsToExport: function(searched_details){
+      return $http.get(baseUrl+'api/getScholarsToExport', {
+        params: searched_details,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization : 'Bearer '+ $rootScope.token
+        }
+      });
     },
     getDegrees: function(){
       return $http.get(baseUrl+'api/getDegrees', {

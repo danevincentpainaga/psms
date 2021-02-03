@@ -1,8 +1,9 @@
+<div id="cover-spin" ng-if="ex.show_spinner" ></div>
 <div>
   <md-toolbar class="md-menu-toolbar" style="border-bottom: 1px solid #c7c7c7;box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);">
     <div layout="row">
       <md-toolbar-filler style="display: flex;">
-        <md-icon class="material-icons">system_update_alt</md-icon>
+        <md-icon class="material-icons">exit_to_app</md-icon>
       </md-toolbar-filler>
       <div style="width: 50%;">
         <h2 class="md-toolbar-tools">Export scholars</h2>
@@ -13,13 +14,13 @@
             </button>
             <md-menu-content>
               <md-menu-item class="md-indent">
-                <md-icon class="material-icons">person_add</md-icon>
+                <md-icon class="material-icons">view_list</md-icon>
                 <md-button ng-click="ex.exportMasterlist()">
                   Masterlist
                 </md-button>
               </md-menu-item>
               <md-menu-item class="md-indent">
-                <md-icon class="material-icons">speaker_notes</md-icon>
+                <md-icon class="material-icons">sort</md-icon>
                 <md-button ng-click="ex.exportNormal()">
                   Normal
                 </md-button>

@@ -103,6 +103,7 @@
           <th>Student ID NO.</th>
           <th>Year level</th>
           <th>Last Renewed</th>
+          <th>Amount</th>
           <th>IP.</th>
           <th>Date Created</th>
           <th>Date Updated</th>
@@ -144,6 +145,7 @@
           <td>{{ scholar.student_id_number }}</td>
           <td>{{ scholar.year_level }}</td>
           <td>{{ scholar.academicyear_semester_contract.semester }} - {{ scholar.academicyear_semester_contract.academic_year }}</td>
+          <td>{{ scholar.academicyear_semester_contract.amount }}</td>
           <td>{{ scholar.IP }}</td>
           <td>{{ scholar.created_at | formatDate }}</td>
           <td style="display: flex;align-items: center;">

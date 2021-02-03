@@ -29,6 +29,7 @@ app.controller('contractCtrl',['$scope', 'academicSemesterYearApiService', 'acad
     c.asc_id = selected.asc_id;
     c.semester = selected.semester;
     c.academic_year = selected.academic_year;
+    c.amount = selected.amount;
     c.buttonText = "UPDATE";
     c.labelText = "Update";
     $mdSidenav('addUpdateContract').toggle();
@@ -140,12 +141,13 @@ app.controller('contractCtrl',['$scope', 'academicSemesterYearApiService', 'acad
     c.asc_id = "";
     c.semester = "";
     c.academic_year ="";
+    c.amount = "";
     c.buttonText = "ADD";
     c.labelText = "Add";
   }
 
   function updateOrSave(){
-    c.buttonText == 'ADD'? saveAcademicYearList({ semester: c.semester, academic_year: c.academic_year }) : updateAcademicYearList({ asc_id: c.asc_id, semester: c.semester, academic_year: c.academic_year });
+    c.buttonText == 'ADD'? saveAcademicYearList({ semester: c.semester, academic_year: c.academic_year, amount: c.amount }) : updateAcademicYearList({ asc_id: c.asc_id, semester: c.semester, academic_year: c.academic_year, amount: c.amount });
   }
 
   function checkContractState(contract_state){

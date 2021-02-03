@@ -27,6 +27,7 @@
                             <th style="background-color: #dddddd;"><span>No.</span></th>
                             <th style="background-color: #dddddd;"><span>Semester/Academic yea</span></th>
                             <th style="background-color: #dddddd;"><span>State</span></th>
+                            <th style="background-color: #dddddd;"><span>Contract amount</span></th>
                             <th style="background-color: #dddddd;"><span>Date created</span></th>
                             <th style="background-color: #dddddd;"><span>Date updated</span></th>
                           </tr>
@@ -38,6 +39,9 @@
                               <span>{{ ay.semester }} - {{ ay.academic_year }}</span>
                             </td>
                             <td><span color-contract={{ay.state}}>{{ ay.state }}</span></td>
+                            <td>
+                              <span>{{ ay.amount }}</span>
+                            </td>
                             <td><span>{{ ay.created_at | formatDate }}</span></td>
                             <td style="display: flex;align-items: center;">
                               <span style="margin-right: 20px;">{{ ay.updated_at | formatDate }}</span>

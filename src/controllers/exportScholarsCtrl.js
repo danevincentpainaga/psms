@@ -32,11 +32,12 @@ app.controller('exportScholarsCtrl',['$scope', '$rootScope', '$cookies', '$windo
 
 
   ex.exportNormal = function(){
-    exportScholars.exportNormal(ex.scholars);
+    ex.show_spinner = true;
+    exportScholars.exportNormal(ex.scholars, ex);
   }
 
   ex.exportMasterlist = function(){
-    exportScholars.exportMasterlist(ex.scholars);
+    exportScholars.exportMasterlist(ex.scholars, ex);
   }
 
   function getScholarsToExport(){

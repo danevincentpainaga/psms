@@ -1,6 +1,8 @@
 angular.module('psmsApp').factory('exportScholars', function($timeout) {
-    return{
-		exportNormal: function(scholars){
+
+    	var self = this;
+
+		self.exportNormal = function(scholars, ctrl){
 
 		    var scholar = [];
 
@@ -24,6 +26,7 @@ angular.module('psmsApp').factory('exportScholars', function($timeout) {
 		          'Academic year': val.academicyear_semester_contract.academic_year,
 		          Status: val.scholar_status,
 		          'Contract status': val.contract_status,
+		          'Amount': val.academicyear_semester_contract.amount,
 		          IP: val.IP
 		        }
 
@@ -39,10 +42,11 @@ angular.module('psmsApp').factory('exportScholars', function($timeout) {
 
 		    XLSX.writeFile(wb, "Scholars list.xlsx");
 
-		    console.log(wb);
+		    ctrl.show_spinner = false;
 
-		},
-		exportMasterlist: function(scholars){
+		}
+
+		self.exportMasterlist = function(scholars, ctrl){
 
 		    let municipalities = {
 		      'ANINI-Y':[],
@@ -85,10 +89,11 @@ angular.module('psmsApp').factory('exportScholars', function($timeout) {
 		          'Academic year': val.academicyear_semester_contract.academic_year,
 		          Status: val.scholar_status,
 		          'Contract status': val.contract_status,
+		          'Amount': val.academicyear_semester_contract.amount,
 		          IP: val.IP
 		        }
 
-		        checkMunicipality(val.address.municipality, municipalities, scholar);
+		        self.checkMunicipality(val.address.municipality, municipalities, scholar);
 
 		    });
 
@@ -102,12 +107,13 @@ angular.module('psmsApp').factory('exportScholars', function($timeout) {
 
 		    });
 
-		    XLSX.writeFile(wb, "Masterlist.xlsx");
+		    XLSX.writeFile(wb, "Scholars Masterlist.xlsx");
 
-		    console.log(wb);
+		    ctrl.show_spinner = false;
 		    
-		},
-		checkMunicipality: function(municipality, municipalities, scholar){
+		}
+
+		self.checkMunicipality = function(municipality, municipalities, scholar){
 			switch(municipality){
 				case 'ANINI-Y':
 				        municipalities['ANINI-Y'].push(scholar);
@@ -166,5 +172,6 @@ angular.module('psmsApp').factory('exportScholars', function($timeout) {
 		    }      
 
 		}
-    }
+		
+    return self;
 });

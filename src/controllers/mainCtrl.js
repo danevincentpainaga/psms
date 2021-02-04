@@ -11,9 +11,7 @@ angular.module('psmsApp')
   .controller('mainCtrl',['$scope', '$rootScope', '$mdSidenav', '$mdDialog', '$cookies', '$location', '$timeout', 'authApiService',
      function ($scope, $rootScope, $mdSidenav, $mdDialog, $cookies, $location, $timeout, authApiService) {
 
-    $scope.toggleSidenav = buildToggler('left');
-
-    $scope.toppings = [{name:'Admin'},{name:'User'}];
+    $scope.toggleSidenav = buildToggler('sidebar-menu');
 
     function buildToggler(componentId) {
       return function() {
@@ -30,7 +28,7 @@ angular.module('psmsApp')
       $rootScope.route_loader = true;
       authApiService.logout().then(response => {
         $cookies.remove('auth');
-        $location.path('/');
+        $timeout(function() { $location.path('/') }, 1000);
       }, err =>{
         console.log(err);
       })
@@ -53,12 +51,6 @@ angular.module('psmsApp')
         [65, 59, 80, 81, 56, 55, 40]
       ];
     }, 3000);
-
-  // $scope.query = {
-  //   order: 'name',
-  //   limit: 5,
-  //   page: 1
-  // };
 
 }]);
 
@@ -198,4 +190,83 @@ angular
       });
     }
   }
+}]);
+
+
+
+angular
+.module('psmsApp').directive('ngFiles', ['$parse', function ($parse) {
+    function fn_link(scope, element, attrs) {
+        var onChange = $parse(attrs.ngFiles);
+        element.on('change', function (event) {
+            onChange(scope, { $files: event.target.files });
+            element.val(null);
+        });
+    };
+
+    return {
+        link: fn_link
+    }
+}]);
+
+angular
+.module('psmsApp').factory("fileReader", function($q, $log) {
+  var onLoad = function(reader, deferred, scope) {
+    return function() {
+      scope.$apply(function() {
+        deferred.resolve(reader.result);
+      });
+    };
+  };
+
+  var onError = function(reader, deferred, scope) {
+    return function() {
+      scope.$apply(function() {
+        deferred.reject(reader.result);
+      });
+    };
+  };
+
+  var onProgress = function(reader, scope) {
+    return function(event) {
+      scope.$broadcast("fileProgress", {
+        total: event.total,
+        loaded: event.loaded
+      });
+    };
+  };
+
+  var getReader = function(deferred, scope) {
+    var reader = new FileReader();
+    reader.onload = onLoad(reader, deferred, scope);
+    reader.onerror = onError(reader, deferred, scope);
+    reader.onprogress = onProgress(reader, scope);
+    return reader;
+  };
+
+  var readAsDataURL = function(file, scope) {
+    var deferred = $q.defer();
+      if(file){
+        var reader = getReader(deferred, scope);
+        reader.readAsDataURL(file);
+      }
+      else{
+        deferred.reject(file);
+      }
+
+    return deferred.promise;
+  };
+
+  return {
+    readAsDataUrl: readAsDataURL
+  };
+});
+
+
+angular
+  .module('psmsApp').directive('editProfilePhoto',[ function(){
+    return{
+      restrict:'E',
+      templateUrl:'src/views/test_update_Scholar.html',
+    }
 }]);

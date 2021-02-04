@@ -7,3 +7,14 @@ angular.module('psmsApp').filter('formatDate', function(){
   }
 
 });
+
+angular.module('psmsApp').filter('checkPhoto', function(){
+
+  return function(photo){
+    if (photo) {
+    	return photo
+    } 
+    return 'images/user.jpg';
+  }
+
+});

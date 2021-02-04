@@ -99,7 +99,17 @@ app.factory('scholarApiService', ['$http', '$cookies', '$rootScope', '$q', funct
         }
       });
     },
-
+    uploadProfilePic: function(image){
+      return $http({
+        method:'POST',
+        url: baseUrl+'api/uploadProfilePic',
+        data: image,
+        headers: {
+          "Content-Type": undefined,
+          Authorization : 'Bearer '+ $rootScope.token
+        }
+      });
+    },
 
 	}
 }]);

@@ -9,10 +9,11 @@
  */ 
 
 var app = angular.module('psmsApp');
-app.controller('editScholarCtrl', ['$scope', '$rootScope', '$mdDialog', '$q', '$mdSidenav', 'addScholarsService', 'scholarApiService', 'swalert',
-    function ($scope, $rootScope, $mdDialog, $q, $mdSidenav, addScholarsService, scholarApiService, swalert) {
+app.controller('editScholarCtrl', ['$scope', '$rootScope', '$mdDialog', '$q', '$mdSidenav', 'addScholarsService', 'scholarApiService', 'swalert', 'fileReader',
+    function ($scope, $rootScope, $mdDialog, $q, $mdSidenav, addScholarsService, scholarApiService, swalert, fileReader) {
 
   var ec = this;
+  ec.updatePhotoBtnText = 'Update';
   ec.primaryButtonText = 'Update';
   ec.parentsButtonText = 'Update';
   ec.enablePrimaryButtonText = 'Enable';
@@ -23,6 +24,7 @@ app.controller('editScholarCtrl', ['$scope', '$rootScope', '$mdDialog', '$q', '$
     	console.log(n);
       ec.icon = (n.degree === 'Masters' || n.degree === 'Doctorate')  ? 'school' : 'groups';
       ec.binded_copy = n;
+      ec.photo = n.photo;
       ec.copy = angular.copy(n);
       ec.addressId = n.addressId;
       ec.schoolId = n.schoolId;
@@ -55,6 +57,41 @@ app.controller('editScholarCtrl', ['$scope', '$rootScope', '$mdDialog', '$q', '$
     ec.age = addScholarsService.calcAge(n);
     ec.displayedAge = ec.age;
   }, true);  
+
+
+  ec.editPhoto  = function(){
+    ec.editing = true;
+  }
+
+  ec.getTheFiles = function(file){
+
+    var formdata = new FormData();
+
+    formdata.append('file', file[0]);
+    formdata.append('scholar_id', ec.copy.scholar_id);
+    ec.new_photo = formdata;
+
+    fileReader.readAsDataUrl(file[0], $scope)
+      .then(function(result) {
+        ec.result_photo = result;
+        ec.image_selected = true;
+      }, function(err){
+        console.log(err);
+      });
+  }
+
+  ec.updatePhoto = function(){
+    ec.updating = true;
+    ec.updatePhotoBtnText = 'Updating...';
+    uploadProfilePic(ec.new_photo);
+  }
+
+  ec.cancel = function(){
+    ec.editing = false;
+    ec.new_photo = "";
+    ec.result_photo = undefined;
+    ec.image_selected = false;
+  }
 
   ec.enableDisablePrimaryDetails = function(){
     if (!ec.primary_details) {
@@ -218,6 +255,21 @@ app.controller('editScholarCtrl', ['$scope', '$rootScope', '$mdDialog', '$q', '$
       console.log(err);
     });
   }
+
+  function uploadProfilePic(image){
+    scholarApiService.uploadProfilePic(image).then(response => {
+      ec.binded_copy.photo = response.data;
+      ec.cancel();
+      ec.updating = false;
+      ec.updatePhotoBtnText = 'Update';
+      swalert.toastInfo('Profile updated', 'success', 'top-right', 4000);
+    }, err => {
+      swalert.dialogBox(err.data.message, 'error', 'Failed');
+      swalert.toastInfo(err.data, 'error', 'top-right', 4000);
+      console.log(err);
+    });
+  }
+
 
   function updatePrimaryDetails(response){
     ec.binded_copy.firstname = ec.firstname;

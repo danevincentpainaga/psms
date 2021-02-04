@@ -19,11 +19,14 @@
       </md-card-header>
       <md-card-content style="padding: 0px 16px;" >
         <form name="primary_details">
-          <div layout="row" layout-xs="column">
-              <div flex="15">
-              <div layout="column" style="margin-bottom: 15px;">
-                <img src="images/user-4.jpg" style="max-width: 100px;border: 2px solid #e3e3e3;">
-              </div>
+          <div layout="row" layout-xs="column" style="margin-bottom: 15px;">
+              <div flex="13" class="image-holder">
+                <div class="file-input">
+                  <button ng-click="ec.editPhoto()">edit</button>
+                </div>
+                <div layout="column" class="file-image">
+                  <img ng-src="http://localhost:8000/storage/{{ ec.photo }}">
+                </div>
               </div>
               <md-input-container flex="">
                 <label>Firstname</label>
@@ -222,3 +225,4 @@
     </md-button>
   </md-content>
 </md-sidenav>
+<edit-profile-photo ng-if="ec.editing"></edit-profile-photo>

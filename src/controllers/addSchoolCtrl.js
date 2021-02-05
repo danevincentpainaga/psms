@@ -13,6 +13,7 @@ app.controller('addSchoolCtrl', ['$scope', '$rootScope', '$mdDialog', 'schoolApi
   function ($scope, $rootScope, $mdDialog, schoolApiService, swalert) {
 
   var as = this;
+  as.saveBtnText = 'Save';
 
   as.cancelEditing = function(){
     $scope.editing = false;
@@ -24,6 +25,7 @@ app.controller('addSchoolCtrl', ['$scope', '$rootScope', '$mdDialog', 'schoolApi
 
   as.save = function (answer) {
     if (as.school_name) {
+      as.saveBtnText = 'Saving...';
       as.saving = true;
       let new_school_name = { school_name: as.school_name.toUpperCase() };
       saveSchoolDetails(new_school_name);
@@ -34,6 +36,8 @@ app.controller('addSchoolCtrl', ['$scope', '$rootScope', '$mdDialog', 'schoolApi
     schoolApiService.saveSchoolDetails(details).then(response => {
       console.log(response.data);
       clearInputs();
+      as.saveBtnText = 'Save';
+      as.saving = false;
       swalert.dialogBox('School saved!', 'success', 'Success');
       $rootScope.$emit('successful_add_emit_from_addSchoolCtrl');
     }, err => {

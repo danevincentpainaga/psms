@@ -3,7 +3,7 @@
     <h1 class="md-toolbar-tools">Edit</h1>
   </md-toolbar>
   <md-content layout-padding style="background-color: #efefef;font-size: 13px;">
-    <md-card style="margin: 0px; padding: 8px;">
+    <md-card style="margin: 0px; padding: 12px;">
       <md-card-header>
         <md-card-avatar>
           <md-icon class="material-icons" style="margin-right: 15px; background-color: #616dc3;">{{ ec.icon }}</md-icon>
@@ -25,14 +25,20 @@
                   <button ng-click="ec.editPhoto()">edit</button>
                 </div>
                 <div layout="column" class="file-image">
-                  <img ng-src="http://localhost:8000/storage/{{ ec.photo }}">
+                  <img ng-src="{{ ec.photo | checkScholarPhoto }}">
                 </div>
               </div>
+              <md-input-container flex style="margin-bottom: 0px;" ng-if="ec.binded_copy.degree !== 'Undergraduate'">
+                <label>Select degree</label>
+                <md-select ng-model="ec.degree" ng-disabled="!ec.primary_details" >
+                  <md-option value="Masters"><em>Masters</em></md-option>
+                  <md-option value="Doctorate"><em>Doctorate</em></md-option>
+                </md-select>
+              </md-input-container>
               <md-input-container flex="">
                 <label>Firstname</label>
                 <input type="text" ng-model="ec.firstname" ng-disabled="!ec.primary_details">
               </md-input-container>
-
               <md-input-container flex="">
                 <label>Lastname</label>
                 <textarea ng-model="ec.lastname" ng-disabled="!ec.primary_details"></textarea>
@@ -173,7 +179,7 @@
           </md-input-container>
         </div> 
         <div layout="row" layout-xs="column">
-           <md-input-container flex="70">
+           <md-input-container flex="50">
             <label>Occupation</label>
             <input type="text" ng-model="ec.f_occupation" ng-disabled="!ec.parents_details">
           </md-input-container>         
@@ -209,7 +215,7 @@
           </md-input-container>
         </div>
         <div layout="row" layout-xs="column">
-           <md-input-container flex="70">
+           <md-input-container flex="50">
             <label>Occupation</label>
             <input type="text" ng-model="ec.m_occupation" ng-disabled="!ec.parents_details">
           </md-input-container>         

@@ -1,3 +1,5 @@
+var XLSX = require('xlsx/dist/xlsx.full.min.js');
+
 angular.module('psmsApp').factory('exportScholars', function($timeout) {
 
     	var self = this;
@@ -17,8 +19,8 @@ angular.module('psmsApp').factory('exportScholars', function($timeout) {
 		          Gender: val.gender,
 		          Address: val.address.address,
 		          Municipality: val.address.municipality,
-		          Father: val.father_details.firstname+" "+val.father_details.lastname+", "+val.father_details.middlename,
-		          Mother: val.mother_details.firstname+" "+val.mother_details.lastname+", "+val.mother_details.middlename,
+		          Father: self.excludeNull(val.father_details.firstname)+" "+self.excludeNull(val.father_details.lastname) + self.excludeNull(val.father_details.middlename, true),
+		          Mother: self.excludeNull(val.mother_details.firstname)+" "+self.excludeNull(val.mother_details.lastname) + self.excludeNull(val.mother_details.middlename, true),
 		          School: val.school.school_name,
 		          'Student ID NO.': val.student_id_number,
 		          'Year level.': val.year_level,
@@ -80,8 +82,8 @@ angular.module('psmsApp').factory('exportScholars', function($timeout) {
 		          Gender: val.gender,
 		          Address: val.address.address,
 		          Municipality: val.address.municipality,
-		          Father: val.father_details.firstname+" "+val.father_details.lastname+", "+val.father_details.middlename,
-		          Mother: val.mother_details.firstname+" "+val.mother_details.lastname+", "+val.mother_details.middlename,
+		          Father: self.excludeNull(val.father_details.firstname)+" "+self.excludeNull(val.father_details.lastname) + self.excludeNull(val.father_details.middlename, true),
+		          Mother: self.excludeNull(val.mother_details.firstname)+" "+self.excludeNull(val.mother_details.lastname) + self.excludeNull(val.mother_details.middlename, true),
 		          School: val.school.school_name,
 		          'Student ID NO.': val.student_id_number,
 		          'Year level.': val.year_level,
@@ -171,6 +173,13 @@ angular.module('psmsApp').factory('exportScholars', function($timeout) {
 				        break;
 		    }      
 
+		}
+
+		self.excludeNull = function(value, isMiddlename){
+			if (value) {
+				return value = isMiddlename ? ", " + value : value;
+			}
+			return "";
 		}
 		
     return self;

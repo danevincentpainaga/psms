@@ -29,12 +29,13 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
   ac.saveNewUndergraduateDetails = function(){
     
     if (
-          ac.firstname && ac.lastname && ac.middlename && ac.addressId && ac.date_of_birth
+          ac.firstname && ac.lastname && ac.middlename && ac.addressId && moment.validateDate(ac.date_of_birth) 
           && ac.age && ac.gender && ac.schoolId && ac.course_section && ac.year_level && ac.student_id_number
           && ac.IP && academicContractDetails.ascId
       ) {
 
         ac.buttonText = 'Saving...';
+        ac.saving = true;
       
           let scholar_details = {
             firstname: ac.firstname.toUpperCase(),
@@ -150,9 +151,10 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
   }
 
   function saveNewScholarDetails(scholarDetails){
-     scholarApiService.saveNewScholarDetails(scholarDetails).then(response => {
+      scholarApiService.saveNewScholarDetails(scholarDetails).then(response => {
       addScholarsService.clearInputs(ac);
       ac.buttonText = 'Save';
+      ac.saving = false;
       getNewUndergraduateScholars({ searched: ac.scholar_lastname });
       swalert.dialogBox('Scholar saved!', 'success', 'Success');
       print(scholarDetails);

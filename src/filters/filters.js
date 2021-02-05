@@ -14,7 +14,18 @@ angular.module('psmsApp').filter('checkPhoto', function(){
     if (photo) {
     	return photo
     } 
-    return 'images/user.jpg';
+    return 'images/user.png';
+  }
+
+});
+
+angular.module('psmsApp').filter('checkScholarPhoto', function(){
+
+  return function(photo){
+    if (photo) {
+    	return 'http://localhost:8000/storage/'+photo;
+    } 
+    return 'images/user.png';
   }
 
 });

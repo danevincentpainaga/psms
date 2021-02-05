@@ -13,6 +13,27 @@ app.factory('addressApiService', ['$http', '$cookies', '$rootScope', '$q', funct
         }
       });
     },
-
+    saveAddress: function(address){
+      return $http({
+        method:'POST',
+        url: baseUrl+'api/saveAddress',
+        data: address,
+        headers: {
+          Accept: "application/json",
+          Authorization : 'Bearer '+ $rootScope.token 
+        }
+      });
+    },
+    updateAddress: function(newAddress){
+      return $http({
+        method:'POST',
+        url: baseUrl+'api/updateAddress',
+        data: newAddress,
+        headers: {
+          Accept: "application/json",
+          Authorization : 'Bearer '+ $rootScope.token 
+        }
+      });
+    },
 	}
 }]);

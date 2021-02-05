@@ -66,16 +66,9 @@ angular
     })
     .state('address', {
       url: '/address',
-      views:{
-        '':{
-          templateUrl: 'src/views/address.html',
-        },
-        'address-view@address':{
-          templateUrl: 'src/views/address_list.html',
-          controller: 'contractCtrl',
-          controllerAs: 'c',
-        }
-      },
+      templateUrl: 'src/views/address.html',
+      controller: 'addressCtrl',
+      controllerAs: 'ad',
       Authenticated: true,
     })
     .state('schools', {
@@ -160,7 +153,7 @@ angular
           }
 
           console.log(usersCannotAccess);
-          $rootScope.authenticated = true;
+          // $rootScope.authenticated = true;
 
         });
 
@@ -195,7 +188,7 @@ angular
   });
 
   $transitions.onStart({ to: 'base'}, function(transition) {
-      $rootScope.authenticated = false;
+      // $rootScope.authenticated = false;
       $rootScope.route_loader = false;
   });
 
@@ -239,6 +232,7 @@ require('../services/scholarApiService');
 require('../services/academicContractService');
 require('../services/usersApiService');
 require('../services/academicSemesterYearApiService');
+require('../services/dashboardApiService');
 
 
 require('../controllers/mainCtrl');
@@ -254,3 +248,4 @@ require('../controllers/userAccountsCtrl');
 require('../controllers/contractCtrl');
 require('../controllers/exportScholarsCtrl');
 require('../controllers/editScholarCtrl');
+require('../controllers/addressCtrl');

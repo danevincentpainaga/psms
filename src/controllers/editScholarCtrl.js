@@ -123,6 +123,7 @@ app.controller('editScholarCtrl', ['$scope', '$rootScope', '$mdDialog', '$q', '$
     let primary_scholar_details = {
       scholar_id: ec.copy.scholar_id,
       student_id_number: ec.student_id_number.toUpperCase(),
+      degree: ec.degree,
       firstname: ec.firstname.toUpperCase(),
       lastname: ec.lastname.toUpperCase(),
       middlename: ec.middlename.toUpperCase(),
@@ -264,7 +265,6 @@ app.controller('editScholarCtrl', ['$scope', '$rootScope', '$mdDialog', '$q', '$
       ec.updatePhotoBtnText = 'Update';
       swalert.toastInfo('Profile updated', 'success', 'top-right', 4000);
     }, err => {
-      swalert.dialogBox(err.data.message, 'error', 'Failed');
       swalert.toastInfo(err.data, 'error', 'top-right', 4000);
       console.log(err);
     });
@@ -272,6 +272,7 @@ app.controller('editScholarCtrl', ['$scope', '$rootScope', '$mdDialog', '$q', '$
 
 
   function updatePrimaryDetails(response){
+    ec.binded_copy.degree = ec.degree;
     ec.binded_copy.firstname = ec.firstname;
     ec.binded_copy.lastname = ec.lastname;
     ec.binded_copy.middlename = ec.middlename;

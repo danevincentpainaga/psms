@@ -2,22 +2,14 @@
 <html ng-app="psmsApp">
 <head>
 	<title>PSMS</title>
-	<!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
-		<!-- style sheet -->
-
 	<link rel="stylesheet" href="/node_modules/material-icons/iconfont/material-icons.css">
-  
 </head>
+
 <body ng-cloak ng-controller="mainCtrl">
 	
 	<md-progress-linear md-mode="indeterminate" ng-if="route_loader"></md-progress-linear>
-	<ng-include src="'src/views/header.html'" ng-if="authenticated"></ng-include> 
-	<div class="row" ui-view="" style="background: #efefef !important;"></div>
-  
+	<div class="row" ui-view="" style="background: #efefef !important;"></div>  
   <iframe id="printPdf" name="printPdf" style="display: none;"></iframe>
-
-	<script type="text/javascript" src="/node_modules/xlsx/dist/xlsx.full.min.js"></script>
-
 
 <!-- <div style="position: fixed;
   width: 100%;

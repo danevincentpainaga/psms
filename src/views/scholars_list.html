@@ -1,5 +1,6 @@
+<ng-include src="'src/views/header.html'"></ng-include> 
 <div>
-  <md-toolbar class="md-menu-toolbar" style="border-bottom: 1px solid #c7c7c7;box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);">
+  <md-toolbar class="md-menu-toolbar" style="border-bottom: 1px solid #c7c7c7;">
     <div layout="row">
       <md-toolbar-filler style="display: flex;">
         <md-icon class="material-icons">source</md-icon>
@@ -13,17 +14,15 @@
             </button>
             <md-menu-content>
               <md-menu-item class="md-indent">
-                <md-icon class="material-icons">person_add</md-icon>
-                <md-button ng-click="ctrl.sampleAction('redo', $event)">
+                <md-icon class="material-icons">groups</md-icon>
+                <md-button ng-click="navigateTo('/add_undergraduate_scholars')" >
                   Undergraduate
-                  <span class="md-alt-text">Ctrl-B</span>
                 </md-button>
               </md-menu-item>
               <md-menu-item class="md-indent">
-                <md-icon class="material-icons">speaker_notes</md-icon>
-                <md-button ng-click="ctrl.sampleAction('redo', $event)">
+                <md-icon class="material-icons">school</md-icon>
+                <md-button ng-click="navigateTo('/add_masteral_doctorate_scholars')">
                   Master's/Doctorate
-                  <span class="md-alt-text">Ctrl-M</span>
                 </md-button>
               </md-menu-item>
             </md-menu-content>
@@ -33,14 +32,14 @@
               Export
             </button>
             <md-menu-content>
-              <md-menu-item class="md-indent">
-                <md-icon class="material-icons">person_add</md-icon>
+              <md-menu-item class="md-indent" ng-if="sc.scholars_loaded">
+                <md-icon class="material-icons">view_list</md-icon>
                 <md-button ng-click="sc.exportMasterlist()">
                   Masterlist
                 </md-button>
               </md-menu-item>
-              <md-menu-item class="md-indent">
-                <md-icon class="material-icons">speaker_notes</md-icon>
+              <md-menu-item class="md-indent" ng-if="sc.scholars_loaded">
+                <md-icon class="material-icons">sort</md-icon>
                 <md-button ng-click="sc.exportNormal()">
                   Normal
                 </md-button>
@@ -114,8 +113,8 @@
           <td style="background-color: #f6c08e;">{{ $index+1 }}.</td>
           <td>
             <span>
-            <img ng-src="images/avatarmale.svg" style="max-width:27px;">
-            {{ scholar.lastname }}, {{ scholar.firstname }} {{ scholar.middlename }}
+              <img ng-src="{{ scholar.photo | checkScholarPhoto }}" class="md-avatar scholar-image" alt="" style="width:25px;height: 25px;margin: 5px 5px 5px 0px;border: 2px solid #ebebeb;"/>
+              {{ scholar.lastname }}, {{ scholar.firstname }} {{ scholar.middlename }}
             </span>
           </td>
           <td>{{ scholar.date_of_birth }}</td>
@@ -145,7 +144,7 @@
           <td>{{ scholar.student_id_number }}</td>
           <td>{{ scholar.year_level }}</td>
           <td>{{ scholar.academicyear_semester_contract.semester }} - {{ scholar.academicyear_semester_contract.academic_year }}</td>
-          <td>{{ scholar.academicyear_semester_contract.amount }}</td>
+          <td>{{ scholar.academicyear_semester_contract.amount | currency : '' : 0 }}</td>
           <td>{{ scholar.IP }}</td>
           <td>{{ scholar.created_at | formatDate }}</td>
           <td style="display: flex;align-items: center;">

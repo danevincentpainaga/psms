@@ -1,17 +1,12 @@
-<div>
-  	<h1>Dashboard</h1>
-  	<div layout="column">
-		<div layout="row" layout-xs="column">
-			<div flex="15"></div>
-			<div flex>
-			  <md-content>
-				<canvas class="chart chart-line" chart-data="data" chart-labels="labels" chart-series="series" chart-click="onClick"></canvas>
-			  </md-content>				
-			</div>
-			<div flex="15"></div>
+<ng-include src="'src/views/header.html'"></ng-include> 
+<div class="demo-md-panel-content">
+	<div layout="row">
+		<div flex="20">
+
+		</div>
+		<div flex="70">
+			<canvas id="bar" class="chart chart-bar" chart-data="undergraduate" chart-series="undergraduate_series" chart-labels="labels" chart-options="options"> chart-series="series" ></canvas>
+			<canvas id="bar" class="chart chart-bar" chart-data="masteral_doctorate" chart-series="masteral_doctorate_series" chart-labels="labels" chart-options="options"> chart-series="series" ></canvas>
 		</div>
 	</div>
 </div>
-
-<!-- <iframe id="printPdf" name="printPdf" style="display: none;"></iframe> -->
-<button print-doc>Print</button>

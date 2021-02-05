@@ -1,6 +1,7 @@
 <div id="cover-spin" ng-if="ex.show_spinner" ></div>
+<ng-include src="'src/views/header.html'"></ng-include> 
 <div>
-  <md-toolbar class="md-menu-toolbar" style="border-bottom: 1px solid #c7c7c7;box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);">
+  <md-toolbar class="md-menu-toolbar" style="border-bottom: 1px solid #c7c7c7;">
     <div layout="row">
       <md-toolbar-filler style="display: flex;">
         <md-icon class="material-icons">exit_to_app</md-icon>
@@ -13,13 +14,13 @@
               Export
             </button>
             <md-menu-content>
-              <md-menu-item class="md-indent">
+              <md-menu-item class="md-indent" ng-if="ex.scholars_loaded">
                 <md-icon class="material-icons">view_list</md-icon>
                 <md-button ng-click="ex.exportMasterlist()">
                   Masterlist
                 </md-button>
               </md-menu-item>
-              <md-menu-item class="md-indent">
+              <md-menu-item class="md-indent" ng-if="ex.scholars_loaded">
                 <md-icon class="material-icons">sort</md-icon>
                 <md-button ng-click="ex.exportNormal()">
                   Normal
@@ -33,7 +34,7 @@
   </md-toolbar>
   <md-progress-linear md-mode="indeterminate" ng-if="!ex.scholars_loaded" style="position: absolute;"></md-progress-linear>
   <div layout="column" layout-xs="column" style="background-color: #fff; padding: 5px;">
-    <div flex style="overflow: auto;border: 1px solid #b0b1b3;"  ng-style="resizeDiv()" resize-div  class="container" fixed-column-table >
+    <div flex style="overflow: auto;border: 1px solid #b0b1b3;"  ng-style="resizeDiv()" resize-div>
     <table>
       <thead>
         <tr class="scholars">
@@ -57,6 +58,7 @@
           <th>Year Level</th>
           <th>Semester</th>
           <th>Academic year</th>
+          <th>Amount</th>
           <th>IP.</th>
           <th>Date Created</th>
           <th>Date Updated</th>
@@ -143,6 +145,7 @@
           <th>
             <input type="text" ng-model="ex.academic_year" style="width:80%;height: 18px;outline: none;">
           </th>
+          <th></th>
           <th>
             <select ng-model="ex.IP" style="width: 90%;height: 22px;outline: none;">
               <option></option>
@@ -159,7 +162,7 @@
           <td style="background-color: #f6c08e;">{{ $index+1 }}.</td>
           <td>
             <span>
-            <img ng-src="images/avatarmale.svg" style="max-width:27px;">
+            <img ng-src="{{ scholar.photo | checkScholarPhoto }}" class="md-avatar scholar-image" alt="" style="width:25px;height: 25px;margin: 5px 5px 5px 0px;border: 2px solid #ebebeb;"/>
             {{ scholar.lastname }}, {{ scholar.firstname }} {{ scholar.middlename }}
             </span>
           </td>
@@ -191,6 +194,7 @@
           <td>{{ scholar.year_level }}</td>
           <td>{{ scholar.academicyear_semester_contract.semester }}</td>
           <td>{{ scholar.academicyear_semester_contract.academic_year }}</td>
+          <td>{{ scholar.academicyear_semester_contract.amount | currency : '' : 0 }}</td>
           <td>{{ scholar.IP }}</td>
           <td>{{ scholar.created_at | formatDate }}</td>
           <td style="display: flex;align-items: center;">

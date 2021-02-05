@@ -1,3 +1,4 @@
+<ng-include src="'src/views/header.html'"></ng-include> 
 <div style="font-size: 14px;">
   <md-toolbar class="md-menu-toolbar">
     <div layout="row">
@@ -81,7 +82,6 @@
       </div>
     </div>
   </md-toolbar>
-
   <div layout="column" style="height: 90%;" ng-style="resize()" resize-add-scholars-div>
     <section layout="row" flex layout-xs="column">
       <div layout="row" layout-xs="column" style="background-color: #fff; border-right: 1px solid #c7c7c7;min-width: 340px;" >
@@ -97,10 +97,10 @@
               <md-progress-circular md-diameter="25px"></md-progress-circular>
             </div>
               <md-list-item class="md-2-line" ng-repeat="scholar in md.scholars track by $index" ng-if="md.scholars_loaded">
-                <img src="images/avatarmale.svg" class="md-avatar" alt="" />
+                <img ng-src="{{ scholar.photo | checkScholarPhoto }}" class="md-avatar scholar-image" alt="" />
                 <div class="md-list-item-text" style="max-width: 210px;">
-                  <h5 style="margin: 0px;">{{scholar.lastname}},&nbsp;{{scholar.firstname}}&nbsp;{{scholar.middlename}}.</h5>
-                  <p style="font-size: 12px;">{{ scholar.school.school_name }}</p>
+                  <h4 style="margin: 0px;color: black;">{{scholar.lastname}},&nbsp;{{scholar.firstname}}&nbsp;{{scholar.middlename}}.</h4>
+                  <p style="font-size: 12px;">{{ scholar.school.school_name }} - {{ scholar.degree }}</p>
                 </div>
                 <span ng-if="$index===md.selectedIndex" style="margin: 7px 0px;">opening..</span>
                 <md-menu ng-if="$index!==md.selectedIndex">
@@ -201,7 +201,7 @@
                   </div>
                   <md-input-container flex="20">
                     <label>Date of Birth</label>
-                    <input type="text" ng-model="md.date_of_birth" ng-change="md.selectedDateOfBirth(md.date_of_birth)" add-double-slashes-directive ng-disabled="!md.degree_has_selected"/>
+                    <input type="text" ng-model="md.date_of_birth" ng-change="md.selectedDateOfBirth(md.date_of_birth)" minlength="10"add-double-slashes-directive ng-disabled="!md.degree_has_selected" autocomplete="off"/>
                   </md-input-container>
                   <md-input-container flex="10">
                     <label>Age</label>
@@ -270,7 +270,6 @@
               </form>
             </md-card-content>
           </md-card>
-
           <md-card style="margin: 5px 0px;">
             <md-card-content style="padding: 20px 25px 0px;">
               <p>Father's Details</p>
@@ -337,7 +336,7 @@
               </div>
             </md-card-content>
             <div style="width: 100%;text-align: right;">
-              <md-button class="md-raised md-primary" ng-click="md.saveNewMasterDoctorateDetails()">{{ md.buttonText }}</md-button>
+              <md-button class="md-raised md-primary" ng-click="md.saveNewMasterDoctorateDetails()" ng-disabled="md.saving">{{ md.buttonText }}</md-button>
               <md-button class="md-raised" ng-click="md.clear()">Clear</md-button>
             </div>
           </md-card>  

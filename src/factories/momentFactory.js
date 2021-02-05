@@ -4,6 +4,9 @@ app.factory('moment', function(){
   return {
     changeFormat: function(passedDate){
       return moment(passedDate).format("DD/MM/YYYY");
+    },
+    validateDate: function(date){
+    	return moment(date, 'MM/DD/YYYY',true).isValid()
     }
   }
 });

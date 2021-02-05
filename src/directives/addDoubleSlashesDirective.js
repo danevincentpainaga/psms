@@ -16,6 +16,10 @@ angular.module('psmsApp').directive('addDoubleSlashesDirective', function() {
           return val;
         }
 
+        if (val.length > 10) {
+          val = val.substring(0, 10);
+        }
+
         if (val) {
           //first only allow digits and slashes
           val = val.replace(/[^0-9\/]/g, '');

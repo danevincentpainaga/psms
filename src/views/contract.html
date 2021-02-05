@@ -1,16 +1,16 @@
 <div id="cover-spin" ng-if="c.show_spinner" ></div>
+<ng-include src="'src/views/header.html'"></ng-include> 
 <div style="font-size: 14px;">
-  <md-toolbar class="md-menu-toolbar" style="box-shadow: 1px 0 5px rgba(0,0,0,.1);">
+  <md-toolbar class="md-menu-toolbar" style="border-bottom: 1px solid #c7c7c7;">
     <div layout="row" style="min-height: 64px;">
       <md-toolbar-filler style="display: flex;">
-        <md-icon class="material-icons">home</md-icon>
+        <md-icon class="material-icons">history_edu</md-icon>
       </md-toolbar-filler>
       <h2 class="md-toolbar-tools" style="padding: 20px;">
         <span>Contract</span>
       </h2>
     </div>
   </md-toolbar>
-  <md-progress-linear md-mode="indeterminate" ng-if="!c.disable_linear_loader"></md-progress-linear>
   <div layout="column">
     <div layout="row">
       <div flex="15"></div>
@@ -21,6 +21,9 @@
               <div flex="70" layout-xs="column" style="background-color: #fff; border-right: 1px solid #c7c7c7;;border: 1px solid #c7c7c7;">
                 <md-content flex style="height: 100%;background-color: #fff; padding: 8px;" class="container" >
                     <div style="max-height: 475px;min-height: 475px;overflow: auto;border: 1px solid rgb(176, 177, 179);" class="container" fixed-column-table>
+                      <div>
+                        <md-progress-linear md-mode="indeterminate" ng-if="!c.disable_linear_loader"></md-progress-linear>
+                      </div>
                       <table>
                         <thead style="background: #dddddd;box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);">
                           <tr>
@@ -40,20 +43,20 @@
                             </td>
                             <td><span color-contract={{ay.state}}>{{ ay.state }}</span></td>
                             <td>
-                              <span>{{ ay.amount }}</span>
+                              <span>{{ ay.amount | currency : '' : 0}}</span>
                             </td>
                             <td><span>{{ ay.created_at | formatDate }}</span></td>
                             <td style="display: flex;align-items: center;">
                               <span style="margin-right: 20px;">{{ ay.updated_at | formatDate }}</span>
-                              <md-icon class="material-icons" style="font-size: 17px; box-sizing: border-box;padding: 3px;cursor: pointer;outline-style: none;" ng-click="c.setContract(ay)" hide-btn-actions="{{ ay.state }}">
+                              <md-icon class="material-icons" style="font-size: 17px; box-sizing: border-box;padding: 3px;cursor: pointer;outline-style: none;" ng-click="c.setContract(ay)" ng-if="ay.state === 'Available'">
                                 <md-tooltip>Set as Contract.</md-tooltip>
                                 system_update
                               </md-icon>
-                              <md-icon class="material-icons" style="font-size: 17px; box-sizing: border-box;padding: 3px;cursor: pointer;outline-style: none;" ng-click="c.edit(ay)" hide-btn-actions="{{ ay.state }}">
+                              <md-icon class="material-icons" style="font-size: 17px; box-sizing: border-box;padding: 3px;cursor: pointer;outline-style: none;" ng-click="c.edit(ay)" ng-if="ay.state !== 'Closed'">
                                 <md-tooltip>Edit</md-tooltip>
                                 edit
                               </md-icon>
-                              <md-icon class="material-icons" style="font-size: 17px; box-sizing: border-box;padding: 3px;cursor: pointer;outline-style: none;" hide-btn-actions="{{ ay.state }}">
+                              <md-icon class="material-icons" style="font-size: 17px; box-sizing: border-box;padding: 3px;cursor: pointer;outline-style: none;" ng-if="ay.state === 'Available'">
                                 <md-tooltip>Delete</md-tooltip>
                                 close
                               </md-icon>

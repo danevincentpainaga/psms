@@ -31,12 +31,13 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
   md.saveNewMasterDoctorateDetails = function(){
 
     if (
-          md.firstname && md.lastname && md.middlename && md.addressId && md.date_of_birth
+          md.firstname && md.lastname && md.middlename && md.addressId && moment.validateDate(md.date_of_birth)
           && md.age && md.gender && md.schoolId && md.course_section && md.year_level && md.student_id_number
           && md.IP && academicContractDetails.ascId
       ) {
 
         md.buttonText = 'Saving...';
+        md.saving = true;
 
         let scholar_details = {
           firstname: md.firstname.toUpperCase(),
@@ -160,6 +161,7 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
       md.degree_has_selected = false;
       addScholarsService.clearInputs(md);
       md.buttonText = 'Save';
+      md.saving = false;
       getNewMastersDoctorateScholars({ searched: md.scholar_lastname });
       print(scholarDetails);
       swalert.dialogBox('Scholar saved!', 'success', 'Success');

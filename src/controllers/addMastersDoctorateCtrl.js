@@ -32,8 +32,8 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
 
     if (
           md.firstname && md.lastname && md.middlename && md.addressId && moment.validateDate(md.date_of_birth)
-          && md.age && md.gender && md.schoolId && md.course_section && md.year_level && md.student_id_number
-          && md.IP && academicContractDetails.ascId
+          && md.age && md.gender && md.schoolId && md.courseId && md.section && md.year_level && md.student_id_number
+          && md.IP && academicContractDetails.ascId && md.m_firstname && md.search_mlastname && md.m_middlename
       ) {
 
         md.buttonText = 'Saving...';
@@ -48,7 +48,8 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
           age: md.age,
           gender: md.gender,
           schoolId: md.schoolId,
-          course_section: md.course_section.toUpperCase(),
+          courseId: md.courseId,
+          section: md.section.toUpperCase(),
           year_level: md.year_level,
           student_id_number: md.student_id_number,
           IP: md.IP,
@@ -124,6 +125,16 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
     }
   }
 
+  md.selectedCourseChange = function(course){
+    if (course) {
+      md.courseId = course.course_id;
+    }
+    else{
+      md.courseId = null;
+      md.search_course = "";
+    }
+  }
+
   md.selectedAddressChange = function(address){
     if (address) {
       md.addressId = address.address_id;
@@ -139,8 +150,12 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
     md.displayedAge = md.age;
   }
 
+  md.courseSearchQuery = function(searched){
+    return addScholarsService.getCourses({searched: searched});
+  }
+
   md.schoolSearchQuery = function(searched){
-     return addScholarsService.getListOfSchool({searched_school: searched});
+    return addScholarsService.getListOfSchool({searched_school: searched});
   }
 
   md.addressSearchQuery = function(searched){

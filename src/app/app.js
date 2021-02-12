@@ -6,7 +6,12 @@ angular
   'ui.router.state.events',
   'ngSanitize',
   'ngMaterial',
-  'chart.js'
+  'chart.js',
+  'ui.grid',
+  'ui.grid.exporter',
+  'ui.grid.importer',
+  'ui.grid.resizeColumns',
+  'ui.grid.moveColumns'
 ])
 .config(function ($stateProvider, $urlRouterProvider) {
   $stateProvider
@@ -78,6 +83,13 @@ angular
       controllerAs: 's',
       Authenticated: true,
     })
+    .state('course', {
+      url: '/course',
+      templateUrl: 'src/views/course.html',
+      controller: 'courseCtrl',
+      controllerAs: 'cc',
+      Authenticated: true,
+    })
     .state('user_accounts', {
       url: '/user_accounts',
       templateUrl: 'src/views/user_accounts.html',
@@ -99,7 +111,13 @@ angular
       controllerAs: 'ex',
       Authenticated: true,
     })
-    
+    .state('import', {
+      url: '/import',
+      templateUrl: 'src/views/import.html',
+      controller: 'importScholarsCtrl',
+      controllerAs: 'ic',
+      Authenticated: true,
+    }) 
   $urlRouterProvider.otherwise('/');
 
 })
@@ -214,6 +232,7 @@ require('../directives/colorDegreeDirective');
 require('../directives/colorScholarStatusDirective');
 require('../directives/colorContractStatusDirective');
 require('../directives/colorContractDirective');
+require('../directives/filereadDirective');
 
 require('../filters/filters');
 
@@ -233,6 +252,7 @@ require('../services/academicContractService');
 require('../services/usersApiService');
 require('../services/academicSemesterYearApiService');
 require('../services/dashboardApiService');
+require('../services/courseApiService');
 
 
 require('../controllers/mainCtrl');
@@ -247,5 +267,7 @@ require('../controllers/updateSchoolCtrl');
 require('../controllers/userAccountsCtrl');
 require('../controllers/contractCtrl');
 require('../controllers/exportScholarsCtrl');
+require('../controllers/importScholarsCtrl');
 require('../controllers/editScholarCtrl');
 require('../controllers/addressCtrl');
+require('../controllers/courseCtrl');

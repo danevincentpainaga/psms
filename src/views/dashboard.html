@@ -1,12 +1,138 @@
 <ng-include src="'src/views/header.html'"></ng-include> 
-<div class="demo-md-panel-content">
+<div class="demo-md-panel-content" >
+  <md-toolbar class="md-menu-toolbar" style="border-bottom: 1px solid #c7c7c7;">
+    <div layout="row" style="min-height: 64px;">
+      <md-toolbar-filler style="display: flex;">
+        <md-icon class="material-icons">home</md-icon>
+      </md-toolbar-filler>
+      <h2 class="md-toolbar-tools" style="padding: 20px;">
+        <span>Dashboard</span>
+      </h2>
+    </div>
+  </md-toolbar>
 	<div layout="row">
-		<div flex="20">
-
+	  <div flex="25">
+	  	<div layout="column">
+	  		<div flex>
+	            <div class="card" style="position: relative;
+	    display: -ms-flexbox;
+	    display: flex;
+	    -ms-flex-direction: column;
+	    flex-direction: column;
+	    min-width: 0;
+	    background-color: #fff;
+	    background-clip: border-box;
+	    border: 1px solid #c7c7c7;
+	    border-color: rgba(0,0,0,.125);
+	    border-radius: .25rem;margin: 15px 15px 0px 15px;background-color: #39f!important;color: #ffff;">
+	                
+	                <div class="card-body" style="padding: 1.25rem;height: 70px;">
+	                    7,000
+	                </div>
+	            </div>
+	  		</div>
+	  		<div flex>
+	            <div class="card" style="position: relative;
+	    display: -ms-flexbox;
+	    display: flex;
+	    -ms-flex-direction: column;
+	    flex-direction: column;
+	    min-width: 0;
+	    background-color: #fff;
+	    background-clip: border-box;
+	    border: 1px solid #c7c7c7;
+	    border-radius: .25rem;margin: 15px 15px 0px 15px;background-color: #321fdb!important;color: #fff;">
+	                
+	                <div class="card-body" style="padding: 1.25rem;height: 70px;">
+	                    1,0000
+	                </div>
+	            </div>
+	  		</div>
+	  		<div flex>
+	            <div class="card" style="position: relative;
+	    display: -ms-flexbox;
+	    display: flex;
+	    -ms-flex-direction: column;
+	    flex-direction: column;
+	    min-width: 0;
+	    background-color: #fff;
+	    background-clip: border-box;
+	    border: 1px solid #c7c7c7;
+	    border-color: rgba(0,0,0,.125);
+	    border-radius: .25rem;margin: 15px 15px 0px 15px;">
+	                <div class="card-header" style="padding: .75rem 1.25rem;
+    margin-bottom: 0;
+    border-bottom: 1px solid rgba(0,0,0,.125);">Statuses</div>
+	                <div class="card-body" style="padding: 1.25rem;">
+						<canvas id="pie" class="chart chart-pie"
+						  chart-data="scholars_data" chart-options="scholar_options" chart-labels="scholar_labels">
+						</canvas>
+	                </div>
+	            </div>
+	  		</div>
+	  		<div flex>
+            <div class="card" style="position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid #c7c7c7;
+    border-radius: .25rem;margin: 15px 15px 0px 15px;">
+                <div class="card-header" style="padding: .75rem 1.25rem;
+margin-bottom: 0;
+border-bottom: 1px solid rgba(0,0,0,.125);">Statuses</div>
+                <div class="card-body" style="padding: 1.25rem;">
+					<canvas id="polar-area" class="chart chart-polar-area"
+					  chart-data="scholars_data" chart-options="scholar_options" chart-labels="scholar_labels">
+					</canvas>
+                </div>
+            </div>
+  		</div>
+	  	</div>
+	  </div>
+	  <div flex="75">
+		<div layout="column">
+		  <div flex="">
+            <div class="card" style="position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid #c7c7c7;
+    border-radius: .25rem;margin: 15px 15px 0px 15px;">
+                <div class="card-header" style="padding: .75rem 1.25rem;
+    margin-bottom: 0;">Undergraduate</div>
+                <div class="card-body" style="padding: 1.25rem;">
+                    <canvas id="bar" class="chart chart-bar" chart-data="undergraduate" chart-series="undergraduate_series" chart-labels="labels" chart-options="options"> chart-series="series" ></canvas>
+                </div>
+            </div>
+		  </div>
+		  <div flex="">
+            <div class="card" style="position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid #c7c7c7;
+    border-radius: .25rem;margin: 15px 15px 0px 15px;">
+                <div class="card-header" style="padding: .75rem 1.25rem;
+    margin-bottom: 0;">Masteral/Doctorate</div>
+                <div class="card-body" style="padding: 1.25rem;">
+                    <canvas id="bar" class="chart chart-bar" chart-data="masteral_doctorate" chart-series="masteral_doctorate_series" chart-labels="labels" chart-options="options"> chart-series="series" ></canvas>
+                </div>
+            </div>
+		  </div>
 		</div>
-		<div flex="70">
-			<canvas id="bar" class="chart chart-bar" chart-data="undergraduate" chart-series="undergraduate_series" chart-labels="labels" chart-options="options"> chart-series="series" ></canvas>
-			<canvas id="bar" class="chart chart-bar" chart-data="masteral_doctorate" chart-series="masteral_doctorate_series" chart-labels="labels" chart-options="options"> chart-series="series" ></canvas>
-		</div>
+		<br />
+	  </div>
 	</div>
 </div>

@@ -1,6 +1,16 @@
 <ng-include src="'src/views/header.html'"></ng-include> 
 <div>
-  <md-toolbar class="md-menu-toolbar" style="border-bottom: 1px solid #c7c7c7;">
+<md-toolbar class="md-menu-toolbar" style="border-bottom: 1px solid #c7c7c7;">
+  <div layout="row" style="min-height: 64px;">
+    <md-toolbar-filler style="display: flex;">
+      <md-icon class="material-icons">source</md-icon>
+    </md-toolbar-filler>
+    <h2 class="md-toolbar-tools" style="padding: 20px;">
+      <span>Scholars</span>
+    </h2>
+  </div>
+</md-toolbar>
+<!--   <md-toolbar class="md-menu-toolbar" style="border-bottom: 1px solid #c7c7c7;">
     <div layout="row">
       <md-toolbar-filler style="display: flex;">
         <md-icon class="material-icons">source</md-icon>
@@ -47,13 +57,24 @@
             </md-menu-content>
           </md-menu>
         </md-menu-bar>
-      </div>
-      <div flex style="display: flex;justify-content: flex-end;">
+      </div> -->
+<!--       <div flex style="display: flex;justify-content: flex-end;">
         <md-table-pagination md-limit="sc.pagination_data.per_page" md-limit-options="[50, 100, 150]" md-page="sc.pagination_data.current_page" md-total="{{sc.pagination_data.last_page}}" md-on-paginate="sc.scholars" md-page-select></md-table-pagination>
-      </div>
+      </div> -->
     </div>
   </md-toolbar>
   <md-progress-linear md-mode="indeterminate" ng-if="!sc.scholars_loaded" style="position: absolute;"></md-progress-linear>
+  <ul>
+    <li>
+      <a href="" class="active">Undergraduate</a>
+    </li>
+    <li>
+      <a href="">Masteral</a>
+    </li>
+    <li>
+      <a href="">Doctorate</a>
+    </li>
+  </ul>
   <div layout="column" layout-xs="column" style="background-color: #fff; padding: 5px;">
     <div flex style="overflow: auto;border: 1px solid #b0b1b3;"  ng-style="resizeDiv()" resize-div  class="container" fixed-column-table >
     <table>
@@ -98,9 +119,10 @@
             </select>
           </th>
           <th>Course</th>
+          <th>Year & section</th>
+          <th>Year level</th>
           <th>School</th>
           <th>Student ID NO.</th>
-          <th>Year level</th>
           <th>Last Renewed</th>
           <th>Amount</th>
           <th>IP.</th>
@@ -139,10 +161,11 @@
               {{ scholar.degree }}
             </span>
           </td>
-          <td>{{ scholar.course_section }}</td>
+          <td>{{ scholar.course.course }}</td>
+          <td>{{ scholar.year_level }} - {{ scholar.section }}</td>
+          <td>{{ scholar.year_level }}</td>
           <td>{{ scholar.school.school_name }}</td>
           <td>{{ scholar.student_id_number }}</td>
-          <td>{{ scholar.year_level }}</td>
           <td>{{ scholar.academicyear_semester_contract.semester }} - {{ scholar.academicyear_semester_contract.academic_year }}</td>
           <td>{{ scholar.academicyear_semester_contract.amount | currency : '' : 0 }}</td>
           <td>{{ scholar.IP }}</td>

@@ -33,7 +33,7 @@ app.controller('exportScholarsCtrl',['$scope', '$rootScope', '$cookies', '$windo
 
   ex.exportNormal = function(){
     ex.show_spinner = true;
-    exportScholars.exportNormal(ex.scholars, ex);
+    exportScholars.export(ex.scholars, ex);
   }
 
   ex.exportMasterlist = function(){

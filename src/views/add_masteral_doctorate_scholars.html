@@ -237,22 +237,42 @@
                       No states matching "{{md.search_school}}" were found.
                     </md-not-found>
                   </md-autocomplete>
-                  <md-input-container flex="40">
-                    <label>Course & Section</label>
-                    <textarea ng-model="md.course_section" ng-disabled="!md.degree_has_selected"></textarea>
+                  <md-autocomplete flex
+                    md-input-name="autocompleteField"
+                    md-input-minlength="1"
+                    md-no-cache="md.noCache"
+                    md-selected-item="md.course"
+                    md-search-text="md.search_course"
+                    md-delay="500"
+                    md-selected-item-change="md.selectedCourseChange(course)"
+                    md-items="course in md.courseSearchQuery(md.search_course)"
+                    md-item-text="course.course"
+                    md-autoselect="true"
+                    md-escape-options="clear"
+                    md-require-match=""
+                    md-floating-label="Course" ng-disabled="!md.degree_has_selected">
+                    <md-item-template>
+                      <span md-highlight-text="md.search_course" md-highlight-flags="^i">{{course.course}}</span>
+                    </md-item-template>
+                    <md-not-found>
+                      No address matching "{{md.search_course}}" were found.
+                    </md-not-found>
+                  </md-autocomplete>
+                  <md-input-container flex="15">
+                    <label>section</label>
+                    <input ng-model="md.section" ng-disabled="!md.degree_has_selected">
                   </md-input-container>
                 </div>
                 <div layout="row" layout-xs="column">
                   <md-input-container flex>
                     <label>Year level.</label>
                     <md-select ng-model="md.year_level" ng-disabled="!md.degree_has_selected">
-                      <md-option value="1st year"><em>1st year</em></md-option>
-                      <md-option value="2nd year"><em>2nd year</em></md-option>
-                      <md-option value="3rd year"><em>3rd year</em></md-option>
-                      <md-option value="4th year"><em>4th year</em></md-option>
-                      <md-option value="5th year"><em>5th year</em></md-option>
-                      <md-option value="6th year"><em>6th year</em></md-option>
-                      <md-option value="7th year"><em>7th year</em></md-option>
+                      <md-option value="I"><em>1st year</em></md-option>
+                      <md-option value="II"><em>2nd year</em></md-option>
+                      <md-option value="III"><em>3rd year</em></md-option>
+                      <md-option value="IV"><em>4th year</em></md-option>
+                      <md-option value="V"><em>5th year</em></md-option>
+                      <md-option value="VI"><em>6th year</em></md-option>
                     </md-select>
                   </md-input-container>
                   <md-input-container flex="30">

@@ -9,8 +9,8 @@
  */ 
 
 var app = angular.module('psmsApp');
-app.controller('editScholarCtrl', ['$scope', '$rootScope', '$mdDialog', '$q', '$mdSidenav', 'addScholarsService', 'scholarApiService', 'swalert', 'fileReader',
-    function ($scope, $rootScope, $mdDialog, $q, $mdSidenav, addScholarsService, scholarApiService, swalert, fileReader) {
+app.controller('editScholarCtrl', ['$scope', '$rootScope', '$mdDialog', '$q', '$mdSidenav', 'addScholarsService', 'scholarApiService', 'swalert', 'moment', 'fileReader',
+    function ($scope, $rootScope, $mdDialog, $q, $mdSidenav, addScholarsService, scholarApiService, swalert, moment, fileReader) {
 
   var ec = this;
   ec.updatePhotoBtnText = 'Update';
@@ -28,6 +28,7 @@ app.controller('editScholarCtrl', ['$scope', '$rootScope', '$mdDialog', '$q', '$
       ec.copy = angular.copy(n);
       ec.addressId = n.addressId;
       ec.schoolId = n.schoolId;
+      ec.courseId = n.courseId;
     	ec.academic_year = n.academicyear_semester_contract.academic_year;
     	ec.semester = n.academicyear_semester_contract.semester;
     	ec.firstname = n.firstname;
@@ -40,7 +41,8 @@ app.controller('editScholarCtrl', ['$scope', '$rootScope', '$mdDialog', '$q', '$
     	ec.IP = n.IP;
     	ec.search_address = n.address.address;
     	ec.search_school = n.school.school_name;
-    	ec.course_section = n.course_section;
+    	ec.course = n.course.course;
+      ec.section = n.section;
     	ec.search_flastname = n.father_details.lastname;
     	ec.f_firstname = n.father_details.firstname;
     	ec.f_middlename = n.father_details.middlename;
@@ -117,52 +119,69 @@ app.controller('editScholarCtrl', ['$scope', '$rootScope', '$mdDialog', '$q', '$
 
   ec.updateScholarPrimaryDetails = function(){
 
-    ec.updatingPrimaryDetails = true;
-    ec.primaryButtonText = 'Updating...';
+    if (
+          ec.firstname && ec.lastname && ec.middlename && ec.addressId && moment.validateDate(ec.date_of_birth) 
+          && ec.age && ec.gender && ec.schoolId && ec.courseId && ec.section && ec.year_level && ec.student_id_number
+          && ec.IP
+      ) {
 
-    let primary_scholar_details = {
-      scholar_id: ec.copy.scholar_id,
-      student_id_number: ec.student_id_number.toUpperCase(),
-      degree: ec.degree,
-      firstname: ec.firstname.toUpperCase(),
-      lastname: ec.lastname.toUpperCase(),
-      middlename: ec.middlename.toUpperCase(),
-      addressId: ec.addressId,
-      date_of_birth: ec.date_of_birth,
-      age: ec.age,
-      gender: ec.gender,
-      schoolId: ec.schoolId,
-      course_section: ec.course_section.toUpperCase(),
-      year_level: ec.year_level,
-      IP: ec.IP,
+        ec.updatingPrimaryDetails = true;
+        ec.primaryButtonText = 'Updating...';
+
+        let primary_scholar_details = {
+          scholar_id: ec.copy.scholar_id,
+          student_id_number: ec.student_id_number.toUpperCase(),
+          degree: ec.degree,
+          firstname: ec.firstname.toUpperCase(),
+          lastname: ec.lastname.toUpperCase(),
+          middlename: ec.middlename.toUpperCase(),
+          addressId: ec.addressId,
+          date_of_birth: ec.date_of_birth,
+          age: ec.age,
+          gender: ec.gender,
+          schoolId: ec.schoolId,
+          courseId: ec.courseId,
+          section: ec.section.toUpperCase(),
+          year_level: ec.year_level,
+          IP: ec.IP,
+        }
+
+        console.log(primary_scholar_details);
+        updateScholarDetails(primary_scholar_details);
     }
-
-    updateScholarDetails(primary_scholar_details);
+    else{
+        swalert.toastInfo('please complete the form', 'error', 'top-right');
+    }
   }
 
   ec.updateScholarParentsDetails = function(){
 
-    ec.updatingParentsDetails = true;
-    ec.parentsButtonText = 'Updating...';
-    
-    let parentsDetails = {
-      scholar_id: ec.copy.scholar_id,
-      father_details:{ 
-          firstname: (ec.f_firstname || "").toUpperCase(),
-          lastname: (ec.search_flastname || "").toUpperCase(),
-          middlename: (ec.f_middlename || "").toUpperCase(),
-          occupation: (ec.f_occupation || "").toUpperCase(),
-      },
-      mother_details:{ 
-          firstname: (ec.m_firstname || "").toUpperCase(), 
-          lastname: (ec.search_mlastname || "").toUpperCase(), 
-          middlename: (ec.m_middlename || "").toUpperCase(), 
-          occupation: (ec.m_occupation || "").toUpperCase(),
-      },
+    if (ec.m_firstname && ec.search_mlastname && ec.m_middlename) {
+
+      ec.updatingParentsDetails = true;
+      ec.parentsButtonText = 'Updating...';
+      
+      let parentsDetails = {
+        scholar_id: ec.copy.scholar_id,
+        father_details:{ 
+            firstname: (ec.f_firstname || "").toUpperCase(),
+            lastname: (ec.search_flastname || "").toUpperCase(),
+            middlename: (ec.f_middlename || "").toUpperCase(),
+            occupation: (ec.f_occupation || "").toUpperCase(),
+        },
+        mother_details:{ 
+            firstname: (ec.m_firstname || "").toUpperCase(), 
+            lastname: (ec.search_mlastname || "").toUpperCase(), 
+            middlename: (ec.m_middlename || "").toUpperCase(), 
+            occupation: (ec.m_occupation || "").toUpperCase(),
+        },
+      }
+
+      updateScholarParentsDetails(parentsDetails);
     }
-
-    updateScholarParentsDetails(parentsDetails);
-
+    else{
+        swalert.toastInfo('Mother details is required', 'error', 'top-right');
+    }
   }
 
   ec.close = function(){
@@ -198,9 +217,16 @@ app.controller('editScholarCtrl', ['$scope', '$rootScope', '$mdDialog', '$q', '$
 
   ec.schoolSearchQuery = function(searched){
     if (searched != ec.copy.school.school_name) {
-      return addScholarsService.getSearchedSchool(searched);
+      return addScholarsService.getListOfSchool(searched);
     }
     return [ec.copy.school];
+  }
+
+  ec.courseSearchQuery = function(searched){
+    if (searched != ec.copy.course.course) {
+      return addScholarsService.getCourses(searched);
+    }
+    return [ec.copy.course];
   }
 
   ec.addressSearchQuery = function(searched){
@@ -284,7 +310,9 @@ app.controller('editScholarCtrl', ['$scope', '$rootScope', '$mdDialog', '$q', '$
     ec.binded_copy.schoolId = ec.schoolId;
     ec.binded_copy.school.school_id = ec.schoolId;
     ec.binded_copy.school.school_name = ec.search_school;
-    ec.binded_copy.course_section = ec.course_section;
+    ec.binded_copy.courseId = ec.courseId;
+    ec.binded_copy.section = ec.section;
+    ec.binded_copy.course.course = ec.search_course;
     ec.binded_copy.year_level = ec.year_level;
     ec.binded_copy.IP = ec.IP;
     ec.binded_copy.updated_at = response;

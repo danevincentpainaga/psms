@@ -4,6 +4,54 @@ angular.module('psmsApp').factory('exportScholars', function($timeout) {
 
     	var self = this;
 
+		self.export = function(scholars, ctrl){
+
+		    var scholar = [];
+
+		    angular.forEach(scholars, function(val, i){
+
+		        let exportedData = {
+		          Lastname: val.lastname,
+		          Firstname: val.firstname,
+		          Middlename: val.middlename,
+		          'Date of Birth': val.date_of_birth,
+		          Age: val.age,
+		          Gender: val.gender,
+		          Address: val.address.address,
+		          Father_lastname: self.excludeNull(val.father_details.lastname),
+		          Father_firstname: self.excludeNull(val.father_details.firstname),
+		          Father_middlename: self.excludeNull(val.father_details.middlename),
+		          Mother_maiden_name: self.excludeNull(val.mother_details.lastname),
+		          Mother_firstname: self.excludeNull(val.mother_details.firstname),
+		          Mother_middlename: self.excludeNull(val.mother_details.middlename),
+		          School: val.school.school_name,
+		          Degree: val.degree,
+		          Course: val.course.course,
+		          Section: val.section,
+		          'Student ID NO': val.student_id_number,
+		          'Year level': val.year_level,
+		          Semester: val.academicyear_semester_contract.semester,
+		          'Academic year': val.academicyear_semester_contract.academic_year,
+		          Status: val.scholar_status,
+		          IP: val.IP
+		        }
+
+		        scholar.push(exportedData);
+
+		    });
+
+		    var wb = XLSX.utils.book_new();
+
+		    var ws = XLSX.utils.json_to_sheet(scholar);
+
+		    XLSX.utils.book_append_sheet(wb, ws, 'Scholars list');
+
+		    XLSX.writeFile(wb, "Scholars list.xlsx");
+
+		    ctrl.show_spinner = false;
+
+		}
+
 		self.exportNormal = function(scholars, ctrl){
 
 		    var scholar = [];
@@ -22,7 +70,7 @@ angular.module('psmsApp').factory('exportScholars', function($timeout) {
 		          Father: self.excludeNull(val.father_details.firstname)+" "+self.excludeNull(val.father_details.lastname) + self.excludeNull(val.father_details.middlename, true),
 		          Mother: self.excludeNull(val.mother_details.firstname)+" "+self.excludeNull(val.mother_details.lastname) + self.excludeNull(val.mother_details.middlename, true),
 		          School: val.school.school_name,
-		          'Student ID NO.': val.student_id_number,
+		          'Student ID NO': val.student_id_number,
 		          'Year level.': val.year_level,
 		          Semester: val.academicyear_semester_contract.semester,
 		          'Academic year': val.academicyear_semester_contract.academic_year,

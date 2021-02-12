@@ -73,6 +73,14 @@ app.factory('scholarApiService', ['$http', '$cookies', '$rootScope', '$q', funct
         }
       });
     },
+    getAllScholars: function(){
+      return $http.get(baseUrl+'api/getAllScholars', {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization : 'Bearer '+ $rootScope.token
+        }
+      });
+    },
     getScholars: function(searched_details, page){
       return $http.get(baseUrl+'api/getScholars?page='+page, {
         params: searched_details,

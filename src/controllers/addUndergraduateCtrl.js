@@ -30,8 +30,8 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
     
     if (
           ac.firstname && ac.lastname && ac.middlename && ac.addressId && moment.validateDate(ac.date_of_birth) 
-          && ac.age && ac.gender && ac.schoolId && ac.course_section && ac.year_level && ac.student_id_number
-          && ac.IP && academicContractDetails.ascId
+          && ac.age && ac.gender && ac.schoolId && ac.courseId && ac.section && ac.year_level && ac.student_id_number
+          && ac.IP && academicContractDetails.ascId && ac.m_firstname && ac.search_mlastname && ac.m_middlename
       ) {
 
         ac.buttonText = 'Saving...';
@@ -46,8 +46,9 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
             age: ac.age,
             gender: ac.gender,
             schoolId: ac.schoolId,
-            course_section: ac.course_section.toUpperCase(),
-            year_level: ac.year_level,
+            courseId: ac.courseId,
+            section: ac.section.toUpperCase(),
+            year_level: ac.year_level.toUpperCase(),
             student_id_number: ac.student_id_number.toUpperCase(),
             IP: ac.IP,
             degree: "Undergraduate",
@@ -67,7 +68,6 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
             },
           }
 
-          console.log(scholar_details);
           saveNewScholarDetails(scholar_details);
 
     }
@@ -119,6 +119,16 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
     }
   }
 
+  ac.selectedCourseChange = function(course){
+    if (course) {
+      ac.courseId = course.course_id;
+    }
+    else{
+      ac.courseId = null;
+      ac.search_course = "";
+    }
+  }
+
   ac.selectedAddressChange = function(address){
     if (address) {
       ac.addressId = address.address_id;
@@ -132,6 +142,10 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
   ac.selectedDateOfBirth = function(dateOfBirth){
     ac.age = addScholarsService.calcAge(dateOfBirth);
     ac.displayedAge = ac.age;
+  }
+
+   ac.courseSearchQuery = function(searched){
+     return addScholarsService.getCourses({searched: searched});
   }
 
   ac.schoolSearchQuery = function(searched){
@@ -167,7 +181,6 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
 
   function getNewUndergraduateScholars(searched){
      scholarApiService.getNewUndergraduateScholars(searched).then(response => {
-      console.log(response.data);
       ac.scholars = response.data.data;
       ac.scholars_loaded = true;
     }, err => {

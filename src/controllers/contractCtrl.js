@@ -98,9 +98,11 @@ app.controller('contractCtrl',['$scope', 'academicSemesterYearApiService', 'acad
         c.contract_details = response.data;
         c.contract_status = c.contract_details[0].contract_state;
         c.contract_loaded = true;
+        c.not_in_progress = true;
         console.log(c.contract_details);
     }, err => {
       console.log(err);
+      c.not_in_progress = true;
     });
   } 
 

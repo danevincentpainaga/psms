@@ -15,56 +15,48 @@
       <div flex="20"></div>
       <div flex="">
           <br />
-          <md-content flex layout-padding style="height: 100%;background-color: #fff; padding: 0px;" ng-if="!s.editing_state">
+          <div>
+            <md-progress-linear md-mode="indeterminate" ng-if="!ad.address_list_loaded"></md-progress-linear>
+          </div>
+          <md-content flex layout-padding style="height: 100%;background-color: #fff; padding: 0px;" class="md-whiteframe-1dp"  ng-if="!s.editing_state">
               <md-list>
                 <div>
                   <md-button class="md-fab md-mini md-primary" ng-click="ad.add($event)" ng-if="!s.disable_linear_loader" style="float: right;">
                     <md-icon class="material-icons">add</md-icon>
                   </md-button>
                 </div>
-                <md-subheader class="md-no-sticky">List of Addresses</md-subheader>
-                <md-input-container style="width: 40%;margin: 25px 0px 0px 0px;height: 40px;">
-                  <label>Search</label>
-                  <input type="text" ng-model="ad.searched_address" style="text-transform: uppercase;" autocomplete="off">
-                  <md-progress-circular class="md-hue-2" md-diameter="15px" style="position: absolute;right: 0px;top: 10px;" ng-if="ad.searching"></md-progress-circular>
-                </md-input-container>
-                <div>
-                  <md-progress-linear md-mode="indeterminate" ng-if="!ad.address_list_loaded"></md-progress-linear>
+                <div style="padding: 0px 15px;">
+                  <md-input-container style="width: 40%;margin: 25px 0px 0px 0px;height: 40px;">
+                    <label>Search</label>
+                    <input type="text" ng-model="ad.searched_address" style="text-transform: uppercase;" autocomplete="off">
+                    <md-progress-circular class="md-hue-2" md-diameter="15px" style="position: absolute;right: 0px;top: 10px;" ng-if="ad.searching"></md-progress-circular>
+                  </md-input-container>
                 </div>
+                <md-subheader class="md-no-sticky">List of Addresses</md-subheader>
                 <md-content flex style="height: 100%;background-color: #fff;" >
-                    <div style="max-height: 300px;min-height: 300px;overflow: auto;border: 1px solid rgb(176, 177, 179);" class="container" fixed-column-table>
-                      <table>
-                        <thead style="background: #dddddd;box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);">
-                          <tr>
-                            <th style="background-color: #dddddd;"><span>No.</span></th>
-                            <th style="background-color: #dddddd;"><span>Address</span></th>
-                            <th style="background-color: #dddddd;"><span>Muncipality</span></th>
-                            <th></th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr ng-repeat="address in ad.addresses track by $index">
-                            <td style="background-color: #f6c08e;">{{ $index+1 }}.</td>
-                            <td>
-                              <span>{{ address.address }}</span>
-                            </td>
-                            <td>
-                              <span>{{ address.municipality }}</span>
-                            </td>
-                            <td>
-                              <md-icon class="material-icons" style="font-size: 17px; box-sizing: border-box;padding: 3px;cursor: pointer;outline-style: none;" ng-click="ad.edit(address)">
-                                <md-tooltip>Edit</md-tooltip>
-                                edit
-                              </md-icon>
-                              <md-icon class="material-icons" style="font-size: 17px; box-sizing: border-box;padding: 3px;cursor: pointer;outline-style: none;">
-                                <md-tooltip>Delete</md-tooltip>
-                                close
-                              </md-icon>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                  </div>
+                    <div style="max-height: 300px;min-height: 300px;overflow: auto;">
+                      <md-list-item ng-repeat="address in ad.addresses track by $index">
+                        <div style="display: flex;width: 100%">
+                          <div flex style="margin-right: 10px;">
+                            <p>{{ $index+1 }}.</p>
+                          </div>
+                          <div flex="50">
+                            <p>{{ address.address }}</p>
+                          </div>
+                          <div flex="50">
+                            <p>{{ address.municipality }}</p>
+                          </div>
+                        </div>
+                       <md-icon class="material-icons" style="font-size: 17px; box-sizing: border-box;padding: 3px;cursor: pointer;outline-style: none;" ng-click="ad.edit(address)">
+                          <md-tooltip>Edit</md-tooltip>
+                          edit
+                        </md-icon>
+                        <md-icon class="material-icons" style="font-size: 17px; box-sizing: border-box;padding: 3px;cursor: pointer;outline-style: none;">
+                          <md-tooltip>Delete</md-tooltip>
+                          close
+                        </md-icon>
+                      </md-list-item>
+                    </div>
                 </md-content>
             </md-list>
           </md-content>

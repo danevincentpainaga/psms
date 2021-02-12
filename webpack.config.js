@@ -3,6 +3,8 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const webpack = require('webpack'); //to access built-in plugins
 const path = require('path');
 
+var SRC = path.resolve(__dirname, './src/app/app.js');
+
 module.exports = {
   mode: 'development',
   entry: {
@@ -22,6 +24,17 @@ module.exports = {
           'style-loader',
           'css-loader',
           'sass-loader'
+        ],
+      },
+      {
+        test: /\.(eot|gif|otf|png|svg|ttf|woff)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 100000,
+            },
+          },
         ],
       },
     ], 

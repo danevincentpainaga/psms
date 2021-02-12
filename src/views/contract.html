@@ -82,10 +82,16 @@
                       </md-card-header-text>
                     </md-card-header>
                     <md-card-content style="padding: 16px; font-size: 13px;">
-                      <div layout="row" layout-sm="column" layout-align="space-around" style="margin: 20px 0px;" ng-if="!c.contract_loaded">
+                      <div layout="row" layout-sm="column" layout-align="space-around" style="margin: 20px 0px;" ng-if="!c.not_in_progress">
                         <md-progress-circular md-diameter="25px"></md-progress-circular>
                       </div>
+                      <div ng-if="c.not_in_progress && !c.contract_loaded" >
+                        <p style="text-align: center;">Contract not set.</p>
+                        <p style="text-align: center; font-size: 12px;">please create and set contract to start.</p>
+                        <br />
+                      </div>
                       <div class="demo-md-panel-content" ng-repeat="contract in c.contract_details" ng-if="c.contract_loaded">
+
                         <p>
                           State: 
                           &nbsp;

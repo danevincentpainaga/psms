@@ -1,6 +1,13 @@
 angular.module('psmsApp')
-	.factory('addScholarsService',['schoolApiService', 'addressApiService', 'scholarApiService', function(schoolApiService, addressApiService, scholarApiService){
+	.factory('addScholarsService',['schoolApiService', 'addressApiService', 'scholarApiService', 'courseApiService', function(schoolApiService, addressApiService, scholarApiService, courseApiService){
 	  return {
+	    getCourses: function(searched){
+			return courseApiService.getCourses(searched).then(response=>{
+				return response.data;
+				}, err => {
+				console.log(err);
+			});
+	    },
 	    getListOfSchool: function(searched){
 			return schoolApiService.getListOfSchool(searched).then(response=>{
 				return response.data;
@@ -44,7 +51,9 @@ angular.module('psmsApp')
 		    ctrl.age = "";
 		    ctrl.gender = "";
 		    ctrl.schoolId = "";
-		    ctrl.course_section = "";
+		    ctrl.search_course = "";
+		    ctrl.courseId = "";
+		    ctrl.section = "";
 		    ctrl.year_level = "";
 		    ctrl.student_id_number = "";
 		    ctrl.IP = "";

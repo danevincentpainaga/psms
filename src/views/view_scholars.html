@@ -1,0 +1,84 @@
+<ng-include src="'src/views/header.html'"></ng-include> 
+<div style="font-size: 14px;">
+  <md-toolbar class="md-menu-toolbar" style="border-bottom: 1px solid #c7c7c7;">
+    <div layout="row">
+      <md-toolbar-filler style="display: flex;">
+        <md-icon class="material-icons">content_paste</md-icon>
+      </md-toolbar-filler>
+      <div>
+        <h2 class="md-toolbar-tools">Add Users</h2>
+        <md-menu-bar>
+          <md-menu>
+            <button ng-click="$mdMenu.open()">
+              Accounts
+            </button>
+            <md-menu-content>
+              <md-menu-item class="md-indent">
+                <md-icon class="material-icons">save</md-icon>
+                <md-button ng-click="ctrl.sampleAction('redo', $event)">
+                  Add new
+                </md-button>
+              </md-menu-item>
+              <md-menu-item class="md-indent">
+                <md-icon class="material-icons">clear_all</md-icon>
+                <md-button ng-click="ctrl.sampleAction('redo', $event)">
+                  User accounts
+                </md-button>
+              </md-menu-item>
+            </md-menu-content>
+          </md-menu>
+        </md-menu-bar>
+      </div>
+    </div>
+  </md-toolbar>
+  <div layout="column">
+      <div layout="row">
+        <div flex>
+          test
+        </div>
+        <div flex="60" style="margin-top: 1rem;">
+          <div style="background: #ffff;position: relative;border: 1px solid #ebe9e6;border-radius: 1rem;">
+            <div style="width: 100%;
+    position: relative;
+    padding: 0;
+    overflow: hidden;
+    border-radius: 12px 12px 0 0;
+    height: 250px;">
+                <img src="images/bg-2.jpg" style="width: 100%;height: 100%;position: absolute; object-fit: cover;">
+            </div>
+            <div class="profiles_content" style="display: flex; position: relative;margin-top: -138px;
+    z-index: 2;
+    padding: 0;
+    padding-bottom: 25px;justify-content: center;align-items: center; flex-direction: column;">
+                <div class="avatar" style="width: 160px;
+    height: 160px;
+    margin-right: 0px;
+    margin-bottom: 15px;position: relative;
+    z-index: 1;">
+                  <div class="avatar-holder" style="    border-radius: 100%;    box-shadow: 0 2px 20px 0 rgb(0 0 0 / 30%);
+    border: 4px solid #FFF;    background: #dcdcdc;
+    width: 100%;
+    height: 100%;overflow: hidden;
+    position: relative;">
+                    <img src="images/user.png" style="width: 100%;height: 100%;position: absolute;    top: 0;
+    left: 0; object-fit: cover;">
+                  </div>
+                </div>
+                <div class="profile_info">
+                    <h1> Josephine Williams </h1>
+                    <p> Family , Food , Fashion , Fourever <a href="#">Edit </a></p>
+                </div>
+            </div>
+          </div>
+
+          <div style="background: #ffff;position: relative;border: 1px solid #ebe9e6;border-radius: 1rem;margin-top: 1rem;">
+            details
+          </div>
+
+
+        </div>
+        <div flex></div>
+      </div>
+  </div>
+</div>
+

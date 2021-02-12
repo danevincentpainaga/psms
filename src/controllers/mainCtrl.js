@@ -33,6 +33,12 @@ angular.module('psmsApp')
       })
     }
     
+  $scope.scholar_labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales", "Tele Sales", "Corporate Sales"];
+  // $scope.scholar_series = ['Pre-Approved', 'Approved', 'Pending', 'In-Active'];
+  $scope.scholars_data = [300, 500, 100, 40, 120];
+
+
+
 }]);
 
 angular

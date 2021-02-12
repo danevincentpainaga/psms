@@ -1,12 +1,52 @@
 @import "~angular-material/angular-material";
+@import "angular-ui-grid/ui-grid.min.css";
 /*@import '~angular-material-data-table/dist/md-data-table.min.css';*/
 /*@import '~material-design-icons/iconfont/material-icons.css';*/
 
 /*background: linear-gradient(to bottom,#F8F8F8 0,#eeeeee 100%);*/
 
+.grid .ui-grid-row .error {
+  background-color: red;
+}
+
+ul{
+    display: flex;
+    justify-content: flex-end;
+    border-bottom: 1px solid #dee2e6;
+    margin: 0px;
+    flex-wrap: wrap;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+    margin: 3px 3px 0px 0px;
+    font-size: 13px;
+  li{
+      .active{
+        text-decoration: none;
+        color: #495057;
+        background-color: #fff;
+        border-color: #c8d0d8 #c2c7cc #fff;
+      }
+
+    a{
+      text-decoration: none;
+      border: 1px solid #c8c8c8;
+      border-top-left-radius: .15rem;
+      border-top-right-radius: .15rem;
+      display: block;
+      padding: .5rem 1rem;
+      border-bottom: 0px;
+    }
+  }
+}
+
+.grid {
+  width: 100%;
+  height: 350px;
+}
 body{
 	font-family: century gothic !important;
-	background: #efefef !important;
+	/*background: #efefef !important;*/
   overflow-x: hidden !important;
 }
 
@@ -211,6 +251,7 @@ th,
       height: 100%;
       width: 100%;
       background: #0000008c;
+      border-radius: 1em;
       input{
         width: 85px;
       }

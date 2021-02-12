@@ -10,48 +10,52 @@
   <md-content>
     <md-subheader class="md-no-sticky">Menu</md-subheader>
     <md-list-item ng-click="navigateTo('/dashboard')" >
-      <md-icon class="material-icons" style="margin-right: 15px;">home</md-icon>
+      <md-icon class="material-icons" style="margin-right: 15px;color: rgba(37, 99, 235, 235);">home</md-icon>
       <p style="margin-top: 5px;"> Dashboard</p>
     </md-list-item>
     <md-list-item ng-click="navigateTo('/scholars_list')" >
-      <md-icon class="material-icons" style="margin-right: 15px;">source</md-icon>
+      <md-icon class="material-icons" style="margin-right: 15px;color: rgba(245, 158, 11, 11);">source</md-icon>
       <p style="margin-top: 5px;"> Scholars list</p>
     </md-list-item>
     <md-list-item ng-click="navigateTo('/add_undergraduate_scholars')" >
-      <md-icon class="material-icons" style="margin-right: 15px;">groups</md-icon>
+      <md-icon class="material-icons" style="margin-right: 15px;color: #ef4444;">groups</md-icon>
       <p style="margin-top: 5px;"> Undergraduate</p>
     </md-list-item>
     <md-list-item ng-click="navigateTo('/add_masteral_doctorate_scholars')" ng-if="master_doctorate_access" >
-      <md-icon class="material-icons" style="margin-right: 15px;">school</md-icon>
+      <md-icon class="material-icons" style="margin-right: 15px;color: #3b82f6;">school</md-icon>
       <p style="margin-top: 5px;"> Master's/Doctorate</p>
     </md-list-item>
     <md-list-item ng-click="navigateTo('/schools')" >
-      <md-icon class="material-icons" style="margin-right: 15px;">account_balance</md-icon>
+      <md-icon class="material-icons" style="margin-right: 15px;color: #10b981;">account_balance</md-icon>
       <p style="margin-top: 5px;"> Schools</p>
     </md-list-item>
+    <md-list-item ng-click="navigateTo('/course')" >
+      <md-icon class="material-icons" style="margin-right: 15px;color: #10b981;">account_balance</md-icon>
+      <p style="margin-top: 5px;"> Course</p>
+    </md-list-item>
     <md-list-item ng-click="navigateTo('/address')" >
-      <md-icon class="material-icons" style="margin-right: 15px;">location_on</md-icon>
+      <md-icon class="material-icons" style="margin-right: 15px;color: #ec4899;">manage_accounts</md-icon>
       <p style="margin-top: 5px;"> Address</p>
     </md-list-item>
     <md-list-item ng-click="navigateTo('/contract')" ng-if="isAdmin">
-      <md-icon class="material-icons" style="margin-right: 15px;">history_edu</md-icon>
+      <md-icon class="material-icons" style="margin-right: 15px;color: #2fbeb1!important">history_edu</md-icon>
       <p style="margin-top: 5px;"> Contract</p>
     </md-list-item>
-    <md-list-item ng-click="navigateTo(setting.extraScreen, $event)" ng-if="isAdmin">
-      <md-icon class="material-icons" style="margin-right: 15px;">admin_panel_settings</md-icon>
+    <md-list-item ng-click="navigateTo('/user_accounts')" ng-if="isAdmin">
+      <md-icon class="material-icons" style="margin-right: 15px;color: #28dd25!important;">admin_panel_settings</md-icon>
       <p style="margin-top: 5px;"> User accounts</p>
     </md-list-item>
     <md-list-item ng-click="navigateTo(setting.extraScreen, $event)" >
       <md-icon class="material-icons" style="margin-right: 15px;">leaderboard</md-icon>
       <p style="margin-top: 5px;"> Reports</p>
     </md-list-item>
-<!--     <md-list-item ng-click="navigateTo('/schools')">
-      <md-icon class="material-icons" style="margin-right: 15px;">cloud_upload</md-icon>
-      <p style="margin-top: 5px;"> Import</p>
-    </md-list-item> -->
     <md-list-item ng-click="navigateTo('/export')" >
       <md-icon class="material-icons" style="margin-right: 15px;">import_export</md-icon>
-      <p style="margin-top: 5px;"> Export / Import</p>
+      <p style="margin-top: 5px;"> Export</p>
+    </md-list-item>
+    <md-list-item ng-click="navigateTo('/import')" >
+      <md-icon class="material-icons" style="margin-right: 15px;">cloud_upload</md-icon>
+      <p style="margin-top: 5px;"> Import</p>
     </md-list-item>
   </md-content>
 </md-sidenav>

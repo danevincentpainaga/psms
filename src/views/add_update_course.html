@@ -1,0 +1,33 @@
+<md-sidenav class="md-sidenav-right" md-component-id="addUpdateCourse">
+  <md-toolbar class="md-theme-light">
+  </md-toolbar>
+  <md-content layout-padding style="font-size: 13px;">
+    <div>
+      <md-card style="margin: 5px 0px;">
+        <md-card-header>
+          <md-card-avatar>
+            <md-icon class="material-icons" style="margin-right: 15px; background-color: #616dc3;">manage_accounts</md-icon>
+          </md-card-avatar>
+          <md-card-header-text>
+            <span class="md-title">{{ cc.labelText }}</span>
+            <span class="md-subhead">Course</span>
+          </md-card-header-text>
+        </md-card-header>
+        <md-card-content style="padding: 15px 16px 0px 16px;">
+          <form>
+            <div layout="column" >
+              <md-input-container flex="">
+                <label>Course</label>
+                <input type="text" ng-model="cc.course">
+              </md-input-container>
+            </div>
+            <div style="margin-bottom: 2em; margin-top: 3em;">
+              <md-button class="md-raised md-primary" ng-click="cc.saveUpdateCourse()" ng-disabled="cc.saving_updating" style="width: 100%;margin: 10px 0px !important;">{{ cc.saveUpdateBtnText }}</md-button>
+              <md-button class="md-raised" ng-click="cc.close()" style="width: 100%;margin: 0px !important;">Close</md-button>
+            </div>
+          </form>
+        </md-card-content>
+      </md-card>
+    </div>
+  </md-content>
+</md-sidenav>

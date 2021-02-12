@@ -2,9 +2,9 @@
   <md-toolbar class="md-theme-light">
     <h1 class="md-toolbar-tools">Edit</h1>
   </md-toolbar>
-  <md-content layout-padding style="background-color: #efefef;font-size: 13px;">
+  <md-content layout-padding style="background-color: #efefef;font-size: 12px;">
     <md-card style="margin: 0px; padding: 12px;">
-      <md-card-header>
+<!--       <md-card-header>
         <md-card-avatar>
           <md-icon class="material-icons" style="margin-right: 15px; background-color: #616dc3;">{{ ec.icon }}</md-icon>
         </md-card-avatar>
@@ -15,6 +15,34 @@
         <md-card-header-text style="text-align: right;">
           <span class="md-subhead" style="color: #008300;">AY - {{ ec.academic_year }}</span>
           <span class="md-subhead">{{ ec.semester }}</span>
+        </md-card-header-text>
+      </md-card-header> -->
+      <md-card-header style="padding: 15px 17px 15px;">
+        <md-card-avatar>
+          <md-icon class="material-icons" style="margin-right: 15px; background-color: #616dc3;">{{ ec.icon }}</md-icon>
+        </md-card-avatar>
+        <md-card-header-text>
+          <span class="md-title">Details</span>
+          <span class="md-subhead">{{ ec.degree }}</span>
+        </md-card-header-text>
+        <md-card-header-text flex="40">
+          <div layout="row">
+            <div flex style="display: flex;justify-content: flex-end;">
+              <md-input-container flex style="margin-bottom: 0px;" ng-if="ec.binded_copy.degree !== 'Undergraduate'">
+                <label>Select degree</label>
+                <md-select ng-model="ec.degree" ng-disabled="!ec.primary_details" >
+                  <md-option value="Masters"><em>Masters</em></md-option>
+                  <md-option value="Doctorate"><em>Doctorate</em></md-option>
+                </md-select>
+              </md-input-container>
+            </div>
+            <div flex="35" style="display: flex;justify-content: flex-end;">
+              <div layout="column"style="text-align: right;">
+                <span class="md-subhead" style="color: #008300;">AY - {{ ec.academic_year }}</span>
+                <span class="md-subhead">{{ ec.semester }}</span> 
+              </div>
+            </div>
+          </div>
         </md-card-header-text>
       </md-card-header>
       <md-card-content style="padding: 0px 16px;" >
@@ -28,25 +56,18 @@
                   <img ng-src="{{ ec.photo | checkScholarPhoto }}" style="border-radius: 1em;">
                 </div>
               </div>
-              <md-input-container flex style="margin-bottom: 0px;" ng-if="ec.binded_copy.degree !== 'Undergraduate'">
-                <label>Select degree</label>
-                <md-select ng-model="ec.degree" ng-disabled="!ec.primary_details" >
-                  <md-option value="Masters"><em>Masters</em></md-option>
-                  <md-option value="Doctorate"><em>Doctorate</em></md-option>
-                </md-select>
-              </md-input-container>
-              <md-input-container flex="">
+              <md-input-container flex="" style="margin-top: 50px;margin-bottom: 0px;">
                 <label>Firstname</label>
                 <input type="text" ng-model="ec.firstname" ng-disabled="!ec.primary_details">
               </md-input-container>
-              <md-input-container flex="">
+              <md-input-container flex=""  style="margin-top: 50px;margin-bottom: 0px;">
                 <label>Lastname</label>
-                <textarea ng-model="ec.lastname" ng-disabled="!ec.primary_details"></textarea>
+                <input ng-model="ec.lastname" ng-disabled="!ec.primary_details" >
               </md-input-container>
 
-              <md-input-container flex="">
+              <md-input-container flex=""  style="margin-top: 50px;margin-bottom: 0px;">
                 <label>Middlename</label>
-                <textarea ng-model="ec.middlename" ng-disabled="!ec.primary_details"></textarea>
+                <input ng-model="ec.middlename" ng-disabled="!ec.primary_details" >
               </md-input-container>
           </div>
           <div layout="row" layout-xs="column">
@@ -78,7 +99,7 @@
             </md-input-container>
             <md-input-container flex="10">
               <label>Age</label>
-              <textarea ng-model="ec.displayedAge" disabled></textarea>
+              <input ng-model="ec.displayedAge" disabled>
             </md-input-container>
             <md-input-container flex="20">
               <label>Gender</label>
@@ -149,7 +170,7 @@
             </md-input-container>
             <md-input-container flex="30">
               <label>ID NO.</label>
-              <textarea ng-model="ec.student_id_number" ng-disabled="!ec.primary_details"></textarea>
+              <input ng-model="ec.student_id_number" ng-disabled="!ec.primary_details">
             </md-input-container>
             <md-input-container flex="20">
               <label>IP.</label>

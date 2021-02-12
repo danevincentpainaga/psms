@@ -9,7 +9,7 @@
   background-color: red;
 }
 
-ul{
+.custom-nav{
     display: flex;
     justify-content: flex-end;
     border-bottom: 1px solid #dee2e6;
@@ -223,7 +223,7 @@ table{
           }
         };
         &:not(:nth-child(1)){
-          padding: 0px 45px 0px 7px !important;
+          padding: 0px 17px 0px 7px !important;
           text-align: left !important;
           font-size: 12px !important;
         }

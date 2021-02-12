@@ -64,7 +64,7 @@
     </div>
   </md-toolbar>
   <md-progress-linear md-mode="indeterminate" ng-if="!sc.scholars_loaded" style="position: absolute;"></md-progress-linear>
-  <ul>
+  <ul class="custom-nav">
     <li>
       <a href="" class="active">Undergraduate</a>
     </li>
@@ -179,6 +179,11 @@
             <md-icon class="material-icons" style="font-size: 17px; box-sizing: border-box;padding: 3px;cursor: pointer;outline-style: none;" hide-btn-actions="{{ ay.state }}">
               <md-tooltip>Delete</md-tooltip>
               close
+            </md-icon>
+            <span ng-if="$index===sc.selectedIndex" style="margin: 7px 0px;">opening..</span>
+            <md-icon class="material-icons" style="font-size: 17px; box-sizing: border-box;padding: 3px;cursor: pointer;outline-style: none;" ng-click="sc.print(scholar, $index)">
+              <md-tooltip>Print contract</md-tooltip>
+              print
             </md-icon>
           </td>
         </tr>

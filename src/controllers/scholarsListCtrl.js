@@ -26,7 +26,12 @@ app.controller('scholarsListCtrl',['$scope', '$rootScope', '$cookies', '$window'
     getScholars();
 
   }, 500), true);
-  
+
+  sc.print = function(scholarDetails, idx){
+    sc.selectedIndex = idx;
+    print(scholarDetails);
+  }
+
   sc.edit = function(scholarDetails){
     sc.scholar_to_edit = scholarDetails;
     $mdSidenav('right').toggle();
@@ -92,6 +97,22 @@ app.controller('scholarsListCtrl',['$scope', '$rootScope', '$cookies', '$window'
       }, err=> {
         console.log(err);
       });
+  }
+
+  function print(scholarDetails){
+
+    let docDefinition = {
+        content: [
+          {text: 'NAME: '+scholarDetails.firstname.toUpperCase()+" "+scholarDetails.lastname.toUpperCase()+", "+scholarDetails.middlename.toUpperCase()},
+        ]
+      };
+
+    let pdfDocGenerator = pdfMake.createPdf(docDefinition);
+    pdfDocGenerator.print({}, window.frames['printPdf']);
+    
+    pdfDocGenerator.getDataUrl((dataUrl) => {
+      $timeout(()=>{ sc.selectedIndex = undefined }, 1000);
+    });
   }
 
   getMunicipalities();

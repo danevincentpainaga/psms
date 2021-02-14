@@ -34,7 +34,7 @@
       <p style="margin-top: 5px;"> Course</p>
     </md-list-item>
     <md-list-item ng-click="navigateTo('/address')" >
-      <md-icon class="material-icons" style="margin-right: 15px;color: #ec4899;">manage_accounts</md-icon>
+      <md-icon class="material-icons" style="margin-right: 15px;color: #ec4899;">location_on</md-icon>
       <p style="margin-top: 5px;"> Address</p>
     </md-list-item>
     <md-list-item ng-click="navigateTo('/contract')" ng-if="isAdmin">
@@ -53,7 +53,7 @@
       <md-icon class="material-icons" style="margin-right: 15px;">exit_to_app</md-icon>
       <p style="margin-top: 5px;"> Export</p>
     </md-list-item>
-    <md-list-item ng-click="navigateTo('/import')" >
+    <md-list-item ng-click="navigateTo('/import')" ng-if="isAdmin">
       <md-icon class="material-icons" style="margin-right: 15px;">file_upload</md-icon>
       <p style="margin-top: 5px;"> Import</p>
     </md-list-item>

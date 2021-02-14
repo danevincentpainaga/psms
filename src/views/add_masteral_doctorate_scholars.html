@@ -82,8 +82,8 @@
       </div>
     </div>
   </md-toolbar>
-  <div layout="column" style="height: 90%;" ng-style="resize()" resize-add-scholars-div>
-    <section layout="row" flex layout-xs="column">
+  <div layout="column">
+    <section layout="row" layout-xs="column" layout-gt-xs="column" layout-gt-sm="row">
       <div layout="row" layout-xs="column" style="background-color: #fff; border-right: 1px solid #c7c7c7;min-width: 340px;" >
         <md-content flex layout-padding style="height: 100%;background-color: #fff; padding: 0px;;">
           <md-list flex>
@@ -125,7 +125,7 @@
           </md-list>
         </md-content>
       </div>
-      <div flex="" layout-padding style="background: #efefef; overflow-y: auto;border-top: 1px solid #c7c7c7;">
+      <div flex="" layout-padding style="background: #efefef; overflow-y: auto;border-top: 1px solid #c7c7c7;" ng-style="resize()" resize-add-scholars-div>
         <h3 ng-if="!md.has_semester" >Contract closed.</h3>
         <div ng-if="md.has_semester">
           <md-card style="margin: 0px;">
@@ -137,7 +137,11 @@
                 <span class="md-title">Details</span>
                 <span class="md-subhead">Masteral/Doctorate</span>
               </md-card-header-text>
-              <md-card-header-text flex="40">
+              <md-card-header-text hide-gt-md style="text-align: right;">
+                <span class="md-subhead" style="color: #008300;">AY - {{ md.academic_year }}</span>
+                <span class="md-subhead">{{ md.semester }}</span> 
+              </md-card-header-text>
+              <md-card-header-text flex="40" hide show-gt-md>
                 <div layout="row">
                   <div flex style="display: flex;justify-content: flex-end;">
                     <md-input-container flex style="margin-bottom: 0px;">
@@ -159,23 +163,30 @@
             </md-card-header>
             <md-card-content style="padding: 0px 30px;" >
               <form name="primary_details">
-                <div layout="row" layout-xs="column">
-                    <md-input-container flex="">
+                <div layout-xs="column" layout-gt-xs="column" layout-gt-sm="column" layout-gt-md="row" hide-gt-md>
+                  <md-input-container flex>
+                    <label>Select degree</label>
+                    <md-select ng-model="md.degree" ng-change="md.selectedDegree()">
+                      <md-option value="Masters"><em>Masters</em></md-option>
+                      <md-option value="Doctorate"><em>Doctorate</em></md-option>
+                    </md-select>
+                  </md-input-container>
+                </div>
+                <div layout-xs="column" layout-gt-xs="column" layout-gt-sm="column" layout-gt-md="row">
+                    <md-input-container flex>
                       <label>Firstname</label>
                       <input type="text" ng-model="md.firstname" ng-disabled="!md.degree_has_selected">
                     </md-input-container>
-
-                    <md-input-container flex="">
+                    <md-input-container flex>
                       <label>Lastname</label>
                       <textarea ng-model="md.lastname" ng-disabled="!md.degree_has_selected"></textarea>
                     </md-input-container>
-
-                    <md-input-container flex="">
+                    <md-input-container flex>
                       <label>Middlename</label>
                       <textarea ng-model="md.middlename" ng-disabled="!md.degree_has_selected"></textarea>
                     </md-input-container>
                 </div>
-                <div layout="row" layout-xs="column">
+                <div layout-xs="column" layout-gt-xs="column" layout-gt-sm="column" layout-gt-md="row">
                   <div style="display: flex;width: 100%;position: relative;">
                     <md-autocomplete flex
                       md-input-name="autocompleteField"
@@ -199,15 +210,15 @@
                       </md-not-found>
                     </md-autocomplete>
                   </div>
-                  <md-input-container flex="20">
+                  <md-input-container flex="20" flex-xs="100" flex-gt-sm="100">
                     <label>Date of Birth</label>
                     <input type="text" ng-model="md.date_of_birth" ng-change="md.selectedDateOfBirth(md.date_of_birth)" minlength="10"add-double-slashes-directive ng-disabled="!md.degree_has_selected" autocomplete="off"/>
                   </md-input-container>
-                  <md-input-container flex="10">
+                  <md-input-container flex="10" flex-xs="100" flex-gt-sm="100">
                     <label>Age</label>
                     <textarea ng-model="md.displayedAge" disabled></textarea>
                   </md-input-container>
-                  <md-input-container flex="20">
+                  <md-input-container flex="20" flex-xs="100" flex-gt-sm="100">
                     <label>Gender</label>
                     <md-select ng-model="md.gender" ng-disabled="!md.degree_has_selected">
                       <md-option value="Male"><em>Male</em></md-option>
@@ -215,7 +226,7 @@
                     </md-select>
                   </md-input-container>
                 </div>
-                <div layout="row" layout-xs="column">
+                <div layout-xs="column" layout-gt-xs="column" layout-gt-sm="column" layout-gt-md="row">
                   <md-autocomplete flex
                     md-input-name="autocompleteField"
                     md-input-minlength="1"
@@ -237,7 +248,7 @@
                       No states matching "{{md.search_school}}" were found.
                     </md-not-found>
                   </md-autocomplete>
-                  <md-autocomplete flex
+                  <md-autocomplete flex flex-gt-sm="100"
                     md-input-name="autocompleteField"
                     md-input-minlength="1"
                     md-no-cache="md.noCache"
@@ -258,12 +269,12 @@
                       No address matching "{{md.search_course}}" were found.
                     </md-not-found>
                   </md-autocomplete>
-                  <md-input-container flex="15">
+                  <md-input-container flex="15" flex-xs="100" flex-gt-sm="100">
                     <label>section</label>
                     <input ng-model="md.section" ng-disabled="!md.degree_has_selected">
                   </md-input-container>
                 </div>
-                <div layout="row" layout-xs="column">
+                <div layout-xs="column" layout-gt-xs="column" layout-gt-sm="column" layout-gt-md="row">
                   <md-input-container flex>
                     <label>Year level.</label>
                     <md-select ng-model="md.year_level" ng-disabled="!md.degree_has_selected">
@@ -275,11 +286,11 @@
                       <md-option value="VI"><em>6th year</em></md-option>
                     </md-select>
                   </md-input-container>
-                  <md-input-container flex="30">
+                  <md-input-container flex="30" flex-xs="100" flex-gt-sm="100">
                     <label>ID NO.</label>
                     <textarea ng-model="md.student_id_number" ng-disabled="!md.degree_has_selected"></textarea>
                   </md-input-container>
-                  <md-input-container flex="20">
+                  <md-input-container flex="20" flex-xs="100" flex-gt-sm="100">
                     <label>IP.</label>
                     <md-select ng-model="md.IP" ng-disabled="!md.degree_has_selected">
                       <md-option value="YES"><em>YES</em></md-option>
@@ -293,8 +304,8 @@
           <md-card style="margin: 5px 0px;">
             <md-card-content style="padding: 20px 25px 0px;">
               <p>Father's Details</p>
-              <div layout="row" layout-xs="column">
-                <md-autocomplete flex 
+              <div layout-xs="column" layout-gt-xs="column" layout-gt-sm="column" layout-gt-md="row">
+                <md-autocomplete flex
                   md-input-name="autocompleteField"
                   md-input-minlength="2"
                   md-no-cache="md.noCache"
@@ -314,18 +325,18 @@
                     No records matching "{{md.search_flastname}}" were found.
                   </md-not-found>
                 </md-autocomplete>
-                <md-input-container flex="">
+                <md-input-container flex flex-xs="100" flex-gt-sm="100">
                   <label>Firstname</label>
                   <input type="text" ng-model="md.f_firstname" ng-disabled="!md.degree_has_selected">
                 </md-input-container>
-                <md-input-container flex="">
+                <md-input-container flex flex-xs="100" flex-gt-sm="100">
                   <label>Middlename</label>
                   <input type="text" ng-model="md.f_middlename" ng-disabled="!md.degree_has_selected">
                 </md-input-container>
               </div>    
               <p>Mother's Details</p>
-              <div layout="row" layout-xs="column">
-                <md-autocomplete flex 
+              <div layout-xs="column" layout-gt-xs="column" layout-gt-sm="column" layout-gt-md="row">
+                <md-autocomplete flex
                   md-input-name="autocompleteField"
                   md-input-minlength="2"
                   md-no-cache="md.noCache"
@@ -345,11 +356,11 @@
                     No records matching "{{md.search_school}}" were found.
                   </md-not-found>
                 </md-autocomplete>
-                <md-input-container flex="">
+                <md-input-container flex flex-xs="100" flex-gt-sm="100">
                   <label>Firstname</label>
                   <input type="text" ng-model="md.m_firstname" ng-disabled="!md.degree_has_selected">
                 </md-input-container>
-                <md-input-container flex="">
+                <md-input-container flex flex-xs="100" flex-gt-sm="100">
                   <label>Middlename</label>
                   <input type="text" ng-model="md.m_middlename" ng-disabled="!md.degree_has_selected">
                 </md-input-container>

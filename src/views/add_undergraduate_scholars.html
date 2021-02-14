@@ -1,5 +1,6 @@
 <ng-include src="'src/views/header.html'"></ng-include> 
 <div style="font-size: 14px;">
+  <!-- <md-content> -->
   <md-toolbar class="md-menu-toolbar">
     <div layout="row">
       <md-toolbar-filler style="display: flex;">
@@ -82,8 +83,8 @@
       </div>
     </div>
   </md-toolbar>
-  <div layout="column" ng-style="resize()" resize-add-scholars-div>
-    <section layout="row" flex layout-xs="column">
+  <div layout="column">
+    <section layout="row" layout-xs="column" layout-gt-xs="column" layout-gt-sm="row">
       <div layout="row" layout-xs="column" style="background-color: #fff; border-right: 1px solid #c7c7c7;min-width: 340px;" >
         <md-content flex layout-padding style="height: 100%;background-color: #fff; padding: 0px;;">
           <md-list flex>
@@ -125,7 +126,7 @@
           </md-list>
         </md-content>
       </div>
-      <div flex="" layout-padding style="background: #efefef;overflow-y: auto;border-top: 1px solid #c7c7c7;" >
+      <div flex layout-padding style="background: #efefef;overflow-y: auto;border-top: 1px solid #c7c7c7;" ng-style="resize()" resize-add-scholars-div>
         <h3 ng-if="!ac.has_semester">Contract closed.</h3>
         <div ng-if="ac.has_semester">
           <md-card style="margin: 0px;">
@@ -144,21 +145,21 @@
             </md-card-header>
             <md-card-content style="padding: 0px 30px;" >
               <form name="primary_details">
-                <div layout="row" layout-xs="column">
-                    <md-input-container flex="">
+                <div layout-xs="column" layout-gt-xs="column" layout-gt-sm="column" layout-gt-md="row">
+                    <md-input-container flex>
                       <label>Firstname</label>
                       <input type="text" ng-model="ac.firstname" autocomplete="off">
                     </md-input-container>
-                    <md-input-container flex="">
+                    <md-input-container flex>
                       <label>Lastname</label>
                       <input type="text" ng-model="ac.lastname" >
                     </md-input-container>
-                    <md-input-container flex="">
+                    <md-input-container flex>
                       <label>Middlename</label>
                       <input type="text" ng-model="ac.middlename">
                     </md-input-container>
                 </div>
-                <div layout="row" layout-xs="column">
+                <div layout-xs="column" layout-gt-xs="column" layout-gt-sm="column" layout-gt-md="row">
                   <div style="display: flex;width: 100%;position: relative;">
                     <md-autocomplete flex
                       md-input-name="autocompleteField"
@@ -182,15 +183,15 @@
                       </md-not-found>
                     </md-autocomplete>
                   </div>
-                  <md-input-container flex="20">
+                  <md-input-container flex="20" flex-xs="100" flex-gt-sm="100">
                     <label>Date of Birth</label>
                     <input type="text" ng-model="ac.date_of_birth" ng-change="ac.selectedDateOfBirth(ac.date_of_birth)" minlength="10"add-double-slashes-directive autocomplete="off" />
                   </md-input-container>
-                  <md-input-container flex="10">
+                  <md-input-container flex="10" flex-xs="100" flex-gt-sm="100">
                     <label>Age</label>
                     <input ng-model="ac.displayedAge" disabled>
                   </md-input-container>
-                  <md-input-container flex="20">
+                  <md-input-container flex="20" flex-xs="100" flex-gt-sm="100">
                     <label>Gender</label>
                     <md-select ng-model="ac.gender">
                       <md-option value="Male"><em>Male</em></md-option>
@@ -198,8 +199,7 @@
                     </md-select>
                   </md-input-container>
                 </div>
-                <div layout="row" layout-xs="column">
-        
+                <div layout-xs="column" layout-gt-xs="column" layout-gt-sm="column" layout-gt-md="row">
                   <md-autocomplete flex
                     md-input-name="autocompleteField"
                     md-input-minlength="1"
@@ -242,13 +242,13 @@
                       No address matching "{{ac.search_course}}" were found.
                     </md-not-found>
                   </md-autocomplete>
-                  <md-input-container flex="15">
+                  <md-input-container flex="15" flex-xs="100" flex-gt-sm="100">
                     <label>section</label>
                     <input ng-model="ac.section">
                   </md-input-container>
                 </div>
-                <div layout="row" layout-xs="column">
-                  <md-input-container flex>
+                <div layout-xs="column" layout-gt-xs="column" layout-gt-sm="column" layout-gt-md="row">
+                  <md-input-container flex flex-xs="100" flex-gt-sm="100">
                     <label>Year level.</label>
                     <md-select ng-model="ac.year_level">
                       <md-option value="I"><em>1st year</em></md-option>
@@ -259,14 +259,12 @@
                       <md-option value="VI"><em>6th year</em></md-option>
                     </md-select>
                   </md-input-container>
-                  <md-input-container flex="30">
+                  <md-input-container flex="30" flex-xs="100" flex-gt-sm="100">
                     <label>ID NO.</label>
-    
                     <input ng-model="ac.student_id_number">
                   </md-input-container>
-                  <md-input-container flex="20">
+                  <md-input-container flex="20" flex-xs="100" flex-gt-sm="100">
                     <label>IP.</label>
-    
                     <md-select ng-model="ac.IP">
                       <md-option value="YES"><em>YES</em></md-option>
                       <md-option value="NO"><em>NO</em></md-option>
@@ -279,9 +277,8 @@
           <md-card style="margin: 5px 0px;">
             <md-card-content style="padding: 20px 25px 0px;">
               <p>Father's Details</p>
-              <div layout="row" layout-xs="column">
-        
-                <md-autocomplete flex 
+              <div layout-xs="column" layout-gt-xs="column" layout-gt-sm="column" layout-gt-md="row">
+                <md-autocomplete flex
                   md-input-name="autocompleteField"
                   md-input-minlength="2"
                   md-no-cache="ac.noCache"
@@ -301,18 +298,17 @@
                     No records matching "{{ac.search_flastname}}" were found.
                   </md-not-found>
                 </md-autocomplete>
-                <md-input-container flex="">
+                <md-input-container flex>
                   <label>Firstname</label>
                   <input type="text" ng-model="ac.f_firstname" >
                 </md-input-container>
-                <md-input-container flex="">
+                <md-input-container flex>
                   <label>Middlename</label>
                   <input type="text" ng-model="ac.f_middlename" >
                 </md-input-container>
               </div>    
               <p>Mother's Details</p>
-              <div layout="row" layout-xs="column">
-    
+              <div layout-xs="column" layout-gt-xs="column" layout-gt-sm="column" layout-gt-md="row">
                 <md-autocomplete flex 
                   md-input-name="autocompleteField"
                   md-input-minlength="2"
@@ -333,11 +329,11 @@
                     No records matching "{{ac.search_school}}" were found.
                   </md-not-found>
                 </md-autocomplete>
-                <md-input-container flex="">
+                <md-input-container flex>
                   <label>Firstname</label>
                   <input type="text" ng-model="ac.m_firstname" >
                 </md-input-container>
-                <md-input-container flex="">
+                <md-input-container flex>
                   <label>Middlename</label>
                   <input type="text" ng-model="ac.m_middlename" >
                 </md-input-container>
@@ -352,5 +348,6 @@
       </div>
     </section>
   </div>
+<!-- </md-content> -->
 </div>
 <edit-scholar scholar="ac.scholar_to_edit"></edit-scholar>

@@ -12,32 +12,31 @@
   </md-toolbar>
   <div layout="column">
     <div layout="row">
-      <div flex="20"></div>
-      <div flex="">
-          <br />
+      <div flex="0" flex-gt-sm="20"></div>
+      <div flex>
           <div>
             <md-progress-linear md-mode="indeterminate" ng-if="!s.disable_linear_loader"></md-progress-linear>
           </div>
-          <md-content flex layout-padding style="height: 100%;background-color: #fff; padding: 0px;border: 1px solid #c7c7c7;" ng-if="!s.editing_state">
+          <md-content flex layout-padding style="margin-top: 1em; height: 100%;background-color: #fff; padding: 0px;border: 1px solid #c7c7c7;" ng-if="!s.editing_state">
               <md-list class="fixedRows">
-                  <div style="padding: 0px 13px;">
-                <md-input-container style="width: 40%;margin: 25px 0px 0px 0px;height: 40px;">
-                  <label>Search</label>
-                  <input type="text" ng-model="s.searched_school" style="text-transform: uppercase;" autocomplete="off">
-                  <md-progress-circular class="md-hue-2" md-diameter="15px" style="position: absolute;right: 0px;top: 10px;" ng-if="!s.school_list_loaded"></md-progress-circular>
-                </md-input-container>
-                <md-button class="md-fab md-mini md-primary" ng-click="s.showDialog($event)" ng-if="s.disable_linear_loader" style="float: right;">
-                  <md-icon class="material-icons">add</md-icon>
-                </md-button>
-                  </div>
-                  <md-subheader class="md-no-sticky">List of School</md-subheader>
+                <div style="padding: 0px 13px;">
+                  <md-input-container style="width: 40%;margin: 25px 0px 0px 0px;height: 40px;">
+                    <label>Search</label>
+                    <input type="text" ng-model="s.searched_school" style="text-transform: uppercase;" autocomplete="off">
+                    <md-progress-circular class="md-hue-2" md-diameter="15px" style="position: absolute;right: 0px;top: 10px;" ng-if="!s.school_list_loaded"></md-progress-circular>
+                  </md-input-container>
+                  <md-button class="md-fab md-mini md-primary" ng-click="s.showDialog($event)" ng-if="s.disable_linear_loader" style="float: right;">
+                    <md-icon class="material-icons">add</md-icon>
+                  </md-button>
+                </div>
+                <md-subheader class="md-no-sticky">List of School</md-subheader>
    <!--                <div style="display: flex;justify-content: center;align-items: center;">
                     <md-progress-circular md-mode="indeterminate" ng-if="!s.disable_linear_loader" style="margin: 50px 0px;"></md-progress-circular>
                   </div> -->
                   <div layout="row" style="flex-wrap: wrap;">
-                    <md-list-item class="md-2-line" flex="33" ng-repeat="school in s.list_of_schools">
+                    <md-list-item class="md-2-line" flex="100" flex-gt-sm="33" ng-repeat="school in s.list_of_schools">
                       <img src="images/school.png" class="md-avatar" alt="" />
-                      <div class="md-list-item-text" style="max-width: 210px;">
+                      <div class="md-list-item-text">
                         <h5 style="margin: 0px;">{{school.school_name}}</h5>
                         <p style="font-size: 12px;">{{ school.province.province_name }}</p>
                       </div>
@@ -64,7 +63,7 @@
           </md-content>
           <add-school-directive schooldetails="s.school_to_update" ng-if="s.editing_state" editing="s.editing_state"></add-school-directive>
       </div>
-      <div flex="20"></div>
+      <div flex="0" flex-gt-sm="20"></div>
     </div>
   </div>
 </div>

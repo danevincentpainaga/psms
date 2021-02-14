@@ -153,7 +153,7 @@ angular
         console.log('Running...');
 
         return authApiService.getAuthenticatedUser().then(response=>{
-          
+          console.log(response.data);
           $rootScope.access_degree = JSON.parse(response.data.degree_access);
           $rootScope.username = response.data.name;
           let degree_access = JSON.parse(response.data.degree_access);
@@ -162,6 +162,7 @@ angular
 
             validateDegree(degree_access, usersCannotAccess);
             validateRoute(usersCannotAccess);
+            $rootScope.isAdmin = false;
 
           }
           else{
@@ -170,7 +171,7 @@ angular
             $rootScope.isAdmin = true;
           }
 
-          console.log(usersCannotAccess);
+          console.log($rootScope.isAdmin);
           // $rootScope.authenticated = true;
 
         });
@@ -181,7 +182,9 @@ angular
             if (degree_access.indexOf('Masters') == -1 || degree_access.indexOf('Doctorate') == -1) {
 
                 protected_route.push('add_masteral_doctorate_scholars');
-                return;
+                $rootScope.master_doctorate_access = false;
+                return ;
+                
             }
             
             return $rootScope.master_doctorate_access = true;

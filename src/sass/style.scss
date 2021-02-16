@@ -1,7 +1,7 @@
 @import "~angular-material/angular-material";
 @import "angular-ui-grid/ui-grid.min.css";
 /*@import '~angular-material-data-table/dist/md-data-table.min.css';*/
-/*@import '~material-design-icons/iconfont/material-icons.css';*/
+@import '~material-icons/iconfont/material-icons.css';
 
 /*background: linear-gradient(to bottom,#F8F8F8 0,#eeeeee 100%);*/
 
@@ -337,4 +337,42 @@ th,
   object-fit: contain;
   border-radius: 100%;
   border: 2px solid #ebebeb;
+}
+
+
+.fading-up{
+  animation-name: fadeInUp;
+  animation-duration: .7s;
+  animation-timing-function: ease-out;
+}
+
+@keyframes fadeInUp{
+  from{ opacity: 0; margin-top: 30px;}
+  to{ opacity: 1; margin-top: 0px; }
+}
+
+
+.fading{
+  animation-name: fadeIn;
+  animation-duration: 1s;
+  animation-timing-function: ease-out;
+}
+
+@keyframes fadeIn{
+  from{ opacity: 0; }
+  to{ opacity: 1; }
+}
+
+
+tr.ng-enter{
+  transition:0.5s linear all;
+  opacity:0;
+  transform: translateX(40px);
+}
+tr.ng-enter.ng-enter-active{
+  opacity:1;
+  transform: translateX(0);
+}
+tr.ng-enter-stagger{
+  transition-delay: 0.1s;
 }

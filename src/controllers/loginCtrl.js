@@ -39,7 +39,9 @@ app.controller('loginCtrl',['$scope', '$rootScope', '$cookies', '$window', '$loc
       console.log(credentials);
       authApiService.validateLogin(credentials)
         .then(function(response){
-          $cookies.putObject('auth', response.data);
+          let now = new Date();
+          let exp = new Date(now.getFullYear()+1, now.getMonth(), now.getDate());
+          $cookies.putObject('auth', response.data,  {'expires' : exp});
           $location.path('/dashboard');
       }, function(err){
           lg.buttonMessage = 'LOGIN';

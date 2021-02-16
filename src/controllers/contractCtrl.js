@@ -29,13 +29,17 @@ app.controller('contractCtrl',['$scope', 'academicSemesterYearApiService', 'acad
     c.asc_id = selected.asc_id;
     c.semester = selected.semester;
     c.academic_year = selected.academic_year;
-    c.amount = selected.amount;
+    c.undergraduate_amount = selected.undergraduate_amount;
+    c.masteral_doctorate_amount = selected.masteral_doctorate_amount;
     c.buttonText = "UPDATE";
     c.labelText = "Update";
     $mdSidenav('addUpdateContract').toggle();
   }
 
   c.add = function(){
+    clearInputs();
+    c.buttonText = "ADD";
+    c.labelText = "Add";
     $mdSidenav('addUpdateContract').toggle();
   }
 
@@ -82,7 +86,6 @@ app.controller('contractCtrl',['$scope', 'academicSemesterYearApiService', 'acad
 
   function updateAcademicYearList(details){
      academicSemesterYearApiService.updateAcademicYearList(details).then(response => {
-      clearInputs()
       console.log(response.data);
       getAcademicYearList();
       swalert.dialogBox(response.data.message, 'success', 'Success');
@@ -143,13 +146,12 @@ app.controller('contractCtrl',['$scope', 'academicSemesterYearApiService', 'acad
     c.asc_id = "";
     c.semester = "";
     c.academic_year ="";
-    c.amount = "";
-    c.buttonText = "ADD";
-    c.labelText = "Add";
+    c.undergraduate_amount = "";
+    c.masteral_doctorate_amount = "";
   }
 
   function updateOrSave(){
-    c.buttonText == 'ADD'? saveAcademicYearList({ semester: c.semester, academic_year: c.academic_year, amount: c.amount }) : updateAcademicYearList({ asc_id: c.asc_id, semester: c.semester, academic_year: c.academic_year, amount: c.amount });
+    c.buttonText == 'ADD'? saveAcademicYearList({ semester: c.semester, academic_year: c.academic_year, undergraduate_amount: c.undergraduate_amount, masteral_doctorate_amount: c.masteral_doctorate_amount }) : updateAcademicYearList({ asc_id: c.asc_id, semester: c.semester, academic_year: c.academic_year, undergraduate_amount: c.undergraduate_amount, masteral_doctorate_amount: c.masteral_doctorate_amount });
   }
 
   function checkContractState(contract_state){

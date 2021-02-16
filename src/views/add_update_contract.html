@@ -1,6 +1,6 @@
 <md-sidenav class="md-sidenav-right" md-component-id="addUpdateContract">
   <md-toolbar class="md-theme-light">
-    <h1 class="md-toolbar-tools">ADD</h1>
+    <h1 class="md-toolbar-tools">{{ c.buttonText }}</h1>
   </md-toolbar>
   <md-content layout-padding style="font-size: 13px;">
     <div>
@@ -31,12 +31,12 @@
                 <span>Undergraduate:</span>
                 <md-input-container flex="">
                   <label>Amount</label>
-                  <input type="text" ng-model="c.amount">
+                  <input type="text" ng-model="c.undergraduate_amount">
                 </md-input-container>
                 <span>Master/Doctorate:</span>
                 <md-input-container flex="">
                   <label>Amount</label>
-                  <input type="text" ng-model="c.amount">
+                  <input type="text" ng-model="c.masteral_doctorate_amount">
                 </md-input-container>
               </div>
             </div>

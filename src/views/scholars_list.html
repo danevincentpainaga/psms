@@ -75,7 +75,7 @@
       <a href="">Doctorate</a>
     </li>
   </ul>
-  <div layout="column" layout-xs="column" style="padding: 5px;">
+  <div layout="column" layout-xs="column" style="padding: 5px;"  class="fading" >
     <div flex style="background-color: #fff; overflow: auto;border: 1px solid #b0b1b3;"  ng-style="resizeDiv()" resize-div  class="container" fixed-column-table >
     <table>
       <thead>
@@ -131,7 +131,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="scholar in sc.scholars track by $index">
+        <tr class="fading" ng-repeat="scholar in sc.scholars track by $index">
           <td style="background-color: #f6c08e;">{{ $index+1 }}.</td>
           <td>
             <span>

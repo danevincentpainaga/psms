@@ -1,5 +1,5 @@
 <ng-include src="'src/views/header.html'"></ng-include> 
-<div style="font-size: 14px;">
+<div style="font-size: 14px;" class="fading">
   <!-- <md-content> -->
   <md-toolbar class="md-menu-toolbar">
     <div layout="row">
@@ -128,7 +128,7 @@
       </div>
       <div flex layout-padding style="background: #efefef;overflow-y: auto;border-top: 1px solid #c7c7c7;" ng-style="resize()" resize-add-scholars-div>
         <h3 ng-if="!ac.has_semester">Contract closed.</h3>
-        <div ng-if="ac.has_semester">
+        <div ng-if="ac.has_semester" class="fading-up">
           <md-card style="margin: 0px;">
             <md-card-header style="padding: 22px 25px 0px;">
               <md-card-avatar>
@@ -183,15 +183,15 @@
                       </md-not-found>
                     </md-autocomplete>
                   </div>
-                  <md-input-container flex="20" flex-xs="100" flex-gt-sm="100">
+                  <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="20">
                     <label>Date of Birth</label>
                     <input type="text" ng-model="ac.date_of_birth" ng-change="ac.selectedDateOfBirth(ac.date_of_birth)" minlength="10"add-double-slashes-directive autocomplete="off" />
                   </md-input-container>
-                  <md-input-container flex="10" flex-xs="100" flex-gt-sm="100">
+                  <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="10">
                     <label>Age</label>
                     <input ng-model="ac.displayedAge" disabled>
                   </md-input-container>
-                  <md-input-container flex="20" flex-xs="100" flex-gt-sm="100">
+                  <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="20">
                     <label>Gender</label>
                     <md-select ng-model="ac.gender">
                       <md-option value="Male"><em>Male</em></md-option>
@@ -242,13 +242,13 @@
                       No address matching "{{ac.search_course}}" were found.
                     </md-not-found>
                   </md-autocomplete>
-                  <md-input-container flex="15" flex-xs="100" flex-gt-sm="100">
+                  <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="15">
                     <label>section</label>
                     <input ng-model="ac.section">
                   </md-input-container>
                 </div>
                 <div layout-xs="column" layout-gt-xs="column" layout-gt-sm="column" layout-gt-md="row">
-                  <md-input-container flex flex-xs="100" flex-gt-sm="100">
+                  <md-input-container flex>
                     <label>Year level.</label>
                     <md-select ng-model="ac.year_level">
                       <md-option value="I"><em>1st year</em></md-option>
@@ -259,11 +259,11 @@
                       <md-option value="VI"><em>6th year</em></md-option>
                     </md-select>
                   </md-input-container>
-                  <md-input-container flex="30" flex-xs="100" flex-gt-sm="100">
+                  <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="30">
                     <label>ID NO.</label>
                     <input ng-model="ac.student_id_number">
                   </md-input-container>
-                  <md-input-container flex="20" flex-xs="100" flex-gt-sm="100">
+                  <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="20">
                     <label>IP.</label>
                     <md-select ng-model="ac.IP">
                       <md-option value="YES"><em>YES</em></md-option>

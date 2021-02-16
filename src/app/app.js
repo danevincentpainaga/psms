@@ -1,5 +1,6 @@
 angular
 .module('psmsApp', [
+  'ngAnimate',
   'ngCookies',
   'ngResource',
   'ui.router',
@@ -130,7 +131,7 @@ angular
       }
 
       if (!transition.to().Authenticated && authApiService.AuthenticatedUser()) {
-          return false;
+          return transition.router.stateService.target('dashboard');
       }
   })
 
@@ -142,6 +143,7 @@ angular
       var usersCannotAccess = ['user_accounts', 'contract'];
       var $state = transition.router.stateService;
       var auth = $cookies.getObject('auth');
+      console.log(auth);
 
       // if (!authApiService.AuthenticatedUser()) {
       //     $state.target('base');
@@ -192,6 +194,7 @@ angular
 
         function validateRoute(protected_route) {
           if (protected_route.indexOf(transition.to().name) > -1) {
+              console.log($state.$current.name);
               transition.abort();
               $rootScope.route_loader = false;
               $state.$current.name ? $state.go($state.$current.name) : $state.go('dashboard') ;
@@ -216,7 +219,6 @@ angular
   $transitions.onSuccess({}, function(transition) {
       $rootScope.route_loader = false;
   });
-
 
 }]);
 

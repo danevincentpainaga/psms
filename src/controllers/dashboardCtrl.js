@@ -16,6 +16,9 @@ app.controller('dashboardCtrl',['$scope', '$rootScope', '$cookies', '$window', '
   dc.undergraduate_total = 0;
   dc.masters_total = 0;
   dc.doctorate_total = 0;
+
+  dc.series = ['NEW', 'OLD'];
+  dc.options = { legend: { display: true } };
   
   dc.datasetOverride = [{
     backgroundColor: "rgba(71,205,71, 0.58)",
@@ -40,9 +43,6 @@ app.controller('dashboardCtrl',['$scope', '$rootScope', '$cookies', '$window', '
       console.log(response.data);
       dc.undergraduate_labels = response.data.municipalities;
       dc.undergraduate = response.data.scholars_count;
-      dc.undergraduate_series = ['NEW', 'OLD'];
-      dc.options = { legend: { display: true } };
-
     }, err => {
       console.log(err);
     })
@@ -50,13 +50,9 @@ app.controller('dashboardCtrl',['$scope', '$rootScope', '$cookies', '$window', '
 
   function mastersScholarsCount(){
     dashboardApiService.mastersScholarsCount().then(response => {
-
       console.log(response.data);
       dc.masteral_doctorate_labels = response.data.municipalities;
       dc.masteral_doctorate = response.data.scholars_count;
-      dc.masteral_doctorate_series = ['NEW', 'OLD'];
-      dc.options = { legend: { display: true } };
-
     }, err => {
       console.log(err);
     })
@@ -67,13 +63,32 @@ app.controller('dashboardCtrl',['$scope', '$rootScope', '$cookies', '$window', '
       dc.undergraduate_total = response.data.undergraduate;
       dc.masters_total = response.data.masters;
       dc.doctorate_total = response.data.doctorate;
-      console.log(response.data);
-
     }, err => {
       console.log(err);
     })    
   }
 
+  function getNewOldTotalPerDegree(){
+      dashboardApiService.getNewOldTotalPerDegree().then(response => {
+      dc.degree_labels = response.data.degree;
+      dc.degree = response.data.scholars_count;
+      console.log(response.data);
+    }, err => {
+      console.log(err);
+    })    
+  }
+
+  function getContractStatusTotalPerDegree(){
+      dashboardApiService.getContractStatusTotalPerDegree().then(response => {
+      console.log(response.data);
+      dc.contract_status = response.data;
+    }, err => {
+      console.log(err);
+    })    
+  }
+
+  getContractStatusTotalPerDegree();
+  getNewOldTotalPerDegree();
   mastersScholarsCount();
   undergraduateScholarsCount();
   getApprovedScholarsCount();

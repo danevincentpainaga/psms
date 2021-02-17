@@ -94,8 +94,8 @@
 	    color: rgba(13,27,62,0.7);
 	    font-weight: bold;
 	    font-size: .88rem;border-bottom:1px solid rgba(26,54,126,0.125); ">Statuses</div>
-	                <div class="card-body" style="padding: 1.25rem;">
-						<canvas id="base" class="chart-horizontal-bar" chart-data="data" chart-series="data_series" chart-labels="all_labels" chart-options="data">chart-series="series" ></canvas>
+	                <div class="card-body" style="padding: 1rem">
+						<canvas id="base" class="chart-horizontal-bar" chart-data="dc.degree" chart-series="dc.series" chart-labels="dc.degree_labels" chart-options="dc.options" chart-dataset-override="dc.datasetOverride">chart-series="series" ></canvas>
 	                </div>
 	            </div>
   			</div>
@@ -109,41 +109,40 @@
 	    background-color: #fff;
 	    background-clip: border-box;
 	    border-color: rgba(0,0,0,.125);
-	    border-radius: .25rem;margin: 15px 15px 0px 15px;box-shadow: 0 0.46875rem 2.1875rem rgb(4 9 20 / 3%), 0 0.9375rem 1.40625rem rgb(4 9 20 / 3%), 0 0.25rem 0.53125rem rgb(4 9 20 / 5%), 0 0.125rem 0.1875rem rgb(4 9 20 / 3%);">
+	    border-radius: .25rem;margin: 15px 15px 0px 15px;box-shadow: 0 0.46875rem 2.1875rem rgb(4 9 20 / 3%), 0 0.9375rem 1.40625rem rgb(4 9 20 / 3%), 0 0.25rem 0.53125rem rgb(4 9 20 / 5%), 0 0.125rem 0.1875rem rgb(4 9 20 / 3%);"  ng-repeat="status in dc.contract_status">
 	                <div class="card-header" style="padding: .75rem 1.25rem;
     margin-bottom: 0;
     color: rgba(13,27,62,0.7);
     font-weight: bold;
-    font-size: .88rem;border-bottom:1px solid rgba(26,54,126,0.125); ">Undergraduate</div>
-	                <div class="card-body" style="padding: 1.25rem;">
-						<canvas id="pie" class="chart chart-pie"
-						  chart-data="scholars_data" chart-options="scholar_options" chart-labels="scholar_labels">
-						</canvas>
+    font-size: .88rem;border-bottom:1px solid rgba(26,54,126,0.125); "><span color-degree degree={{status.degree}}>{{ status.degree }}</span></div>
+	                <div class="card-body" style="padding: .3rem;font-size: 14px;">
+					  <md-list-item class="secondary-button-padding">
+					    <p>
+					    	<span>Pre-Approved</span>
+					    </p>
+					    <span  color-contract-status="Pre-Approved">{{ status.pre_approved }}</span>
+					  </md-list-item>
+					  <md-list-item class="secondary-button-padding">
+					    <p>
+					    	<span>Approved</span>
+					    </p>
+					    <span color-contract-status="Approved">{{ status.approved }}</span>
+					  </md-list-item>
+					  <md-list-item class="secondary-button-padding">
+					    <p>
+					    	<span>Pending</span>
+					    </p>
+					    <span color-contract-status="Pending">{{ status.pending }}</span>
+					  </md-list-item>
+					  <md-list-item class="secondary-button-padding">
+					    <p>
+					    	<span>In-Active</span>
+					    </p>
+					    <span color-contract-status="In-Active">{{ status.in_active }}</span>
+					  </md-list-item>
 	                </div>
 	            </div>
 	  		</div>
-	  		<div flex>
-	            <div class="card" style="position: relative;
-	    display: -ms-flexbox;
-	    display: flex;
-	    -ms-flex-direction: column;
-	    flex-direction: column;
-	    min-width: 0;
-	    background-color: #fff;
-	    background-clip: border-box;
-	    border-radius: .25rem;margin: 15px 15px 0px 15px;box-shadow: 0 0.46875rem 2.1875rem rgb(4 9 20 / 3%), 0 0.9375rem 1.40625rem rgb(4 9 20 / 3%), 0 0.25rem 0.53125rem rgb(4 9 20 / 5%), 0 0.125rem 0.1875rem rgb(4 9 20 / 3%);">
-	                <div class="card-header" style="padding: .75rem 1.25rem;
-	    margin-bottom: 0;
-	    color: rgba(13,27,62,0.7);
-	    font-weight: bold;
-	    font-size: .88rem;border-bottom:1px solid rgba(26,54,126,0.125); ">Master's/Doctorate</div>
-	                <div class="card-body" style="padding: 1.25rem;">
-						<canvas id="pie" class="chart chart-pie"
-						  chart-data="scholars_data" chart-options="scholar_options" chart-labels="scholar_labels">
-						</canvas>
-	                </div>
-	            </div>
-  			</div>
 	  	</div>
 	  </div>
 	  <div flex="75">
@@ -164,11 +163,11 @@
     font-weight: bold;
     font-size: .88rem;border-bottom:1px solid rgba(26,54,126,0.125); ">Undergraduate</div>
                 <div class="card-body" style="padding: 1.25rem;">
-                    <canvas id="bar" class="chart chart-bar" chart-data="dc.undergraduate" chart-series="dc.undergraduate_series" chart-labels="dc.undergraduate_labels" chart-options="dc.options" chart-dataset-override="dc.datasetOverride" ></canvas>
+                    <canvas id="bar" class="chart chart-bar" chart-data="dc.undergraduate" chart-series="dc.series" chart-labels="dc.undergraduate_labels" chart-options="dc.options" chart-dataset-override="dc.datasetOverride" ></canvas>
                 </div>
             </div>
 		  </div>
-		  <div flex="">
+		  <div flex>
             <div class="card" style="position: relative;
     display: -ms-flexbox;
     display: flex;
@@ -184,7 +183,7 @@
     font-weight: bold;
     font-size: .88rem;border-bottom:1px solid rgba(26,54,126,0.125); ">Master's/Doctorate</div>
                 <div class="card-body" style="padding: 1.25rem;">
-                    <canvas id="bar" class="chart chart-bar" chart-data="dc.masteral_doctorate" chart-series="dc.masteral_doctorate_series" chart-labels="dc.masteral_doctorate_labels" chart-options="dc.options" chart-dataset-override="dc.datasetOverride"> chart-series="series" ></canvas>
+                    <canvas id="bar" class="chart chart-bar" chart-data="dc.masteral_doctorate" chart-series="dc.series" chart-labels="dc.masteral_doctorate_labels" chart-options="dc.options" chart-dataset-override="dc.datasetOverride"> chart-series="series" ></canvas>
                 </div>
             </div>
 		  </div>

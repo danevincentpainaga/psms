@@ -32,18 +32,6 @@ angular.module('psmsApp')
         console.log(err);
       })
     }
-    
-  $scope.scholar_labels = ["Approved", "Pre-Approved", "Pending", "In-Active"];
-  // $scope.scholar_series = ['Pre-Approved', 'Approved', 'Pending', 'In-Active'];
-  $scope.scholars_data = [7000, 7000, 2000, 1700];
-
-  $scope.all_labels = ["Undergraduate", "Master's", "Doctorate"];
-  $scope.data = [
-    [65, 59, 80],
-    [28, 48, 40]
-  ];
-  $scope.data_series = ['NEW', 'OLD'];
-  $scope.options = { legend: { display: true } };
 
 }]);
 

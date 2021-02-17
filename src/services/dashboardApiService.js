@@ -27,5 +27,21 @@ angular.module('psmsApp').factory('dashboardApiService', ['$http', '$rootScope',
         }
       });
     },
+    getNewOldTotalPerDegree: function(){
+      return $http.get(baseUrl+'api/getNewOldTotalPerDegree', {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization : 'Bearer '+ $rootScope.token
+        }
+      });
+    },
+    getContractStatusTotalPerDegree: function(){
+      return $http.get(baseUrl+'api/getContractStatusTotalPerDegree', {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization : 'Bearer '+ $rootScope.token
+        }
+      });
+    },
 	}
 }]);

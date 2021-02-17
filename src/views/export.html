@@ -53,6 +53,7 @@
           <th>Mother</th>
           <th>Degree</th>
           <th>Course</th>
+          <th>Section</th>
           <th>School</th>
           <th>Student ID NO.</th>
           <th>Year Level</th>
@@ -113,7 +114,13 @@
             </select>
           </th>
           <th>
-            <input type="text" ng-model="ex.course_section" style="width:80%;height: 18px;outline: none;">
+            <select ng-model="ex.course" style="width: 90%;height: 22px;outline: none;">
+              <option></option>
+              <option ng-value="course.course_id" ng-repeat="course in ex.courses">{{ course.course }}</option>
+            </select>
+          </th>
+          <th>
+            <input type="text" ng-model="ex.section" style="width:80%;height: 18px;outline: none;" >
           </th>
           <th>
             <select ng-model="ex.school" style="width: 90%;height: 22px;outline: none;">
@@ -127,13 +134,12 @@
           <th>
             <select ng-model="ex.year_level">
               <option></option>
-              <option value="1st year"><em>1st year</em></option>
-              <option value="2nd year"><em>2nd year</em></option>
-              <option value="3rd year"><em>3rd year</em></option>
-              <option value="4th year"><em>4th year</em></option>
-              <option value="5th year"><em>5th year</em></option>
-              <option value="6th year"><em>6th year</em></option>
-              <option value="7th year"><em>7th year</em></option>
+              <option value="I"><em>1st year</em></option>
+              <option value="II"><em>2nd year</em></option>
+              <option value="III"><em>3rd year</em></option>
+              <option value="IV"><em>4th year</em></option>
+              <option value="V"><em>5th year</em></option>
+              <option value="VI"><em>6th year</em></option>
             </select>
           </th>
           <th>
@@ -179,22 +185,23 @@
               {{ scholar.contract_status }}
             </span>
           </td>
-          <td>{{ scholar.address.address }}</td>
-          <td>{{ scholar.address.municipality }}</td>
-          <td>{{ scholar.father_details.firstname }} {{ scholar.father_details.lastname }}, {{ scholar.father_details.middlename }}</td>
-          <td>{{ scholar.mother_details.firstname }} {{ scholar.mother_details.lastname }}, {{ scholar.mother_details.middlename }}</td>
+          <td>{{ scholar.address }}</td>
+          <td>{{ scholar.municipality }}</td>
+          <td>{{ scholar.father_details | fatherDetails }}</td>
+          <td>{{ scholar.mother_details | motherDetails }}</td>
           <td>
             <span color-degree degree={{scholar.degree}}>
               {{ scholar.degree }}
             </span>
           </td>
-          <td>{{ scholar.course.course }}</td>
-          <td>{{ scholar.school.school_name }}</td>
+          <td>{{ scholar.course }}</td>
+          <td>{{ scholar.section }}</td>
+          <td>{{ scholar.school_name }}</td>
           <td>{{ scholar.student_id_number }}</td>
           <td>{{ scholar.year_level }}</td>
-          <td>{{ scholar.academicyear_semester_contract.semester }}</td>
-          <td>{{ scholar.academicyear_semester_contract.academic_year }}</td>
-          <td>{{ scholar.academicyear_semester_contract.amount | currency : '' : 0 }}</td>
+          <td>{{ scholar.semester }}</td>
+          <td>{{ scholar.academic_year }}</td>
+          <td>{{ scholar.amount | currency : '' : 0 }}</td>
           <td>{{ scholar.IP }}</td>
           <td>{{ scholar.created_at | formatDate }}</td>
           <td style="display: flex;align-items: center;">

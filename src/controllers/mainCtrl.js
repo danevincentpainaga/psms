@@ -76,8 +76,8 @@ angular
             
             scope.resizeDiv = function () {
                 return {
-                  'min-height': (newValue.h - 181) + 'px',
-                  'max-height': (newValue.h - 181) + 'px'
+                  'min-height': (newValue.h - 160) + 'px',
+                  'max-height': (newValue.h - 160) + 'px'
                 };
             };
         }, true);
@@ -104,8 +104,8 @@ angular
             
             scope.resize = function () {
                 return {
-                  'min-height': (newValue.h - 162) + 'px',
-                  'max-height': (newValue.h - 162) + 'px'
+                  'min-height': (newValue.h - 145) + 'px',
+                  'max-height': (newValue.h - 145) + 'px'
                 };
             };
         }, true);

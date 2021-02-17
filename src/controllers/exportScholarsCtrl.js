@@ -9,24 +9,32 @@
  */ 
 
 var app = angular.module('psmsApp');
-app.controller('exportScholarsCtrl',['$scope', '$rootScope', '$cookies', '$window', '$location', '$timeout', 'schoolApiService', 'addressApiService', 'scholarApiService', 'municipalitiesApiService', 'debounce', 'moment', 'exportScholars',
-  function ($scope, $rootScope, $cookies, $window, $location, $timeout, schoolApiService, addressApiService, scholarApiService, municipalitiesApiService, debounce, moment, exportScholars) {
+app.controller('exportScholarsCtrl',['$scope', '$rootScope', '$cookies', '$window', '$location', '$timeout', 'schoolApiService', 'addressApiService', 'scholarApiService', 'municipalitiesApiService', 'courseApiService', 'debounce', 'moment', 'exportScholars',
+  function ($scope, $rootScope, $cookies, $window, $location, $timeout, schoolApiService, addressApiService, scholarApiService, municipalitiesApiService, courseApiService, debounce, moment, exportScholars) {
 
   var ex = this;
 
   ex.semester_list = [{semester: "1st Semester"}, {semester: "2nd Semester"}, {semester: "3rd Semester"}, {semester: "4th Semester"}];
 
-  $scope.$watchGroup(['ex.scholar_lastname', 'ex.age', 'ex.address', 'ex.course_section', 'ex.student_id_number', 'ex.academic_year'], debounce(function() {
+  $scope.$watchGroup(['ex.scholar_lastname', 'ex.age', 'ex.address', 'ex.section', 'ex.student_id_number', 'ex.academic_year'], debounce(function(n, o){
+    
+    let hasValue = n.some(element => element !== undefined);
 
-    ex.scholars_loaded = false;
-    getScholarsToExport();
+    if (hasValue) {
+          ex.scholars_loaded = false;
+          getScholarsToExport();
+    }
 
   }, 500), true);
 
-  $scope.$watchGroup(['ex.gender', 'ex.scholar_status', 'ex.contract_status', 'ex.municipality', 'ex.degree', 'ex.school', 'ex.year_level', 'ex.semester', 'ex.IP'], function(){
+  $scope.$watchGroup(['ex.gender', 'ex.scholar_status', 'ex.contract_status', 'ex.municipality', 'ex.degree', 'ex.school', 'ex.course', 'ex.year_level', 'ex.semester', 'ex.IP'], function(n, o){
 
-    ex.scholars_loaded = false;
-    getScholarsToExport();
+    let hasValue = n.some(element => element !== undefined);
+
+    if (hasValue) {
+      ex.scholars_loaded = false;
+      getScholarsToExport();
+    }
 
   }, true); 
 
@@ -51,7 +59,8 @@ app.controller('exportScholarsCtrl',['$scope', '$rootScope', '$cookies', '$windo
         address: ex.address,
         municipality: ex.municipality,
         degree: ex.degree,
-        course_section: ex.course_section,
+        course: ex.course,
+        section: ex.section,
         schoolId: ex.school,
         student_id_number: ex.student_id_number,
         year_level: ex.year_level,
@@ -88,6 +97,16 @@ app.controller('exportScholarsCtrl',['$scope', '$rootScope', '$cookies', '$windo
       });
   }
 
+  function getCourses(){
+    courseApiService.getCourses()
+      .then(response=>{
+        ex.courses = response.data;
+      }, err=> {
+        console.log(err);
+      });
+  }
+
+  getCourses();
   getListOfSchool();
   getMunicipalities();
   getScholarsToExport();

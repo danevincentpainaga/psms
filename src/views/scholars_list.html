@@ -154,8 +154,8 @@
           </td>
           <td>{{ scholar.address.address }}</td>
           <td>{{ scholar.address.municipality }}</td>
-          <td>{{ scholar.father_details.firstname }} {{ scholar.father_details.lastname }}, {{ scholar.father_details.middlename }}</td>
-          <td>{{ scholar.mother_details.firstname }} {{ scholar.mother_details.lastname }}, {{ scholar.mother_details.middlename }}</td>
+          <td>{{ scholar.father_details | fatherDetails }}</td>
+          <td>{{ scholar.mother_details | motherDetails }}</td>
           <td>
             <span color-degree degree={{scholar.degree}}>
               {{ scholar.degree }}

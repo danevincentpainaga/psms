@@ -171,7 +171,7 @@ app.controller('editScholarCtrl', ['$scope', '$rootScope', '$mdDialog', '$q', '$
         },
         mother_details:{ 
             firstname: (ec.m_firstname || "").toUpperCase(), 
-            lastname: (ec.search_mlastname || "").toUpperCase(), 
+            maiden_name: (ec.search_mlastname || "").toUpperCase(), 
             middlename: (ec.m_middlename || "").toUpperCase(), 
             occupation: (ec.m_occupation || "").toUpperCase(),
         },

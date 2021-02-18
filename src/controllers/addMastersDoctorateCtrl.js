@@ -33,7 +33,7 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
     if (
           md.firstname && md.lastname && md.middlename && md.addressId && moment.validateDate(md.date_of_birth)
           && md.age && md.gender && md.schoolId && md.courseId && md.section && md.year_level && md.student_id_number
-          && md.IP && academicContractDetails.ascId && md.m_firstname && md.search_mlastname && md.m_middlename
+          && md.IP && academicContractDetails.ascId && md.m_firstname && md.search_maidenname && md.m_middlename
       ) {
 
         md.buttonText = 'Saving...';
@@ -64,7 +64,7 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
           },
           mother_details:{ 
             firstname: (md.m_firstname || "").toUpperCase(),
-            lastname: (md.search_mlastname || "").toUpperCase(),
+            maiden_name: (md.search_maidenname || "").toUpperCase(),
             middlename: (md.m_middlename || "").toUpperCase(),
             occupation: ""
           },

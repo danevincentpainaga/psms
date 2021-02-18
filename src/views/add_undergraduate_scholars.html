@@ -314,16 +314,16 @@
                   md-input-minlength="2"
                   md-no-cache="ac.noCache"
                   md-selected-item="ac.mother"
-                  md-search-text="ac.search_mlastname"
+                  md-search-text="ac.search_maidenname"
                   md-delay="500"
                   md-selected-item-change="ac.selectedMotherDetailsChange(mdetails)"
-                  md-items="mdetails in ac.motherSearchQuery(ac.search_mlastname)"
+                  md-items="mdetails in ac.motherSearchQuery(ac.search_maidenname)"
                   md-item-text="mdetails.lastname"
                   md-autoselect="true"
                   md-escape-options="clear"
                   md-floating-label="Maiden name">
                   <md-item-template>
-                    <span md-highlight-text="ac.search_mlastname">{{mdetails.lastname}}, {{mdetails.firstname}} {{mdetails.middlename}}</span>
+                    <span md-highlight-text="ac.search_maidenname">{{mdetails.lastname}}, {{mdetails.firstname}} {{mdetails.middlename}}</span>
                   </md-item-template>
                   <md-not-found>
                     No records matching "{{ac.search_school}}" were found.

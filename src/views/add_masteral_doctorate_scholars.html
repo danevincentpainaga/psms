@@ -341,16 +341,16 @@
                   md-input-minlength="2"
                   md-no-cache="md.noCache"
                   md-selected-item="md.mother"
-                  md-search-text="md.search_mlastname"
+                  md-search-text="md.search_maidenname"
                   md-delay="500"
                   md-selected-item-change="md.selectedMotherDetailsChange(mdetails)"
-                  md-items="mdetails in md.motherSearchQuery(md.search_mlastname)"
+                  md-items="mdetails in md.motherSearchQuery(md.search_maidenname)"
                   md-item-text="mdetails.lastname"
                   md-autoselect="true"
                   md-escape-options="clear"
                   md-floating-label="Maiden name" ng-disabled="!md.degree_has_selected">
                   <md-item-template>
-                    <span md-highlight-text="md.search_mlastname">{{mdetails.lastname}}, {{mdetails.firstname}} {{mdetails.middlename}}</span>
+                    <span md-highlight-text="md.search_maidenname">{{mdetails.lastname}}, {{mdetails.firstname}} {{mdetails.middlename}}</span>
                   </md-item-template>
                   <md-not-found>
                     No records matching "{{md.search_school}}" were found.

@@ -31,7 +31,7 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
     if (
           ac.firstname && ac.lastname && ac.middlename && ac.addressId && moment.validateDate(ac.date_of_birth) 
           && ac.age && ac.gender && ac.schoolId && ac.courseId && ac.section && ac.year_level && ac.student_id_number
-          && ac.IP && academicContractDetails.ascId && ac.m_firstname && ac.search_mlastname && ac.m_middlename
+          && ac.IP && academicContractDetails.ascId && ac.m_firstname && ac.search_maidenname && ac.m_middlename
       ) {
 
         ac.buttonText = 'Saving...';
@@ -55,16 +55,16 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
             contract_id: academicContractDetails.activated_contract_id,
             asc_id: academicContractDetails.ascId,
             father_details:{ 
-              firstname: (ac.f_firstname || "").toUpperCase(),
-              lastname: (ac.search_flastname || "").toUpperCase(),
-              middlename: (ac.f_middlename || "").toUpperCase(),
-              occupation: ""
+                firstname: (ec.f_firstname || "").toUpperCase(),
+                lastname: (ec.search_flastname || "").toUpperCase(),
+                middlename: (ec.f_middlename || "").toUpperCase(),
+                occupation: (ec.f_occupation || "").toUpperCase(),
             },
             mother_details:{ 
-              firstname: (ac.m_firstname || "").toUpperCase(),
-              lastname: (ac.search_mlastname || "").toUpperCase(),
-              middlename: (ac.m_middlename || "").toUpperCase(),
-              occupation: ""
+                firstname: (ec.m_firstname || "").toUpperCase(), 
+                maiden_name: (ec.search_mlastname || "").toUpperCase(), 
+                middlename: (ec.m_middlename || "").toUpperCase(), 
+                occupation: (ec.m_occupation || "").toUpperCase(),
             },
           }
 

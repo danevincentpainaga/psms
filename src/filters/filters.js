@@ -1,6 +1,7 @@
 var moment = require('moment');
+var app = angular.module('psmsApp');
 
-angular.module('psmsApp').filter('formatDate', function(){
+app.filter('formatDate', function(){
 
   return function(date){
     return moment(date).format("MMMM Do YYYY, h:mm:ss a");
@@ -8,7 +9,7 @@ angular.module('psmsApp').filter('formatDate', function(){
 
 });
 
-angular.module('psmsApp').filter('checkPhoto', function(){
+app.filter('checkPhoto', function(){
 
   return function(photo){
     if (photo) {
@@ -19,7 +20,7 @@ angular.module('psmsApp').filter('checkPhoto', function(){
 
 });
 
-angular.module('psmsApp').filter('checkScholarPhoto', function(){
+app.filter('checkScholarPhoto', function(){
 
   return function(photo){
     if (photo) {
@@ -30,9 +31,10 @@ angular.module('psmsApp').filter('checkScholarPhoto', function(){
 
 });
 
-angular.module('psmsApp').filter('fatherDetails', function(){
+app.filter('fatherDetails', function(){
 
   return function(details){
+
     if (details) {
       
       let parent_details = typeof details === 'object'? details : JSON.parse(details);
@@ -47,13 +49,50 @@ angular.module('psmsApp').filter('fatherDetails', function(){
 });
 
 
-angular.module('psmsApp').filter('motherDetails', function(){
+app.filter('motherDetails', function(){
 
   return function(details){
     if (details) {
       let parent_details = typeof details === 'object'? details : JSON.parse(details);
       return parent_details.firstname+" "+parent_details.maiden_name+", "+parent_details.middlename;
     }
+  }
+
+});
+
+app.filter('amount', function(){
+
+  return function(scholar, bool){
+
+    let masteral_doctorate_amount, undergraduate_amount;
+
+    bool ? (masteral_doctorate_amount = scholar.academicyear_semester_contract.masteral_doctorate_amount, undergraduate_amount = scholar.academicyear_semester_contract.undergraduate_amount) : (masteral_doctorate_amount = scholar.masteral_doctorate_amount, undergraduate_amount = scholar.undergraduate_amount);
+    
+    return scholar.degree.toLowerCase() !== 'undergraduate'? masteral_doctorate_amount : undergraduate_amount;
+
+  }
+
+});
+
+app.filter('formatYear', function(){
+
+  return function(roman){
+
+    switch(roman){
+      case 'I':
+            return '1st year';
+      case 'II':
+            return '2nd year';
+      case 'III':
+            return '3rd year';
+      case 'IV':
+            return '4th year';
+      case 'V':
+            return '5th year';
+      case 'Vi':
+            return '6th year';
+    }
+
   }
 
 });

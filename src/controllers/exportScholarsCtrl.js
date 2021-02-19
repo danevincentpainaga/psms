@@ -9,8 +9,8 @@
  */ 
 
 var app = angular.module('psmsApp');
-app.controller('exportScholarsCtrl',['$scope', '$rootScope', '$cookies', '$window', '$location', '$timeout', 'schoolApiService', 'addressApiService', 'scholarApiService', 'municipalitiesApiService', 'courseApiService', 'debounce', 'moment', 'exportScholars',
-  function ($scope, $rootScope, $cookies, $window, $location, $timeout, schoolApiService, addressApiService, scholarApiService, municipalitiesApiService, courseApiService, debounce, moment, exportScholars) {
+app.controller('exportScholarsCtrl',['$scope', '$rootScope', '$cookies', '$window', '$location', '$timeout', 'schoolApiService', 'addressApiService', 'scholarApiService', 'municipalitiesApiService', 'courseApiService', 'debounce', 'moment', 'exportScholarsService',
+  function ($scope, $rootScope, $cookies, $window, $location, $timeout, schoolApiService, addressApiService, scholarApiService, municipalitiesApiService, courseApiService, debounce, moment, exportScholarsService) {
 
   var ex = this;
 
@@ -39,13 +39,16 @@ app.controller('exportScholarsCtrl',['$scope', '$rootScope', '$cookies', '$windo
   }, true); 
 
 
-  ex.exportNormal = function(){
-    ex.show_spinner = true;
-    exportScholars.export(ex.scholars, ex);
+  ex.exportForDatabase = function(){
+    exportScholarsService.exportForDatabase(ex.scholars, ex);
   }
 
   ex.exportMasterlist = function(){
-    exportScholars.exportMasterlist(ex.scholars, ex);
+    exportScholarsService.exportMasterlist(ex.scholars, ex);
+  }
+
+  ex.exportNormal = function(){
+    exportScholarsService.exportNormal(ex.scholars, ex);
   }
 
   function getScholarsToExport(){

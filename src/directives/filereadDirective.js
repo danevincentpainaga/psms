@@ -10,39 +10,50 @@ angular.module('psmsApp').directive("fileread", [function () {
         
         reader.onload = function (evt) {
           $scope.$apply(function () {
-            var data = evt.target.result;
-            
-            var workbook = XLSX.read(data, {type: 'binary'});
-            
-            var headerNames = XLSX.utils.sheet_to_json( workbook.Sheets[workbook.SheetNames[0]], { header: 1 })[0];
-            
-            var data = XLSX.utils.sheet_to_json( workbook.Sheets[workbook.SheetNames[0]]);
-            
+
             var errors = [];
             var headers = [
                             'Lastname', 'Firstname', 'Middlename', 'Date of Birth', 'Age',
                             'Gender', 'Father_firstname', 'Father_lastname', 'Father_middlename',
                             'Mother_firstname', 'Mother_maiden_name', 'Mother_middlename', 'School',
-                            'Course', 'Section', 'Student ID NO', 'Year level', 'Semester', 'Academic year',
+                            'Student ID NO', 'Degree', 'Course', 'Section', 'Year level', 'Semester', 'Academic year',
                             'Status', 'IP'
-                          ]
+                          ];
+
+            var data = evt.target.result;
+            
+            var workbook = XLSX.read(data, {type: 'binary'});
+            
+            var sheet_name = workbook.SheetNames.indexOf('Scholars list');
+
+            if (sheet_name === -1){
+                alert('Can\'t find sheet name Scholars list. Note! dont include spaces before and after Scholars list sheet');
+                $elm.val(null);
+                return;
+            }
+
+            var headerNames = XLSX.utils.sheet_to_json(workbook.Sheets['Scholars list'], { header: 1 })[0];
+            
+            var data = XLSX.utils.sheet_to_json(workbook.Sheets['Scholars list']);
+            
             headers.forEach(function(val, i){
       
                 if (headerNames.indexOf(val) === -1) {
-                    console.log(val);
-                    errors.push(val);
+                    errors.push(' Can\'t find header name '+val);
                 }
       
             })
 
-            console.log(errors);
-            // headerNames.forEach(function (h) {
-                // $scope.opts.columnDefs.push({ displayName: h, field: h, width: '15%' });
-            // });
+            if (errors.length > 0) {
+                console.log(errors);
+                $elm.val(null);
+                alert(errors);
+                return;
+            }
             
             $scope.opts.data = data;
-            console.log($scope.opts.data);
             $elm.val(null);
+
           });
         };
         

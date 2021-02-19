@@ -46,7 +46,7 @@ app.controller('editScholarCtrl', ['$scope', '$rootScope', '$mdDialog', '$q', '$
     	ec.search_flastname = n.father_details.lastname;
     	ec.f_firstname = n.father_details.firstname;
     	ec.f_middlename = n.father_details.middlename;
-    	ec.search_mlastname = n.mother_details.lastname;
+    	ec.search_mlastname = n.mother_details.maiden_name;
     	ec.m_firstname = n.mother_details.firstname;
     	ec.m_middlename = n.mother_details.middlename;
       ec.degree = n.degree;

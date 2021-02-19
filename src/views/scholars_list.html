@@ -163,11 +163,11 @@
           </td>
           <td>{{ scholar.course.course }}</td>
           <td>{{ scholar.year_level }} - {{ scholar.section }}</td>
-          <td>{{ scholar.year_level }}</td>
+          <td>{{ scholar.year_level | formatYear }}</td>
           <td>{{ scholar.school.school_name }}</td>
           <td>{{ scholar.student_id_number }}</td>
           <td>{{ scholar.academicyear_semester_contract.semester }} - {{ scholar.academicyear_semester_contract.academic_year }}</td>
-          <td>{{ scholar.academicyear_semester_contract.amount | currency : '' : 0 }}</td>
+          <td>{{ scholar | amount:true | currency : '' : 0 }}</td>
           <td>{{ scholar.IP }}</td>
           <td>{{ scholar.created_at | formatDate }}</td>
           <td style="display: flex;align-items: center;">

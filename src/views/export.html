@@ -1,4 +1,4 @@
-<div id="cover-spin" ng-if="ex.show_spinner" ></div>
+<!-- <div id="cover-spin" ng-if="ex.show_spinner" ></div> -->
 <ng-include src="'src/views/header.html'"></ng-include> 
 <div>
   <md-toolbar class="md-menu-toolbar" style="border-bottom: 1px solid #c7c7c7;">
@@ -17,13 +17,19 @@
               <md-menu-item class="md-indent" ng-if="ex.scholars_loaded">
                 <md-icon class="material-icons">view_list</md-icon>
                 <md-button ng-click="ex.exportMasterlist()">
-                  Masterlist
+                  Masterlist report
                 </md-button>
               </md-menu-item>
               <md-menu-item class="md-indent" ng-if="ex.scholars_loaded">
                 <md-icon class="material-icons">sort</md-icon>
                 <md-button ng-click="ex.exportNormal()">
-                  Normal
+                  Normal report
+                </md-button>
+              </md-menu-item>
+              <md-menu-item class="md-indent" ng-if="ex.scholars_loaded">
+                <md-icon class="material-icons">file_download</md-icon>
+                <md-button ng-click="ex.exportForDatabase()">
+                  Export for database
                 </md-button>
               </md-menu-item>
             </md-menu-content>
@@ -168,7 +174,6 @@
           <td style="background-color: #f6c08e;">{{ $index+1 }}.</td>
           <td>
             <span>
-            <img ng-src="{{ scholar.photo | checkScholarPhoto }}" class="md-avatar scholar-image" alt="" style="width:25px;height: 25px;margin: 5px 5px 5px 0px;border: 2px solid #ebebeb;"/>
             {{ scholar.lastname }}, {{ scholar.firstname }} {{ scholar.middlename }}
             </span>
           </td>
@@ -201,7 +206,7 @@
           <td>{{ scholar.year_level }}</td>
           <td>{{ scholar.semester }}</td>
           <td>{{ scholar.academic_year }}</td>
-          <td>{{ scholar.amount | currency : '' : 0 }}</td>
+          <td>{{ scholar | amount:false | currency : '' : 0 }}</td>
           <td>{{ scholar.IP }}</td>
           <td>{{ scholar.created_at | formatDate }}</td>
           <td style="display: flex;align-items: center;">

@@ -9,8 +9,8 @@
  */ 
 
 var app = angular.module('psmsApp');
-app.controller('scholarsListCtrl',['$scope', '$rootScope', '$cookies', '$window', '$location', '$timeout', '$mdSidenav', 'schoolApiService', 'addressApiService', 'scholarApiService', 'municipalitiesApiService', 'debounce', 'moment', 'exportScholars',
-  function ($scope, $rootScope, $cookies, $window, $location, $timeout, $mdSidenav, schoolApiService, addressApiService, scholarApiService, municipalitiesApiService, debounce, moment, exportScholars) {
+app.controller('scholarsListCtrl',['$scope', '$rootScope', '$cookies', '$window', '$location', '$timeout', '$mdSidenav', 'schoolApiService', 'addressApiService', 'scholarApiService', 'municipalitiesApiService', 'debounce', 'moment',
+  function ($scope, $rootScope, $cookies, $window, $location, $timeout, $mdSidenav, schoolApiService, addressApiService, scholarApiService, municipalitiesApiService, debounce, moment) {
 
   var sc = this;
 
@@ -59,14 +59,6 @@ app.controller('scholarsListCtrl',['$scope', '$rootScope', '$cookies', '$window'
     sc.scholars_loaded = false;
     sc.selected_municipality = selected;
     getScholars();
-  }
-
-  sc.exportNormal = function(){
-    exportScholars.exportNormal(sc.scholars);
-  }
-
-  sc.exportMasterlist = function(){
-    exportScholars.exportMasterlist(sc.scholars);
   }
 
   function getScholars(){

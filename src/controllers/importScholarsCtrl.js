@@ -14,6 +14,7 @@ app.controller('importScholarsCtrl',['$scope', '$q', 'municipalitiesApiService',
 
   var ic = this;
   var year_level = ['I', 'II', 'III', 'IV', 'V', 'VI'];
+  var degree = ['Undergraduate', 'Masters', 'Doctorate'];
   var scholar_status = ['NEW', 'OLD'];
   var ip = ['YES', 'NO'];
   var gender = ['Male', 'Female'];
@@ -46,9 +47,10 @@ app.controller('importScholarsCtrl',['$scope', '$q', 'municipalitiesApiService',
       { field:'Mother_firstname', width: '30%' },
       { field:'Mother_middlename', width: '30%' },
       { field:'School',  width: '30%' },
+      { field:'Degree',  width: '30%' },
+      { field:'Student ID NO',  width: '15%' },
       { field:'Course',  width: '30%' },
       { field:'Section',  width: '30%' },
-      { field:'Student ID NO',  width: '15%' },
       { field:'Year level', width: '15%' },
       { field:'Semester',width: '15%' },
       { field:'Academic year', width: '15%' },
@@ -111,7 +113,6 @@ app.controller('importScholarsCtrl',['$scope', '$q', 'municipalitiesApiService',
       $q.all([scholarApiService.getAllScholars(), addressApiService.getAddresses(), schoolApiService.getListOfSchool(), courseApiService.getCourses(), academicContractService.getAcademicContractDetails()]).then(response=>{
 
         ic.scholars_to_import.forEach(function(val, i){
-
           $timeout(()=>{
             validateScholarsName(response, val, i);
             if (i === ic.scholars_to_import.length -1) {
@@ -126,14 +127,71 @@ app.controller('importScholarsCtrl',['$scope', '$q', 'municipalitiesApiService',
       });
   }
 
+  function validateScholarsName(response, scholarsObj, idx){
+
+      var total = ic.scholars_to_import.length - 1;
+
+      ic.gridOptions.data[idx].error = [];
+
+      ic.checking_in = "Checking... "+scholarsObj.Lastname;
+
+      const result = response[0].data.find(item => {
+
+        if (item.lastname.trim().toLowerCase() === scholarsObj.Lastname.trim().toLowerCase() && item.firstname.trim().toLowerCase() === scholarsObj.Firstname.trim().toLowerCase() && item.middlename.trim().toLowerCase() === scholarsObj.Middlename.trim().toLowerCase()) {
+            ic.gridOptions.data[idx].error.push("Error: Scholar already exist");
+            return item;
+        }
+
+      });
+
+      if (result) {
+
+        ic.progress_value = Math.round(idx / total * 100);
+
+        return;
+
+      }
+
+      validate(degree, scholarsObj.Degree, "Error: Invalid Degree", idx);
+      validate(scholar_status, scholarsObj.Status, "Error: Invalid status", idx);
+      validate(ip, scholarsObj.IP, "Error: Invalid IP", idx);
+      validate(year_level, scholarsObj['Year level'], "Error: Invalid Year level", idx);
+      validate(gender, scholarsObj.Gender, "Error: Invalid Gender", idx);
+
+      if (!scholarsObj.Section) {
+          ic.gridOptions.data[idx].error.push("Error: Section is required");
+      }
+
+      if (!moment.validateDate(scholarsObj['Date of Birth'])) {
+          ic.gridOptions.data[idx].error.push("Error: Invalid Date of Birth");
+      }
+
+      if (!scholarsObj.Mother_maiden_name && !scholarsObj.Mother_firstname && !scholarsObj.Mother_middlename ) {
+          ic.gridOptions.data[idx].error.push("Error: Mother's details is required");
+      }
+
+      validateAddress(response[1].data, scholarsObj, idx);
+      validateSchool(response[2].data, scholarsObj, idx);
+      validateCourse(response[3].data, scholarsObj, idx);
+      validateContractDetails(response[4].data, scholarsObj, idx);
+
+      ic.progress_value = Math.round(idx / total * 100);
+  }
+
+  function validate(referenceArray, fieldname, error, idx){
+    if (referenceArray.indexOf(fieldname) === -1) {
+        ic.gridOptions.data[idx].error.push(error);
+    }   
+  }
+
   function validateAddress(addressesArray, scholarsObj, idx){
 
       console.log("Address checking... ");
 
       const address = addressesArray.find(item => {
-        if (item.address.replace(/ |,/g,'') === scholarsObj.Address.replace(/ |,/g,'')) {
+        if (item.address.replace(/ |,/g,'').toLowerCase() === scholarsObj.Address.replace(/ |,/g,'').toLowerCase()) {
             scholarsObj.Address = item.address_id;
-            return item;
+            return true;
         }
       });
 
@@ -148,9 +206,9 @@ app.controller('importScholarsCtrl',['$scope', '$q', 'municipalitiesApiService',
       console.log("School checking...");
 
       const school = schoolsArray.find(item => {
-        if (item.school_name.replace(/ |,/g,'') === scholarsObj.School.replace(/ |,/g,'')) {
+        if (item.school_name.replace(/ |,/g,'').toLowerCase() === scholarsObj.School.replace(/ |,/g,'').toLowerCase()) {
             scholarsObj.School = item.school_id;
-            return item;
+            return true;
         }
       });
 
@@ -165,9 +223,9 @@ app.controller('importScholarsCtrl',['$scope', '$q', 'municipalitiesApiService',
       console.log("Course checking...");
 
       const course = coursesArray.find(item => {
-        if (item.course.replace(/ |,/g,'') === scholarsObj.Course.replace(/ |,/g,'')) {
+        if (item.course.replace(/ |,/g,'').toLowerCase() === scholarsObj.Course.replace(/ |,/g,'').toLowerCase()) {
             scholarsObj.Course = item.course_id;
-            return item;
+            return true;
         }
       });
 
@@ -184,7 +242,7 @@ app.controller('importScholarsCtrl',['$scope', '$q', 'municipalitiesApiService',
       const contract = contractDetailsArray.find(item => {
         if (item.academic_year_semester.semester.trim() === scholarsObj.Semester.trim() && item.academic_year_semester.academic_year.trim() === scholarsObj['Academic year'].trim()) {
             scholarsObj.Contract_id = item.ascId;
-            return item;
+            return true;
         }
       });
 
@@ -192,65 +250,6 @@ app.controller('importScholarsCtrl',['$scope', '$q', 'municipalitiesApiService',
         ic.gridOptions.data[idx].error.push("Error: Academic year semester Invalid");
       }
 
-  }
-
-  function validateScholarsName(response, scholarsObj, idx){
-
-      var total = ic.scholars_to_import.length - 1;
-
-      ic.gridOptions.data[idx].error = [];
-
-      ic.checking_in = "Checking... "+scholarsObj.Lastname;
-
-      const result = response[0].data.find(item => {
-
-        if (item.lastname.trim() === scholarsObj.Lastname.trim() && item.firstname.trim() === scholarsObj.Firstname.trim() && item.middlename.trim() === scholarsObj.Middlename.trim()) {
-            ic.gridOptions.data[idx].error.push("Error: Scholar already exist");
-            return item;
-        }
-
-      });
-
-
-      if (result) {
-
-        ic.progress_value = Math.round(idx / total * 100);
-
-      }
-      else{
-
-          validate(scholar_status, scholarsObj.Status, "Error: Invalid status", idx);
-          validate(ip, scholarsObj.IP, "Error: Invalid IP", idx);
-          validate(year_level, scholarsObj['Year level'], "Error: Invalid Year level", idx);
-          validate(gender, scholarsObj.Gender, "Error: Invalid Gender", idx);
-
-          if (!scholarsObj.Section) {
-              ic.gridOptions.data[idx].error.push("Error: Section is required");
-          }
-
-          if (!moment.validateDate(scholarsObj['Date of Birth'])) {
-              ic.gridOptions.data[idx].error.push("Error: Invalid Date of Birth");
-          }
-
-          if (!scholarsObj.Mother_maiden_name && !scholarsObj.Mother_firstname && !scholarsObj.Mother_middlename ) {
-              ic.gridOptions.data[idx].error.push("Error: Mother's details is required");
-          }
-
-          validateAddress(response[1].data, scholarsObj, idx);
-          validateSchool(response[2].data, scholarsObj, idx);
-          validateCourse(response[3].data, scholarsObj, idx);
-          validateContractDetails(response[4].data, scholarsObj, idx);
-
-          ic.progress_value = Math.round(idx / total * 100);
-
-      }
-
-  }
-
-  function validate(referenceArray, fieldname, error, idx){
-    if (referenceArray.indexOf(fieldname) === -1) {
-        ic.gridOptions.data[idx].error.push(error);
-    }   
   }
 
   ic.gridOptions.data = ic.myData;

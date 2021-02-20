@@ -8,8 +8,8 @@
  */
 
 angular.module('psmsApp')
-  .controller('mainCtrl',['$scope', '$rootScope', '$mdSidenav', '$mdDialog', '$cookies', '$location', '$timeout', 'authApiService',
-     function ($scope, $rootScope, $mdSidenav, $mdDialog, $cookies, $location, $timeout, authApiService) {
+  .controller('mainCtrl',['$scope', '$rootScope', '$mdSidenav', '$mdDialog', '$cookies', '$location', '$timeout', '$window', 'authApiService',
+     function ($scope, $rootScope, $mdSidenav, $mdDialog, $cookies, $location, $timeout, $window, authApiService) {
 
     $scope.toggleSidenav = buildToggler('sidebar-menu');
 
@@ -232,6 +232,6 @@ angular
   .module('psmsApp').directive('editProfilePhoto',[ function(){
     return{
       restrict:'E',
-      templateUrl:'src/views/test_update_Scholar.html',
+      templateUrl:'src/views/update_scholar_photo.html',
     }
 }]);

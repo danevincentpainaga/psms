@@ -9,8 +9,8 @@
  */ 
 
 var app = angular.module('psmsApp');
-app.controller('importScholarsCtrl',['$scope', '$q', 'municipalitiesApiService', 'schoolApiService', 'addressApiService', 'scholarApiService', 'courseApiService', 'academicContractService', 'moment', '$timeout',
-  function ($scope, $q, municipalitiesApiService, schoolApiService, addressApiService, scholarApiService, courseApiService, academicContractService, moment, $timeout) {
+app.controller('importScholarsCtrl',['$scope', '$q', 'municipalitiesApiService', 'schoolApiService', 'addressApiService', 'scholarApiService', 'courseApiService', 'academicContractService', 'addScholarsService', 'moment', '$timeout',
+  function ($scope, $q, municipalitiesApiService, schoolApiService, addressApiService, scholarApiService, courseApiService, academicContractService, addScholarsService, moment, $timeout) {
 
   var ic = this;
   var year_level = ['I', 'II', 'III', 'IV', 'V', 'VI'];
@@ -20,6 +20,7 @@ app.controller('importScholarsCtrl',['$scope', '$q', 'municipalitiesApiService',
   var gender = ['Male', 'Female'];
 
   ic.myData = [];
+  ic.scholars_to_upload = [];
 
   ic.gridOptions = {
     enableColumnResizing: true,
@@ -83,6 +84,17 @@ app.controller('importScholarsCtrl',['$scope', '$q', 'municipalitiesApiService',
     }
   };
 
+  ic.uploadToDatabase = function(){
+    console.log(ic.scholars_to_upload);
+
+    scholarApiService.importScholars(ic.scholars_to_upload).then(response =>{
+      console.log(response.data);
+    }, err => {
+      console.log(err);
+    });
+
+  }
+
   ic.selectMunicipalities = function(){
     ic.hasImported = true;
   }
@@ -99,23 +111,38 @@ app.controller('importScholarsCtrl',['$scope', '$q', 'municipalitiesApiService',
 
   ic.checkImportedScholars = function(){
 
-      ic.scholars_to_import = angular.copy(ic.gridOptions.data);
+      ic.imported_scholars = angular.copy(ic.gridOptions.data);
       console.log("checking... ");
+
+      // ic.imported_scholars.forEach(function(val, i){
+
+      //   ic.gridOptions.data[i].error = [];
+
+      //   const result = ic.imported_scholars.filter(item => {
+      //     if (concatAndLower(item) === concatAndLower(val))  return true;
+      //   });
+
+      //   if (result.length > 1) {
+      //     ic.gridOptions.data[i].error.push("Duplicate");
+      //   }
+
+      // });
+
       validateImportedScholars();
 
   }
 
-  ic.importToDatabase = function(){
-    console.log(ic.scholars_to_import);
+  function concatAndLower(value){
+    return (value.Firstname+value.Lastname+value.Middlename).replace(/ |,/g,'').trim().toLowerCase();
   }
 
   function validateImportedScholars(){
       $q.all([scholarApiService.getAllScholars(), addressApiService.getAddresses(), schoolApiService.getListOfSchool(), courseApiService.getCourses(), academicContractService.getAcademicContractDetails()]).then(response=>{
 
-        ic.scholars_to_import.forEach(function(val, i){
+        ic.imported_scholars.forEach(function(val, i){
           $timeout(()=>{
             validateScholarsName(response, val, i);
-            if (i === ic.scholars_to_import.length -1) {
+            if (i === ic.imported_scholars.length -1) {
               ic.checking_in = 'Finished';
             }
           });
@@ -129,7 +156,7 @@ app.controller('importScholarsCtrl',['$scope', '$q', 'municipalitiesApiService',
 
   function validateScholarsName(response, scholarsObj, idx){
 
-      var total = ic.scholars_to_import.length - 1;
+      var total = ic.imported_scholars.length - 1;
 
       ic.gridOptions.data[idx].error = [];
 
@@ -174,6 +201,37 @@ app.controller('importScholarsCtrl',['$scope', '$q', 'municipalitiesApiService',
       validateSchool(response[2].data, scholarsObj, idx);
       validateCourse(response[3].data, scholarsObj, idx);
       validateContractDetails(response[4].data, scholarsObj, idx);
+
+      let scholar = {
+          student_id_number: scholarsObj['Student ID NO'].toUpperCase(),
+          lastname: scholarsObj.Lastname.toUpperCase(),
+          firstname: scholarsObj.Firstname.toUpperCase(),
+          middlename: scholarsObj.Middlename.toUpperCase(),
+          addressId: scholarsObj.Address,
+          date_of_birth: scholarsObj['Date of Birth'],
+          age: addScholarsService.calcAge(scholarsObj['Date of Birth']),
+          gender: scholarsObj.Gender,
+          schoolId: scholarsObj.School,
+          courseId: scholarsObj.Course,
+          section: scholarsObj.Section.toUpperCase(),
+          year_level: scholarsObj['Year level'],
+          IP: scholarsObj.IP,
+          father_details:{ 
+              firstname: (scholarsObj.Father_firstname || "").toUpperCase(),
+              lastname: (scholarsObj.Father_lastname || "").toUpperCase(),
+              middlename: (scholarsObj.Father_middlename || "").toUpperCase(),
+          },
+          mother_details:{ 
+              firstname: (scholarsObj.Mother_firstname).toUpperCase(), 
+              maiden_name: (scholarsObj.Mother_maiden_name).toUpperCase(), 
+              middlename: (scholarsObj.Mother_middlename).toUpperCase(), 
+          },
+          degree: scholarsObj.Degree,
+          scholar_status: scholarsObj.Status,
+          contract_id: scholarsObj.contract_id
+      };
+
+      ic.scholars_to_upload.push(scholar);
 
       ic.progress_value = Math.round(idx / total * 100);
   }
@@ -241,7 +299,7 @@ app.controller('importScholarsCtrl',['$scope', '$q', 'municipalitiesApiService',
 
       const contract = contractDetailsArray.find(item => {
         if (item.academic_year_semester.semester.trim() === scholarsObj.Semester.trim() && item.academic_year_semester.academic_year.trim() === scholarsObj['Academic year'].trim()) {
-            scholarsObj.Contract_id = item.ascId;
+            scholarsObj.contract_id = item.ascId;
             return true;
         }
       });

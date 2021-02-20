@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html ng-app="psmsApp">
+<html lang="en" ng-app="psmsApp">
 <head>
-	<title>PSMS</title>
+    <meta charset="UTF-8">
+  	<title>PSMS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="http://ui-grid.info/docs/grunt-scripts/csv.js"></script>
     <script src="http://ui-grid.info/docs/grunt-scripts/pdfmake.js"></script>
     <script src="http://ui-grid.info/docs/grunt-scripts/vfs_fonts.js"></script>
@@ -14,7 +16,7 @@
 	
 	<md-progress-linear md-mode="indeterminate" ng-if="route_loader"></md-progress-linear>
 	<div ui-view="" style="background: #efefef !important;height: 100%;overflow: auto;"></div>  
-  <iframe id="printPdf" name="printPdf" style="display: none;"></iframe>
+  <iframe id="printPdf" name="printPdf" title="printPdf" style="display: none;"></iframe>
 
 <!-- <div style="position: fixed;
   width: 100%;

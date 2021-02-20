@@ -25,7 +25,6 @@ app.controller('schoolsCtrl',['$scope', '$rootScope', '$cookies', '$window', '$l
   function getListOfSchool(searched){
      schoolApiService.getListOfSchool(searched).then(response => {
       s.disable_linear_loader = true;
-      console.log(response.data);
       s.school_list_loaded = true;
       s.hide_spinner = true;
       s.list_of_schools = response.data;

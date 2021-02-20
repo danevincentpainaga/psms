@@ -78,8 +78,6 @@ angular.module('psmsApp')
 
 		Object.assign(course_details, { course_id: cc.course_id });
 
-		console.log(course_details);
-
 		courseApiService.updateCourse(course_details).then(response => {
 			cc.binded_course.course = response.data.course;
 			cc.saving_updating = false;
@@ -92,7 +90,6 @@ angular.module('psmsApp')
 
 	function getCourses(searched){
 		courseApiService.getCourses({searched: searched}).then(response=>{
-			console.log(response.data);
 			cc.courses = response.data;
 			cc.searching = false;
 			cc.course_list_loaded = true;

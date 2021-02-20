@@ -80,7 +80,7 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
 
   md.edit = function(scholarDetails){
     md.scholar_to_edit = scholarDetails;
-    $mdSidenav('right').toggle();
+    $mdSidenav('editScholar').toggle();
   }
 
   md.print = function(scholarDetails, idx){

@@ -36,7 +36,6 @@ angular
       controller: 'scholarsListCtrl',
       controllerAs: 'sc',
       Authenticated: true,
-      Authorized: true,
     })
     .state('add_undergraduate_scholars', {
       url: '/add_undergraduate_scholars',
@@ -119,6 +118,7 @@ angular
       controllerAs: 'ic',
       Authenticated: true,
     }) 
+    
   $urlRouterProvider.otherwise('/');
 
 })
@@ -148,7 +148,7 @@ angular
         $rootScope.token = auth.success;
 
         return authApiService.getAuthenticatedUser().then(response=>{
-          console.log(response.data);
+
           $rootScope.access_degree = JSON.parse(response.data.degree_access);
           $rootScope.username = response.data.name;
           let degree_access = JSON.parse(response.data.degree_access);
@@ -161,9 +161,11 @@ angular
 
           }
           else{
+
             validateDegree(degree_access, adminCannotAccess);
             validateRoute(adminCannotAccess);
             $rootScope.isAdmin = true;
+            
           }
 
         });
@@ -182,7 +184,6 @@ angular
 
         function validateRoute(protected_route) {
           if (protected_route.indexOf(transition.to().name) > -1) {
-              console.log($state.$current.name);
               transition.abort();
               $rootScope.route_loader = false;
               $state.$current.name ? $state.go($state.$current.name) : $state.go('dashboard') ;

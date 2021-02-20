@@ -28,7 +28,8 @@
           </md-select>
         </md-input-container>
       </div>
-        <input type="file" accept=".xls,.xlsx,.ods" fileread="" opts="ic.gridOptions" multiple="false" />
+      <input type="file" accept=".xls,.xlsx,.ods" fileread="" opts="ic.gridOptions" multiple="false" />
+      <button ng-click="ic.uploadToDatabase()">Upload</button>
     </div>
     <div flex style="border: 1px solid #b0b1b3;min-height: 300px;"  ng-if="!ic.hasImported">
       <md-progress-linear md-mode="determinate" value="{{ic.progress_value}}"></md-progress-linear>

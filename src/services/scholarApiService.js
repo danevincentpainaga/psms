@@ -1,5 +1,4 @@
-var app = angular.module('psmsApp');
-app.factory('scholarApiService', ['$http', '$cookies', '$rootScope', '$q', function($http, $cookies, $rootScope, $q){
+angular.module('psmsApp').factory('scholarApiService', ['$http', '$cookies', '$rootScope', '$q', function($http, $cookies, $rootScope, $q){
 	 
   var baseUrl = "http://localhost:8000/";
 
@@ -93,6 +92,17 @@ app.factory('scholarApiService', ['$http', '$cookies', '$rootScope', '$q', funct
     getScholarsToExport: function(searched_details){
       return $http.get(baseUrl+'api/getScholarsToExport', {
         params: searched_details,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization : 'Bearer '+ $rootScope.token
+        }
+      });
+    },
+    importScholars: function(importedScholars){
+      return $http({
+        method:'POST',
+        url: baseUrl+'api/importScholars',
+        data: importedScholars,
         headers: {
           "Content-Type": "application/json",
           Authorization : 'Bearer '+ $rootScope.token

@@ -13,9 +13,10 @@ module.exports = {
   },
   watch: true,
   output: {
+    path: path.resolve(__dirname, 'dist'),
     filename: '[name].bundle.js',
-    path: path.resolve(__dirname, 'dist')
   },
+  devtool: "eval-cheap-source-map",
   module: {
     rules: [
       {

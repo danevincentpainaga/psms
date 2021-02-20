@@ -40,7 +40,6 @@ app.controller('dashboardCtrl',['$scope', '$rootScope', '$cookies', '$window', '
 
   function undergraduateScholarsCount(){
     dashboardApiService.undergraduateScholarsCount().then(response => {
-      console.log(response.data);
       dc.undergraduate_labels = response.data.municipalities;
       dc.undergraduate = response.data.scholars_count;
     }, err => {
@@ -50,7 +49,6 @@ app.controller('dashboardCtrl',['$scope', '$rootScope', '$cookies', '$window', '
 
   function mastersScholarsCount(){
     dashboardApiService.mastersScholarsCount().then(response => {
-      console.log(response.data);
       dc.masteral_doctorate_labels = response.data.municipalities;
       dc.masteral_doctorate = response.data.scholars_count;
     }, err => {
@@ -72,7 +70,6 @@ app.controller('dashboardCtrl',['$scope', '$rootScope', '$cookies', '$window', '
       dashboardApiService.getNewOldTotalPerDegree().then(response => {
       dc.degree_labels = response.data.degree;
       dc.degree = response.data.scholars_count;
-      console.log(response.data);
     }, err => {
       console.log(err);
     })    
@@ -80,7 +77,6 @@ app.controller('dashboardCtrl',['$scope', '$rootScope', '$cookies', '$window', '
 
   function getContractStatusTotalPerDegree(){
       dashboardApiService.getContractStatusTotalPerDegree().then(response => {
-      console.log(response.data);
       dc.contract_status = response.data;
     }, err => {
       console.log(err);

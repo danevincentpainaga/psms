@@ -1,5 +1,4 @@
-var app = angular.module('psmsApp');
-app.factory('addressApiService', ['$http', '$cookies', '$rootScope', '$q', function($http, $cookies, $rootScope, $q){
+angular.module('psmsApp').factory('addressApiService', ['$http', '$cookies', '$rootScope', '$q', function($http, $cookies, $rootScope, $q){
 	 
   var baseUrl = "http://localhost:8000/";
 

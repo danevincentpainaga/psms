@@ -36,7 +36,6 @@ app.controller('loginCtrl',['$scope', '$rootScope', '$cookies', '$window', '$loc
         password: lg.password
       }
 
-      console.log(credentials);
       authApiService.validateLogin(credentials)
         .then(function(response){
           let now = new Date();

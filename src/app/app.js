@@ -15,7 +15,6 @@ require('../directives/filereadDirective');
 
 require('../filters/filters');
 
-
 require('../factories/addScholarsService');
 require('../factories/debounce');
 require('../factories/momentService');
@@ -32,7 +31,6 @@ require('../services/usersApiService');
 require('../services/academicSemesterYearApiService');
 require('../services/dashboardApiService');
 require('../services/courseApiService');
-
 
 require('../controllers/mainCtrl');
 require('../controllers/dashboardCtrl');

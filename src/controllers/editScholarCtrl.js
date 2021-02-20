@@ -21,7 +21,12 @@ app.controller('editScholarCtrl', ['$scope', '$rootScope', '$mdDialog', '$q', '$
 
   $scope.$watch('scholar', function(n, o){
     if (n) {
+
     	console.log(n);
+
+      let father = JSON.parse(n.father_details);
+      let mother = JSON.parse(n.mother_details);
+
       ec.icon = (n.degree === 'Masters' || n.degree === 'Doctorate')  ? 'school' : 'groups';
       ec.binded_copy = n;
       ec.photo = n.photo;
@@ -43,16 +48,17 @@ app.controller('editScholarCtrl', ['$scope', '$rootScope', '$mdDialog', '$q', '$
     	ec.search_school = n.school.school_name;
     	ec.course = n.course.course;
       ec.section = n.section;
-    	ec.search_flastname = n.father_details.lastname;
-    	ec.f_firstname = n.father_details.firstname;
-    	ec.f_middlename = n.father_details.middlename;
-    	ec.search_mlastname = n.mother_details.maiden_name;
-    	ec.m_firstname = n.mother_details.firstname;
-    	ec.m_middlename = n.mother_details.middlename;
+    	ec.search_flastname = father.lastname;
+    	ec.f_firstname = father.firstname;
+    	ec.f_middlename = father.middlename;
+    	ec.search_maidenname = mother.maiden_name;
+    	ec.m_firstname = mother.firstname;
+    	ec.m_middlename = mother.middlename;
       ec.degree = n.degree;
-      ec.f_occupation = n.father_details.occupation;
-      ec.m_occupation = n.mother_details.occupation;
+      ec.f_occupation = father.occupation;
+      ec.m_occupation = mother.occupation;
     }
+
   }, true);
 
   $scope.$watch('ec.date_of_birth', function(n, o){
@@ -156,7 +162,7 @@ app.controller('editScholarCtrl', ['$scope', '$rootScope', '$mdDialog', '$q', '$
 
   ec.updateScholarParentsDetails = function(){
 
-    if (ec.m_firstname && ec.search_mlastname && ec.m_middlename) {
+    if (ec.m_firstname && ec.search_maidenname && ec.m_middlename) {
 
       ec.updatingParentsDetails = true;
       ec.parentsButtonText = 'Updating...';
@@ -171,7 +177,7 @@ app.controller('editScholarCtrl', ['$scope', '$rootScope', '$mdDialog', '$q', '$
         },
         mother_details:{ 
             firstname: (ec.m_firstname || "").toUpperCase(), 
-            maiden_name: (ec.search_mlastname || "").toUpperCase(), 
+            maiden_name: (ec.search_maidenname || "").toUpperCase(), 
             middlename: (ec.m_middlename || "").toUpperCase(), 
             occupation: (ec.m_occupation || "").toUpperCase(),
         },
@@ -186,7 +192,7 @@ app.controller('editScholarCtrl', ['$scope', '$rootScope', '$mdDialog', '$q', '$
 
   ec.close = function(){
   	$scope.scholar = undefined;
- 	  $mdSidenav('right').toggle();
+ 	  $mdSidenav('editScholar').toggle();
     ec.primary_details = false;
     ec.parents_details = false;
     ec.enablePrimaryButtonText = 'Enable';

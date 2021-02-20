@@ -55,16 +55,16 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
             contract_id: academicContractDetails.activated_contract_id,
             asc_id: academicContractDetails.ascId,
             father_details:{ 
-                firstname: (ec.f_firstname || "").toUpperCase(),
-                lastname: (ec.search_flastname || "").toUpperCase(),
-                middlename: (ec.f_middlename || "").toUpperCase(),
-                occupation: (ec.f_occupation || "").toUpperCase(),
+              firstname: (ac.f_firstname || "").toUpperCase(),
+              lastname: (ac.search_flastname || "").toUpperCase(),
+              middlename: (ac.f_middlename || "").toUpperCase(),
+              occupation: ""
             },
             mother_details:{ 
-                firstname: (ec.m_firstname || "").toUpperCase(), 
-                maiden_name: (ec.search_mlastname || "").toUpperCase(), 
-                middlename: (ec.m_middlename || "").toUpperCase(), 
-                occupation: (ec.m_occupation || "").toUpperCase(),
+              firstname: (ac.m_firstname || "").toUpperCase(),
+              maiden_name: (ac.search_maidenname || "").toUpperCase(),
+              middlename: (ac.m_middlename || "").toUpperCase(),
+              occupation: ""
             },
           }
 
@@ -78,7 +78,7 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
 
   ac.edit = function(scholarDetails){
     ac.scholar_to_edit = scholarDetails;
-    $mdSidenav('right').toggle();
+    $mdSidenav('editScholar').toggle();
   }
 
   ac.print = function(scholarDetails, idx){

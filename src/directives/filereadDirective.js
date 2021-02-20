@@ -34,7 +34,7 @@ angular.module('psmsApp').directive("fileread", [function () {
 
             var headerNames = XLSX.utils.sheet_to_json(workbook.Sheets['Scholars list'], { header: 1 })[0];
             
-            var data = XLSX.utils.sheet_to_json(workbook.Sheets['Scholars list']);
+            $scope.json_data = XLSX.utils.sheet_to_json(workbook.Sheets['Scholars list']);
             
             headers.forEach(function(val, i){
       
@@ -44,6 +44,10 @@ angular.module('psmsApp').directive("fileread", [function () {
       
             })
 
+            angular.forEach($scope.json_data, function( row, index){
+                row.number = index+1;
+            });
+
             if (errors.length > 0) {
                 console.log(errors);
                 $elm.val(null);
@@ -51,7 +55,7 @@ angular.module('psmsApp').directive("fileread", [function () {
                 return;
             }
             
-            $scope.opts.data = data;
+            $scope.opts.data = $scope.json_data;
             $elm.val(null);
 
           });

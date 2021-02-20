@@ -19,20 +19,21 @@ app.controller('importScholarsCtrl',['$scope', '$q', 'municipalitiesApiService',
   var ip = ['YES', 'NO'];
   var gender = ['Male', 'Female'];
 
-  ic.myData = [];
+  // ic.myData = [];
   ic.scholars_to_upload = [];
 
   ic.gridOptions = {
     enableColumnResizing: true,
     enableGridMenu: true,
-    // data: 'data',
+    data: [],
     importerDataAddCallback: function ( grid, newObjects ) {
 
-      ic.myData = ic.myData.concat( newObjects );
-      ic.gridOptions.data = ic.myData;
-      console.log(newObjects);
+      // ic.myData = ic.myData.concat( newObjects );
+      // ic.gridOptions.data = ic.myData;
+      // console.log(newObjects);
     },
     columnDefs: [
+      { displayName: 'No.', field: 'number', width: '5%'},
       { displayName: 'Error', field: 'error', width: '15%'},
       { field: 'Lastname', width: '15%'},
       { field: 'Firstname', width: '15%' },
@@ -61,24 +62,9 @@ app.controller('importScholarsCtrl',['$scope', '$q', 'municipalitiesApiService',
     enableGridMenu: true,
     enableSelectAll: true,
     exporterCsvFilename: 'Imported_scholars.csv',
-    // exporterPdfDefaultStyle: {fontSize: 9},
-    // exporterPdfTableStyle: {margin: [30, 30, 30, 30]},
-    // exporterPdfTableHeaderStyle: {fontSize: 10, bold: true, italics: true, color: 'red'},
-    // exporterPdfHeader: { text: "My Header", style: 'headerStyle' },
-    // exporterPdfFooter: function ( currentPage, pageCount ) {
-    //   return { text: currentPage.toString() + ' of ' + pageCount.toString(), style: 'footerStyle' };
-    // },
-    // exporterPdfCustomFormatter: function ( docDefinition ) {
-    //   docDefinition.styles.headerStyle = { fontSize: 22, bold: true };
-    //   docDefinition.styles.footerStyle = { fontSize: 10, bold: true };
-    //   return docDefinition;
-    // },
-    // exporterPdfOrientation: 'portrait',
-    // exporterPdfPageSize: 'LETTER',
-    // exporterPdfMaxGridWidth: 500,
     exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
-    exporterExcelFilename: 'myFile.xlsx',
-    exporterExcelSheetName: 'Sheet1',
+    exporterExcelFilename: 'Imported_scholars.xlsx',
+    exporterExcelSheetName: 'Scholars',
     onRegisterApi: function(gridApi){
       ic.gridApi = gridApi;
     }
@@ -95,10 +81,6 @@ app.controller('importScholarsCtrl',['$scope', '$q', 'municipalitiesApiService',
 
   }
 
-  ic.selectMunicipalities = function(){
-    ic.hasImported = true;
-  }
-
   function getMunicipalities(){
     municipalitiesApiService.getMunicipalities()
       .then(response=>{
@@ -111,25 +93,36 @@ app.controller('importScholarsCtrl',['$scope', '$q', 'municipalitiesApiService',
 
   ic.checkImportedScholars = function(){
 
+      let checkedItem = [];
+
       ic.imported_scholars = angular.copy(ic.gridOptions.data);
       console.log("checking... ");
 
-      // ic.imported_scholars.forEach(function(val, i){
+      ic.imported_scholars.forEach(function(value, idx){
 
-      //   ic.gridOptions.data[i].error = [];
+        ic.gridOptions.data[idx].error = [];
 
-      //   const result = ic.imported_scholars.filter(item => {
-      //     if (concatAndLower(item) === concatAndLower(val))  return true;
-      //   });
+        if (checkedItem.indexOf(concatAndLower(value)) > -1) return;
 
-      //   if (result.length > 1) {
-      //     ic.gridOptions.data[i].error.push("Duplicate");
-      //   }
+        checkedItem.push(concatAndLower(value));
 
-      // });
+        checkDuplicate(value, ic.imported_scholars, idx);
+
+      });
 
       validateImportedScholars();
 
+  }
+
+  function checkDuplicate(value, imported_scholars, idx){
+    for (var i = 0; i < imported_scholars.length; i++) {
+      if (idx !== i) {
+        if (concatAndLower(value) === concatAndLower(imported_scholars[i]))  {
+          ic.gridOptions.data[idx].error[0] = "Duplicate No.";
+          ic.gridOptions.data[idx].error.push(i+1);
+        }
+      }
+    }
   }
 
   function concatAndLower(value){
@@ -158,15 +151,13 @@ app.controller('importScholarsCtrl',['$scope', '$q', 'municipalitiesApiService',
 
       var total = ic.imported_scholars.length - 1;
 
-      ic.gridOptions.data[idx].error = [];
-
       ic.checking_in = "Checking... "+scholarsObj.Lastname;
 
       const result = response[0].data.find(item => {
 
         if (item.lastname.trim().toLowerCase() === scholarsObj.Lastname.trim().toLowerCase() && item.firstname.trim().toLowerCase() === scholarsObj.Firstname.trim().toLowerCase() && item.middlename.trim().toLowerCase() === scholarsObj.Middlename.trim().toLowerCase()) {
             ic.gridOptions.data[idx].error.push("Error: Scholar already exist");
-            return item;
+            return true;
         }
 
       });
@@ -203,28 +194,28 @@ app.controller('importScholarsCtrl',['$scope', '$q', 'municipalitiesApiService',
       validateContractDetails(response[4].data, scholarsObj, idx);
 
       let scholar = {
-          student_id_number: scholarsObj['Student ID NO'].toUpperCase(),
-          lastname: scholarsObj.Lastname.toUpperCase(),
-          firstname: scholarsObj.Firstname.toUpperCase(),
-          middlename: scholarsObj.Middlename.toUpperCase(),
+          student_id_number: upperCase(scholarsObj['Student ID NO']),
+          lastname: upperCase(scholarsObj.Lastname),
+          firstname: upperCase(scholarsObj.Firstname),
+          middlename: upperCase(scholarsObj.Middlename),
           addressId: scholarsObj.Address,
           date_of_birth: scholarsObj['Date of Birth'],
           age: addScholarsService.calcAge(scholarsObj['Date of Birth']),
           gender: scholarsObj.Gender,
           schoolId: scholarsObj.School,
           courseId: scholarsObj.Course,
-          section: scholarsObj.Section.toUpperCase(),
+          section: upperCase(scholarsObj.Section),
           year_level: scholarsObj['Year level'],
           IP: scholarsObj.IP,
           father_details:{ 
-              firstname: (scholarsObj.Father_firstname || "").toUpperCase(),
-              lastname: (scholarsObj.Father_lastname || "").toUpperCase(),
-              middlename: (scholarsObj.Father_middlename || "").toUpperCase(),
+              firstname: upperCase((scholarsObj.Father_firstname || "")),
+              lastname: upperCase((scholarsObj.Father_lastname || "")),
+              middlename: upperCase((scholarsObj.Father_middlename || "")),
           },
           mother_details:{ 
-              firstname: (scholarsObj.Mother_firstname).toUpperCase(), 
-              maiden_name: (scholarsObj.Mother_maiden_name).toUpperCase(), 
-              middlename: (scholarsObj.Mother_middlename).toUpperCase(), 
+              firstname: upperCase((scholarsObj.Mother_firstname)), 
+              maiden_name: upperCase((scholarsObj.Mother_maiden_name)), 
+              middlename: upperCase((scholarsObj.Mother_middlename)), 
           },
           degree: scholarsObj.Degree,
           scholar_status: scholarsObj.Status,
@@ -234,6 +225,13 @@ app.controller('importScholarsCtrl',['$scope', '$q', 'municipalitiesApiService',
       ic.scholars_to_upload.push(scholar);
 
       ic.progress_value = Math.round(idx / total * 100);
+  }
+
+  function upperCase(value){
+    if (value){
+      return value.toUpperCase();
+    } 
+    return value;
   }
 
   function validate(referenceArray, fieldname, error, idx){
@@ -310,7 +308,7 @@ app.controller('importScholarsCtrl',['$scope', '$q', 'municipalitiesApiService',
 
   }
 
-  ic.gridOptions.data = ic.myData;
+  // ic.gridOptions.data = ic.myData;
 
   getMunicipalities();
 

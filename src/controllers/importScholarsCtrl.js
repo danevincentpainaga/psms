@@ -9,12 +9,11 @@
  */ 
 
 var app = angular.module('psmsApp');
-app.controller('importScholarsCtrl',['$scope', '$q', 'municipalitiesApiService', 'schoolApiService', 'addressApiService', 'scholarApiService', 'courseApiService', 'academicContractService', 'addScholarsService', 'moment', '$timeout',
-  function ($scope, $q, municipalitiesApiService, schoolApiService, addressApiService, scholarApiService, courseApiService, academicContractService, addScholarsService, moment, $timeout) {
+app.controller('importScholarsCtrl',['$scope', '$q', 'importScholarApiService', 'municipalitiesApiService', 'schoolApiService', 'scholarApiService', 'courseApiService', 'academicContractService', 'addScholarsService', 'moment', '$timeout',
+  function ($scope, $q, importScholarApiService, municipalitiesApiService, schoolApiService, scholarApiService, courseApiService, academicContractService, addScholarsService, moment, $timeout) {
 
   var ic = this;
   var year_level = ['I', 'II', 'III', 'IV', 'V', 'VI'];
-  var degree = ['Undergraduate', 'Masters', 'Doctorate'];
   var scholar_status = ['NEW', 'OLD'];
   var ip = ['YES', 'NO'];
   var gender = ['Male', 'Female'];
@@ -73,7 +72,7 @@ app.controller('importScholarsCtrl',['$scope', '$q', 'municipalitiesApiService',
   ic.uploadToDatabase = function(){
     console.log(ic.scholars_to_upload);
 
-    scholarApiService.importScholars(ic.scholars_to_upload).then(response =>{
+    importScholarApiService.importScholars(ic.scholars_to_upload).then(response =>{
       console.log(response.data);
     }, err => {
       console.log(err);
@@ -111,8 +110,42 @@ app.controller('importScholarsCtrl',['$scope', '$q', 'municipalitiesApiService',
       });
 
       validateImportedScholars();
-
+      // checkDuplicate(imported_scholars, 0); 
   }
+
+  // This code removes Duplicate Names with row NO. of Duplicates
+
+  // function checkDuplicate(imported_scholars, idx){
+
+  //   if (idx >= imported_scholars.length - 1) {
+  //     ic.gridOptions.data = imported_scholars;
+  //     return;
+  //   }
+
+  //   var result = check(imported_scholars, idx);
+
+
+  //   idx++;
+
+  //   checkDuplicate(result, idx);
+
+  // }
+
+  // function check(imported_scholars, idx){
+  //   for (var i = 0; i < imported_scholars.length; i++) {
+
+  //     if (imported_scholars[idx].number !== imported_scholars[i].number) {
+  //       if (concatAndLower(imported_scholars[idx]) === concatAndLower(imported_scholars[i]))  {
+  //         imported_scholars[idx].error[0] = "Duplicate No.";
+  //         imported_scholars[idx].error.push(imported_scholars[i].number);
+  //         imported_scholars.splice(i, 1);
+  //       }
+  //     }
+
+  //   }
+
+  //   return imported_scholars;
+  // }
 
   function checkDuplicate(value, imported_scholars, idx){
     for (var i = 0; i < imported_scholars.length; i++) {
@@ -130,8 +163,8 @@ app.controller('importScholarsCtrl',['$scope', '$q', 'municipalitiesApiService',
   }
 
   function validateImportedScholars(){
-      $q.all([scholarApiService.getAllScholars(), addressApiService.getAddresses(), schoolApiService.getListOfSchool(), courseApiService.getCourses(), academicContractService.getAcademicContractDetails()]).then(response=>{
-
+      $q.all([importScholarApiService.getAllScholars({degree: ic.degree}), importScholarApiService.getAddresses({municipality: ic.municipality}), schoolApiService.getListOfSchool(), courseApiService.getCourses(), academicContractService.getAcademicContractDetails()]).then(response=>{
+        console.log(response);
         ic.imported_scholars.forEach(function(val, i){
           $timeout(()=>{
             validateScholarsName(response, val, i);
@@ -170,11 +203,14 @@ app.controller('importScholarsCtrl',['$scope', '$q', 'municipalitiesApiService',
 
       }
 
-      validate(degree, scholarsObj.Degree, "Error: Invalid Degree", idx);
       validate(scholar_status, scholarsObj.Status, "Error: Invalid status", idx);
       validate(ip, scholarsObj.IP, "Error: Invalid IP", idx);
       validate(year_level, scholarsObj['Year level'], "Error: Invalid Year level", idx);
       validate(gender, scholarsObj.Gender, "Error: Invalid Gender", idx);
+
+      if (!scholarsObj.Degree || upperCase(scholarsObj.Degree) !== upperCase(ic.degree)) {
+          ic.gridOptions.data[idx].error.push("Error: Degree is Invalid");
+      }
 
       if (!scholarsObj.Section) {
           ic.gridOptions.data[idx].error.push("Error: Section is required");
@@ -307,8 +343,6 @@ app.controller('importScholarsCtrl',['$scope', '$q', 'municipalitiesApiService',
       }
 
   }
-
-  // ic.gridOptions.data = ic.myData;
 
   getMunicipalities();
 

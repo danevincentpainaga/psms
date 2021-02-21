@@ -72,14 +72,6 @@ angular.module('psmsApp').factory('scholarApiService', ['$http', '$cookies', '$r
         }
       });
     },
-    getAllScholars: function(){
-      return $http.get(baseUrl+'api/getAllScholars', {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization : 'Bearer '+ $rootScope.token
-        }
-      });
-    },
     getScholars: function(searched_details, page){
       return $http.get(baseUrl+'api/getScholars?page='+page, {
         params: searched_details,
@@ -92,17 +84,6 @@ angular.module('psmsApp').factory('scholarApiService', ['$http', '$cookies', '$r
     getScholarsToExport: function(searched_details){
       return $http.get(baseUrl+'api/getScholarsToExport', {
         params: searched_details,
-        headers: {
-          "Content-Type": "application/json",
-          Authorization : 'Bearer '+ $rootScope.token
-        }
-      });
-    },
-    importScholars: function(importedScholars){
-      return $http({
-        method:'POST',
-        url: baseUrl+'api/importScholars',
-        data: importedScholars,
         headers: {
           "Content-Type": "application/json",
           Authorization : 'Bearer '+ $rootScope.token

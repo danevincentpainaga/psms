@@ -34,7 +34,7 @@ app.controller('scholarsListCtrl',['$scope', '$rootScope', '$cookies', '$window'
 
   sc.edit = function(scholarDetails){
     sc.scholar_to_edit = scholarDetails;
-    $mdSidenav('right').toggle();
+    $mdSidenav('editScholar').toggle();
   }
 
   sc.selectedStatus = function(selected){

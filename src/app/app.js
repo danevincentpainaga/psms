@@ -31,6 +31,7 @@ require('../services/usersApiService');
 require('../services/academicSemesterYearApiService');
 require('../services/dashboardApiService');
 require('../services/courseApiService');
+require('../services/importScholarApiService');
 
 require('../controllers/mainCtrl');
 require('../controllers/dashboardCtrl');

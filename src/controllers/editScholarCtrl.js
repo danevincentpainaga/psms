@@ -22,8 +22,6 @@ app.controller('editScholarCtrl', ['$scope', '$rootScope', '$mdDialog', '$q', '$
   $scope.$watch('scholar', function(n, o){
     if (n) {
 
-    	console.log(n);
-
       let father = JSON.parse(n.father_details);
       let mother = JSON.parse(n.mother_details);
 
@@ -152,7 +150,6 @@ app.controller('editScholarCtrl', ['$scope', '$rootScope', '$mdDialog', '$q', '$
           IP: ec.IP,
         }
 
-        console.log(primary_scholar_details);
         updateScholarDetails(primary_scholar_details);
     }
     else{
@@ -258,7 +255,6 @@ app.controller('editScholarCtrl', ['$scope', '$rootScope', '$mdDialog', '$q', '$
 
   function updateScholarDetails(scholarDetails){
      scholarApiService.updateScholarDetails(scholarDetails).then(response => {
-      console.log(response.data);
       updatePrimaryDetails(response.data);
       ec.primaryButtonText = 'Update';
       ec.updatingPrimaryDetails = false;

@@ -364,15 +364,15 @@ th,
 }
 
 
-tr.ng-enter{
+.hasFading tr.ng-enter{
   transition:0.3s linear all;
   opacity:0;
   transform: translateX(40px);
 }
-tr.ng-enter.ng-enter-active{
+.hasFading tr.ng-enter.ng-enter-active{
   opacity:1;
   transform: translateX(0);
 }
-tr.ng-enter-stagger{
+.hasFading tr.ng-enter-stagger{
   transition-delay: 0.1s;
 }

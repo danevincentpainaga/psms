@@ -9,8 +9,8 @@
  */ 
 
 var app = angular.module('psmsApp');
-app.controller('importScholarsCtrl',['$scope', '$q', 'importScholarApiService', 'municipalitiesApiService', 'schoolApiService', 'scholarApiService', 'courseApiService', 'academicContractService', 'addScholarsService', 'moment', '$timeout',
-  function ($scope, $q, importScholarApiService, municipalitiesApiService, schoolApiService, scholarApiService, courseApiService, academicContractService, addScholarsService, moment, $timeout) {
+app.controller('importScholarsCtrl',['$scope', '$q', 'importScholarApiService', 'municipalitiesApiService', 'schoolApiService', 'scholarApiService', 'courseApiService', 'academicContractService', 'addScholarsService', 'moment', '$timeout', 'swalert',
+  function ($scope, $q, importScholarApiService, municipalitiesApiService, schoolApiService, scholarApiService, courseApiService, academicContractService, addScholarsService, moment, $timeout, swalert) {
 
   var ic = this;
   var year_level = ['I', 'II', 'III', 'IV', 'V', 'VI'];
@@ -70,9 +70,11 @@ app.controller('importScholarsCtrl',['$scope', '$q', 'importScholarApiService', 
   };
 
   ic.uploadToDatabase = function(){
+    ic.checking_in = 'Uploading...';
     console.log(ic.scholars_to_upload);
 
     importScholarApiService.importScholars(ic.scholars_to_upload).then(response =>{
+      swalert.dialogBox('Import successful!', 'success', 'Success');
       console.log(response.data);
     }, err => {
       console.log(err);

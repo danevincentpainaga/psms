@@ -17,7 +17,7 @@ app.controller('contractCtrl',['$scope', 'academicSemesterYearApiService', 'acad
   c.buttonText = "ADD";
   c.labelText = "Add";
 
-  c.semester_list = [{semester: "1st Semester"}, {semester: "2nd Semester"}, {semester: "3rd Semester"}, {semester: "4th Semester"}];
+  c.semester_list = [{semester: "1st Semester"}, {semester: "2nd Semester"}, {semester: "3rd Semester"}];
 
   c.saveOrUpdateAcademicYearList = function(){
     if (c.semester && c.academic_year){

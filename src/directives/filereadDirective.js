@@ -44,11 +44,6 @@ angular.module('psmsApp').directive("fileread", [function () {
       
             })
 
-            angular.forEach($scope.json_data, function( row, index){
-                // row.error = [];
-                row.number = index+1;
-            });
-
             if (errors.length > 0) {
                 console.log(errors);
                 $elm.val(null);

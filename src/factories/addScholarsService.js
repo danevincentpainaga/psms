@@ -62,7 +62,7 @@ angular.module('psmsApp')
 		    ctrl.search_flastname = "";
 		    ctrl.f_firstname = "";
 		    ctrl.f_middlename = "";
-		    ctrl.search_mlastname = "";
+		    ctrl.search_maidenname = "";
 		    ctrl.m_firstname = "";
 		    ctrl.m_middlename = "";
 	    },

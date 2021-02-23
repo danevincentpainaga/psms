@@ -1,9 +1,27 @@
 @import "~angular-material/angular-material";
-@import "angular-ui-grid/ui-grid.min.css";
+@import "angular-ui-grid/ui-grid.css";
 /*@import '~angular-material-data-table/dist/md-data-table.min.css';*/
 @import '~material-icons/iconfont/material-icons.css';
 
 /*background: linear-gradient(to bottom,#F8F8F8 0,#eeeeee 100%);*/
+.ui-grid-render-container{
+  font-size: 14px;
+}
+
+.ui-grid-cell-contents{
+  outline: none !important;
+}
+
+.ui-grid-header-cell-wrapper{
+  font-size: 12px !important;
+  background: linear-gradient(to bottom, #F8F8F8 0, #eeeeee 100%) !important;
+  color: #636363 !important;
+  input{
+    &:focus{
+      outline-color: rgba(128, 146, 247, 0.54);
+    }
+  }
+}
 
 .grid .ui-grid-row .error {
   background-color: red;

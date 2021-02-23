@@ -12,7 +12,8 @@ angular
   'ui.grid.exporter',
   'ui.grid.importer',
   'ui.grid.resizeColumns',
-  'ui.grid.moveColumns'
+  'ui.grid.moveColumns',
+  'ui.grid.autoResize'
 ])
 .config(function ($stateProvider, $urlRouterProvider) {
   $stateProvider

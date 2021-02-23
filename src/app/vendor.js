@@ -21,6 +21,7 @@ import 'angular-ui-grid/ui-grid.importer.min';
 import 'angular-ui-grid/ui-grid.selection.min';
 import 'angular-ui-grid/ui-grid.resize-columns.min';
 import 'angular-ui-grid/ui-grid.move-columns.min';
+import 'angular-ui-grid/ui-grid.auto-resize.min';
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;

@@ -174,6 +174,7 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
       print(scholarDetails);
     }, err => {
       ac.buttonText = 'Save';
+      ac.saving = false;
       swalert.dialogBox(err.data.message, 'error', 'Failed');
       console.log(err);
     });

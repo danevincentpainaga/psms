@@ -16,29 +16,29 @@ app.controller('exportScholarsCtrl',['$scope', '$rootScope', '$cookies', '$windo
   ex.number = 1;
 
   ex.mergedChunks = [];
-  ex.semester_list = [{semester: "1st Semester"}, {semester: "2nd Semester"}, {semester: "3rd Semester"}, {semester: "4th Semester"}];
+  // ex.semester_list = [{semester: "1st Semester"}, {semester: "2nd Semester"}, {semester: "3rd Semester"}, {semester: "4th Semester"}];
 
-  $scope.$watchGroup(['ex.scholar_lastname', 'ex.age', 'ex.address', 'ex.section', 'ex.student_id_number', 'ex.academic_year'], debounce(function(n, o){
+  // $scope.$watchGroup(['ex.scholar_lastname', 'ex.age', 'ex.address', 'ex.section', 'ex.student_id_number', 'ex.academic_year'], debounce(function(n, o){
     
-    let hasValue = n.some(element => element !== undefined);
+  //   let hasValue = n.some(element => element !== undefined);
 
-    if (hasValue) {
-          ex.scholars_loaded = false;
-          getScholarsToExport();
-    }
+  //   if (hasValue) {
+  //         ex.scholars_loaded = false;
+  //         getScholarsToExport();
+  //   }
 
-  }, 500), true);
+  // }, 500), true);
 
-  $scope.$watchGroup(['ex.gender', 'ex.scholar_status', 'ex.contract_status', 'ex.municipality', 'ex.degree', 'ex.school', 'ex.course', 'ex.year_level', 'ex.semester', 'ex.IP'], function(n, o){
+  // $scope.$watchGroup(['ex.gender', 'ex.scholar_status', 'ex.contract_status', 'ex.municipality', 'ex.degree', 'ex.school', 'ex.course', 'ex.year_level', 'ex.semester', 'ex.IP'], function(n, o){
 
-    let hasValue = n.some(element => element !== undefined);
+  //   let hasValue = n.some(element => element !== undefined);
 
-    if (hasValue) {
-      ex.scholars_loaded = false;
-      getScholarsToExport();
-    }
+  //   if (hasValue) {
+  //     ex.scholars_loaded = false;
+  //     getScholarsToExport();
+  //   }
 
-  }, true); 
+  // }, true); 
 
   ex.gridOptions = {
     enableFiltering: true,
@@ -49,8 +49,7 @@ app.controller('exportScholarsCtrl',['$scope', '$rootScope', '$cookies', '$windo
 
     },
     columnDefs: [
-      { field: 'index', displayName: 'NO.', width: '5%',  enableFiltering: false, cellTemplate: '<div class="ui-grid-cell-contents">{{grid.renderContainers.body.visibleRowCache.indexOf(row)+1}}</div>' },
-      // { displayName:'NO.', field: 'row_no', width: '5%', enableFiltering: false},
+      { field: 'index', displayName: 'NO.', width: '50',  enableFiltering: false, enableSorting: false, cellTemplate: '<div class="ui-grid-cell-contents">{{grid.renderContainers.body.visibleRowCache.indexOf(row)+1}}</div>' },
       { field: 'lastname', width: '15%',
         filter: {
           condition: uiGridConstants.filter.EXACT,
@@ -81,7 +80,7 @@ app.controller('exportScholarsCtrl',['$scope', '$rootScope', '$cookies', '$windo
         }
       },
       { displayName:'Address', field: 'address', width: '30%' },
-      { displayName:'Municipality', field: 'municipality', width: '30%',
+      { displayName:'Municipality', field: 'municipality', width: '10%',
         filter: {
           type: uiGridConstants.filter.SELECT,
           condition: uiGridConstants.filter.EXACT,
@@ -95,8 +94,32 @@ app.controller('exportScholarsCtrl',['$scope', '$rootScope', '$cookies', '$windo
       { displayName:'Student ID NO.', field: 'student_id_number', width: '10%' },
       { displayName:'Course', field: 'course', width: '30%' },
       { displayName:'Section', field: 'section', width: '10%' },
-      { displayName:'Yearl level', field: 'year_level', width: '10%' },
-      { displayName:'Semester', field: 'semester', width: '10%' },
+      { displayName:'Yearl level', field: 'year_level', width: '10%',
+        filter: {
+          type: uiGridConstants.filter.SELECT,
+          condition: uiGridConstants.filter.EXACT,
+          selectOptions: [ 
+            { value: 'I', label: '1st year' }, 
+            { value: 'II', label: '2nd year' },
+            { value: 'III', label: '3rd year' },
+            { value: 'IV', label: '4th year' },
+            { value: 'V', label: '5th year' },
+            { value: 'VI', label: '6th year' }
+          ]
+        },
+        cellFilter: 'formatYear'
+      },
+      { displayName:'Semester', field: 'semester', width: '10%',
+        filter: {
+          type: uiGridConstants.filter.SELECT,
+          condition: uiGridConstants.filter.EXACT,
+          selectOptions: [ 
+            { value: '1st Semester', label: '1st Semester' }, 
+            { value: '2nd Semester', label: '2nd Semester' },
+            { value: '3rd Semester', label: '3rd Semester' }
+          ]
+        }
+      },
       { displayName:'Academic year', field: 'academic_year', width: '10%' },
       { displayName:'Amount', field: 'amount', width: '10%' },
       { displayName:'IP', field: 'IP', width: '10%',
@@ -117,29 +140,27 @@ app.controller('exportScholarsCtrl',['$scope', '$rootScope', '$cookies', '$windo
       
       ex.gridApi = gridApi;
 
+      ex.gridApi.core.on.rowsRendered($scope, function() {
+        ex.filteredGrid = ex.gridApi.core.getVisibleRows().map((row)=>{
+          return row.entity;
+        });
+        console.log(ex.filteredGrid);
+      });
+
+
     }
   };
 
   ex.exportForDatabase = function(){
-    exportScholarsService.exportForDatabase(ex.scholars, ex);
+    exportScholarsService.exportForDatabase(ex.filteredGrid, ex);
   }
 
   ex.exportMasterlist = function(){
-
-    const grid = ex.gridApi.core.getVisibleRows().map((row)=>{
-      return row.entity;
-    });
-
-    exportScholarsService.exportMasterlist(grid, ex);
+    exportScholarsService.exportMasterlist(ex.filteredGrid, ex);
   }
 
   ex.exportNormal = function(){
-
-    const grid = ex.gridApi.core.getVisibleRows().map((row)=>{
-      return row.entity;
-    });
-
-    exportScholarsService.exportNormal(grid, ex);
+    exportScholarsService.exportNormal(ex.filteredGrid, ex);
   }
 
   function getScholarsToExport(){
@@ -166,7 +187,6 @@ app.controller('exportScholarsCtrl',['$scope', '$rootScope', '$cookies', '$windo
      scholarApiService.getScholarsToExport(searched).then(response => {
 
       splitArrayOfChunks(response.data);
-      console.log(ex.mergedChunks);
 
       ex.scholars_loaded = true;
       // ex.hide_spinner = true;
@@ -185,16 +205,23 @@ app.controller('exportScholarsCtrl',['$scope', '$rootScope', '$cookies', '$windo
   function mergeChunks(chunk){
     for (var i = 0; i < chunk.length; i++) {
 
-      Object.assign(chunk[i], { row_no: ex.number++, amount: $filter('amount')(chunk[i]), father: $filter('fatherDetails')(chunk[i].father_details), mother: $filter('motherDetails')(chunk[i].mother_details) });
+      Object.assign(chunk[i], { row_no: ex.number++, amount: $filter('currency')($filter('amount')(chunk[i]), '', 0), father: $filter('fatherDetails')(chunk[i].father_details), mother: $filter('motherDetails')(chunk[i].mother_details) });
       ex.mergedChunks.push(chunk[i]);
    
     }
   }
 
   function getMunicipalities(){
-    municipalitiesApiService.getMunicipalities()
+    municipalitiesApiService.getMunicipalities()  
       .then(response=>{
-        ex.municipalities = response.data;
+        console.log(response.data);
+        let arr = [];
+
+        response.data.forEach(function(val, i){
+           arr.push({ value: val.municipality, label: val.municipality }); 
+        });
+
+        ex.gridOptions.columnDefs[9].filter.selectOptions = arr;
       }, err=> {
         console.log(err);
       });
@@ -217,21 +244,11 @@ app.controller('exportScholarsCtrl',['$scope', '$rootScope', '$cookies', '$windo
         console.log(err);
       });
   }
-
-
-  ex.test = function(){
-    // console.log(ex.gridApi.core.getVisibleRows());
-    // const grid = ex.gridApi.core.getVisibleRows().map((row)=>{
-    //   return row.entity;
-    // });
-
-    // console.log(grid);
-  }
-
+  
+  // getMunicipalities();
   getScholarsToExport();
   // getCourses();
   // getListOfSchool();
-  // getMunicipalities();
 
 }]);
 

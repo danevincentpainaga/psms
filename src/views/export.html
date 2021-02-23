@@ -32,12 +32,6 @@
                   Export for database
                 </md-button>
               </md-menu-item>
-              <md-menu-item class="md-indent" >
-                <md-icon class="material-icons">file_download</md-icon>
-                <md-button ng-click="ex.test()">
-                  Test
-                </md-button>
-              </md-menu-item>
             </md-menu-content>
           </md-menu>
         </md-menu-bar>
@@ -47,7 +41,7 @@
   <md-progress-linear md-mode="indeterminate" ng-if="!ex.scholars_loaded" style="position: absolute;"></md-progress-linear>
   <div layout="column" layout-xs="column" style="background-color: #fff; padding: 5px;">
 
-    <div ui-grid="ex.gridOptions" ui-grid-resize-columns ui-grid-importer ui-grid-exporter class="grid" ng-style="resizeDiv()" resize-div></div>
+    <div ui-grid="ex.gridOptions" ui-grid-resize-columns ui-grid-importer ui-grid-exporter ui-grid-auto-resize class="grid" ng-style="resizeDiv()" resize-div></div>
     
   </div>
 

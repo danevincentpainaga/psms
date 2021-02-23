@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rimraf dist && webpack --bail --progress --profile",
-    "server": "webpack serve --open Chrome.exe",
+    "server": "webpack serve --open msedge.exe",
     "start": "npm run server"
   },
   "keywords": [],

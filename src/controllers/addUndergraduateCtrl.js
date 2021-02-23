@@ -68,7 +68,7 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
             },
           }
 
-          saveNewScholarDetails(scholar_details);
+          storeNewScholarDetails(scholar_details);
 
     }
     else{
@@ -164,8 +164,8 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
     return addScholarsService.getFatherList(searched);
   }
 
-  function saveNewScholarDetails(scholarDetails){
-      scholarApiService.saveNewScholarDetails(scholarDetails).then(response => {
+  function storeNewScholarDetails(scholarDetails){
+      scholarApiService.storeNewScholarDetails(scholarDetails).then(response => {
       addScholarsService.clearInputs(ac);
       ac.buttonText = 'Save';
       ac.saving = false;

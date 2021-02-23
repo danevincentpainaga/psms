@@ -15,23 +15,24 @@ require('../directives/filereadDirective');
 
 require('../filters/filters');
 
+require('../factories/alertDialog');
 require('../factories/addScholarsService');
 require('../factories/debounce');
 require('../factories/momentService');
-require('../factories/exportScholarsService');
+require('../factories/exportService');
 
-require('../services/municipalitiesApiService');
-require('../services/alertDialog');
-require('../services/authApiService');
-require('../services/schoolApiService');
-require('../services/addressApiService');
-require('../services/scholarApiService');
-require('../services/academicContractService');
-require('../services/usersApiService');
-require('../services/academicSemesterYearApiService');
-require('../services/dashboardApiService');
-require('../services/courseApiService');
-require('../services/importScholarApiService');
+require('../apiServices/municipalitiesApiService');
+require('../apiServices/authApiService');
+require('../apiServices/schoolApiService');
+require('../apiServices/addressApiService');
+require('../apiServices/scholarApiService');
+require('../apiServices/academicContractService');
+require('../apiServices/usersApiService');
+require('../apiServices/academicSemesterYearApiService');
+require('../apiServices/dashboardApiService');
+require('../apiServices/courseApiService');
+require('../apiServices/importScholarApiService');
+require('../apiServices/exportScholarsApiService');
 
 require('../controllers/mainCtrl');
 require('../controllers/dashboardCtrl');

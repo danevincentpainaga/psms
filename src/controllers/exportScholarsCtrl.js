@@ -9,8 +9,8 @@
  */ 
 
 var app = angular.module('psmsApp');
-app.controller('exportScholarsCtrl',['$scope', '$rootScope', '$cookies', '$window', '$location', '$timeout', '$filter', 'schoolApiService', 'addressApiService', 'scholarApiService', 'municipalitiesApiService', 'courseApiService', 'debounce', 'moment', 'exportScholarsService', 'uiGridConstants',
-  function ($scope, $rootScope, $cookies, $window, $location, $timeout, $filter, schoolApiService, addressApiService, scholarApiService, municipalitiesApiService, courseApiService, debounce, moment, exportScholarsService, uiGridConstants) {
+app.controller('exportScholarsCtrl',['$scope', '$rootScope', '$cookies', '$window', '$location', '$timeout', '$filter', 'schoolApiService', 'addressApiService', 'scholarApiService', 'municipalitiesApiService', 'courseApiService', 'exportScholarsApiService', 'debounce', 'moment', 'exportService', 'uiGridConstants',
+  function ($scope, $rootScope, $cookies, $window, $location, $timeout, $filter, schoolApiService, addressApiService, scholarApiService, municipalitiesApiService, courseApiService, exportScholarsApiService, debounce, moment, exportService, uiGridConstants) {
 
   var ex = this;
   ex.number = 1;
@@ -152,15 +152,15 @@ app.controller('exportScholarsCtrl',['$scope', '$rootScope', '$cookies', '$windo
   };
 
   ex.exportForDatabase = function(){
-    exportScholarsService.exportForDatabase(ex.filteredGrid, ex);
+    exportService.exportForDatabase(ex.filteredGrid, ex);
   }
 
   ex.exportMasterlist = function(){
-    exportScholarsService.exportMasterlist(ex.filteredGrid, ex);
+    exportService.exportMasterlist(ex.filteredGrid, ex);
   }
 
   ex.exportNormal = function(){
-    exportScholarsService.exportNormal(ex.filteredGrid, ex);
+    exportService.exportNormal(ex.filteredGrid, ex);
   }
 
   function getScholarsToExport(){
@@ -184,7 +184,7 @@ app.controller('exportScholarsCtrl',['$scope', '$rootScope', '$cookies', '$windo
         IP: ex.IP,
     };
 
-     scholarApiService.getScholarsToExport(searched).then(response => {
+     exportScholarsApiService.getScholarsToExport(searched).then(response => {
 
       splitArrayOfChunks(response.data);
 

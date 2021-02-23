@@ -72,8 +72,8 @@ app.controller('contractCtrl',['$scope', 'academicSemesterYearApiService', 'acad
     });
   }
 
-  function saveAcademicYearList(details){
-     academicSemesterYearApiService.saveAcademicYearList(details).then(response => {
+  function storeAcademicYearList(details){
+     academicSemesterYearApiService.storeAcademicYearList(details).then(response => {
       clearInputs()
       console.log(response.data);
       getAcademicYearList();
@@ -151,7 +151,7 @@ app.controller('contractCtrl',['$scope', 'academicSemesterYearApiService', 'acad
   }
 
   function updateOrSave(){
-    c.buttonText == 'ADD'? saveAcademicYearList({ semester: c.semester, academic_year: c.academic_year, undergraduate_amount: c.undergraduate_amount, masteral_doctorate_amount: c.masteral_doctorate_amount }) : updateAcademicYearList({ asc_id: c.asc_id, semester: c.semester, academic_year: c.academic_year, undergraduate_amount: c.undergraduate_amount, masteral_doctorate_amount: c.masteral_doctorate_amount });
+    c.buttonText == 'ADD'? storeAcademicYearList({ semester: c.semester, academic_year: c.academic_year, undergraduate_amount: c.undergraduate_amount, masteral_doctorate_amount: c.masteral_doctorate_amount }) : updateAcademicYearList({ asc_id: c.asc_id, semester: c.semester, academic_year: c.academic_year, undergraduate_amount: c.undergraduate_amount, masteral_doctorate_amount: c.masteral_doctorate_amount });
   }
 
   function checkContractState(contract_state){

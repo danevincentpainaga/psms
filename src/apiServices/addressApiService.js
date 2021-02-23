@@ -4,7 +4,7 @@ angular.module('psmsApp').factory('addressApiService', ['$http', '$cookies', '$r
 
   return{
     getAddresses: function(searched){
-      return $http.get(baseUrl+'api/getAddresses', {
+      return $http.get(baseUrl+'api/address/getAddresses', {
         params: searched,
         headers: {
           "Content-Type": "application/json",
@@ -12,10 +12,10 @@ angular.module('psmsApp').factory('addressApiService', ['$http', '$cookies', '$r
         }
       });
     },
-    saveAddress: function(address){
+    storeAddress: function(address){
       return $http({
         method:'POST',
-        url: baseUrl+'api/saveAddress',
+        url: baseUrl+'api/address/storeAddress',
         data: address,
         headers: {
           Accept: "application/json",
@@ -26,7 +26,7 @@ angular.module('psmsApp').factory('addressApiService', ['$http', '$cookies', '$r
     updateAddress: function(newAddress){
       return $http({
         method:'POST',
-        url: baseUrl+'api/updateAddress',
+        url: baseUrl+'api/address/updateAddress',
         data: newAddress,
         headers: {
           Accept: "application/json",

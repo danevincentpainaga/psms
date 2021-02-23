@@ -4,7 +4,7 @@ angular.module('psmsApp').factory('courseApiService', ['$http', '$cookies', '$ro
 
   return{
     getCourses: function(searched){
-      return $http.get(baseUrl+'api/getCourses', {
+      return $http.get(baseUrl+'api/course/getCourses', {
         params: searched,
         headers: {
           "Content-Type": "application/json",
@@ -12,10 +12,10 @@ angular.module('psmsApp').factory('courseApiService', ['$http', '$cookies', '$ro
         }
       });
     },
-    saveCourse: function(course){
+    storeCourse: function(course){
       return $http({
         method:'POST',
-        url: baseUrl+'api/saveCourse',
+        url: baseUrl+'api/course/storeCourse',
         data: course,
         headers: {
           Accept: "application/json",
@@ -26,7 +26,7 @@ angular.module('psmsApp').factory('courseApiService', ['$http', '$cookies', '$ro
     updateCourse: function(newCourse){
       return $http({
         method:'POST',
-        url: baseUrl+'api/updateCourse',
+        url: baseUrl+'api/course/updateCourse',
         data: newCourse,
         headers: {
           Accept: "application/json",

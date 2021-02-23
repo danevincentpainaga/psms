@@ -4,7 +4,7 @@ angular.module('psmsApp').factory('dashboardApiService', ['$http', '$rootScope',
 
   return{
     undergraduateScholarsCount: function(){
-      return $http.get(baseUrl+'api/undergraduateScholarsCount', {
+      return $http.get(baseUrl+'api/dashboard/undergraduateScholarsCount', {
         headers: {
           "Content-Type": "application/json",
           Authorization : 'Bearer '+ $rootScope.token
@@ -12,7 +12,7 @@ angular.module('psmsApp').factory('dashboardApiService', ['$http', '$rootScope',
       });
     },
     mastersScholarsCount: function(){
-      return $http.get(baseUrl+'api/mastersScholarsCount', {
+      return $http.get(baseUrl+'api/dashboard/mastersScholarsCount', {
         headers: {
           "Content-Type": "application/json",
           Authorization : 'Bearer '+ $rootScope.token
@@ -20,7 +20,7 @@ angular.module('psmsApp').factory('dashboardApiService', ['$http', '$rootScope',
       });
     },
     getApprovedScholarsCount: function(){
-      return $http.get(baseUrl+'api/getApprovedScholarsCount', {
+      return $http.get(baseUrl+'api/dashboard/getApprovedScholarsCount', {
         headers: {
           "Content-Type": "application/json",
           Authorization : 'Bearer '+ $rootScope.token
@@ -28,7 +28,7 @@ angular.module('psmsApp').factory('dashboardApiService', ['$http', '$rootScope',
       });
     },
     getNewOldTotalPerDegree: function(){
-      return $http.get(baseUrl+'api/getNewOldTotalPerDegree', {
+      return $http.get(baseUrl+'api/dashboard/getNewOldTotalPerDegree', {
         headers: {
           "Content-Type": "application/json",
           Authorization : 'Bearer '+ $rootScope.token
@@ -36,7 +36,7 @@ angular.module('psmsApp').factory('dashboardApiService', ['$http', '$rootScope',
       });
     },
     getContractStatusTotalPerDegree: function(){
-      return $http.get(baseUrl+'api/getContractStatusTotalPerDegree', {
+      return $http.get(baseUrl+'api/dashboard/getContractStatusTotalPerDegree', {
         headers: {
           "Content-Type": "application/json",
           Authorization : 'Bearer '+ $rootScope.token

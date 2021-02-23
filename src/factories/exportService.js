@@ -1,6 +1,6 @@
 var XLSX = require('xlsx/dist/xlsx.full.min.js');
 
-angular.module('psmsApp').factory('exportScholarsService',['$timeout', '$filter', function($timeout, $filter) {
+angular.module('psmsApp').factory('exportService',['$timeout', '$filter', function($timeout, $filter) {
 
     	var self = this;
 

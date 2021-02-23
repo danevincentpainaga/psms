@@ -55,7 +55,7 @@ angular.module('psmsApp')
 			};
 
 			if (!ad.isUpdating) {
-				saveAddress(address_details);
+				storeAddress(address_details);
 			}
 			else{
 				updateAddress(address_details);
@@ -64,8 +64,8 @@ angular.module('psmsApp')
 	}
 
 
-	function saveAddress(address_details){
-		addressApiService.saveAddress(address_details).then(response => {
+	function storeAddress(address_details){
+		addressApiService.storeAddress(address_details).then(response => {
 			ad.addresses.push(response.data);
 			clearInputs();
 			ad.saving_updating = false;

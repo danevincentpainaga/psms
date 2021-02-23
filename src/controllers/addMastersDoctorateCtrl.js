@@ -70,7 +70,7 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
           },
         }
             
-        saveNewScholarDetails(scholar_details);    
+        storeNewScholarDetails(scholar_details);    
 
     }
     else{
@@ -170,8 +170,8 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
     return addScholarsService.getFatherList(searched);
   }
 
-  function saveNewScholarDetails(scholarDetails){
-     scholarApiService.saveNewScholarDetails(scholarDetails).then(response => {
+  function storeNewScholarDetails(scholarDetails){
+     scholarApiService.storeNewScholarDetails(scholarDetails).then(response => {
       md.degree = "";
       md.degree_has_selected = false;
       addScholarsService.clearInputs(md);

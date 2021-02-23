@@ -1,39 +1,36 @@
-angular.module('psmsApp').factory('schoolApiService', ['$http', '$cookies', '$rootScope', '$q', function($http, $cookies, $rootScope, $q){
+angular.module('psmsApp').factory('importScholarApiService', ['$http', '$cookies', '$rootScope', '$q', function($http, $cookies, $rootScope, $q){
 	 
   var baseUrl = "http://localhost:8000/";
 
   return{
-    getListOfSchool: function(searched){
-      return $http.get(baseUrl+'api/getListOfSchool', {
-        params: searched,
+    getAllScholars: function(degree){
+      return $http.get(baseUrl+'api/import/getAllScholars', {
+        params: degree,
         headers: {
           "Content-Type": "application/json",
           Authorization : 'Bearer '+ $rootScope.token
         }
       });
     },
-    saveSchoolDetails: function(details){
+    getAddresses: function(municipality){
+      return $http.get(baseUrl+'api/import/getAddresses', {
+        params: municipality,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization : 'Bearer '+ $rootScope.token
+        }
+      });
+    },
+    importScholars: function(importedScholars){
       return $http({
         method:'POST',
-        url: baseUrl+'api/saveSchoolDetails',
-        data: details,
+        url: baseUrl+'api/import/importScholars',
+        data: importedScholars,
         headers: {
           "Content-Type": "application/json",
           Authorization : 'Bearer '+ $rootScope.token
         }
       });
     },
-    updateSchoolDetails: function(details){
-      return $http({
-        method:'POST',
-        url: baseUrl+'api/updateSchoolDetails',
-        data: details,
-        headers: {
-          "Content-Type": "application/json",
-          Authorization : 'Bearer '+ $rootScope.token
-        }
-      });
-    },
-
 	}
 }]);

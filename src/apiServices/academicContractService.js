@@ -6,7 +6,7 @@ angular.module('psmsApp').factory('academicContractService', ['$http', '$cookies
     getAcademicContractDetails: function(searched){
       return $http({
         method:'GET',
-        url: baseUrl+'api/getAcademicContractDetails',
+        url: baseUrl+'api/contract/getAcademicContractDetails',
         headers: {
           "Content-Type": "application/json",
           Authorization : 'Bearer '+ $rootScope.token
@@ -16,7 +16,7 @@ angular.module('psmsApp').factory('academicContractService', ['$http', '$cookies
     setContract: function(details){
       return $http({
         method:'POST',
-        url: baseUrl+'api/setContract',
+        url: baseUrl+'api/contract/setContract',
         data: details,
         headers: {
           "Content-Type": "application/json",
@@ -27,7 +27,7 @@ angular.module('psmsApp').factory('academicContractService', ['$http', '$cookies
     closeContract: function(){
       return $http({
         method:'POST',
-        url: baseUrl+'api/closeContract',
+        url: baseUrl+'api/contract/closeContract',
         headers: {
           "Content-Type": "application/json",
           Authorization : 'Bearer '+ $rootScope.token
@@ -37,7 +37,7 @@ angular.module('psmsApp').factory('academicContractService', ['$http', '$cookies
     openContract: function(){
       return $http({
         method:'POST',
-        url: baseUrl+'api/openContract',
+        url: baseUrl+'api/contract/openContract',
         headers: {
           "Content-Type": "application/json",
           Authorization : 'Bearer '+ $rootScope.token
@@ -47,7 +47,7 @@ angular.module('psmsApp').factory('academicContractService', ['$http', '$cookies
     confirmPassword: function(password){
       return $http({
         method:'POST',
-        url: baseUrl+'api/confirmPassword',
+        url: baseUrl+'api/contract/confirmPassword',
         data: password,
         headers: {
           "Content-Type": "application/json",

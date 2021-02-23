@@ -53,7 +53,7 @@ angular.module('psmsApp')
 			};
 
 			if (!cc.isUpdating) {
-				saveCourse(course_details);
+				storeCourse(course_details);
 			}
 			else{
 				updateCourse(course_details);
@@ -62,8 +62,8 @@ angular.module('psmsApp')
 	}
 
 
-	function saveCourse(course_details){
-		courseApiService.saveCourse(course_details).then(response => {
+	function storeCourse(course_details){
+		courseApiService.storeCourse(course_details).then(response => {
 			cc.courses.push(response.data);
 			clearInputs();
 			cc.saving_updating = false;

@@ -7,17 +7,17 @@ angular.module('psmsApp')
    getAcademicYearList: function(){
       return $http({
         method:'GET',
-        url: baseUrl+'api/getAcademicYearList',
+        url: baseUrl+'api/academic/getAcademicYearList',
         headers: {
           "Content-Type": "application/json",
           Authorization : 'Bearer '+ $rootScope.token
         }
       });
     },
-   saveAcademicYearList: function(details){
+   storeAcademicYearList: function(details){
       return $http({
         method:'POST',
-        url: baseUrl+'api/saveAcademicYearList',
+        url: baseUrl+'api/academic/storeAcademicYearList',
         data: details,
         headers: {
           "Content-Type": "application/json",
@@ -28,7 +28,7 @@ angular.module('psmsApp')
    updateAcademicYearList: function(details){
       return $http({
         method:'POST',
-        url: baseUrl+'api/updateAcademicYearList',
+        url: baseUrl+'api/academic/updateAcademicYearList',
         data: details,
         headers: {
           "Content-Type": "application/json",

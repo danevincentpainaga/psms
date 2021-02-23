@@ -3,10 +3,10 @@ angular.module('psmsApp').factory('scholarApiService', ['$http', '$cookies', '$r
   var baseUrl = "http://localhost:8000/";
 
   return{
-    saveNewScholarDetails: function(scholar_details){
+    storeNewScholarDetails: function(scholar_details){
       return $http({
         method:'POST',
-        url: baseUrl+'api/saveNewScholarDetails',
+        url: baseUrl+'api/scholars/storeNewScholarDetails',
         data: scholar_details,
         headers: {
           "Content-Type": "application/json",
@@ -17,7 +17,7 @@ angular.module('psmsApp').factory('scholarApiService', ['$http', '$cookies', '$r
     updateScholarDetails: function(scholar_details){
       return $http({
         method:'POST',
-        url: baseUrl+'api/updateScholarDetails',
+        url: baseUrl+'api/scholars/updateScholarDetails',
         data: scholar_details,
         headers: {
           "Content-Type": "application/json",
@@ -28,7 +28,7 @@ angular.module('psmsApp').factory('scholarApiService', ['$http', '$cookies', '$r
     updateScholarParentsDetails: function(parents_details){
       return $http({
         method:'POST',
-        url: baseUrl+'api/updateScholarParentsDetails',
+        url: baseUrl+'api/parents/updateScholarParentsDetails',
         data: parents_details,
         headers: {
           "Content-Type": "application/json",
@@ -37,7 +37,7 @@ angular.module('psmsApp').factory('scholarApiService', ['$http', '$cookies', '$r
       });
     },
     getMotherList: function(searched){
-      return $http.get(baseUrl+'api/getMotherList', {
+      return $http.get(baseUrl+'api/parents/getMotherList', {
         params: searched,
         headers: {
           "Content-Type": "application/json",
@@ -46,7 +46,7 @@ angular.module('psmsApp').factory('scholarApiService', ['$http', '$cookies', '$r
       });
     },
     getFatherList: function(searched){
-      return $http.get(baseUrl+'api/getFatherList', {
+      return $http.get(baseUrl+'api/parents/getFatherList', {
         params: searched,
         headers: {
           "Content-Type": "application/json",
@@ -55,7 +55,7 @@ angular.module('psmsApp').factory('scholarApiService', ['$http', '$cookies', '$r
       });
     },
     getNewUndergraduateScholars: function(searched){
-      return $http.get(baseUrl+'api/getNewUndergraduateScholars', {
+      return $http.get(baseUrl+'api/scholars/getNewUndergraduateScholars', {
         params: searched,
         headers: {
           "Content-Type": "application/json",
@@ -64,7 +64,7 @@ angular.module('psmsApp').factory('scholarApiService', ['$http', '$cookies', '$r
       });
     },
     getNewMastersDoctorateScholars: function(searched){
-      return $http.get(baseUrl+'api/getNewMastersDoctorateScholars', {
+      return $http.get(baseUrl+'api/scholars/getNewMastersDoctorateScholars', {
         params: searched,
         headers: {
           "Content-Type": "application/json",
@@ -73,16 +73,7 @@ angular.module('psmsApp').factory('scholarApiService', ['$http', '$cookies', '$r
       });
     },
     getScholars: function(searched_details, page){
-      return $http.get(baseUrl+'api/getScholars?page='+page, {
-        params: searched_details,
-        headers: {
-          "Content-Type": "application/json",
-          Authorization : 'Bearer '+ $rootScope.token
-        }
-      });
-    },
-    getScholarsToExport: function(searched_details){
-      return $http.get(baseUrl+'api/getScholarsToExport', {
+      return $http.get(baseUrl+'api/scholars/getScholars?page='+page, {
         params: searched_details,
         headers: {
           "Content-Type": "application/json",
@@ -91,7 +82,7 @@ angular.module('psmsApp').factory('scholarApiService', ['$http', '$cookies', '$r
       });
     },
     getDegrees: function(){
-      return $http.get(baseUrl+'api/getDegrees', {
+      return $http.get(baseUrl+'api/scholars/getDegrees', {
         headers: {
           "Content-Type": "application/json",
           Authorization : 'Bearer '+ $rootScope.token
@@ -101,7 +92,7 @@ angular.module('psmsApp').factory('scholarApiService', ['$http', '$cookies', '$r
     uploadProfilePic: function(image){
       return $http({
         method:'POST',
-        url: baseUrl+'api/uploadProfilePic',
+        url: baseUrl+'api/scholars/uploadProfilePic',
         data: image,
         headers: {
           "Content-Type": undefined,

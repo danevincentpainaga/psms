@@ -28,12 +28,12 @@ app.controller('addSchoolCtrl', ['$scope', '$rootScope', '$mdDialog', 'schoolApi
       as.saveBtnText = 'Saving...';
       as.saving = true;
       let new_school_name = { school_name: as.school_name.toUpperCase() };
-      saveSchoolDetails(new_school_name);
+      storeSchoolDetails(new_school_name);
     }
   };
 
-  function saveSchoolDetails(details){
-    schoolApiService.saveSchoolDetails(details).then(response => {
+  function storeSchoolDetails(details){
+    schoolApiService.storeSchoolDetails(details).then(response => {
       console.log(response.data);
       clearInputs();
       as.saveBtnText = 'Save';

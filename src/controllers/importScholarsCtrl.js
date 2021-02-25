@@ -32,7 +32,7 @@ app.controller('importScholarsCtrl',['$scope', '$q', 'importScholarApiService', 
       // console.log(newObjects);
     },
     columnDefs: [
-      { displayName: 'No.', field: 'number', width: '5%'},
+      { displayName: 'No.', field: 'number', width: '5%', cellClass: 'row-no'},
       { displayName: 'Error', field: 'error', width: '15%'},
       { field: 'Lastname', width: '15%'},
       { field: 'Firstname', width: '15%' },

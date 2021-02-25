@@ -1,5 +1,5 @@
 <!-- <div id="cover-spin" ng-if="ex.show_spinner" ></div> -->
-<ng-include src="'src/views/header.html'"></ng-include> 
+<ng-include src="'/header.html'"></ng-include> 
 <div>
   <md-toolbar class="md-menu-toolbar" style="border-bottom: 1px solid #c7c7c7;">
     <div layout="row">
@@ -41,7 +41,14 @@
   <md-progress-linear md-mode="indeterminate" ng-if="!ex.scholars_loaded" style="position: absolute;"></md-progress-linear>
   <div layout="column" layout-xs="column" style="background-color: #fff; padding: 5px;">
 
-    <div ui-grid="ex.gridOptions" ui-grid-resize-columns ui-grid-importer ui-grid-exporter ui-grid-auto-resize class="grid" ng-style="resizeDiv()" resize-div></div>
+    <div ui-grid="ex.gridOptions" 
+          ui-grid-resize-columns 
+          ui-grid-importer 
+          ui-grid-exporter 
+          ui-grid-auto-resize 
+          ui-grid-pinning
+          class="grid" ng-style="resizeDiv()" resize-div>
+    </div>
     
   </div>
 

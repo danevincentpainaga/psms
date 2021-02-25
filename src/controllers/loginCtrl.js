@@ -36,19 +36,27 @@ app.controller('loginCtrl',['$scope', '$rootScope', '$cookies', '$window', '$loc
         password: lg.password
       }
 
-      authApiService.validateLogin(credentials)
+      authApiService.getCsrfToken()
         .then(function(response){
-          let now = new Date();
-          let exp = new Date(now.getFullYear()+1, now.getMonth(), now.getDate());
-          $cookies.putObject('auth', response.data,  {'expires' : exp});
-          $location.path('/dashboard');
+
+            authApiService.validateLogin(credentials)
+              .then(function(response){
+                let now = new Date();
+                let exp = new Date(now.getFullYear()+1, now.getMonth(), now.getDate());
+                $cookies.putObject('auth', response.data,  {'expires' : exp});
+                $location.path('/dashboard');
+            }, function(err){
+                lg.buttonMessage = 'LOGIN';
+                lg.disableLogginBtn = false;
+                $rootScope.route_loader = false;
+                swalert.toastInfo(err.data.errors.email, 'error', 'top');
+                console.log(err);
+            });
+
       }, function(err){
-          lg.buttonMessage = 'LOGIN';
-          lg.disableLogginBtn = false;
-          $rootScope.route_loader = false;
-          swalert.toastInfo(err.data.errors.email, 'error', 'top');
-          console.log(err);
+        console.log(err);
       });
+
         
     }
   }

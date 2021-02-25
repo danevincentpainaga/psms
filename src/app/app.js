@@ -12,6 +12,7 @@ require('../directives/colorScholarStatusDirective');
 require('../directives/colorContractStatusDirective');
 require('../directives/colorContractDirective');
 require('../directives/filereadDirective');
+require('../directives/editScholarDirective');
 
 require('../filters/filters');
 

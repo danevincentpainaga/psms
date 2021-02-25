@@ -169,9 +169,9 @@ app.controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$win
       addScholarsService.clearInputs(ac);
       ac.buttonText = 'Save';
       ac.saving = false;
-      getNewUndergraduateScholars({ searched: ac.scholar_lastname });
       swalert.dialogBox('Scholar saved!', 'success', 'Success');
       print(scholarDetails);
+      getNewUndergraduateScholars({ searched: ac.scholar_lastname });
     }, err => {
       ac.buttonText = 'Save';
       ac.saving = false;

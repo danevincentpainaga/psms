@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin'); //installed via npm
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyPlugin = require("copy-webpack-plugin");
 const webpack = require('webpack'); //to access built-in plugins
 const path = require('path');
 
@@ -7,6 +8,11 @@ var SRC = path.resolve(__dirname, './src/app/app.js');
 
 module.exports = {
   mode: 'development',
+  devServer: {
+    contentBase: path.join(__dirname, 'dist'),
+    compress: true,
+    port: 9000,
+  },
   entry: {
     vendor: './src/app/vendor.js',
     main: './src/app/app.js',
@@ -53,6 +59,27 @@ module.exports = {
       //   ],
       // },
     {
+      exclude: path.resolve(__dirname, './src/index.html'),
+      test: /\.html$/i,
+      use: [
+        { loader:'ngtemplate-loader?relativeTo=' + (path.resolve(__dirname, './src/views')) },
+        { loader: 'raw-loader' }
+      ]
+    },
+    {
+     // test: /\.(woff|woff2|ttf|eot|svg|jpg|jpeg|png|gif)(\?v=\d+\.\d+\.\d+)?$/,
+     test: /\.(jpg|jpeg|png|gif)(\?v=\d+\.\d+\.\d+)?$/,
+      use: [
+        {
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]',
+            outputPath: 'images'
+          }
+        }
+      ]
+    },
+    {
       test: /\.svg(\?v=[0-9]\.[0-9]\.[0-9])?$/,
       use: 'url-loader?limit=100000&mimetype=image/svg+xml&name=/[name].[ext]'
     },
@@ -71,10 +98,15 @@ module.exports = {
     {
       test: /\.eot(\?v=[0-9]\.[0-9]\.[0-9])?$/,
       use: 'url-loader?limit=100000&mimetype=application/vnd.ms-fontobject&name=/[name].[ext]'
-    }
+    },
     ], 
   },
   plugins: [
     new HtmlWebpackPlugin({template: './src/index.html'}),
+    new CopyPlugin({
+      patterns: [
+        { from: "./src/images", to: "images" },
+      ],
+    }),
   ]
 };

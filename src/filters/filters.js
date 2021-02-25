@@ -15,7 +15,7 @@ app.filter('checkPhoto', function(){
     if (photo) {
     	return photo
     } 
-    return 'images/user.png';
+    return '/images/user.png';
   }
 
 });
@@ -26,7 +26,7 @@ app.filter('checkScholarPhoto', function(){
     if (photo) {
     	return 'http://localhost:8000/storage/'+photo;
     } 
-    return 'images/user.png';
+    return '/images/user.png';
   }
 
 });

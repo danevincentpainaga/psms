@@ -144,21 +144,6 @@ angular
     }
 }]);
 
-
-angular
-.module('psmsApp').directive('editScholar',[ function($mdSidenav){
-  return{
-    restrict:'E',
-    scope:{
-      scholar:'=',
-      updated:'='
-    },
-    controller:'editScholarCtrl',
-    controllerAs: 'ec',
-    templateUrl: 'src/views/edit_scholar.html',
-  }
-}]);
-
 angular
 .module('psmsApp').directive('ngFiles', ['$parse', function ($parse) {
     function fn_link(scope, element, attrs) {

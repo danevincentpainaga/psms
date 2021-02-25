@@ -2,43 +2,20 @@
 
 /**
  * @ngdoc function
- * @name psmsApp.controller:scholarsListCtrl
+ * @name psmsApp.controller:exportScholarsCtrl
  * @description
- * # scholarsListCtrl
+ * # exportScholarsCtrl
  * Controller of the psmsApp
  */ 
 
 var app = angular.module('psmsApp');
-app.controller('exportScholarsCtrl',['$scope', '$rootScope', '$cookies', '$window', '$location', '$timeout', '$filter', 'schoolApiService', 'addressApiService', 'scholarApiService', 'municipalitiesApiService', 'courseApiService', 'exportScholarsApiService', 'debounce', 'moment', 'exportService', 'uiGridConstants',
-  function ($scope, $rootScope, $cookies, $window, $location, $timeout, $filter, schoolApiService, addressApiService, scholarApiService, municipalitiesApiService, courseApiService, exportScholarsApiService, debounce, moment, exportService, uiGridConstants) {
+app.controller('exportScholarsCtrl',['$scope', '$filter', 'schoolApiService', 'addressApiService', 'scholarApiService', 'municipalitiesApiService', 'courseApiService', 'exportScholarsApiService', 'debounce', 'moment', 'exportService', 'uiGridConstants',
+  function ($scope, $filter, schoolApiService, addressApiService, scholarApiService, municipalitiesApiService, courseApiService, exportScholarsApiService, debounce, moment, exportService, uiGridConstants) {
 
   var ex = this;
+
   ex.number = 1;
-
   ex.mergedChunks = [];
-  // ex.semester_list = [{semester: "1st Semester"}, {semester: "2nd Semester"}, {semester: "3rd Semester"}, {semester: "4th Semester"}];
-
-  // $scope.$watchGroup(['ex.scholar_lastname', 'ex.age', 'ex.address', 'ex.section', 'ex.student_id_number', 'ex.academic_year'], debounce(function(n, o){
-    
-  //   let hasValue = n.some(element => element !== undefined);
-
-  //   if (hasValue) {
-  //         ex.scholars_loaded = false;
-  //         getScholarsToExport();
-  //   }
-
-  // }, 500), true);
-
-  // $scope.$watchGroup(['ex.gender', 'ex.scholar_status', 'ex.contract_status', 'ex.municipality', 'ex.degree', 'ex.school', 'ex.course', 'ex.year_level', 'ex.semester', 'ex.IP'], function(n, o){
-
-  //   let hasValue = n.some(element => element !== undefined);
-
-  //   if (hasValue) {
-  //     ex.scholars_loaded = false;
-  //     getScholarsToExport();
-  //   }
-
-  // }, true); 
 
   ex.gridOptions = {
     enableFiltering: true,
@@ -49,14 +26,14 @@ app.controller('exportScholarsCtrl',['$scope', '$rootScope', '$cookies', '$windo
 
     },
     columnDefs: [
-      { field: 'index', displayName: 'NO.', width: '50',  enableFiltering: false, enableSorting: false, cellTemplate: '<div class="ui-grid-cell-contents">{{grid.renderContainers.body.visibleRowCache.indexOf(row)+1}}</div>' },
-      { field: 'lastname', width: '15%',
+      { field: 'index', displayName: 'NO.', width: '50',  enableFiltering: false, pinnedLeft:true, enableSorting: false, cellClass: 'row-no', cellTemplate: '<div class="ui-grid-cell-contents">{{grid.renderContainers.body.visibleRowCache.indexOf(row)+1}}</div>' },
+      { field: 'lastname', width: '15%', enablePinning:true,
         filter: {
           condition: uiGridConstants.filter.EXACT,
         } 
       },
-      { field: 'firstname', width: '20%' },
-      { field: 'middlename', width: '15%' },
+      { field: 'firstname', width: '20%', enablePinning:true },
+      { field: 'middlename', width: '15%', enablePinning:true },
       { field: 'date_of_birth', width: '10%' },
       { field: 'gender', width: '10%',
         filter: {
@@ -90,7 +67,17 @@ app.controller('exportScholarsCtrl',['$scope', '$rootScope', '$cookies', '$windo
       { displayName:'Father', field: 'father', width: '30%' },
       { displayName:'Mother', field: 'mother', width: '30%' },
       { displayName:'School', field: 'school_name', width: '30%' },
-      { displayName:'Degree', field: 'degree', width: '10%' },
+      { displayName:'Degree', field: 'degree', width: '10%',
+        filter: {
+          type: uiGridConstants.filter.SELECT,
+          condition: uiGridConstants.filter.EXACT,
+          selectOptions: [ 
+            { value: 'Undergraduate', label: 'Undergraduate' }, 
+            { value: 'Masters', label: 'Masters' },
+            { value: 'Doctorate', label: 'Doctorate' }
+          ]
+        }
+      },
       { displayName:'Student ID NO.', field: 'student_id_number', width: '10%' },
       { displayName:'Course', field: 'course', width: '30%' },
       { displayName:'Section', field: 'section', width: '10%' },
@@ -144,9 +131,7 @@ app.controller('exportScholarsCtrl',['$scope', '$rootScope', '$cookies', '$windo
         ex.filteredGrid = ex.gridApi.core.getVisibleRows().map((row)=>{
           return row.entity;
         });
-        console.log(ex.filteredGrid);
       });
-
 
     }
   };
@@ -226,29 +211,9 @@ app.controller('exportScholarsCtrl',['$scope', '$rootScope', '$cookies', '$windo
         console.log(err);
       });
   }
-
-  function getListOfSchool(){
-    schoolApiService.getListOfSchool()
-      .then(response=>{
-        ex.schools = response.data;
-      }, err=> {
-        console.log(err);
-      });
-  }
-
-  function getCourses(){
-    courseApiService.getCourses()
-      .then(response=>{
-        ex.courses = response.data;
-      }, err=> {
-        console.log(err);
-      });
-  }
   
   // getMunicipalities();
   getScholarsToExport();
-  // getCourses();
-  // getListOfSchool();
-
+  
 }]);
 

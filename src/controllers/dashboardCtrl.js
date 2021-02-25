@@ -8,11 +8,11 @@
  * Controller of the psmsApp
  */ 
 
-var app = angular.module('psmsApp');
-app.controller('dashboardCtrl',['$scope', '$rootScope', '$cookies', '$window', '$location', '$timeout', 'swalert', 'dashboardApiService',
-  function ($scope, $rootScope, $cookies, $window, $location, $timeout, swalert, dashboardApiService) {
+angular.module('psmsApp')
+  .controller('dashboardCtrl', ['$scope', 'dashboardApiService', function ($scope, dashboardApiService) {
 
   var dc = this;
+
   dc.undergraduate_total = 0;
   dc.masters_total = 0;
   dc.doctorate_total = 0;

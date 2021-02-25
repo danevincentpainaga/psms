@@ -1,4 +1,4 @@
-<ng-include src="'src/views/header.html'"></ng-include> 
+<ng-include src="'/header.html'"></ng-include> 
 <div style="font-size: 14px;">
   <md-toolbar class="md-menu-toolbar" style="border-bottom: 1px solid #c7c7c7;">
     <div layout="row" style="min-height: 64px;">
@@ -32,7 +32,7 @@
                 <md-subheader class="md-no-sticky">List of School</md-subheader>
                   <div layout="row" style="flex-wrap: wrap;">
                     <md-list-item class="md-2-line" flex="100" flex-gt-sm="33" ng-repeat="school in s.list_of_schools">
-                      <img src="images/school.png" class="md-avatar" alt="" />
+                      <img src="/images/school.png" class="md-avatar" alt="" />
                       <div class="md-list-item-text">
                         <h5 style="margin: 0px;">{{school.school_name}}</h5>
                         <p style="font-size: 12px;">{{ school.province.province_name }}</p>

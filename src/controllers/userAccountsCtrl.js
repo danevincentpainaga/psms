@@ -8,86 +8,84 @@
  * Controller of the psmsApp
  */ 
 
-var app = angular.module('psmsApp');
-app.controller('userAccountsCtrl', ['$scope', '$rootScope', '$mdDialog', 'usersApiService', 'debounce', 'swalert', '$mdSidenav', 'municipalitiesApiService',
-  function ($scope, $rootScope, $mdDialog, usersApiService, debounce, swalert, $mdSidenav, municipalitiesApiService) {
 
-  var u = this;
-  // u.degree_list = [{degree:"All"}, {degree:'Undergraduate'},{degree:'Masters'},{degree:'Doctorate'}];
-  u.degree_list = ['Undergraduate', 'Masters', 'Doctorate'];
-  u.degree_options = "All";
-  u.selected_degree_options = "*";
-  u.selected_municipality_options = "*";
+angular.module('psmsApp')
+  .controller('userAccountsCtrl', ['$scope', 'usersApiService', 'debounce', 'swalert', '$mdSidenav', 'municipalitiesApiService',
+    function ($scope, usersApiService, debounce, swalert, $mdSidenav, municipalitiesApiService) {
 
-  $scope.$watch('u.searched_user', debounce(function() {
+    var u = this;
+    // u.degree_list = [{degree:"All"}, {degree:'Undergraduate'},{degree:'Masters'},{degree:'Doctorate'}];
+    u.degree_list = ['Undergraduate', 'Masters', 'Doctorate'];
+    u.degree_options = "All";
+    u.selected_degree_options = "*";
+    u.selected_municipality_options = "*";
 
-    u.users_list_loaded = false;
-    let searched = { searched: u.searched_user };
-    u.selectedMunicipalities = [];
-    u.selectedDegree = [];
-    getUserAccounts(searched);
+    $scope.$watch('u.searched_user', debounce(function() {
 
-  }, 500), true);
+      u.users_list_loaded = false;
+      let searched = { searched: u.searched_user };
+      u.selectedMunicipalities = [];
+      u.selectedDegree = [];
+      getUserAccounts(searched);
 
-  u.add = function(){
-    $mdSidenav('addUpdateUser').toggle();
-    getMunicipalities();
-  }
+    }, 500), true);
 
-  u.save = function(){
-    console.log(u.selectedDegree);
-  }
+    u.add = function(){
+      $mdSidenav('addUpdateUser').toggle();
+      getMunicipalities();
+    }
 
-  u.close = function(){
-    $mdSidenav('addUpdateUser').toggle();
-  }
+    u.save = function(){
+      console.log(u.selectedDegree);
+    }
 
-  u.onModelChange = function(searched){
-    console.log(searched);
-  }
+    u.close = function(){
+      $mdSidenav('addUpdateUser').toggle();
+    }
 
-  u.selectedDegreeOptions = function(){
-    u.custom_degree = u.selected_degree_options === 'Custom'? true : false;
-    console.log(u.selected_degree_options);
-  }
+    u.onModelChange = function(searched){
+      console.log(searched);
+    }
 
-  u.selectedMunicipalityOptions = function(){
-    u.custom_municipality = u.selected_municipality_options === 'Custom'? true : false;
-    console.log(u.selected_municipality_options);
-  }
+    u.selectedDegreeOptions = function(){
+      u.custom_degree = u.selected_degree_options === 'Custom'? true : false;
+      console.log(u.selected_degree_options);
+    }
 
-  u.queryMunicipality = function(searched){
+    u.selectedMunicipalityOptions = function(){
+      u.custom_municipality = u.selected_municipality_options === 'Custom'? true : false;
+      console.log(u.selected_municipality_options);
+    }
 
-    return searched ? u.municipalities.filter(value => value.municipality.toLowerCase().match(searched)) : [];
+    u.queryMunicipality = function(searched){
 
-  }
+      return searched ? u.municipalities.filter(value => value.municipality.toLowerCase().match(searched)) : [];
 
-  u.queryDegree = function(searched){
+    }
 
-    return searched ? u.degree_list.filter(value => value.toLowerCase().match(searched)) : [];
+    u.queryDegree = function(searched){
 
-  }
+      return searched ? u.degree_list.filter(value => value.toLowerCase().match(searched)) : [];
 
-  function getUserAccounts(details){
-    usersApiService.getUserAccounts(details).then(response => {
-      console.log(response.data);
-      u.users_list = response.data;
-      u.disable_linear_loader = true;
-      u.users_list_loaded = true;
-    }, err => {
-      console.log(err);
-    });
-  }
+    }
 
-  function getMunicipalities(){
-    municipalitiesApiService.getMunicipalities().then(response => {
-      u.municipalities = response.data;
-      console.log(response.data);
-    }, err => {
-      console.log(err);
-    });
-  }
+    function getUserAccounts(details){
+      usersApiService.getUserAccounts(details).then(response => {
+        console.log(response.data);
+        u.users_list = response.data;
+        u.disable_linear_loader = true;
+        u.users_list_loaded = true;
+      }, err => {
+        console.log(err);
+      });
+    }
 
-
+    function getMunicipalities(){
+      municipalitiesApiService.getMunicipalities().then(response => {
+        u.municipalities = response.data;
+      }, err => {
+        console.log(err);
+      });
+    }
 
 }]);

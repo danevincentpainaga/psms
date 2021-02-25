@@ -1,3 +1,5 @@
+const update_school_directive = require('../views/update_school_directive.html');
+
 angular
 .module('psmsApp').directive('addSchoolDirective',[ function(){
 
@@ -7,7 +9,7 @@ angular
 
   return{
     restrict:'E',
-    templateUrl: 'src/views/update_school_directive.html',
+    templateUrl: update_school_directive,
     controller: 'updateSchoolCtrl',
     controllerAs: 'up',
     scope:{

@@ -1,3 +1,24 @@
+require('../views/header.html');
+require('../views/side_nav.html');
+require('../views/add_user_accounts.html');
+require('../views/add_update_address.html');
+require('../views/add_update_contract.html');
+require('../views/add_update_course.html');
+require('../views/update_scholar_photo.html');
+
+const login_view = require('../views/login.html');
+const dashboard_view = require('../views/dashboard.html');
+const scholars_list_view = require('../views/scholars_list.html');
+const undergraduate_view = require('../views/add_undergraduate_scholars.html');
+const mastera_doctorate_view = require('../views/add_masteral_doctorate_scholars.html');
+const address_view = require('../views/address.html');
+const schools_view = require('../views/schools.html');
+const course_view = require('../views/course.html');
+const user_accounts_view = require('../views/user_accounts.html');
+const contract_view = require('../views/contract.html');
+const export_view = require('../views/export.html');
+const import_view = require('../views/import.html');
+
 angular
 .module('psmsApp', [
   'ngAnimate',
@@ -13,34 +34,35 @@ angular
   'ui.grid.importer',
   'ui.grid.resizeColumns',
   'ui.grid.moveColumns',
-  'ui.grid.autoResize'
+  'ui.grid.autoResize',
+  'ui.grid.pinning'
 ])
 .config(function ($stateProvider, $urlRouterProvider) {
   $stateProvider
     .state('base', {
       url: '/',
-      templateUrl: 'src/views/login.html',
+      templateUrl: login_view,
       controller: 'loginCtrl',
       controllerAs: 'lg',
       Authenticated: false,
     })
     .state('dashboard', {
       url: '/dashboard',
-      templateUrl: 'src/views/dashboard.html',
+      templateUrl: dashboard_view,
       controller: 'dashboardCtrl',
       controllerAs: 'dc',
       Authenticated: true,
     })
     .state('scholars_list', {
       url: '/scholars_list',
-      templateUrl: 'src/views/scholars_list.html',
+      templateUrl: scholars_list_view,
       controller: 'scholarsListCtrl',
       controllerAs: 'sc',
       Authenticated: true,
     })
     .state('add_undergraduate_scholars', {
       url: '/add_undergraduate_scholars',
-      templateUrl: 'src/views/add_undergraduate_scholars.html',
+      templateUrl: undergraduate_view,
       controller: 'addUndergraduateCtrl',
       controllerAs: 'ac',
       resolve:{
@@ -56,7 +78,7 @@ angular
     })
     .state('add_masteral_doctorate_scholars', {
       url: '/add_masteral_doctorate_scholars',
-      templateUrl: 'src/views/add_masteral_doctorate_scholars.html',
+      templateUrl: mastera_doctorate_view,
       controller: 'addMastersDoctorateCtrl',
       controllerAs: 'md',
       resolve:{
@@ -72,49 +94,49 @@ angular
     })
     .state('address', {
       url: '/address',
-      templateUrl: 'src/views/address.html',
+      templateUrl: address_view,
       controller: 'addressCtrl',
       controllerAs: 'ad',
       Authenticated: true,
     })
     .state('schools', {
       url: '/schools',
-      templateUrl: 'src/views/schools.html',
+      templateUrl: schools_view,
       controller: 'schoolsCtrl',
       controllerAs: 's',
       Authenticated: true,
     })
     .state('course', {
       url: '/course',
-      templateUrl: 'src/views/course.html',
+      templateUrl: course_view,
       controller: 'courseCtrl',
       controllerAs: 'cc',
       Authenticated: true,
     })
     .state('user_accounts', {
       url: '/user_accounts',
-      templateUrl: 'src/views/user_accounts.html',
+      templateUrl: user_accounts_view,
       controller: 'userAccountsCtrl',
       controllerAs: 'u',
       Authenticated: true,
     })
     .state('contract', {
       url: '/contract',
-      templateUrl: 'src/views/contract.html',
+      templateUrl: contract_view,
       controller: 'contractCtrl',
       controllerAs: 'c',
       Authenticated: true,
     })
     .state('export', {
       url: '/export',
-      templateUrl: 'src/views/export.html',
+      templateUrl: export_view,
       controller: 'exportScholarsCtrl',
       controllerAs: 'ex',
       Authenticated: true,
     })
     .state('import', {
       url: '/import',
-      templateUrl: 'src/views/import.html',
+      templateUrl: import_view,
       controller: 'importScholarsCtrl',
       controllerAs: 'ic',
       Authenticated: true,

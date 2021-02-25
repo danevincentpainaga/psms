@@ -11,7 +11,7 @@ angular.module('psmsApp')
         url: baseUrl+'api/login',
         data: credData,
         headers: {
-          Accept: "application/json",   
+          Accept: "application/json", 
         }
       });
     },
@@ -39,6 +39,13 @@ angular.module('psmsApp')
         }
       });
       
+    },
+    getCsrfToken: function(){
+      return $http.get(baseUrl+'sanctum/csrf-cookie', {
+        headers: {
+          Accept: "application/json"
+        }
+      });
     },
     logout: function(credData){
       return $http({

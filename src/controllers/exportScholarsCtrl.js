@@ -9,13 +9,15 @@
  */ 
 
 var app = angular.module('psmsApp');
-app.controller('exportScholarsCtrl',['$scope', '$filter', 'schoolApiService', 'addressApiService', 'scholarApiService', 'municipalitiesApiService', 'courseApiService', 'exportScholarsApiService', 'debounce', 'moment', 'exportService', 'uiGridConstants',
-  function ($scope, $filter, schoolApiService, addressApiService, scholarApiService, municipalitiesApiService, courseApiService, exportScholarsApiService, debounce, moment, exportService, uiGridConstants) {
+app.controller('exportScholarsCtrl',['$scope', '$filter', 'schoolApiService', 'addressApiService', 'exportScholarsApiService', 'exportService', 'uiGridConstants',
+  function ($scope, $filter, schoolApiService, addressApiService, exportScholarsApiService, exportService, uiGridConstants) {
 
   var ex = this;
 
   ex.number = 1;
   ex.mergedChunks = [];
+  ex.municipalities = [];
+  ex.schools = [];
 
   ex.gridOptions = {
     enableFiltering: true,
@@ -66,7 +68,13 @@ app.controller('exportScholarsCtrl',['$scope', '$filter', 'schoolApiService', 'a
       },
       { displayName:'Father', field: 'father', width: '30%' },
       { displayName:'Mother', field: 'mother', width: '30%' },
-      { displayName:'School', field: 'school_name', width: '30%' },
+      { displayName:'School', field: 'school_name', width: '20%',
+        filter: {
+          type: uiGridConstants.filter.SELECT,
+          condition: uiGridConstants.filter.EXACT,
+          selectOptions: ex.schools
+        }
+      },
       { displayName:'Degree', field: 'degree', width: '10%',
         filter: {
           type: uiGridConstants.filter.SELECT,
@@ -128,9 +136,11 @@ app.controller('exportScholarsCtrl',['$scope', '$filter', 'schoolApiService', 'a
       ex.gridApi = gridApi;
 
       ex.gridApi.core.on.rowsRendered($scope, function() {
+
         ex.filteredGrid = ex.gridApi.core.getVisibleRows().map((row)=>{
           return row.entity;
         });
+
       });
 
     }
@@ -184,11 +194,16 @@ app.controller('exportScholarsCtrl',['$scope', '$filter', 'schoolApiService', 'a
   function splitArrayOfChunks(array_of_chunks){
     for (var i = 0; i < array_of_chunks.length; i++) {
       mergeChunks(array_of_chunks[i]);
-    }    
+    }
+
+    // ex.gridOptions.columnDefs[9].filter.selectOptions = ex.municipalities;
   }
 
   function mergeChunks(chunk){
     for (var i = 0; i < chunk.length; i++) {
+
+      includeMunicipalityForFilter(chunk[i].municipality);
+      includeSchoolForFilter(chunk[i].school_name);
 
       Object.assign(chunk[i], { row_no: ex.number++, amount: $filter('currency')($filter('amount')(chunk[i]), '', 0), father: $filter('fatherDetails')(chunk[i].father_details), mother: $filter('motherDetails')(chunk[i].mother_details) });
       ex.mergedChunks.push(chunk[i]);
@@ -196,23 +211,18 @@ app.controller('exportScholarsCtrl',['$scope', '$filter', 'schoolApiService', 'a
     }
   }
 
-  function getMunicipalities(){
-    municipalitiesApiService.getMunicipalities()  
-      .then(response=>{
-        console.log(response.data);
-        let arr = [];
-
-        response.data.forEach(function(val, i){
-           arr.push({ value: val.municipality, label: val.municipality }); 
-        });
-
-        ex.gridOptions.columnDefs[9].filter.selectOptions = arr;
-      }, err=> {
-        console.log(err);
-      });
+  function includeMunicipalityForFilter(municipality){
+    if (!ex.municipalities.some(item => item.value === municipality)) {
+      ex.municipalities.push({ value: municipality, label: municipality });
+    }
   }
-  
-  // getMunicipalities();
+
+  function includeSchoolForFilter(school_name){
+    if (!ex.schools.some(item => item.value === school_name)) {
+      ex.schools.push({ value: school_name, label: school_name });
+    }
+  }
+
   getScholarsToExport();
   
 }]);

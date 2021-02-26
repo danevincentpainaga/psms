@@ -1,6 +1,6 @@
 angular.module('psmsApp').factory('scholarApiService', ['$http', '$cookies', '$rootScope', '$q', function($http, $cookies, $rootScope, $q){
 	 
-  var baseUrl = "http://localhost:8000/";
+  var baseUrl = "/";
 
   return{
     storeNewScholarDetails: function(scholar_details){

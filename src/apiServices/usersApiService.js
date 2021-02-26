@@ -1,7 +1,7 @@
 angular.module('psmsApp')
   .factory('usersApiService', ['$http', '$cookies', '$rootScope', '$q', function($http, $cookies, $rootScope, $q){
 	 
-  var baseUrl = "http://localhost:8000/";
+  var baseUrl = "/";
 
   return{
    getUserAccounts: function(searched){

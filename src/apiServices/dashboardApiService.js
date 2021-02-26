@@ -1,6 +1,6 @@
 angular.module('psmsApp').factory('dashboardApiService', ['$http', '$rootScope', function($http, $rootScope){
   
-  var baseUrl = "http://localhost:8000/";
+  var baseUrl = "/";
 
   return{
     undergraduateScholarsCount: function(){

@@ -1,6 +1,6 @@
 angular.module('psmsApp').factory('schoolApiService', ['$http', '$cookies', '$rootScope', '$q', function($http, $cookies, $rootScope, $q){
 	 
-  var baseUrl = "http://localhost:8000/";
+  var baseUrl = "/";
 
   return{
     getListOfSchool: function(searched){

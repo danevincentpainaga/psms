@@ -1,6 +1,6 @@
 angular.module('psmsApp').factory('academicContractService', ['$http', '$cookies', '$rootScope', '$q', function($http, $cookies, $rootScope, $q){
 
-  var baseUrl = "http://localhost:8000/";
+  var baseUrl = "/";
   
   return{
     getAcademicContractDetails: function(searched){

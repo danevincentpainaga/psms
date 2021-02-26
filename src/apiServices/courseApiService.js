@@ -1,6 +1,6 @@
 angular.module('psmsApp').factory('courseApiService', ['$http', '$cookies', '$rootScope', '$q', function($http, $cookies, $rootScope, $q){
 	 
-  var baseUrl = "http://localhost:8000/";
+  var baseUrl = "/";
 
   return{
     getCourses: function(searched){

@@ -5,6 +5,7 @@ require('../views/add_update_address.html');
 require('../views/add_update_contract.html');
 require('../views/add_update_course.html');
 require('../views/update_scholar_photo.html');
+require('../views/import_scholars.tmpl.html');
 
 const login_view = require('../views/login.html');
 const dashboard_view = require('../views/dashboard.html');

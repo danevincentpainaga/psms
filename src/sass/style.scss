@@ -73,9 +73,13 @@ body{
 }
 
 md-progress-linear{
-  height: 2.5px !important;
-  .md-container {
-    height: 2.5px !important;
+  height: 2.5px;
+  transform: scale(1, .7);
+}
+
+.import{
+  md-progress-linear{
+    transform: scale(1, 2);
   }
 }
 

@@ -9,17 +9,19 @@
  */ 
 
 var app = angular.module('psmsApp');
-app.controller('importScholarsCtrl',['$scope', '$q', 'importScholarApiService', 'municipalitiesApiService', 'schoolApiService', 'scholarApiService', 'courseApiService', 'academicContractService', 'addScholarsService', 'moment', '$timeout', 'swalert',
-  function ($scope, $q, importScholarApiService, municipalitiesApiService, schoolApiService, scholarApiService, courseApiService, academicContractService, addScholarsService, moment, $timeout, swalert) {
+app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importScholarApiService', 'municipalitiesApiService', 'schoolApiService', 'scholarApiService', 'courseApiService', 'academicContractService', 'addScholarsService', 'moment', '$timeout', 'swalert',
+  function ($scope, $q, $mdSidenav, importScholarApiService, municipalitiesApiService, schoolApiService, scholarApiService, courseApiService, academicContractService, addScholarsService, moment, $timeout, swalert) {
 
   var ic = this;
   var year_level = ['I', 'II', 'III', 'IV', 'V', 'VI'];
   var scholar_status = ['NEW', 'OLD'];
   var ip = ['YES', 'NO'];
   var gender = ['Male', 'Female'];
+  ic.total_errors = 0;
 
   // ic.myData = [];
   ic.scholars_to_upload = [];
+  ic.progress_value = 0;
 
   ic.gridOptions = {
     enableColumnResizing: true,
@@ -32,7 +34,7 @@ app.controller('importScholarsCtrl',['$scope', '$q', 'importScholarApiService', 
       // console.log(newObjects);
     },
     columnDefs: [
-      { displayName: 'No.', field: 'number', width: '5%', cellClass: 'row-no'},
+      { field: 'index', displayName: 'NO.', field: 'number', width: '50', enableFiltering: false, enableSorting: false, cellClass: 'row-no',  cellTemplate: '<div class="ui-grid-cell-contents">{{grid.renderContainers.body.visibleRowCache.indexOf(row)+1}}</div>' },
       { displayName: 'Error', field: 'error', width: '15%'},
       { field: 'Lastname', width: '15%'},
       { field: 'Firstname', width: '15%' },
@@ -69,6 +71,10 @@ app.controller('importScholarsCtrl',['$scope', '$q', 'importScholarApiService', 
     }
   };
 
+  ic.add = function(){
+    $mdSidenav('importScholars').toggle();
+  }
+
   ic.uploadToDatabase = function(){
     ic.checking_in = 'Uploading...';
     console.log(ic.scholars_to_upload);
@@ -94,25 +100,39 @@ app.controller('importScholarsCtrl',['$scope', '$q', 'importScholarApiService', 
 
   ic.checkImportedScholars = function(){
 
+      ic.show_spinner = true;
+
       let checkedItem = [];
 
       ic.imported_scholars = angular.copy(ic.gridOptions.data);
+      
       console.log("checking... ");
 
-      ic.imported_scholars.forEach(function(value, idx){
+      $timeout(()=>{
 
-        ic.gridOptions.data[idx].error = [];
+        ic.checking_in = "Duplicate values";
 
-        if (checkedItem.indexOf(concatAndLower(value)) > -1) return;
+        ic.imported_scholars.forEach(function(value, idx){
 
-        checkedItem.push(concatAndLower(value));
+          ic.gridOptions.data[idx].error = [];
 
-        checkDuplicate(value, ic.imported_scholars, idx);
+          if (checkedItem.indexOf(concatAndLower(value)) > -1) return;
+
+          checkedItem.push(concatAndLower(value));
+
+          checkDuplicate(value, ic.imported_scholars, idx);
+
+        });
+
+        validateImportedScholars();
 
       });
 
-      validateImportedScholars();
       // checkDuplicate(imported_scholars, 0); 
+  }
+
+  ic.cancel = function(){
+    $mdSidenav('importScholars').toggle();
   }
 
   // This code removes Duplicate Names with row NO. of Duplicates
@@ -155,6 +175,7 @@ app.controller('importScholarsCtrl',['$scope', '$q', 'importScholarApiService', 
         if (concatAndLower(value) === concatAndLower(imported_scholars[i]))  {
           ic.gridOptions.data[idx].error[0] = "Duplicate No.";
           ic.gridOptions.data[idx].error.push(i+1);
+          ic.total_errors += 1;
         }
       }
     }
@@ -166,7 +187,10 @@ app.controller('importScholarsCtrl',['$scope', '$q', 'importScholarApiService', 
 
   function validateImportedScholars(){
       $q.all([importScholarApiService.getAllScholars({degree: ic.degree}), importScholarApiService.getAddresses({municipality: ic.municipality}), schoolApiService.getListOfSchool(), courseApiService.getCourses(), academicContractService.getAcademicContractDetails()]).then(response=>{
+        
         console.log(response);
+        $mdSidenav('importScholars').toggle();
+
         ic.imported_scholars.forEach(function(val, i){
           $timeout(()=>{
             validateScholarsName(response, val, i);
@@ -184,14 +208,17 @@ app.controller('importScholarsCtrl',['$scope', '$q', 'importScholarApiService', 
 
   function validateScholarsName(response, scholarsObj, idx){
 
+      ic.show_spinner = false;
+
       var total = ic.imported_scholars.length - 1;
 
-      ic.checking_in = "Checking... "+scholarsObj.Lastname;
+      ic.checking_in = scholarsObj.Lastname+" "+scholarsObj.Firstname+", "+scholarsObj.Middlename;
 
       const result = response[0].data.find(item => {
 
         if (item.lastname.trim().toLowerCase() === scholarsObj.Lastname.trim().toLowerCase() && item.firstname.trim().toLowerCase() === scholarsObj.Firstname.trim().toLowerCase() && item.middlename.trim().toLowerCase() === scholarsObj.Middlename.trim().toLowerCase()) {
             ic.gridOptions.data[idx].error.push("Error: Scholar already exist");
+            ic.total_errors += 1;
             return true;
         }
 
@@ -212,18 +239,22 @@ app.controller('importScholarsCtrl',['$scope', '$q', 'importScholarApiService', 
 
       if (!scholarsObj.Degree || upperCase(scholarsObj.Degree) !== upperCase(ic.degree)) {
           ic.gridOptions.data[idx].error.push("Error: Degree is Invalid");
+          ic.total_errors += 1;
       }
 
       if (!scholarsObj.Section) {
           ic.gridOptions.data[idx].error.push("Error: Section is required");
+          ic.total_errors += 1;
       }
 
       if (!moment.validateDate(scholarsObj['Date of Birth'])) {
           ic.gridOptions.data[idx].error.push("Error: Invalid Date of Birth");
+          ic.total_errors += 1;
       }
 
       if (!scholarsObj.Mother_maiden_name && !scholarsObj.Mother_firstname && !scholarsObj.Mother_middlename ) {
           ic.gridOptions.data[idx].error.push("Error: Mother's details is required");
+          ic.total_errors += 1;
       }
 
       validateAddress(response[1].data, scholarsObj, idx);
@@ -275,6 +306,7 @@ app.controller('importScholarsCtrl',['$scope', '$q', 'importScholarApiService', 
   function validate(referenceArray, fieldname, error, idx){
     if (referenceArray.indexOf(fieldname) === -1) {
         ic.gridOptions.data[idx].error.push(error);
+        ic.total_errors += 1;
     }   
   }
 
@@ -291,6 +323,7 @@ app.controller('importScholarsCtrl',['$scope', '$q', 'importScholarApiService', 
 
       if (!address) {
         ic.gridOptions.data[idx].error.push("Error: Address "+scholarsObj.Address+" does not exist in database ");
+        ic.total_errors += 1;
       }
 
   }
@@ -308,6 +341,7 @@ app.controller('importScholarsCtrl',['$scope', '$q', 'importScholarApiService', 
 
       if (!school) {
           ic.gridOptions.data[idx].error.push("Error: School "+scholarsObj.School+" does not exist in database ");
+          ic.total_errors += 1;
       }
 
   }
@@ -325,6 +359,7 @@ app.controller('importScholarsCtrl',['$scope', '$q', 'importScholarApiService', 
 
       if (!course) {
         ic.gridOptions.data[idx].error.push("Error: Course "+scholarsObj.Course+" does not exist in database ");
+        ic.total_errors += 1;
       }
 
   }
@@ -342,6 +377,7 @@ app.controller('importScholarsCtrl',['$scope', '$q', 'importScholarApiService', 
 
       if (!contract) {
         ic.gridOptions.data[idx].error.push("Error: Academic year semester Invalid");
+        ic.total_errors += 1;
       }
 
   }

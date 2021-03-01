@@ -62,7 +62,8 @@ angular
 
 angular
   .module('psmsApp').directive('resizeDiv', ['$window', function ($window) {
-    return function (scope, element) {
+    return function (scope, element, attrs) {
+
         var w = angular.element($window);
         scope.getWindowDimensions = function () {
             return {
@@ -76,8 +77,8 @@ angular
             
             scope.resizeDiv = function () {
                 return {
-                  'min-height': (newValue.h - 160) + 'px',
-                  'max-height': (newValue.h - 160) + 'px'
+                  'min-height': (newValue.h - parseInt(attrs.height)) + 'px',
+                  'max-height': (newValue.h - parseInt(attrs.height)) + 'px'
                 };
             };
         }, true);

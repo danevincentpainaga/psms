@@ -6,14 +6,17 @@
       <md-toolbar-filler style="display: flex;">
         <md-icon class="material-icons">file_upload</md-icon>
       </md-toolbar-filler>
-      <h2 class="md-toolbar-tools" style="padding: 20px;">
+      <h2 class="md-toolbar-tools" style="padding: 20px;display: flex;justify-content: space-between;">
         <span>Import</span>
+        <md-button class="md-fab md-mini md-primary" ng-click="ic.add()">
+          <md-icon class="material-icons">add</md-icon>
+        </md-button>
       </h2>
     </div>
   </md-toolbar>
   <md-progress-linear md-mode="indeterminate" ng-if="!ic.municipalities_loaded" style="position: absolute;"></md-progress-linear>
-  <div layout="column" layout-xs="column" style="background-color: #fff; padding: 5px;">
-    <div flex>
+  <div layout="column" layout-xs="column" style="background-color: #fff; padding: 5px;" class="import">
+<!--     <div flex>
       <div layout="row">
         <md-input-container flex="15">
           <label>Degree</label>
@@ -33,12 +36,35 @@
     </div>
     <div flex style="border: 1px solid #b0b1b3;min-height: 300px;"  ng-if="!ic.hasImported">
       <md-progress-linear md-mode="determinate" value="{{ic.progress_value}}"></md-progress-linear>
-      <div ui-grid="ic.gridOptions" ui-grid-resize-columns ui-grid-importer ui-grid-exporter class="grid"></div>
+      <div ui-grid="ic.gridOptions" ui-grid-resize-columns ui-grid-exporter class="grid"></div>
       <label>{{ ic.checking_in }}</label>
       <br />
       <label>{{ic.progress_value}}%</label>
       <br />
-      <button ng-click="ic.checkImportedScholars()">Check</button>
+      
+    </div> -->
+
+    <div flex style="overflow: hidden;">
+      <div ui-grid="ic.gridOptions" 
+        ui-grid-resize-columns 
+        ui-grid-exporter
+        ui-grid-auto-resize 
+        ng-style="resizeDiv()" resize-div height="217" 
+        class="grid">
+      </div>
+    </div>
+    <div style="background: whitesmoke;margin-top: .5em;box-sizing: border-box; padding: 5px;">
+      <div style="display: flex; justify-content: space-between;">      
+        <span style="font-size: 13px;">Progress: {{ic.progress_value}}%</span>
+      </div>
+      <div style="margin-top: .3em;">
+        <md-progress-linear md-mode="determinate" value="{{ic.progress_value}}" ></md-progress-linear>
+        <div class="column" style="margin-top: 1em;">
+          <span style="font-size: 13px;float: left;width: 100%;">Checking: {{ ic.checking_in }}</span>
+          <span style="font-size: 13px;float: left;width: 100%;clear:both;">Total error: <span style="color: red;">{{ ic.total_errors }}</span></span>
+        </div>
+      </div>
     </div>
   </div>
 </div>
+<ng-include src="'/import_scholars.tmpl.html'"></ng-include>

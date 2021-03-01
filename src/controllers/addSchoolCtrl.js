@@ -42,6 +42,9 @@ app.controller('addSchoolCtrl', ['$scope', '$rootScope', '$mdDialog', 'schoolApi
       $rootScope.$emit('successful_add_emit_from_addSchoolCtrl');
     }, err => {
       console.log(err);
+      as.saveBtnText = 'Save';
+      as.saving = false;
+      swalert.dialogBox(err.data.message, 'error', 'Failed');
     });
   }
 

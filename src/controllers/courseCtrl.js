@@ -61,16 +61,16 @@ angular.module('psmsApp')
 		}
 	}
 
-
 	function storeCourse(course_details){
 		courseApiService.storeCourse(course_details).then(response => {
 			cc.courses.push(response.data);
 			clearInputs();
 			cc.saving_updating = false;
-			swalert.toastInfo('Course saved.', 'success', 'top-right', 4000);
+			swalert.dialogBox('Course saved.', 'success',  'successful');
 		}, err => {
 			console.log(err);
-			swalert.toastInfo(err.data, 'error', 'top-right');
+			cc.saving_updating = false;
+			swalert.dialogBox(err.data.message, 'error', 'Failed');
 		})
 	}
 

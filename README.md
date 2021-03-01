@@ -1,3 +1,3 @@
 # psms
-* Provincial Scholarship Management Sytem
+* Provincial Scholarship Management System
 * Status: on progress

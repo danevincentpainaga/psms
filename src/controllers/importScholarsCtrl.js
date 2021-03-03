@@ -9,8 +9,8 @@
  */ 
 
 var app = angular.module('psmsApp');
-app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importScholarApiService', 'municipalitiesApiService', 'schoolApiService', 'scholarApiService', 'courseApiService', 'academicContractService', 'addScholarsService', 'moment', '$timeout', 'swalert',
-  function ($scope, $q, $mdSidenav, importScholarApiService, municipalitiesApiService, schoolApiService, scholarApiService, courseApiService, academicContractService, addScholarsService, moment, $timeout, swalert) {
+app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importScholarApiService', 'municipalitiesApiService', 'schoolApiService', 'scholarApiService', 'courseApiService', 'academicContractService', 'addScholarsService', 'moment', '$timeout', 'swalert', 'uiGridConstants',
+  function ($scope, $q, $mdSidenav, importScholarApiService, municipalitiesApiService, schoolApiService, scholarApiService, courseApiService, academicContractService, addScholarsService, moment, $timeout, swalert, uiGridConstants) {
 
   var ic = this;
   var year_level = ['I', 'II', 'III', 'IV', 'V', 'VI'];
@@ -35,7 +35,14 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
     },
     columnDefs: [
       { field: 'index', displayName: 'NO.', field: 'number', width: '50', enableFiltering: false, enableSorting: false, cellClass: 'row-no',  cellTemplate: '<div class="ui-grid-cell-contents">{{grid.renderContainers.body.visibleRowCache.indexOf(row)+1}}</div>' },
-      { displayName: 'Error', field: 'error', width: '15%'},
+      { displayName: 'Error', field: 'error', width: '15%', 
+        cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
+          let error = grid.getCellValue(row,col);
+          if (error && error.length > 0) {
+            return 'error';
+          }
+        }
+      },
       { field: 'Lastname', width: '15%'},
       { field: 'Firstname', width: '15%' },
       { field: 'Middlename', width: '15%' },
@@ -58,7 +65,7 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
       { field:'Semester',width: '15%' },
       { field:'Academic year', width: '15%' },
       { field:'Status',  width: '10%' },
-      { field:'IP', width: '10%' },
+      { displayName: 'IP', field:'IP', width: '10%' },
     ],
     enableGridMenu: true,
     enableSelectAll: true,
@@ -196,6 +203,7 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
             validateScholarsName(response, val, i);
             if (i === ic.imported_scholars.length -1) {
               ic.checking_in = 'Finished';
+              ic.gridApi.core.notifyDataChange( uiGridConstants.dataChange.COLUMN );
             }
           });
 
@@ -261,6 +269,8 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
       validateSchool(response[2].data, scholarsObj, idx);
       validateCourse(response[3].data, scholarsObj, idx);
       validateContractDetails(response[4].data, scholarsObj, idx);
+
+      ic.gridApi.core.notifyDataChange( uiGridConstants.dataChange.COLUMN );
 
       let scholar = {
           student_id_number: upperCase(scholarsObj['Student ID NO']),

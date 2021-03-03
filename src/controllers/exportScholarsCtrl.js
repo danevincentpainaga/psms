@@ -9,8 +9,8 @@
  */ 
 
 var app = angular.module('psmsApp');
-app.controller('exportScholarsCtrl',['$scope', '$filter', 'schoolApiService', 'addressApiService', 'exportScholarsApiService', 'exportService', 'uiGridConstants',
-  function ($scope, $filter, schoolApiService, addressApiService, exportScholarsApiService, exportService, uiGridConstants) {
+app.controller('exportScholarsCtrl',['$scope', '$filter', '$timeout', 'schoolApiService', 'addressApiService', 'exportScholarsApiService', 'exportService', 'uiGridConstants',
+  function ($scope, $filter, $timeout, schoolApiService, addressApiService, exportScholarsApiService, exportService, uiGridConstants) {
 
   var ex = this;
 
@@ -147,15 +147,15 @@ app.controller('exportScholarsCtrl',['$scope', '$filter', 'schoolApiService', 'a
   };
 
   ex.exportForDatabase = function(){
-    exportService.exportForDatabase(ex.filteredGrid, ex);
+    $timeout(exportService.exportForDatabase(ex.filteredGrid, ex), 500);
   }
 
   ex.exportMasterlist = function(){
-    exportService.exportMasterlist(ex.filteredGrid, ex);
+    $timeout(exportService.exportMasterlist(ex.filteredGrid, ex), 500);
   }
 
   ex.exportNormal = function(){
-    exportService.exportNormal(ex.filteredGrid, ex);
+    $timeout(exportService.exportNormal(ex.filteredGrid, ex), 500);
   }
 
   function getScholarsToExport(){

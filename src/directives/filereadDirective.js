@@ -3,7 +3,8 @@ angular.module('psmsApp').directive("fileread", ['$timeout',  function ($timeout
   return {
     scope: {
       opts: '=',
-      state:'='
+      state:'=',
+      checking: '='
     },
     link: function ($scope, $elm, $attrs) {
 
@@ -11,7 +12,7 @@ angular.module('psmsApp').directive("fileread", ['$timeout',  function ($timeout
 
       $elm.on('change', function (changeEvent) {
 
-        if (!changeEvent.target.files[0]) {
+        if (!changeEvent.target.files[0] || $scope.checking) {
             changeEvent.target.files = file;
             return;
         }

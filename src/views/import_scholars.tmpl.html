@@ -12,32 +12,29 @@
             <span class="md-subhead">scholars</span>
           </md-card-header-text>
         </md-card-header>
-        <md-card-content style="padding: 0px 16px 0px 16px;">
+        <md-card-content style="padding: 0px 16px 16px 16px;">
           <form>
             <div layout="column" >
               <md-input-container flex="15">
                 <label>Degree</label>
-                <md-select ng-model="ic.degree">
+                <md-select ng-model="ic.degree" ng-disabled="ic.isChecking">
                   <md-option ng-value="degree" ng-repeat="degree in access_degree"><em>{{ degree }}</em></md-option>
                 </md-select>
               </md-input-container>
               <md-input-container flex="20">
                 <label>Municipality</label>
-                <md-select ng-model="ic.municipality">
+                <md-select ng-model="ic.municipality" ng-disabled="ic.isChecking">
                   <md-option ng-value="mun.municipality"  ng-repeat="mun in ic.municipalities"><em>{{ mun.municipality }}</em></md-option>
                 </md-select>
               </md-input-container>
             </div>
-            <div style="margin-top: 1.7em;">
-              <input type="file" accept=".xls,.xlsx, .csv,.ods" fileread="" state="ic.show_spinner" opts="ic.gridOptions" multiple="false" style="outline-style: none;" />
+            <div style="margin-top: 1.7em;" ng-if="ic.selection_complete" >
+              <input type="file" accept=".xls,.xlsx, .csv,.ods" fileread="" state="ic.show_spinner" opts="ic.gridOptions" checking="ic.isChecking" multiple="false" style="outline-style: none;" ng-disabled="ic.isChecking"/>
             </div>
-            <div style="margin-top: 14.3em;">
-              <md-button class="md-raised md-primary" ng-click="ic.checkImportedScholars()" style="width: 100%;margin: 10px 0px !important;">Check</md-button>
+            <div style="margin-top: 14.3em;" ng-if="ic.gridOptions.data.length > 0">
+              <md-button class="md-raised md-primary" ng-click="ic.checkImportedScholars()" ng-if="!ic.isChecking" style="width: 100%;margin: 10px 0px !important;">Check</md-button>
               <md-button class="md-raised" ng-click="ic.cancel()" style="width: 100%;margin: 0px !important;">Cancel</md-button>
             </div>
-<!--             <div ng-if="!ic.hasImported" style="display: flex;justify-content: center;align-items: center;border-style: dotted; border-width: 2px;margin-bottom: .5em;padding: 5px;height: 50px">
-              Import
-            </div> -->
           </form>
           <br />
         </md-card-content>

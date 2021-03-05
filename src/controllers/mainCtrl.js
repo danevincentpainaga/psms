@@ -89,33 +89,33 @@ angular
     }
 }]);
 
-angular
-  .module('psmsApp').directive('resizeAddScholarsDiv', ['$window', function ($window) {
-    return function (scope, element) {
-        var w = angular.element($window);
-        scope.getWindowDimensions = function () {
-            return {
-                'h': $window.innerHeight,
-                'w': $window.innerwidth,
-            };
-        };
-        scope.$watch(scope.getWindowDimensions, function (newValue, oldValue) {
-            scope.windowHeight = newValue.h;
-            scope.windowWidth = newValue.w;
+// angular
+//   .module('psmsApp').directive('resizeAddScholarsDiv', ['$window', function ($window) {
+//     return function (scope, element) {
+//         var w = angular.element($window);
+//         scope.getWindowDimensions = function () {
+//             return {
+//                 'h': $window.innerHeight,
+//                 'w': $window.innerwidth,
+//             };
+//         };
+//         scope.$watch(scope.getWindowDimensions, function (newValue, oldValue) {
+//             scope.windowHeight = newValue.h;
+//             scope.windowWidth = newValue.w;
             
-            scope.resize = function () {
-                return {
-                  'min-height': (newValue.h - 145) + 'px',
-                  'max-height': (newValue.h - 145) + 'px'
-                };
-            };
-        }, true);
+//             scope.resize = function () {
+//                 return {
+//                   'min-height': (newValue.h - 145) + 'px',
+//                   'max-height': (newValue.h - 145) + 'px'
+//                 };
+//             };
+//         }, true);
 
-        w.bind('resize', function () {
-            scope.$apply();
-        });
-    }
-}]);
+//         w.bind('resize', function () {
+//             scope.$apply();
+//         });
+//     }
+// }]);
 
 angular
   .module('psmsApp').directive('resizeMdList', ['$window', function ($window) {
@@ -214,10 +214,14 @@ angular
 });
 
 
+
+var update_scholar = require('../views/update_scholar_photo.html');
+
 angular
   .module('psmsApp').directive('editProfilePhoto',[ function(){
+
     return{
       restrict:'E',
-      templateUrl:'src/views/update_scholar_photo.html',
+      templateUrl: update_scholar
     }
 }]);

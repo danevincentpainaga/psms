@@ -195,8 +195,6 @@ app.controller('exportScholarsCtrl',['$scope', '$filter', '$timeout', 'schoolApi
     for (var i = 0; i < array_of_chunks.length; i++) {
       mergeChunks(array_of_chunks[i]);
     }
-
-    // ex.gridOptions.columnDefs[9].filter.selectOptions = ex.municipalities;
   }
 
   function mergeChunks(chunk){

@@ -92,7 +92,7 @@
               <input type="text" ng-model="md.scholar_lastname" style="text-transform: uppercase;">
             </md-input-container>
             <md-subheader class="md-no-sticky">Masteral/Doctorate list</md-subheader>
-            <div style="height: 355px; overflow-y: auto;">
+            <div style="overflow-y: auto;" ng-style="resizeList()"  resize-md-list>
             <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top: 10px;" ng-if="!md.scholars_loaded">
               <md-progress-circular md-diameter="25px"></md-progress-circular>
             </div>
@@ -125,7 +125,7 @@
           </md-list>
         </md-content>
       </div>
-      <div flex="" layout-padding style="background: #efefef; overflow-y: auto;border-top: 1px solid #c7c7c7;" ng-style="resize()" resize-add-scholars-div>
+      <div flex="" layout-padding style="background: #efefef; overflow-y: auto;border-top: 1px solid #c7c7c7;" ng-style="resizeDiv()" resize-div height="145">
         <h3 ng-if="!md.has_semester" >Contract closed.</h3>
         <div ng-if="md.has_semester" class="fading-up">
           <md-card style="margin: 0px;">

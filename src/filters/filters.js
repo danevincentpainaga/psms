@@ -39,9 +39,14 @@ app.filter('fatherDetails', function(){
       
       let parent_details = typeof details === 'object'? details : JSON.parse(details);
 
-      if (parent_details.firstname !== null && parent_details.lastname !== null && parent_details.middlename !== null) {
+      if (parent_details.firstname && parent_details.lastname && !parent_details.middlename) {
+        return parent_details.firstname+" "+parent_details.lastname;
+      }
+
+      if (parent_details.firstname && parent_details.lastname && parent_details.middlename) {
         return parent_details.firstname+" "+parent_details.lastname+", "+parent_details.middlename;
       }
+
       return 'NONE';
     }
   }
@@ -54,6 +59,9 @@ app.filter('motherDetails', function(){
   return function(details){
     if (details) {
       let parent_details = typeof details === 'object'? details : JSON.parse(details);
+      if (!parent_details.middlename) {
+        return parent_details.firstname+" "+parent_details.maiden_name;
+      }
       return parent_details.firstname+" "+parent_details.maiden_name+", "+parent_details.middlename;
     }
   }

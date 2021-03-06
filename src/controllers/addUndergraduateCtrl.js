@@ -17,7 +17,6 @@ angular.module('psmsApp')
     ac.list_of_schools = [];
     ac.buttonText = 'Save';
     
-
     $scope.$watch('ac.scholar_lastname', debounce(function() {
       ac.scholars_loaded = false;
       getNewUndergraduateScholars({ searched: ac.scholar_lastname });
@@ -28,53 +27,55 @@ angular.module('psmsApp')
     }  
 
     ac.saveNewUndergraduateDetails = function(){
-      
-      if (
-            ac.firstname && ac.lastname && ac.middlename && ac.addressId && moment.validateDate(ac.date_of_birth) 
-            && ac.age && ac.gender && ac.schoolId && ac.courseId && ac.section && ac.year_level && ac.student_id_number
-            && ac.IP && academicContractDetails.ascId && ac.m_firstname && ac.search_maidenname && ac.m_middlename
-        ) {
 
-          ac.buttonText = 'Saving...';
-          ac.saving = true;
-        
-            let scholar_details = {
-              firstname: ac.firstname.toUpperCase(),
-              lastname: ac.lastname.toUpperCase(),
-              middlename: ac.middlename.toUpperCase(),
-              addressId: ac.addressId,
-              date_of_birth: ac.date_of_birth,
-              age: ac.age,
-              gender: ac.gender,
-              schoolId: ac.schoolId,
-              courseId: ac.courseId,
-              section: ac.section.toUpperCase(),
-              year_level: ac.year_level.toUpperCase(),
-              student_id_number: ac.student_id_number.toUpperCase(),
-              IP: ac.IP,
-              degree: "Undergraduate",
-              contract_id: academicContractDetails.activated_contract_id,
-              asc_id: academicContractDetails.ascId,
-              father_details:{ 
-                firstname: (ac.f_firstname || "").toUpperCase(),
-                lastname: (ac.search_flastname || "").toUpperCase(),
-                middlename: (ac.f_middlename || "").toUpperCase(),
-                occupation: ""
-              },
-              mother_details:{ 
-                firstname: (ac.m_firstname || "").toUpperCase(),
-                maiden_name: (ac.search_maidenname || "").toUpperCase(),
-                middlename: (ac.m_middlename || "").toUpperCase(),
-                occupation: ""
-              },
-            }
-
-            storeNewScholarDetails(scholar_details);
-
-      }
-      else{
+      if (!ac.f_firstname && !ac.search_flastname || !ac.m_firstname && !ac.search_maidenname)
+      {
         swalert.toastInfo('please complete the form', 'error', 'top-right', 4000);
+        return;
       }
+
+      if (!ac.firstname || !ac.lastname || !ac.addressId || !moment.validateDate(ac.date_of_birth) || !ac.age || !ac.gender || !ac.schoolId || !ac.courseId || !ac.section || !ac.year_level || !ac.student_id_number || !ac.IP || !academicContractDetails.ascId)
+      {
+        swalert.toastInfo('please complete the form', 'error', 'top-right', 4000);
+        return;
+      }
+
+      ac.buttonText = 'Saving...';
+      ac.saving = true;
+    
+        let scholar_details = {
+          firstname: ac.firstname.toUpperCase(),
+          lastname: ac.lastname.toUpperCase(),
+          middlename: (ac.middlename || "").toUpperCase(),
+          addressId: ac.addressId,
+          date_of_birth: ac.date_of_birth,
+          age: ac.age,
+          gender: ac.gender,
+          schoolId: ac.schoolId,
+          courseId: ac.courseId,
+          section: ac.section.toUpperCase(),
+          year_level: ac.year_level.toUpperCase(),
+          student_id_number: ac.student_id_number.toUpperCase(),
+          IP: ac.IP,
+          degree: "Undergraduate",
+          contract_id: academicContractDetails.activated_contract_id,
+          asc_id: academicContractDetails.ascId,
+          father_details:{ 
+            firstname: (ac.f_firstname || "").toUpperCase(),
+            lastname: (ac.search_flastname || "").toUpperCase(),
+            middlename: (ac.f_middlename || "").toUpperCase(),
+            occupation: ""
+          },
+          mother_details:{ 
+            firstname: (ac.m_firstname || "").toUpperCase(),
+            maiden_name: (ac.search_maidenname || "").toUpperCase(),
+            middlename: (ac.m_middlename || "").toUpperCase(),
+            occupation: ""
+          },
+        }
+
+        storeNewScholarDetails(scholar_details);
+        console.log(scholar_details);
     }
 
     ac.edit = function(scholarDetails){

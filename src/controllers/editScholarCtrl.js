@@ -21,7 +21,7 @@ angular.module('psmsApp')
 
     $scope.$watch('scholar', function(n, o){
       if (n) {
-
+        console.log(n);
         let father = JSON.parse(n.father_details);
         let mother = JSON.parse(n.mother_details);
 
@@ -159,7 +159,7 @@ angular.module('psmsApp')
 
     ec.updateScholarParentsDetails = function(){
 
-      if (ec.m_firstname && ec.search_maidenname && ec.m_middlename) {
+      if (ec.m_firstname && ec.search_maidenname) {
 
         ec.updatingParentsDetails = true;
         ec.parentsButtonText = 'Updating...';
@@ -268,10 +268,9 @@ angular.module('psmsApp')
 
     function updateScholarParentsDetails(parentsDetails){
       scholarApiService.updateScholarParentsDetails(parentsDetails).then(response => {
-        console.log(response.data);
 
-        ec.binded_copy.father_details = response.data.father_details;
-        ec.binded_copy.mother_details = response.data.mother_details;
+        ec.binded_copy.father_details = JSON.stringify(response.data.father_details);
+        ec.binded_copy.mother_details = JSON.stringify(response.data.mother_details);
         ec.binded_copy.updated_at = response.data.updated_at;
 
         ec.parentsButtonText = 'Update';

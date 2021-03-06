@@ -20,12 +20,7 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
   ic.total_errors = 0;
 
   $scope.$watchGroup(['ic.degree', 'ic.municipality'], function(n, o){
-    if (n.indexOf(undefined) === -1) {
-      ic.selection_complete = true;
-    }
-    else{
-      ic.selection_complete = false;
-    }
+    ic.selection_complete = n.indexOf(undefined) === -1 ? true : false;
   });
 
 
@@ -109,6 +104,13 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
   }
 
   ic.uploadToDatabase = function(){
+
+    if (ic.total_errors > 0) {
+
+      swalert.dialogBox('Imported data has '+ ic.total_errors +' Errors', 'error', 'Failed');
+
+      return;
+    }
 
     let imported_data = {
       scholars: ic.scholars_to_upload,
@@ -223,9 +225,7 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
   }
 
   function concatAndLower(value){
-    if (!value.Firstname || !value.Lastname || !value.Middlename) {
-      return undefined;
-    }
+    if (!value.Firstname || !value.Lastname || !value.Middlename) return undefined;
     return (value.Firstname+value.Lastname+value.Middlename).replace(/ |,/g,'').trim().toLowerCase();
   }
 
@@ -254,15 +254,21 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
 
       if (!ic.isChecking) return;
 
+      var total = ic.imported_scholars.length - 1;
+
       ic.show_spinner = false;
 
-      var total = ic.imported_scholars.length - 1;
+      if (!scholarsObj.Lastname || !scholarsObj.Firstname || !scholarsObj.Middlename) return;
+
+      validateLettersSpaces(scholarsObj.Lastname, "Lastname", idx);
+      validateLettersSpaces(scholarsObj.Firstname, "Firstname", idx);
+      validateLettersSpaces(scholarsObj.Middlename, "Middlename", idx);
 
       ic.checking_in = scholarsObj.Lastname+" "+scholarsObj.Firstname+", "+scholarsObj.Middlename;
 
       const result = response[0].data.find(item => {
 
-        if ((item.lastname || "").trim().toLowerCase() === (scholarsObj.Lastname || "").trim().toLowerCase() && (item.firstname || "").trim().toLowerCase() === (scholarsObj.Firstname || "").trim().toLowerCase() && (item.middlename || "").trim().toLowerCase() === (scholarsObj.Middlename || "").trim().toLowerCase()) {
+        if ((item.lastname || "").trim().toLowerCase() === (scholarsObj.Lastname || "").toString().trim().toLowerCase() && (item.firstname || "").trim().toLowerCase() === (scholarsObj.Firstname || "").toString().trim().toLowerCase() && (item.middlename || "").trim().toLowerCase() === (scholarsObj.Middlename || "").toString().trim().toLowerCase()) {
             ic.gridOptions.data[idx].error.push("Error: Scholar already exist");
             ic.total_errors += 1;
             return true;
@@ -346,30 +352,20 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
     return value;
   }
 
-
   function validateFather(scholarsObj, idx){
-    if (scholarsObj.Father_lastname && !scholarsObj.Father_firstname || !scholarsObj.Father_middlename) {
+
+    if (!scholarsObj.Father_lastname && !scholarsObj.Father_firstname && !scholarsObj.Father_middlename ) return;
+
+    if (scholarsObj.Father_lastname && scholarsObj.Father_firstname) {
+      validateLettersSpaces(scholarsObj.Father_lastname, "Father_lastname", idx);
+      validateLettersSpaces(scholarsObj.Father_firstname, "Father_firstname", idx);
+      validateLettersSpaces(scholarsObj.Father_middlename, "Father_middlename", idx);
+    }
+    else{
       ic.gridOptions.data[idx].error.push("Error: Incomplete Father details");
       ic.total_errors += 1;
       return;
     }
-
-    if (scholarsObj.Father_firstname && !scholarsObj.Father_lastname || !scholarsObj.Father_middlename) {
-      ic.gridOptions.data[idx].error.push("Error: Incomplete Father details");
-      ic.total_errors += 1;
-      return;
-    }
-
-    if (scholarsObj.Father_middlename && !scholarsObj.Father_lastname || !scholarsObj.Father_firstname) {
-      ic.gridOptions.data[idx].error.push("Error: Incomplete Father details");
-      ic.total_errors += 1;
-      return;
-    }
-
-    validateLettersSpaces(scholarsObj.Father_lastname, "Father_lastname", idx);
-    validateLettersSpaces(scholarsObj.Father_firstname, "Father_firstname", idx);
-    validateLettersSpaces(scholarsObj.Father_middlename, "Father_middlename", idx);
-  
   }
 
   function validateMother(scholarsObj, idx){
@@ -386,8 +382,15 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
   }
 
 
-  function validateLettersSpaces(value, value_name, idx, isFather){
+  function validateLettersSpaces(value, value_name, idx){
+
+    if (value_name === 'Father_middlename' && value === undefined) return;
+
+    let midname = ['Mother_middlename', 'Middlename'];
+
     let str = value.toString().trim();
+
+    if (str.toLowerCase() === "none" && midname.indexOf(value_name) > -1) return;
 
     if (!str || !/^[a-zA-Z\s]+$/.test(str) || str.toLowerCase() === "none") {
       ic.gridOptions.data[idx].error.push("Error: Invalid "+value_name+" "+value);

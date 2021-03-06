@@ -67,8 +67,8 @@ angular.module('psmsApp')
             occupation: ""
           },
           mother_details:{ 
-            firstname: (ac.m_firstname || "").toUpperCase(),
-            maiden_name: (ac.search_maidenname || "").toUpperCase(),
+            firstname: ac.m_firstname.toUpperCase(),
+            maiden_name: ac.search_maidenname.toUpperCase(),
             middlename: (ac.m_middlename || "").toUpperCase(),
             occupation: ""
           },

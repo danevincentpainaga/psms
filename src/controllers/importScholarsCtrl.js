@@ -27,6 +27,7 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
   // ic.myData = [];
   ic.scholars_to_upload = [];
   ic.progress_value = 0;
+  ic.importBtn = 'Import to database';
 
   ic.gridOptions = {
     enableFiltering: true,
@@ -94,21 +95,22 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
   }
 
   ic.cancel = function(){
+    ic.scholars_to_upload = [];
+    ic.check_fininshed = false;
     ic.gridOptions.data = [];
     ic.progress_value = 0;
     ic.total_errors = 0;
     ic.isChecking = false;
     ic.degree = undefined;
     ic.municipality = undefined;
+    ic.importBtn = 'Import to database';
     $mdSidenav('importScholars').toggle();
   }
 
-  ic.uploadToDatabase = function(){
+  ic.importToDatabase = function(){
 
     if (ic.total_errors > 0) {
-
-      swalert.dialogBox('Imported data has '+ ic.total_errors +' Errors', 'error', 'Failed');
-
+      swalert.dialogBox('Imported data has '+ ic.total_errors +' Errors', 'error', 'Cannot import');
       return;
     }
 
@@ -117,14 +119,20 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
       error: ic.total_errors
     };
 
-    console.log(imported_data);
+    // console.log(imported_data);
+    swalert.confirm(imported_data, importScholarsData, 'Proceed to import?', 'You can\'t cancel once imported.', 'warning');
+
+  }
+
+  function importScholarsData(imported_data){
+    ic.importBtn = 'Importing...';
     importScholarApiService.importScholars(imported_data).then(response =>{
       swalert.dialogBox('Import successful!', 'success', 'Success');
+      ic.check_fininshed = false;
     }, err => {
       console.log(err);
       swalert.dialogBox(err.data.message, 'error', 'Failed');
     });
-
   }
 
   function getMunicipalities(){
@@ -224,11 +232,6 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
     }
   }
 
-  function concatAndLower(value){
-    if (!value.Firstname || !value.Lastname || !value.Middlename) return undefined;
-    return (value.Firstname+value.Lastname+value.Middlename).replace(/ |,/g,'').trim().toLowerCase();
-  }
-
   function validateImportedScholars(){
       $q.all([importScholarApiService.getAllScholars({degree: ic.degree}), importScholarApiService.getAddresses({municipality: ic.municipality}), schoolApiService.getListOfSchool(), courseApiService.getCourses(), academicContractService.getAcademicContractDetails()]).then(response=>{
         
@@ -268,7 +271,7 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
 
       const result = response[0].data.find(item => {
 
-        if ((item.lastname || "").trim().toLowerCase() === (scholarsObj.Lastname || "").toString().trim().toLowerCase() && (item.firstname || "").trim().toLowerCase() === (scholarsObj.Firstname || "").toString().trim().toLowerCase() && (item.middlename || "").trim().toLowerCase() === (scholarsObj.Middlename || "").toString().trim().toLowerCase()) {
+        if (trimAndLower(item.lastname) === trimAndLower(scholarsObj.Lastname) && trimAndLower(item.firstname) === trimAndLower(scholarsObj.Firstname) && trimAndLower(item.middlename) === trimAndLower(scholarsObj.Middlename)) {
             ic.gridOptions.data[idx].error.push("Error: Scholar already exist");
             ic.total_errors += 1;
             return true;
@@ -309,8 +312,6 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
           ic.total_errors += 1;
       }
 
-      ic.gridApi.core.notifyDataChange( uiGridConstants.dataChange.COLUMN );
-
       let scholar = {
           student_id_number: upperCase(scholarsObj['Student ID NO']),
           lastname: upperCase(scholarsObj.Lastname),
@@ -343,66 +344,7 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
       ic.scholars_to_upload.push(scholar);
 
       ic.progress_value = Math.ceil(idx / total * 100);
-  }
 
-  function upperCase(value){
-    if (typeof value === 'string'){
-      return value.toUpperCase();
-    } 
-    return value;
-  }
-
-  function validateFather(scholarsObj, idx){
-
-    if (!scholarsObj.Father_lastname && !scholarsObj.Father_firstname && !scholarsObj.Father_middlename ) return;
-
-    if (scholarsObj.Father_lastname && scholarsObj.Father_firstname) {
-      validateLettersSpaces(scholarsObj.Father_lastname, "Father_lastname", idx);
-      validateLettersSpaces(scholarsObj.Father_firstname, "Father_firstname", idx);
-      validateLettersSpaces(scholarsObj.Father_middlename, "Father_middlename", idx);
-    }
-    else{
-      ic.gridOptions.data[idx].error.push("Error: Incomplete Father details");
-      ic.total_errors += 1;
-      return;
-    }
-  }
-
-  function validateMother(scholarsObj, idx){
-    if (!scholarsObj.Mother_maiden_name || !scholarsObj.Mother_firstname || !scholarsObj.Mother_middlename) {
-      ic.gridOptions.data[idx].error.push("Error: Mother details is required");
-      ic.total_errors += 1;
-      return;
-    }
-
-    validateLettersSpaces(scholarsObj.Mother_maiden_name, "Mother_maiden_name", idx);
-    validateLettersSpaces(scholarsObj.Mother_firstname, "Mother_firstname", idx);
-    validateLettersSpaces(scholarsObj.Mother_middlename, "Mother_middlename", idx);
-
-  }
-
-
-  function validateLettersSpaces(value, value_name, idx){
-
-    if (value_name === 'Father_middlename' && value === undefined) return;
-
-    let midname = ['Mother_middlename', 'Middlename'];
-
-    let str = value.toString().trim();
-
-    if (str.toLowerCase() === "none" && midname.indexOf(value_name) > -1) return;
-
-    if (!str || !/^[a-zA-Z\s]+$/.test(str) || str.toLowerCase() === "none") {
-      ic.gridOptions.data[idx].error.push("Error: Invalid "+value_name+" "+value);
-      ic.total_errors += 1;
-    }
-  }
-
-  function validate(referenceArray, fieldname, error, idx){
-    if (referenceArray.indexOf(fieldname) === -1) {
-        ic.gridOptions.data[idx].error.push(error);
-        ic.total_errors += 1;
-    }   
   }
 
   function validateAddress(addressesArray, scholarsObj, idx){
@@ -459,6 +401,74 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
         ic.gridOptions.data[idx].error.push("Error: Academic year semester Invalid");
         ic.total_errors += 1;
       }
+  }
+
+  function upperCase(value){
+    if (typeof value === 'string'){
+      return value.toUpperCase();
+    } 
+    return value;
+  }
+
+  function validateFather(scholarsObj, idx){
+
+    if (!scholarsObj.Father_lastname && !scholarsObj.Father_firstname && !scholarsObj.Father_middlename ) return;
+
+    if (scholarsObj.Father_lastname && scholarsObj.Father_firstname) {
+      validateLettersSpaces(scholarsObj.Father_lastname, "Father_lastname", idx);
+      validateLettersSpaces(scholarsObj.Father_firstname, "Father_firstname", idx);
+      validateLettersSpaces(scholarsObj.Father_middlename, "Father_middlename", idx);
+    }
+    else{
+      ic.gridOptions.data[idx].error.push("Error: Incomplete Father details");
+      ic.total_errors += 1;
+      return;
+    }
+  }
+
+  function validateMother(scholarsObj, idx){
+    if (!scholarsObj.Mother_maiden_name || !scholarsObj.Mother_firstname || !scholarsObj.Mother_middlename) {
+      ic.gridOptions.data[idx].error.push("Error: Mother details is required");
+      ic.total_errors += 1;
+      return;
+    }
+
+    validateLettersSpaces(scholarsObj.Mother_maiden_name, "Mother_maiden_name", idx);
+    validateLettersSpaces(scholarsObj.Mother_firstname, "Mother_firstname", idx);
+    validateLettersSpaces(scholarsObj.Mother_middlename, "Mother_middlename", idx);
+
+  }
+
+  function validateLettersSpaces(value, value_name, idx){
+
+    if (value_name === 'Father_middlename' && value === undefined) return;
+
+    let midname = ['Mother_middlename', 'Middlename'];
+
+    let str = value.toString().trim();
+
+    if (str.toLowerCase() === "none" && midname.indexOf(value_name) > -1) return;
+
+    if (!str || !/^[a-zA-Z\s]+$/.test(str) || str.toLowerCase() === "none") {
+      ic.gridOptions.data[idx].error.push("Error: Invalid "+value_name+" "+value);
+      ic.total_errors += 1;
+    }
+  }
+
+  function validate(referenceArray, fieldname, error, idx){
+    if (referenceArray.indexOf(fieldname) === -1) {
+        ic.gridOptions.data[idx].error.push(error);
+        ic.total_errors += 1;
+    }   
+  }
+
+  function concatAndLower(value){
+    if (!value.Firstname || !value.Lastname || !value.Middlename) return undefined;
+    return (value.Firstname+value.Lastname+value.Middlename).replace(/ |,/g,'').trim().toLowerCase();
+  }
+
+  function trimAndLower(value){
+    return (value || "").toString().trim().toLowerCase()
   }
 
   getMunicipalities();

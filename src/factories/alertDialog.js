@@ -25,11 +25,11 @@ angular.module('psmsApp')
           text: message,
         });
       },
-      updateInfo: function(obj, method){
+      confirm: function(obj, method, title, message, icontype){
         Swal.fire({
-          title: 'Update Details',
-          text: "Proceed to set contract?...",
-          type: 'info',
+          title: title,
+          text: message,
+          icon: icontype,
           showCancelButton: true,
           confirmButtonText: 'Yes',
           cancelButtonColor: '#d33',

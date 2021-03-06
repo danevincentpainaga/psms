@@ -44,6 +44,7 @@ angular.module('psmsApp').directive("fileread", ['$timeout',  function ($timeout
                 var sheet_name = workbook.SheetNames.indexOf('Scholars list');
 
                 if (sheet_name === -1){
+                    $scope.state = false;
                     alert('Can\'t find sheet name Scholars list. Note! dont include spaces before and after Scholars list sheet');
                     $elm.val(null);
                     return;
@@ -62,6 +63,7 @@ angular.module('psmsApp').directive("fileread", ['$timeout',  function ($timeout
                 })
 
                 if (errors.length > 0) {
+                    $scope.state = false;
                     console.log(errors);
                     $elm.val(null);
                     alert(errors);

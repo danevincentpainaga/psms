@@ -11,25 +11,39 @@
         <md-menu-bar>
           <md-menu>
             <button ng-click="$mdMenu.open()">
-              Export
+              Menu
             </button>
             <md-menu-content>
-              <md-menu-item class="md-indent" ng-if="ex.scholars_loaded">
-                <md-icon class="material-icons">view_list</md-icon>
-                <md-button ng-click="ex.exportMasterlist()">
-                  Masterlist report
-                </md-button>
+              <md-menu-item ng-if="ex.scholars_loaded">
+                <md-menu>
+                  <md-button ng-click="$mdMenu.open()">
+                    Export
+                  </md-button>
+                  <md-menu-content>
+                    <md-menu-item class="md-indent" ng-if="ex.scholars_loaded">
+                      <md-icon class="material-icons">view_list</md-icon>
+                      <md-button ng-click="ex.exportMasterlist()">
+                        Masterlist report
+                      </md-button>
+                    </md-menu-item>
+                    <md-menu-item class="md-indent" ng-if="ex.scholars_loaded">
+                      <md-icon class="material-icons">sort</md-icon>
+                      <md-button ng-click="ex.exportNormal()">
+                        Normal report
+                      </md-button>
+                    </md-menu-item>
+                    <md-menu-item class="md-indent" ng-if="ex.scholars_loaded">
+                      <md-icon class="material-icons">file_download</md-icon>
+                      <md-button ng-click="ex.exportForDatabase()">
+                        Export for database
+                      </md-button>
+                    </md-menu-item>
+                  </md-menu-content>
+                </md-menu>
               </md-menu-item>
-              <md-menu-item class="md-indent" ng-if="ex.scholars_loaded">
-                <md-icon class="material-icons">sort</md-icon>
-                <md-button ng-click="ex.exportNormal()">
-                  Normal report
-                </md-button>
-              </md-menu-item>
-              <md-menu-item class="md-indent" ng-if="ex.scholars_loaded">
-                <md-icon class="material-icons">file_download</md-icon>
-                <md-button ng-click="ex.exportForDatabase()">
-                  Export for database
+              <md-menu-item ng-if="ex.scholars_loaded">
+                <md-button ng-click="ex.toggleFiltering()">
+                  Toggle Filter
                 </md-button>
               </md-menu-item>
             </md-menu-content>

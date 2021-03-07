@@ -20,7 +20,7 @@ app.controller('exportScholarsCtrl',['$scope', '$filter', '$timeout', 'schoolApi
   ex.schools = [];
 
   ex.gridOptions = {
-    enableFiltering: true,
+    enableFiltering: false,
     enableColumnResizing: true,
     enableGridMenu: true,
     data: ex.mergedChunks,
@@ -136,14 +136,28 @@ app.controller('exportScholarsCtrl',['$scope', '$filter', '$timeout', 'schoolApi
       ex.gridApi = gridApi;
 
       ex.gridApi.core.on.rowsRendered($scope, function() {
-
         ex.filteredGrid = ex.gridApi.core.getVisibleRows().map((row)=>{
           return row.entity;
         });
+      });
 
+      ex.gridApi.pinning.on.columnPinned($scope, function (colDef, container) {
+        if (!container) {
+          colDef.visible = false;
+          ex.gridApi.core.notifyDataChange( uiGridConstants.dataChange.COLUMN );
+          $timeout(function () {
+            colDef.visible = true;
+            ex.gridApi.core.notifyDataChange( uiGridConstants.dataChange.COLUMN );
+          });
+        }
       });
 
     }
+  };
+
+  ex.toggleFiltering = function(){
+    ex.gridOptions.enableFiltering = !ex.gridOptions.enableFiltering;
+    ex.gridApi.core.notifyDataChange( uiGridConstants.dataChange.COLUMN );
   };
 
   ex.exportForDatabase = function(){

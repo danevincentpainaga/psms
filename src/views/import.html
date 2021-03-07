@@ -8,10 +8,34 @@
       </md-toolbar-filler>
       <h2 class="md-toolbar-tools" style="padding: 20px;display: flex;justify-content: space-between;">
         <span>Import</span>
-        <md-button class="md-fab md-mini md-primary" ng-click="ic.add()">
-          <md-icon class="material-icons">add</md-icon>
-        </md-button>
       </h2>
+      <md-fab-speed-dial ng-hide="ic.hidden" md-direction="left" md-open="ic.isOpen"
+                         class="md-scale md-fab-top-right" ng-class="{ 'md-hover-full': ic.hover }"
+                          style="top: 4px;right: 1px;">
+        <md-fab-trigger>
+          <md-button aria-label="menu" class="md-fab md-primary" style="width: 45px;height: 45px;">
+            <md-tooltip md-direction="top">Menu</md-tooltip>
+            <md-icon class="material-icons">menu_open</md-icon>
+          </md-button>
+        </md-fab-trigger>
+
+        <md-fab-actions>
+          <div>
+            <md-button aria-label="Toggle" class="md-fab md-raised md-mini" ng-click="ic.toggleFiltering()">
+              <md-tooltip md-direction="left" md-visible="ic.tooltipVisible"md-autohide="false">
+                Toggle
+              </md-tooltip>
+              <md-icon class="material-icons">filter_alt</md-icon>
+            </md-button>
+            <md-button aria-label="Add" class="md-fab md-raised md-mini" ng-click="ic.add()">
+              <md-tooltip md-direction="bottom" md-visible="ic.tooltipVisible"md-autohide="false">
+                Add
+              </md-tooltip>
+              <md-icon class="material-icons">add</md-icon>
+            </md-button>
+          </div>
+        </md-fab-actions>
+      </md-fab-speed-dial>
     </div>
   </md-toolbar>
   <md-progress-linear md-mode="indeterminate" ng-if="!ic.municipalities_loaded" style="position: absolute;"></md-progress-linear>

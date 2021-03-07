@@ -1,6 +1,6 @@
 var Swal = require('sweetalert2');
 angular.module('psmsApp')
-  .factory('swalert', ['$http', function($http){
+  .factory('swalert', function(){
     return{
       toastInfo: function(message, nofitificationType, position, timeExpire){
         let time;
@@ -56,4 +56,4 @@ angular.module('psmsApp')
         });
       },
     }
-}]);
+});

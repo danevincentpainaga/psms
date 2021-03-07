@@ -23,6 +23,13 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
     ic.selection_complete = n.indexOf(undefined) === -1 ? true : false;
   });
 
+  $scope.$watch('ic.isOpen', function(isOpen) {
+    if (isOpen) {
+      $timeout(function() { ic.tooltipVisible = ic.isOpen; }, 500);
+    } else {
+      ic.tooltipVisible = ic.isOpen;
+    }
+  });
 
   // ic.myData = [];
   ic.scholars_to_upload = [];
@@ -30,7 +37,7 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
   ic.importBtn = 'Import to database';
 
   ic.gridOptions = {
-    enableFiltering: true,
+    enableFiltering: false,
     enableColumnResizing: true,
     enableGridMenu: true,
     data: [],
@@ -82,6 +89,18 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
     exporterExcelSheetName: 'Scholars',
     onRegisterApi: function(gridApi){
       ic.gridApi = gridApi;
+
+      ic.gridApi.pinning.on.columnPinned($scope, function (colDef, container) {
+        if (!container) {
+          colDef.visible = false;
+          ic.gridApi.core.notifyDataChange( uiGridConstants.dataChange.COLUMN );
+          $timeout(function () {
+            colDef.visible = true;
+            ic.gridApi.core.notifyDataChange( uiGridConstants.dataChange.COLUMN );
+          });
+        }
+      });
+      
     }
   };
 
@@ -124,34 +143,11 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
 
   }
 
-  function importScholarsData(imported_data){
-    ic.importBtn = 'Importing...';
-    importScholarApiService.importScholars(imported_data).then(response =>{
-      swalert.dialogBox('Import successful!', 'success', 'Success');
-      ic.check_fininshed = false;
-    }, err => {
-      console.log(err);
-      swalert.dialogBox(err.data.message, 'error', 'Failed');
-    });
-  }
-
-  function getMunicipalities(){
-    municipalitiesApiService.getMunicipalities()
-      .then(response=>{
-        ic.municipalities = response.data;
-        ic.municipalities_loaded = true;
-      }, err=> {
-        console.log(err);
-      });
-  }
-
   ic.checkImportedScholars = function(){
 
       ic.show_spinner = true;
       ic.isChecking = true;
-
       let checkedItem = [];
-
       ic.imported_scholars = angular.copy(ic.gridOptions.data);
 
       $timeout(()=>{
@@ -244,6 +240,7 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
               ic.checking_in = 'Finished';
               ic.check_fininshed = true;
               ic.gridApi.core.notifyDataChange( uiGridConstants.dataChange.COLUMN );
+              swalert.toastInfo('Check Finished', 'success', 'top-right');
             }
           });
         });
@@ -263,11 +260,11 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
 
       if (!scholarsObj.Lastname || !scholarsObj.Firstname || !scholarsObj.Middlename) return;
 
+      ic.checking_in = scholarsObj.Lastname+" "+scholarsObj.Firstname+", "+scholarsObj.Middlename;
+
       validateLettersSpaces(scholarsObj.Lastname, "Lastname", idx);
       validateLettersSpaces(scholarsObj.Firstname, "Firstname", idx);
       validateLettersSpaces(scholarsObj.Middlename, "Middlename", idx);
-
-      ic.checking_in = scholarsObj.Lastname+" "+scholarsObj.Firstname+", "+scholarsObj.Middlename;
 
       const result = response[0].data.find(item => {
 
@@ -280,7 +277,7 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
       });
 
       if (result) {
-        ic.progress_value = Math.round(idx / total * 100);
+        ic.progress_value = Math.ceil(idx / total * 100);
         return;
       }
 
@@ -469,6 +466,27 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
 
   function trimAndLower(value){
     return (value || "").toString().trim().toLowerCase()
+  }
+
+  function importScholarsData(imported_data){
+    ic.importBtn = 'Importing...';
+    importScholarApiService.importScholars(imported_data).then(response =>{
+      swalert.dialogBox('Import successful!', 'success', 'Success');
+      ic.check_fininshed = false;
+    }, err => {
+      console.log(err);
+      swalert.dialogBox(err.data.message, 'error', 'Failed');
+    });
+  }
+
+  function getMunicipalities(){
+    municipalitiesApiService.getMunicipalities()
+      .then(response=>{
+        ic.municipalities = response.data;
+        ic.municipalities_loaded = true;
+      }, err=> {
+        console.log(err);
+      });
   }
 
   getMunicipalities();

@@ -5,7 +5,7 @@
       <md-card style="margin: 5px 0px;" >
         <md-card-header>
           <md-card-avatar>
-            <md-icon class="material-icons" style="margin-right: 15px; background-color: #616dc3;">history_edu</md-icon>
+            <md-icon class="material-icons" style="margin-right: 15px; background-color: #616dc3;">file_upload</md-icon>
           </md-card-avatar>
           <md-card-header-text>
             <span class="md-title">Import</span>
@@ -30,7 +30,7 @@
                 </md-input-container>
               </div>
               <div style="margin-top: 1.7em;" ng-if="ic.selection_complete" >
-                <input type="file" accept=".xls,.xlsx, .csv,.ods" fileread="" state="ic.show_spinner" opts="ic.gridOptions" checking="ic.isChecking" multiple="false" style="outline-style: none;" ng-disabled="ic.isChecking"/>
+                <input type="file" accept=".xls,.xlsx, .csv,.ods" fileread="" state="ic.show_spinner" opts="ic.gridOptions" checking="ic.isChecking" message="ic.circular_message" multiple="false" style="outline-style: none;" ng-disabled="ic.isChecking"/>
               </div>
               <div style="position: absolute;bottom: 0px;width: 100%;">
                 <md-button class="md-raised md-primary" ng-click="ic.checkImportedScholars()" ng-if="!ic.isChecking && ic.gridOptions.data.length > 0" style="width: 100%;margin: 10px 0px !important;">Check</md-button>

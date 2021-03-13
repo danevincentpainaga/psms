@@ -128,23 +128,23 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
 
   ic.importToDatabase = function(){
 
-    if (ic.total_errors > 0) {
-      swalert.dialogBox('Imported data has '+ ic.total_errors +' Errors', 'error', 'Cannot import');
-      return;
-    }
+    // if (ic.total_errors > 0 && ic.scholars_to_upload.length > 0) {
+    //   swalert.dialogBox('Imported data has '+ ic.total_errors +' Errors', 'error', 'Cannot import');
+    //   return;
+    // }
 
     let imported_data = {
       scholars: ic.scholars_to_upload,
       error: ic.total_errors
     };
 
-    // console.log(imported_data);
-    swalert.confirm(imported_data, importScholarsData, 'Proceed to import?', 'You can\'t cancel once imported.', 'warning');
+    swalert.confirm(imported_data, importScholarsData, 'Proceed to import?', 'You can\'t cancel once imported.', 'warning', 500, ic);
 
   }
 
   ic.checkImportedScholars = function(){
 
+      ic.circular_message = 'Processing';
       ic.show_spinner = true;
       ic.isChecking = true;
       let checkedItem = [];
@@ -258,7 +258,10 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
 
       ic.show_spinner = false;
 
-      if (!scholarsObj.Lastname || !scholarsObj.Firstname || !scholarsObj.Middlename) return;
+      if (!scholarsObj.Lastname || !scholarsObj.Firstname || !scholarsObj.Middlename) {
+        ic.progress_value = Math.ceil(idx / total * 100);
+        return;
+      };
 
       ic.checking_in = scholarsObj.Lastname+" "+scholarsObj.Firstname+", "+scholarsObj.Middlename;
 
@@ -309,6 +312,17 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
           ic.total_errors += 1;
       }
 
+      let fdetails = {
+          firstname: upperCase((scholarsObj.Father_firstname || "")),
+          lastname: upperCase((scholarsObj.Father_lastname || "")),
+          middlename: upperCase((scholarsObj.Father_middlename || "")),
+      };
+      let mdetails = { 
+          firstname: upperCase((scholarsObj.Mother_firstname)), 
+          maiden_name: upperCase((scholarsObj.Mother_maiden_name)), 
+          middlename: upperCase((scholarsObj.Mother_middlename)), 
+      };
+
       let scholar = {
           student_id_number: upperCase(scholarsObj['Student ID NO']),
           lastname: upperCase(scholarsObj.Lastname),
@@ -323,16 +337,8 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
           section: upperCase(scholarsObj.Section),
           year_level: scholarsObj['Year level'],
           IP: scholarsObj.IP,
-          father_details:{ 
-              firstname: upperCase((scholarsObj.Father_firstname || "")),
-              lastname: upperCase((scholarsObj.Father_lastname || "")),
-              middlename: upperCase((scholarsObj.Father_middlename || "")),
-          },
-          mother_details:{ 
-              firstname: upperCase((scholarsObj.Mother_firstname)), 
-              maiden_name: upperCase((scholarsObj.Mother_maiden_name)), 
-              middlename: upperCase((scholarsObj.Mother_middlename)), 
-          },
+          father_details: JSON.stringify(fdetails),
+          mother_details: JSON.stringify(mdetails),
           degree: scholarsObj.Degree,
           scholar_status: scholarsObj.Status,
           contract_id: scholarsObj.contract_id
@@ -469,13 +475,14 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
   }
 
   function importScholarsData(imported_data){
-    ic.importBtn = 'Importing...';
     importScholarApiService.importScholars(imported_data).then(response =>{
       swalert.dialogBox('Import successful!', 'success', 'Success');
-      ic.check_fininshed = false;
+      // ic.check_fininshed = false;
+      ic.show_spinner = false;
     }, err => {
       console.log(err);
       swalert.dialogBox(err.data.message, 'error', 'Failed');
+      ic.show_spinner = false;
     });
   }
 

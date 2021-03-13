@@ -174,27 +174,27 @@ app.controller('exportScholarsCtrl',['$scope', '$filter', '$timeout', 'schoolApi
 
   function getScholarsToExport(){
 
-     let searched = { 
-        searched_name: ex.scholar_lastname,
-        age: ex.age,
-        gender: ex.gender,
-        scholar_status: ex.scholar_status,
-        contract_status: ex.contract_status,
-        address: ex.address,
-        municipality: ex.municipality,
-        degree: ex.degree,
-        course: ex.course,
-        section: ex.section,
-        schoolId: ex.school,
-        student_id_number: ex.student_id_number,
-        year_level: ex.year_level,
-        semester: ex.semester,
-        academic_year: ex.academic_year,
-        IP: ex.IP,
-    };
+    //  let searched = { 
+    //     searched_name: ex.scholar_lastname,
+    //     age: ex.age,
+    //     gender: ex.gender,
+    //     scholar_status: ex.scholar_status,
+    //     contract_status: ex.contract_status,
+    //     address: ex.address,
+    //     municipality: ex.municipality,
+    //     degree: ex.degree,
+    //     course: ex.course,
+    //     section: ex.section,
+    //     schoolId: ex.school,
+    //     student_id_number: ex.student_id_number,
+    //     year_level: ex.year_level,
+    //     semester: ex.semester,
+    //     academic_year: ex.academic_year,
+    //     IP: ex.IP,
+    // };
 
-     exportScholarsApiService.getScholarsToExport(searched).then(response => {
-
+     exportScholarsApiService.getScholarsToExport().then(response => {
+      console.log(response);
       splitArrayOfChunks(response.data);
 
       ex.scholars_loaded = true;

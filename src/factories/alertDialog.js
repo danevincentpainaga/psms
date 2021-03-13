@@ -1,6 +1,6 @@
 var Swal = require('sweetalert2');
 angular.module('psmsApp')
-  .factory('swalert', function(){
+  .factory('swalert', ['$timeout', function($timeout){
     return{
       toastInfo: function(message, nofitificationType, position, timeExpire){
         let time;
@@ -25,7 +25,7 @@ angular.module('psmsApp')
           text: message,
         });
       },
-      confirm: function(obj, method, title, message, icontype){
+      confirm: function(obj, method, title, message, icontype, timeout, ctrl){
         Swal.fire({
           title: title,
           text: message,
@@ -36,7 +36,17 @@ angular.module('psmsApp')
           cancelButtonText: 'No'
         }).then((result) => {
           if (result.value) {
-            method(obj);
+            if (!timeout) {
+              method(obj);
+            }
+            else{
+              ctrl.importBtn = 'Uploading...';
+              ctrl.circular_message = 'Uploading';
+              ctrl.show_spinner = true;
+              $timeout(function() { 
+                method(obj);
+              }, timeout);
+            }
           }
         });
       },
@@ -56,4 +66,4 @@ angular.module('psmsApp')
         });
       },
     }
-});
+}]);

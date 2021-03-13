@@ -1,4 +1,10 @@
-<div id="cover-spin" ng-if="ic.show_spinner" ></div>
+<!-- <div id="cover-spin" ng-if="ic.show_spinner" ></div> -->
+<div class="posting-message" ng-if="ic.show_spinner" >
+  <div class="lds-ring">
+    <span style="font-weight: 300;">{{ ic.circular_message }}</span>
+    <div></div><div></div><div></div><div></div>
+  </div>
+</div>
 <ng-include src="'/header.html'"></ng-include> 
 <div>
   <md-toolbar class="md-menu-toolbar" style="border-bottom: 1px solid #c7c7c7;">
@@ -23,7 +29,7 @@
           <div>
             <md-button aria-label="Toggle" class="md-fab md-raised md-mini" ng-click="ic.toggleFiltering()">
               <md-tooltip md-direction="left" md-visible="ic.tooltipVisible"md-autohide="false">
-                Toggle
+                Toggle filter
               </md-tooltip>
               <md-icon class="material-icons">filter_alt</md-icon>
             </md-button>

@@ -6,163 +6,207 @@ angular.module('psmsApp').factory('exportService',['$timeout', '$filter', functi
 
 		self.exportForDatabase = function(scholars, ctrl){
 
-		    var exportedData = [];
+			ctrl.show_spinner = true;
+			ctrl.circular_message = 'Processing';
 
-		    angular.forEach(scholars, function(val, i){
+			$timeout(function() {
 
-		    	let father = self.parseIfJson(val.father_details);
-		    	let mother = self.parseIfJson(val.mother_details);
+			    var exportedData = [];
 
-		        let scholar = {
-		          Lastname: val.lastname,
-		          Firstname: val.firstname,
-		          Middlename: val.middlename,
-		          'Date of Birth': val.date_of_birth,
-		          Age: val.age,
-		          Gender: val.gender,
-		          Address: val.address,
-		          Father_lastname: father.lastname,
-		          Father_firstname: father.firstname,
-		          Father_middlename: father.middlename,
-		          Mother_maiden_name: mother.maiden_name,
-		          Mother_firstname: mother.firstname,
-		          Mother_middlename: mother.middlename,
-		          School: val.school_name,
-		          'Student ID NO': val.student_id_number,
-		          Degree: val.degree,
-		          Course: val.course,
-		          Section: val.section,
-		          'Year level': val.year_level,
-		          Semester: val.semester,
-		          'Academic year': val.academic_year,
-		          Status: val.scholar_status,
-		          IP: val.IP
-		        }
+			    angular.forEach(scholars, function(val, i){
 
-		        exportedData.push(scholar);
+			    	let father = self.parseIfJson(val.father_details);
+			    	let mother = self.parseIfJson(val.mother_details);
 
-		    });
+			        let scholar = {
+			          Lastname: val.lastname,
+			          Firstname: val.firstname,
+			          Middlename: val.middlename,
+			          'Date of Birth': val.date_of_birth,
+			          Age: val.age,
+			          Gender: val.gender,
+			          Address: val.address,
+			          Father_lastname: father.lastname,
+			          Father_firstname: father.firstname,
+			          Father_middlename: father.middlename,
+			          Mother_maiden_name: mother.maiden_name,
+			          Mother_firstname: mother.firstname,
+			          Mother_middlename: mother.middlename,
+			          School: val.school_name,
+			          'Student ID NO': val.student_id_number,
+			          Degree: val.degree,
+			          Course: val.course,
+			          Section: val.section,
+			          'Year level': val.year_level,
+			          Semester: val.semester,
+			          'Academic year': val.academic_year,
+			          Status: val.scholar_status,
+			          IP: val.IP
+			        }
 
-		    var wb = XLSX.utils.book_new();
+			        exportedData.push(scholar);
 
-		    var ws = XLSX.utils.json_to_sheet(exportedData);
+			    });
 
-		    XLSX.utils.book_append_sheet(wb, ws, 'Scholars list');
+			    self.loopChunk(self.chunk(exportedData, 500, ctrl), 'Scholars list.xlsx', 'Scholars list', ctrl);
 
-		    XLSX.writeFile(wb, "Scholars list.xlsx");
+			    // var wb = XLSX.utils.book_new();
 
+			    // var ws = XLSX.utils.json_to_sheet(exportedData);
+
+			    // XLSX.utils.book_append_sheet(wb, ws, 'Scholars list');
+
+			    // XLSX.writeFile(wb, "Scholars list.xlsx");
+
+			}, 100);
+
+		}
+
+		self.chunk = function(arr, chunkSize, ctrl) {
+		  if (chunkSize <= 0) throw "Invalid chunk size";
+		  var R = [];
+		  for (var i=0,len=arr.length; i<len; i+=chunkSize)
+		    R.push(arr.slice(i,i+chunkSize));
+		  return R;
+		}
+
+		self.loopChunk = function(array_of_chunks, filename, sheetname, ctrl){
+			ctrl.circular_message = 'Exporting';
+			$timeout(()=>{
+				var wb = XLSX.utils.book_new();
+				var ws = XLSX.utils.aoa_to_sheet([Object.keys(array_of_chunks[0][0])]);
+
+				for (var i = 0; i < array_of_chunks.length; i++) {
+					XLSX.utils.sheet_add_json(ws, array_of_chunks[i], { skipHeader:true, origin: -1 });
+				}
+
+			    XLSX.utils.book_append_sheet(wb, ws, sheetname);
+			    XLSX.writeFile(wb, filename);
+			    ctrl.show_spinner = false;
+			});
 		}
 
 		self.exportNormal = function(scholars, ctrl){
 
-		    var exportedData = [];
+			ctrl.show_spinner = true;
+			ctrl.circular_message = 'Processing';
 
-		    angular.forEach(scholars, function(val, i){
+			$timeout(function() {
 
-		        let scholar = {
-		          Lastname: val.lastname,
-		          Firstname: val.firstname,
-		          Middlename: val.middlename,
-		          'Date of Birth': val.date_of_birth,
-		          Age: val.age,
-		          Gender: val.gender,
-		          Address: val.address,
-		          Municipality: val.municipality,
-		          Father: $filter('fatherDetails')(val.father_details),
-		          Mother: $filter('motherDetails')(val.mother_details),
-		          School: val.school_name,
-		          'Student ID NO': val.student_id_number,
-		          Degree: val.degree,
-		          Course: val.course,
-		          Section: val.section,
-		          'Year level.': val.year_level,
-		          Semester: val.semester,
-		          'Academic year': val.academic_year,
-		          Status: val.scholar_status,
-		          'Contract status': val.contract_status,
-		          'Amount': $filter('amount')(val),
-		          IP: val.IP
-		        }
+			    var exportedData = [];
 
-		        exportedData.push(scholar);
+			    angular.forEach(scholars, function(val, i){
+
+			        let scholar = {
+			          Lastname: val.lastname,
+			          Firstname: val.firstname,
+			          Middlename: val.middlename,
+			          'Date of Birth': val.date_of_birth,
+			          Age: val.age,
+			          Gender: val.gender,
+			          Address: val.address,
+			          Municipality: val.municipality,
+			          Father: $filter('fatherDetails')(val.father_details),
+			          Mother: $filter('motherDetails')(val.mother_details),
+			          School: val.school_name,
+			          'Student ID NO': val.student_id_number,
+			          Degree: val.degree,
+			          Course: val.course,
+			          Section: val.section,
+			          'Year level.': val.year_level,
+			          Semester: val.semester,
+			          'Academic year': val.academic_year,
+			          Status: val.scholar_status,
+			          'Contract status': val.contract_status,
+			          'Amount': $filter('amount')(val),
+			          IP: val.IP
+			        }
+
+			        exportedData.push(scholar);
+
+			    });
+
+			    self.loopChunk(self.chunk(exportedData, 500, ctrl), 'Scholars list report.xlsx', 'Scholars list report', ctrl);
 
 		    });
-
-		    var wb = XLSX.utils.book_new();
-
-		    var ws = XLSX.utils.json_to_sheet(exportedData);
-
-		    XLSX.utils.book_append_sheet(wb, ws, 'Scholars list report');
-
-		    XLSX.writeFile(wb, "Scholars list report.xlsx");
 
 		}
 
 		self.exportMasterlist = function(scholars, ctrl){
 
-		    let municipalities = {
-		      'ANINI-Y':[],
-		      'TOBIAS FORNIER':[],
-		      'HAMTIC':[],
-		      'SAN JOSE':[],
-		      'SIBALOM':[],
-		      'SAN REMEGIO':[],
-		      'BELISON':[],
-		      'PATNONGON':[],
-		      'BUGASONG':[],
-		      'VALDERRAMA':[],
-		      'LAUA-AN':[],
-		      'BARBAZA':[],
-		      'TIBIAO':[],
-		      'CULASI':[],
-		      'SEBASTE':[],
-		      'PANDAN':[],
-		      'LIBERTAD':[],
-		      'CALUYA':[],
-		    };
+			ctrl.show_spinner = true;
+			ctrl.circular_message = 'Processing';
 
-		    angular.forEach(scholars, function(val, i){
+			$timeout(function() {
 
-		        let scholar = {
-		          Lastname: val.lastname,
-		          Firstname: val.firstname,
-		          Middlename: val.middlename,
-		          'Date of Birth': val.date_of_birth,
-		          Age: val.age,
-		          Gender: val.gender,
-		          Address: val.address,
-		          Municipality: val.municipality,
-		          Father: $filter('fatherDetails')(val.father_details),
-		          Mother: $filter('motherDetails')(val.mother_details),
-		          School: val.school_name,
-		          'Student ID NO': val.student_id_number,
-		          Degree: val.degree,
-		          Course: val.course,
-		          Section: val.section,
-		          'Year level.': val.year_level,
-		          Semester: val.semester,
-		          'Academic year': val.academic_year,
-		          Status: val.scholar_status,
-		          'Contract status': val.contract_status,
-		          'Amount': $filter('amount')(val),
-		          IP: val.IP
-		        }
+			    let municipalities = {
+			      'ANINI-Y':[],
+			      'TOBIAS FORNIER':[],
+			      'HAMTIC':[],
+			      'SAN JOSE':[],
+			      'SIBALOM':[],
+			      'SAN REMEGIO':[],
+			      'BELISON':[],
+			      'PATNONGON':[],
+			      'BUGASONG':[],
+			      'VALDERRAMA':[],
+			      'LAUA-AN':[],
+			      'BARBAZA':[],
+			      'TIBIAO':[],
+			      'CULASI':[],
+			      'SEBASTE':[],
+			      'PANDAN':[],
+			      'LIBERTAD':[],
+			      'CALUYA':[],
+			    };
 
-		        self.checkMunicipality(val.municipality, municipalities, scholar);
+			    angular.forEach(scholars, function(val, i){
 
-		    });
+			        let scholar = {
+			          Lastname: val.lastname,
+			          Firstname: val.firstname,
+			          Middlename: val.middlename,
+			          'Date of Birth': val.date_of_birth,
+			          Age: val.age,
+			          Gender: val.gender,
+			          Address: val.address,
+			          Municipality: val.municipality,
+			          Father: $filter('fatherDetails')(val.father_details),
+			          Mother: $filter('motherDetails')(val.mother_details),
+			          School: val.school_name,
+			          'Student ID NO': val.student_id_number,
+			          Degree: val.degree,
+			          Course: val.course,
+			          Section: val.section,
+			          'Year level.': val.year_level,
+			          Semester: val.semester,
+			          'Academic year': val.academic_year,
+			          Status: val.scholar_status,
+			          'Contract status': val.contract_status,
+			          'Amount': $filter('amount')(val),
+			          IP: val.IP
+			        }
 
-		    var wb = XLSX.utils.book_new();
+			        self.checkMunicipality(val.municipality, municipalities, scholar);
 
-		    Object.keys(municipalities).forEach(function(key){
+			    });
 
-		        var ws = XLSX.utils.json_to_sheet(municipalities[key]);
+			    var wb = XLSX.utils.book_new();
 
-		        XLSX.utils.book_append_sheet(wb, ws, key);
+			    Object.keys(municipalities).forEach(function(key){
 
-		    });
+			        var ws = XLSX.utils.json_to_sheet(municipalities[key]);
 
-		    XLSX.writeFile(wb, "Scholars Masterlist.xlsx");
+			        XLSX.utils.book_append_sheet(wb, ws, key);
+
+			    });
+
+			    XLSX.writeFile(wb, "Scholars Masterlist.xlsx");
+
+				ctrl.circular_message = 'Finished';
+    			ctrl.show_spinner = false;
+
+		    }, 100);
 		    
 		}
 

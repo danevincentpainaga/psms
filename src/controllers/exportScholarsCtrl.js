@@ -161,15 +161,15 @@ app.controller('exportScholarsCtrl',['$scope', '$filter', '$timeout', 'schoolApi
   };
 
   ex.exportForDatabase = function(){
-    $timeout(exportService.exportForDatabase(ex.filteredGrid, ex), 500);
+    exportService.exportForDatabase(ex.filteredGrid, ex);
   }
 
   ex.exportMasterlist = function(){
-    $timeout(exportService.exportMasterlist(ex.filteredGrid, ex), 500);
+    exportService.exportMasterlist(ex.filteredGrid, ex);
   }
 
   ex.exportNormal = function(){
-    $timeout(exportService.exportNormal(ex.filteredGrid, ex), 500);
+    exportService.exportNormal(ex.filteredGrid, ex);
   }
 
   function getScholarsToExport(){

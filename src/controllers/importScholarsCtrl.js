@@ -128,10 +128,10 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
 
   ic.importToDatabase = function(){
 
-    // if (ic.total_errors > 0 && ic.scholars_to_upload.length > 0) {
-    //   swalert.dialogBox('Imported data has '+ ic.total_errors +' Errors', 'error', 'Cannot import');
-    //   return;
-    // }
+    if (ic.total_errors > 0) {
+      swalert.dialogBox('Imported data has '+ ic.total_errors +' Errors', 'error', 'Cannot import');
+      return;
+    }
 
     let imported_data = {
       scholars: ic.scholars_to_upload,
@@ -237,6 +237,7 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
           $timeout(()=>{
             validateScholarsName(response, val, i);
             if (i === ic.imported_scholars.length -1) {
+              ic.progress_value = 100;
               ic.checking_in = 'Finished';
               ic.check_fininshed = true;
               ic.gridApi.core.notifyDataChange( uiGridConstants.dataChange.COLUMN );
@@ -259,7 +260,7 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
       ic.show_spinner = false;
 
       if (!scholarsObj.Lastname || !scholarsObj.Firstname || !scholarsObj.Middlename) {
-        ic.progress_value = Math.ceil(idx / total * 100);
+        ic.progress_value = Math.ceil(idx / total * 100) -1;
         return;
       };
 
@@ -280,7 +281,7 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
       });
 
       if (result) {
-        ic.progress_value = Math.ceil(idx / total * 100);
+        ic.progress_value = Math.ceil(idx / total * 100) -1;
         return;
       }
 
@@ -346,7 +347,7 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
 
       ic.scholars_to_upload.push(scholar);
 
-      ic.progress_value = Math.ceil(idx / total * 100);
+      ic.progress_value = Math.ceil(idx / total * 100) -1;
 
   }
 

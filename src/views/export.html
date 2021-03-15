@@ -1,6 +1,11 @@
-<!-- <div id="cover-spin" ng-if="ex.show_spinner" ></div> -->
 <ng-include src="'/header.html'"></ng-include> 
 <div>
+<div class="posting-message" ng-if="ex.show_spinner" >
+  <div class="lds-ring">
+    <span style="font-weight: 300;">{{ ex.circular_message }}</span>
+    <div></div><div></div><div></div><div></div>
+  </div>
+</div>
   <md-toolbar class="md-menu-toolbar" style="border-bottom: 1px solid #c7c7c7;">
     <div layout="row">
       <md-toolbar-filler style="display: flex;">

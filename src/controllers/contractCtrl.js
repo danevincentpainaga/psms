@@ -182,7 +182,7 @@ angular.module('psmsApp')
       academicContractService.confirmPassword(password).then(response => {
         console.log(response);
         c.show_spinner = false;
-        swalert.updateInfo({ ascId: selected.asc_id }, setContract);
+        swalert.confirm({ ascId: selected.asc_id }, setContract, 'Set as Contract?', 'plesase review details', 'info', 500, c);
       }, err =>{
         console.log(err);
         c.show_spinner = false;

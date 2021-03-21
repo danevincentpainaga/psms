@@ -478,7 +478,6 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
   function importScholarsData(imported_data){
     importScholarApiService.importScholars(imported_data).then(response =>{
       swalert.dialogBox('Import successful!', 'success', 'Success');
-      // ic.check_fininshed = false;
       ic.show_spinner = false;
     }, err => {
       console.log(err);

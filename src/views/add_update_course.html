@@ -20,6 +20,12 @@
                 <label>Course</label>
                 <input type="text" ng-model="cc.course">
               </md-input-container>
+              <md-input-container>
+                <label>Select degree</label>
+                <md-select ng-model="cc.selected_degree">
+                  <md-option ng-value="degree" ng-repeat="degree in cc.degrees"><em>{{ degree }}</em></md-option>
+                </md-select>
+              </md-input-container>
             </div>
             <div style="margin-bottom: 2em; margin-top: 3em;">
               <md-button class="md-raised md-primary" ng-click="cc.saveUpdateCourse()" ng-disabled="cc.saving_updating" style="width: 100%;margin: 10px 0px !important;">{{ cc.saveUpdateBtnText }}</md-button>

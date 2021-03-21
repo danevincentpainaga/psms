@@ -14,10 +14,11 @@ angular.module('psmsApp')
 
 	var cc = this;
 	cc.isUpdating = false;
+	cc.degrees = ['Undergraduate', 'Masters', 'Doctorate'];
 
 	$scope.$watch('cc.searched_course', debounce(function(){
 		cc.searching = true;
-		getCourses(cc.searched_course);
+		getCoursesList(cc.searched_course);
 	}, 500), true);
 
 	cc.add = function(){
@@ -31,6 +32,7 @@ angular.module('psmsApp')
 		cc.binded_course = selected_course;
 		cc.course_id = selected_course.course_id;
 		cc.course = selected_course.course;
+		cc.selected_degree = selected_course.course_degree;
 		cc.isUpdating = true;
 		cc.saveUpdateBtnText = 'Update';
 		cc.labelText = 'Update';
@@ -50,6 +52,7 @@ angular.module('psmsApp')
 
 			let course_details = {
 				course: cc.course.toUpperCase(),
+				course_degree: cc.selected_degree,
 			};
 
 			if (!cc.isUpdating) {
@@ -70,7 +73,7 @@ angular.module('psmsApp')
 		}, err => {
 			console.log(err);
 			cc.saving_updating = false;
-			swalert.dialogBox(err.data.message, 'error', 'Failed');
+			swalert.dialogBox(err.data, 'error', 'Failed');
 		})
 	}
 
@@ -81,16 +84,17 @@ angular.module('psmsApp')
 		courseApiService.updateCourse(course_details).then(response => {
 			cc.binded_course.course = response.data.course;
 			cc.saving_updating = false;
-			swalert.toastInfo('Course updated.', 'success', 'top-right', 4000);
+			swalert.dialogBox('Course updated.', 'success',  'Updated');
 		}, err => {
 			console.log(err);
-			swalert.toastInfo(err.data, 'error', 'top-right');
+			swalert.dialogBox(err.data, 'error', 'Failed');
 		})
 	}
 
-	function getCourses(searched){
-		courseApiService.getCourses({searched: searched}).then(response=>{
-			cc.courses = response.data;
+	function getCoursesList(searched){
+		courseApiService.getCoursesList({searched: searched}).then(response=>{
+			console.log(response.data.data);
+			cc.courses = response.data.data;
 			cc.searching = false;
 			cc.course_list_loaded = true;
 		}, err => {
@@ -101,6 +105,7 @@ angular.module('psmsApp')
 	function clearInputs(){
 		cc.binded_course = "";
 		cc.course = "";
+		cc.selected_degree = "";
 	}
 
 }]);

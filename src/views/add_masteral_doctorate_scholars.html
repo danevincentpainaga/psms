@@ -147,8 +147,7 @@
                     <md-input-container flex style="margin-bottom: 0px;">
                       <label>Select degree</label>
                       <md-select ng-model="md.degree" ng-change="md.selectedDegree()">
-                        <md-option value="Masters"><em>Masters</em></md-option>
-                        <md-option value="Doctorate"><em>Doctorate</em></md-option>
+                        <md-option ng-value="deg" ng-repeat="deg in md.degrees"><em>{{ deg }}</em></md-option>
                       </md-select>
                     </md-input-container>
                   </div>

@@ -12,6 +12,15 @@ angular.module('psmsApp').factory('courseApiService', ['$http', '$cookies', '$ro
         }
       });
     },
+    getCoursesList: function(searched){
+      return $http.get(baseUrl+'api/course/getCoursesList', {
+        params: searched,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization : 'Bearer '+ $rootScope.token
+        }
+      });
+    },
     storeCourse: function(course){
       return $http({
         method:'POST',

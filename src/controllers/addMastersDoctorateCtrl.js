@@ -14,6 +14,7 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
 
   var md = this;
   md.list_of_schools = [];
+  md.degrees = ['Masters', 'Doctorate'];
   md.degree = "";
   md.buttonText = 'Save';
 
@@ -30,19 +31,25 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
 
   md.saveNewMasterDoctorateDetails = function(){
 
-    if (
-          md.firstname && md.lastname && md.middlename && md.addressId && moment.validateDate(md.date_of_birth)
-          && md.age && md.gender && md.schoolId && md.courseId && md.section && md.year_level && md.student_id_number
-          && md.IP && academicContractDetails.ascId && md.m_firstname && md.search_maidenname && md.m_middlename
-      ) {
+      if (!md.f_firstname && !md.search_flastname || !md.m_firstname && !md.search_maidenname)
+      {
+        swalert.toastInfo('please complete the form', 'error', 'top-right', 4000);
+        return;
+      }
+
+      if (!md.firstname || !md.lastname || !md.addressId || !moment.validateDate(md.date_of_birth) || !md.age || !md.gender || !md.schoolId || !md.courseId || !md.section || !md.year_level || !md.student_id_number || !md.IP || !academicContractDetails.ascId)
+      {
+        swalert.toastInfo('please complete the form', 'error', 'top-right', 4000);
+        return;
+      }
 
         md.buttonText = 'Saving...';
         md.saving = true;
 
         let scholar_details = {
           firstname: md.firstname.toUpperCase(),
-          lastname: md.lastname.toUpperCase(),  
-          middlename: md.middlename.toUpperCase(),
+          lastname: md.lastname.toUpperCase(),
+          middlename: (md.middlename || "").toUpperCase(),
           addressId: md.addressId,
           date_of_birth: md.date_of_birth,
           age: md.age,
@@ -50,8 +57,8 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
           schoolId: md.schoolId,
           courseId: md.courseId,
           section: md.section.toUpperCase(),
-          year_level: md.year_level,
-          student_id_number: md.student_id_number,
+          year_level: md.year_level.toUpperCase(),
+          student_id_number: md.student_id_number.toUpperCase(),
           IP: md.IP,
           degree: md.degree,
           contract_id: academicContractDetails.activated_contract_id,
@@ -63,19 +70,15 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
             occupation: ""
           },
           mother_details:{ 
-            firstname: (md.m_firstname || "").toUpperCase(),
-            maiden_name: (md.search_maidenname || "").toUpperCase(),
+            firstname: md.m_firstname.toUpperCase(),
+            maiden_name: md.search_maidenname.toUpperCase(),
             middlename: (md.m_middlename || "").toUpperCase(),
             occupation: ""
           },
         }
             
-        storeNewScholarDetails(scholar_details);    
-
-    }
-    else{
-      swalert.toastInfo('please complete the form', 'error', 'top-right', 4000);
-    }
+        storeNewScholarDetails(scholar_details);   
+        console.log(scholar_details); 
   }
 
   md.edit = function(scholarDetails){
@@ -151,7 +154,7 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
   }
 
   md.courseSearchQuery = function(searched){
-    return addScholarsService.getCourses({searched: searched});
+    return addScholarsService.getCourses({searched: searched,  degree: JSON.stringify( ['Masters', 'Doctorate'])});
   }
 
   md.schoolSearchQuery = function(searched){
@@ -188,6 +191,7 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
 
   function getNewMastersDoctorateScholars(searched){
      scholarApiService.getNewMastersDoctorateScholars(searched).then(response => {
+      console.log(response.data);
       md.scholars = response.data.data;
       md.scholars_loaded = true;
     }, err => {
@@ -196,6 +200,11 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
   }
 
   function print(scholarDetails){
+
+    const pdfMake = require("pdfmake/build/pdfmake");
+    const pdfFonts = require("pdfmake/build/vfs_fonts");
+    pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
 
     let docDefinition = {
         content: [

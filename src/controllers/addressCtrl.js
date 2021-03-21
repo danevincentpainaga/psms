@@ -69,10 +69,10 @@ angular.module('psmsApp')
 			ad.addresses.push(response.data);
 			clearInputs();
 			ad.saving_updating = false;
-			swalert.toastInfo('Address saved.', 'success', 'top-right', 4000);
+			swalert.dialogBox('Address saved.', 'success',  'successful');
 		}, err => {
 			console.log(err);
-			swalert.toastInfo(err.data, 'error', 'top-right');
+			swalert.dialogBox(err.data, 'error', 'Failed');
 		})
 	}
 
@@ -85,10 +85,10 @@ angular.module('psmsApp')
 			ad.binded_address.municipality = response.data.municipality;
 			clearInputs();
 			ad.saving_updating = false;
-			swalert.toastInfo('Address updated.', 'success', 'top-right', 4000);
+			swalert.dialogBox('Address updated.', 'success',  'successful');
 		}, err => {
 			console.log(err);
-			swalert.toastInfo(err.data, 'error', 'top-right');
+			swalert.dialogBox(err.data, 'error', 'Failed');
 		})
 	}
 

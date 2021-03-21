@@ -147,7 +147,7 @@ angular.module('psmsApp')
     }
 
      ac.courseSearchQuery = function(searched){
-       return addScholarsService.getCourses({searched: searched});
+       return addScholarsService.getCourses({searched: searched, degree: JSON.stringify(['Undergraduate'])});
     }
 
     ac.schoolSearchQuery = function(searched){

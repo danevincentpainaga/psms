@@ -37,7 +37,12 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
         return;
       }
 
-      if (!md.firstname || !md.lastname || !md.addressId || !moment.validateDate(md.date_of_birth) || !md.age || !md.gender || !md.schoolId || !md.courseId || !md.section || !md.year_level || !md.student_id_number || !md.IP || !academicContractDetails.ascId)
+      if (!moment.validateDate(md.date_of_birth)) {
+        swalert.toastInfo('Invalid Date of Birth', 'error', 'top-right', 4000);
+        return;
+      }
+
+      if (!md.firstname || !md.lastname || !md.addressId || !md.age || !md.gender || !md.schoolId || !md.courseId || !md.section || !md.year_level || !md.student_id_number || !md.IP || !academicContractDetails.ascId)
       {
         swalert.toastInfo('please complete the form', 'error', 'top-right', 4000);
         return;

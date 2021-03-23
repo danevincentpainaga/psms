@@ -49,6 +49,7 @@ angular.module('psmsApp')
 		    ctrl.school = "";
 		    ctrl.date_of_birth = "";
 		    ctrl.age = "";
+		    ctrl.displayedAge = "";
 		    ctrl.gender = "";
 		    ctrl.schoolId = "";
 		    ctrl.search_course = "";

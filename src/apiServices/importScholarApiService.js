@@ -21,6 +21,15 @@ angular.module('psmsApp').factory('importScholarApiService', ['$http', '$cookies
         }
       });
     },
+    getCourses: function(degree){
+      return $http.get(baseUrl+'api/import/getCourses', {
+        params: degree,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization : 'Bearer '+ $rootScope.token
+        }
+      });
+    },
     importScholars: function(importedScholars){
       return $http({
         method:'POST',

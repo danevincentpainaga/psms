@@ -143,20 +143,21 @@
                 <span class="md-subhead">{{ ac.semester }}</span>
               </md-card-header-text>
             </md-card-header>
+            <form name="ac.scholar_details" >
             <md-card-content style="padding: 0px 30px;" >
-              <form name="primary_details">
+              <!-- <form name="ac.primary_details" > -->
                 <div layout-xs="column" layout-gt-xs="column" layout-gt-sm="column" layout-gt-md="row">
                     <md-input-container flex>
                       <label>Firstname</label>
-                      <input type="text" ng-model="ac.firstname" autocomplete="off">
+                      <input type="text" ng-model="ac.firstname" autocomplete="off" required>
                     </md-input-container>
                     <md-input-container flex>
                       <label>Lastname</label>
-                      <input type="text" ng-model="ac.lastname" >
+                      <input type="text" ng-model="ac.lastname" required>
                     </md-input-container>
                     <md-input-container flex>
                       <label>Middlename</label>
-                      <input type="text" ng-model="ac.middlename">
+                      <input type="text" ng-model="ac.middlename" required>
                     </md-input-container>
                 </div>
                 <div layout-xs="column" layout-gt-xs="column" layout-gt-sm="column" layout-gt-md="row">
@@ -174,7 +175,7 @@
                       md-autoselect="true"
                       md-escape-options="clear"
                       md-require-match=""
-                      md-floating-label="Address">
+                      md-floating-label="Address" required>
                       <md-item-template>
                         <span md-highlight-text="ac.search_address" md-highlight-flags="^i">{{address.address}}</span>
                       </md-item-template>
@@ -185,15 +186,15 @@
                   </div>
                   <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="20">
                     <label>Date of Birth</label>
-                    <input type="text" ng-model="ac.date_of_birth" ng-change="ac.selectedDateOfBirth(ac.date_of_birth)" minlength="10"add-double-slashes-directive autocomplete="off" />
+                    <input type="text" ng-model="ac.date_of_birth" ng-change="ac.selectedDateOfBirth(ac.date_of_birth)" minlength="10"add-double-slashes-directive autocomplete="off" required/>
                   </md-input-container>
                   <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="10">
                     <label>Age</label>
-                    <input ng-model="ac.displayedAge" disabled>
+                    <input ng-model="ac.displayedAge" disabled required>
                   </md-input-container>
                   <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="20">
                     <label>Gender</label>
-                    <md-select ng-model="ac.gender">
+                    <md-select ng-model="ac.gender" required>
                       <md-option value="Male"><em>Male</em></md-option>
                       <md-option value="Female"><em>Female</em></md-option>
                     </md-select>
@@ -213,7 +214,7 @@
                     md-autoselect="true"
                     md-escape-options="clear"
                     md-require-match=""
-                    md-floating-label="School">
+                    md-floating-label="School" required>
                     <md-item-template>
                       <span md-highlight-text="ac.search_school" md-highlight-flags="^i">{{school.school_name}}</span>
                     </md-item-template>
@@ -234,7 +235,7 @@
                     md-autoselect="true"
                     md-escape-options="clear"
                     md-require-match=""
-                    md-floating-label="Course">
+                    md-floating-label="Course" required>
                     <md-item-template>
                       <span md-highlight-text="ac.search_course" md-highlight-flags="^i">{{course.course}}</span>
                     </md-item-template>
@@ -250,7 +251,7 @@
                 <div layout-xs="column" layout-gt-xs="column" layout-gt-sm="column" layout-gt-md="row">
                   <md-input-container flex>
                     <label>Year level.</label>
-                    <md-select ng-model="ac.year_level">
+                    <md-select ng-model="ac.year_level" required>
                       <md-option value="I"><em>1st year</em></md-option>
                       <md-option value="II"><em>2nd year</em></md-option>
                       <md-option value="III"><em>3rd year</em></md-option>
@@ -259,19 +260,19 @@
                       <md-option value="VI"><em>6th year</em></md-option>
                     </md-select>
                   </md-input-container>
-                  <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="30">
+                  <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="30" required>
                     <label>ID NO.</label>
-                    <input ng-model="ac.student_id_number">
+                    <input ng-model="ac.student_id_number" required>
                   </md-input-container>
-                  <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="20">
+                  <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="20" required>
                     <label>IP.</label>
-                    <md-select ng-model="ac.IP">
+                    <md-select ng-model="ac.IP" required>
                       <md-option value="YES"><em>YES</em></md-option>
                       <md-option value="NO"><em>NO</em></md-option>
                     </md-select>
                   </md-input-container>
                 </div>
-              </form>
+              <!-- </form> -->
             </md-card-content>
           </md-card>
           <md-card style="margin: 5px 0px;">
@@ -285,12 +286,13 @@
                   md-selected-item="ac.father"
                   md-search-text="ac.search_flastname"
                   md-delay="500"
+                  md-search-text-change="ac.searchFatherTextChange(fdetails)"
                   md-selected-item-change="ac.selectedFatherDetailsChange(fdetails)"
                   md-items="fdetails in ac.fatherSearchQuery(ac.search_flastname)"
                   md-item-text="fdetails.lastname"
                   md-autoselect="true"
                   md-escape-options="clear"
-                  md-floating-label="Lastname">
+                  md-floating-label="Lastname" required>
                   <md-item-template>
                     <span md-highlight-text="ac.search_flastname">{{fdetails.lastname}}, {{fdetails.firstname}} {{fdetails.middlename}}</span>
                   </md-item-template>
@@ -300,11 +302,11 @@
                 </md-autocomplete>
                 <md-input-container flex>
                   <label>Firstname</label>
-                  <input type="text" ng-model="ac.f_firstname" >
+                  <input type="text" ng-model="ac.f_firstname" required>
                 </md-input-container>
                 <md-input-container flex>
                   <label>Middlename</label>
-                  <input type="text" ng-model="ac.f_middlename" >
+                  <input type="text" ng-model="ac.f_middlename">
                 </md-input-container>
               </div>    
               <p>Mother's Details</p>
@@ -316,12 +318,13 @@
                   md-selected-item="ac.mother"
                   md-search-text="ac.search_maidenname"
                   md-delay="500"
+                  md-search-text-change="ac.searchMotherTextChange(mdetails)"
                   md-selected-item-change="ac.selectedMotherDetailsChange(mdetails)"
                   md-items="mdetails in ac.motherSearchQuery(ac.search_maidenname)"
                   md-item-text="mdetails.lastname"
                   md-autoselect="true"
                   md-escape-options="clear"
-                  md-floating-label="Maiden name">
+                  md-floating-label="Maiden name" required>
                   <md-item-template>
                     <span md-highlight-text="ac.search_maidenname">{{mdetails.lastname}}, {{mdetails.firstname}} {{mdetails.middlename}}</span>
                   </md-item-template>
@@ -331,11 +334,11 @@
                 </md-autocomplete>
                 <md-input-container flex>
                   <label>Firstname</label>
-                  <input type="text" ng-model="ac.m_firstname" >
+                  <input type="text" ng-model="ac.m_firstname" required>
                 </md-input-container>
                 <md-input-container flex>
                   <label>Middlename</label>
-                  <input type="text" ng-model="ac.m_middlename" >
+                  <input type="text" ng-model="ac.m_middlename">
                 </md-input-container>
               </div>
             </md-card-content>
@@ -343,7 +346,8 @@
               <md-button class="md-raised md-primary" ng-click="ac.saveNewUndergraduateDetails()" ng-disabled="ac.saving">{{ ac.buttonText }}</md-button>
               <md-button class="md-raised" ng-click="ac.clear()">Clear</md-button>
             </div>
-          </md-card>  
+          </md-card>
+          </form>
         </div>
       </div>
     </section>

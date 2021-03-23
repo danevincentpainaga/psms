@@ -24,6 +24,7 @@ angular.module('psmsApp')
 
     ac.clear = function(){
       addScholarsService.clearInputs(this);
+      ac.scholar_details.$setUntouched();
     }  
 
     ac.saveNewUndergraduateDetails = function(){
@@ -31,12 +32,29 @@ angular.module('psmsApp')
       if (!ac.f_firstname && !ac.search_flastname || !ac.m_firstname && !ac.search_maidenname)
       {
         swalert.toastInfo('please complete the form', 'error', 'top-right', 4000);
+        // ac.scholar_details.$setTouched();
         return;
       }
 
-      if (!ac.firstname || !ac.lastname || !ac.addressId || !moment.validateDate(ac.date_of_birth) || !ac.age || !ac.gender || !ac.schoolId || !ac.courseId || !ac.section || !ac.year_level || !ac.student_id_number || !ac.IP || !academicContractDetails.ascId)
+      if (!ac.firstname || !ac.lastname || !ac.addressId || !ac.age || !ac.gender || !ac.schoolId || !ac.courseId || !ac.section || !ac.year_level || !ac.student_id_number || !ac.IP || !academicContractDetails.ascId)
       {
         swalert.toastInfo('please complete the form', 'error', 'top-right', 4000);
+        return;
+      }
+
+      if (ac.search_flastname && !ac.f_firstname || ac.f_firstname && !ac.search_flastname || ac.f_middlename && !ac.search_flastname || ac.f_middlename && !ac.f_firstname) {
+        swalert.toastInfo('please complete father details', 'error', 'top-right', 4000);
+        return;
+      }
+
+      if (ac.m_firstname && !ac.search_maidenname || ac.search_maidenname && !ac.m_firstname) {
+        swalert.toastInfo('please complete mother details', 'error', 'top-right', 4000);
+        return;
+      }
+
+      if (!moment.validateDate(ac.date_of_birth)) {
+        swalert.toastInfo('Invalid Date of Birth', 'error', 'top-right', 4000);
+        // ac.scholar_detail.date_of_birth.$setValidity("unique", true)
         return;
       }
 
@@ -89,27 +107,20 @@ angular.module('psmsApp')
     }
 
     ac.selectedFatherDetailsChange = function(fdetails){
-      if (ac.father) {
-        ac.f_firstname = fdetails.firstname;
-        ac.f_middlename = fdetails.middlename;
-      }
-      else{
-        ac.f_firstname = "";
-        ac.f_middlename = "";
-      }
+      validateParentDetails(fdetails, 'f_firstname', 'f_middlename');
+    }
+
+    ac.searchFatherTextChange = function(fdetails){
+      validateParentDetails(fdetails, 'f_firstname', 'f_middlename');
     }
 
     ac.selectedMotherDetailsChange = function(mdetails){
-      if (ac.mother) {
-        ac.m_firstname = mdetails.firstname;
-        ac.m_middlename = mdetails.middlename;
-      }
-      else{
-        ac.m_firstname = "";
-        ac.m_middlename = "";
-      }
+      validateParentDetails(fdetails, 'm_firstname', 'm_middlename');
     }
 
+    ac.searchMotherTextChange = function(fdetails){
+      validateParentDetails(fdetails, 'm_firstname', 'm_middlename');
+    }
 
     ac.selectedSchoolChange = function(school){
       if (school) {
@@ -166,6 +177,17 @@ angular.module('psmsApp')
       return addScholarsService.getFatherList(searched);
     }
 
+    function validateParentDetails(fdetails, fname, mname){
+      if (fdetails) {
+        ac[fname] = fdetails.firstname;
+        ac[mname] = fdetails.middlename;
+      }
+      else{
+        ac[fname] = "";
+        ac[mname] = "";
+      }
+    }
+
     function storeNewScholarDetails(scholarDetails){
         scholarApiService.storeNewScholarDetails(scholarDetails).then(response => {
         addScholarsService.clearInputs(ac);
@@ -173,6 +195,7 @@ angular.module('psmsApp')
         ac.saving = false;
         swalert.dialogBox('Scholar saved!', 'success', 'Success');
         print(scholarDetails);
+        ac.scholar_details.$setUntouched();
         getNewUndergraduateScholars({ searched: ac.scholar_lastname });
       }, err => {
         ac.buttonText = 'Save';

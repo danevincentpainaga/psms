@@ -84,18 +84,15 @@
   </md-toolbar>
   <div layout="column">
     <section layout="row" layout-xs="column" layout-gt-xs="column" layout-gt-sm="row">
-      <div layout="row" layout-xs="column" style="background-color: #fff; border-right: 1px solid #c7c7c7;min-width: 340px;" >
-        <md-content flex layout-padding style="height: 100%;background-color: #fff; padding: 0px;;">
+      <div layout="row" layout-xs="column" class="scholar-md-list">
+        <md-content flex layout-padding>
           <md-list flex>
-            <md-input-container style="width: 100%;margin: 25px 0px 0px 0px;height: 40px;">
+            <md-input-container class="md-container">
               <label>Search</label>
-              <input type="text" ng-model="md.scholar_lastname" style="text-transform: uppercase;">
+              <input type="text" ng-model="md.scholar_lastname">
             </md-input-container>
             <md-subheader class="md-no-sticky">Masteral/Doctorate list</md-subheader>
-            <div style="overflow-y: auto;" ng-style="resizeList()"  resize-md-list>
-            <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top: 10px;" ng-if="!md.scholars_loaded">
-              <md-progress-circular md-diameter="25px"></md-progress-circular>
-            </div>
+            <div class="added-scholar-list" ng-style="resizeList()"  resize-md-list  when-scrolled="md.loadmore()">
               <md-list-item class="md-2-line" ng-repeat="scholar in md.scholars track by $index" ng-if="md.scholars_loaded">
                 <img ng-src="{{ scholar.photo | checkScholarPhoto }}" class="md-avatar scholar-image" alt="" />
                 <div class="md-list-item-text" style="max-width: 210px;">
@@ -121,6 +118,12 @@
                   </md-menu-content>
                 </md-menu>
               </md-list-item>
+              <div ng-if="!md.hide_load_more" style="text-align: center;font-size: 13px;">
+                <md-button class="md-hue-2" ng-click="md.loadmore()">Load more</md-button>
+              </div>
+              <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top: 10px;" ng-if="md.load_busy">
+                <md-progress-circular md-diameter="25px"></md-progress-circular>
+              </div>
             </div>
           </md-list>
         </md-content>

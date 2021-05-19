@@ -59,6 +59,7 @@ angular.module('psmsApp')
 				storeCourse(course_details);
 			}
 			else{
+				cc.saveUpdateBtnText = 'Updating...';
 				updateCourse(course_details);
 			}
 		}
@@ -84,6 +85,7 @@ angular.module('psmsApp')
 		courseApiService.updateCourse(course_details).then(response => {
 			cc.binded_course.course = response.data.course;
 			cc.saving_updating = false;
+			cc.saveUpdateBtnText = 'Update';
 			swalert.dialogBox('Course updated.', 'success',  'Updated');
 		}, err => {
 			console.log(err);

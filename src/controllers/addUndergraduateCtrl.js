@@ -15,12 +15,26 @@ angular.module('psmsApp')
 
     var ac = this;
     ac.list_of_schools = [];
+    ac.scholars = [];
     ac.buttonText = 'Save';
+    ac.hide_load_more = true;
     
     $scope.$watch('ac.scholar_lastname', debounce(function() {
       ac.scholars_loaded = false;
-      getNewUndergraduateScholars({ searched: ac.scholar_lastname });
+      ac.scholars = [];
+      ac.hide_load_more = true;
+      let show = ac.scholar_lastname ? true : false; 
+      getNewUndergraduateScholars({ searched: ac.scholar_lastname }, ac.toPage = null, show);
     }, 500), true);
+
+    ac.loadmore = function(){
+      ac.hide_load_more = true;
+      if (ac.load_busy || ac.toPage === null) {
+        ac.hide_load_more = true;
+        return;
+      }
+      getNewUndergraduateScholars({ searched: ac.scholar_lastname }, ac.toPage, false);
+    }
 
     ac.clear = function(){
       addScholarsService.clearInputs(this);
@@ -110,15 +124,7 @@ angular.module('psmsApp')
       validateParentDetails(fdetails, 'f_firstname', 'f_middlename');
     }
 
-    ac.searchFatherTextChange = function(fdetails){
-      validateParentDetails(fdetails, 'f_firstname', 'f_middlename');
-    }
-
     ac.selectedMotherDetailsChange = function(mdetails){
-      validateParentDetails(fdetails, 'm_firstname', 'm_middlename');
-    }
-
-    ac.searchMotherTextChange = function(fdetails){
       validateParentDetails(fdetails, 'm_firstname', 'm_middlename');
     }
 
@@ -196,7 +202,7 @@ angular.module('psmsApp')
         swalert.dialogBox('Scholar saved!', 'success', 'Success');
         print(scholarDetails);
         ac.scholar_details.$setUntouched();
-        getNewUndergraduateScholars({ searched: ac.scholar_lastname });
+        getNewUndergraduateScholars({ searched: ac.scholar_lastname }, ac.toPage );
       }, err => {
         ac.buttonText = 'Save';
         ac.saving = false;
@@ -205,10 +211,15 @@ angular.module('psmsApp')
       });
     }
 
-    function getNewUndergraduateScholars(searched){
-       scholarApiService.getNewUndergraduateScholars(searched).then(response => {
-        ac.scholars = response.data.data;
+    function getNewUndergraduateScholars(searched, url, showloadmore){
+       ac.load_busy = true;
+       scholarApiService.getNewUndergraduateScholars(searched, url).then(response => {
+        ac.toPage = response.data.next_page_url;
+        console.log(response.data);
+        ac.scholars = [...ac.scholars, ...response.data.data];
         ac.scholars_loaded = true;
+        ac.load_busy = false;
+        ac.hide_load_more = showloadmore;
       }, err => {
         console.log(err);
       });    
@@ -244,7 +255,6 @@ angular.module('psmsApp')
       else{
         ac.has_semester = false;
       }
-      console.log(academicContractDetails);
     }
 
     hasSemester();

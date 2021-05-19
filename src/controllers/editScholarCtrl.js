@@ -21,9 +21,9 @@ angular.module('psmsApp')
 
     $scope.$watch('scholar', function(n, o){
       if (n) {
-        console.log(n);
-        let father = JSON.parse(n.father_details);
-        let mother = JSON.parse(n.mother_details);
+        
+        let father = typeof n.father_details === 'object'? n.father_details : JSON.parse(n.father_details);
+        let mother = typeof n.mother_details === 'object'? n.mother_details : JSON.parse(n.mother_details);
 
         ec.icon = (n.degree === 'Masters' || n.degree === 'Doctorate')  ? 'school' : 'groups';
         ec.binded_copy = n;
@@ -318,5 +318,7 @@ angular.module('psmsApp')
       ec.binded_copy.IP = ec.IP;
       ec.binded_copy.updated_at = response;
     }
+
+
 
 }]);

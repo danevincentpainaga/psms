@@ -30,6 +30,10 @@ angular.module('psmsApp').directive('addDoubleSlashesDirective', function() {
              val = val.slice(0, -1);
           }
 
+          if (value[0] === '/') {
+            val = val.slice(0, -1);
+          }
+
           if (val.length > 10) {
             val = val.substring(0, 10);
           }   

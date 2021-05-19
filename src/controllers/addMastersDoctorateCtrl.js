@@ -14,14 +14,28 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
 
   var md = this;
   md.list_of_schools = [];
+  md.scholars = [];
   md.degrees = ['Masters', 'Doctorate'];
   md.degree = "";
   md.buttonText = 'Save';
+  md.hide_load_more = true;
 
   $scope.$watch('md.scholar_lastname', debounce(function() {
     md.scholars_loaded = false;
-    getNewMastersDoctorateScholars({ searched: md.scholar_lastname });
+    md.scholars = [];
+    md.hide_load_more = true;
+    let show = md.scholar_lastname ? true : false; 
+    getNewMastersDoctorateScholars({ searched: md.scholar_lastname }, md.toPage = null, show);
   }, 500), true);
+
+  md.loadmore = function(){
+    md.hide_load_more = true;
+    if (md.load_busy || md.toPage === null) {
+      md.hide_load_more = true;
+      return;
+    }
+    getNewMastersDoctorateScholars({ searched: md.scholar_lastname }, md.toPage, false);
+  }
 
   md.clear = function(){
     md.degree = "";
@@ -37,14 +51,24 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
         return;
       }
 
-      if (!moment.validateDate(md.date_of_birth)) {
-        swalert.toastInfo('Invalid Date of Birth', 'error', 'top-right', 4000);
+      if (!md.firstname || !md.lastname || !md.addressId || !md.gender || !md.schoolId || !md.courseId || !md.section || !md.year_level || !md.student_id_number || !md.IP || !academicContractDetails.ascId)
+      {
+        swalert.toastInfo('please complete the form', 'error', 'top-right', 4000);
         return;
       }
 
-      if (!md.firstname || !md.lastname || !md.addressId || !md.age || !md.gender || !md.schoolId || !md.courseId || !md.section || !md.year_level || !md.student_id_number || !md.IP || !academicContractDetails.ascId)
-      {
-        swalert.toastInfo('please complete the form', 'error', 'top-right', 4000);
+      if (md.search_flastname && !md.f_firstname || md.f_firstname && !md.search_flastname || md.f_middlename && !md.search_flastname || md.f_middlename && !md.f_firstname) {
+        swalert.toastInfo('please complete father details', 'error', 'top-right', 4000);
+        return;
+      }
+
+      if (md.m_firstname && !md.search_maidenname || md.search_maidenname && !md.m_firstname) {
+        swalert.toastInfo('please complete mother details', 'error', 'top-right', 4000);
+        return;
+      }
+
+      if (!moment.validateDate(md.date_of_birth)) {
+        swalert.toastInfo('Invalid Date of Birth', 'error', 'top-right', 4000);
         return;
       }
 
@@ -100,27 +124,27 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
     md.degree_has_selected = md.degree ?  true : false;
   }
 
-  md.selectedFatherDetailsChange = function(fdetails){
-    if (md.father) {
-      md.f_firstname = fdetails.firstname;
-      md.f_middlename = fdetails.middlename;
-    }
-    else{
-      md.f_firstname = "";
-      md.f_middlename = "";
-    }
-  }
+  // md.selectedFatherDetailsChange = function(fdetails){
+  //   if (md.father) {
+  //     md.f_firstname = fdetails.firstname;
+  //     md.f_middlename = fdetails.middlename;
+  //   }
+  //   else{
+  //     md.f_firstname = "";
+  //     md.f_middlename = "";
+  //   }
+  // }
 
-  md.selectedMotherDetailsChange = function(mdetails){
-    if (md.mother) {
-      md.m_firstname = mdetails.firstname;
-      md.m_middlename = mdetails.middlename;
-    }
-    else{
-      md.m_firstname = "";
-      md.m_middlename = "";
-    }
-  }
+  // md.selectedMotherDetailsChange = function(mdetails){
+  //   if (md.mother) {
+  //     md.m_firstname = mdetails.firstname;
+  //     md.m_middlename = mdetails.middlename;
+  //   }
+  //   else{
+  //     md.m_firstname = "";
+  //     md.m_middlename = "";
+  //   }
+  // }
 
 
   md.selectedSchoolChange = function(school){
@@ -153,6 +177,14 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
     }
   }
 
+  md.selectedFatherDetailsChange = function(fdetails){
+    validateParentDetails(fdetails, 'f_firstname', 'f_middlename');
+  }
+
+  md.selectedMotherDetailsChange = function(mdetails){
+    validateParentDetails(fdetails, 'm_firstname', 'm_middlename');
+  }
+
   md.selectedDateOfBirth = function(dateOfBirth){
     md.age = addScholarsService.calcAge(dateOfBirth);
     md.displayedAge = md.age;
@@ -178,30 +210,47 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
     return addScholarsService.getFatherList(searched);
   }
 
+  function validateParentDetails(fdetails, fname, mname){
+    if (fdetails) {
+      md[fname] = fdetails.firstname;
+      md[mname] = fdetails.middlename;
+    }
+    else{
+      md[fname] = "";
+      md[mname] = "";
+    }
+  }
+
   function storeNewScholarDetails(scholarDetails){
      scholarApiService.storeNewScholarDetails(scholarDetails).then(response => {
+      md.scholars = [];
       md.degree = "";
       md.degree_has_selected = false;
       addScholarsService.clearInputs(md);
+      swalert.dialogBox('Scholar saved!', 'success', 'Success');
       md.buttonText = 'Save';
       md.saving = false;
-      getNewMastersDoctorateScholars({ searched: md.scholar_lastname });
       print(scholarDetails);
-      swalert.dialogBox('Scholar saved!', 'success', 'Success');
+      getNewMastersDoctorateScholars({ searched: md.scholar_lastname }, md.toPage);
     }, err => {
       console.log(err);
       swalert.dialogBox(err.data.message, 'success', 'Success');
     });
   }
 
-  function getNewMastersDoctorateScholars(searched){
-     scholarApiService.getNewMastersDoctorateScholars(searched).then(response => {
+  function getNewMastersDoctorateScholars(searched, url, showloadmore){  
+     md.load_busy = true;
+     scholarApiService.getNewMastersDoctorateScholars(searched, url).then(response => {
       console.log(response.data);
-      md.scholars = response.data.data;
+      md.toPage = response.data.next_page_url;
+      md.scholars = [...md.scholars, ...response.data.data];
       md.scholars_loaded = true;
+      md.load_busy = false;
+      md.hide_load_more = showloadmore;
+      console.log(md.scholars);
     }, err => {
       console.log(err);
-    });    
+    }); 
   }
 
   function print(scholarDetails){
@@ -234,7 +283,6 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
     else{
       md.has_semester = false;
     }
-    console.log(academicContractDetails);
   }
 
   hasSemester();

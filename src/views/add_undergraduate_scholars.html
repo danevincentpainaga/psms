@@ -1,9 +1,8 @@
 <ng-include src="'/header.html'"></ng-include> 
-<div style="font-size: 14px;" class="fading">
-  <!-- <md-content> -->
+<div class="undergraduate fading">
   <md-toolbar class="md-menu-toolbar">
     <div layout="row">
-      <md-toolbar-filler style="display: flex;">
+      <md-toolbar-filler>
         <md-icon class="material-icons">groups</md-icon>
       </md-toolbar-filler>
       <div>
@@ -85,23 +84,20 @@
   </md-toolbar>
   <div layout="column">
     <section layout="row" layout-xs="column" layout-gt-xs="column" layout-gt-sm="row">
-      <div layout="row" layout-xs="column" style="background-color: #fff; border-right: 1px solid #c7c7c7;min-width: 340px;" >
-        <md-content flex layout-padding style="height: 100%;background-color: #fff; padding: 0px;;">
+      <div layout="row" layout-xs="column" class="scholar-md-list">
+        <md-content flex layout-padding>
           <md-list flex>
-            <md-input-container style="width: 100%;margin: 25px 0px 0px 0px;height: 40px;">
+            <md-input-container class="md-container">
               <label>Search</label>
-              <input type="text" ng-model="ac.scholar_lastname" style="text-transform: uppercase;">
+              <input type="text" ng-model="ac.scholar_lastname">
             </md-input-container>
             <md-subheader class="md-no-sticky">Udergraduate list</md-subheader>
-            <div style="overflow-y: auto;" ng-style="resizeList()"  resize-md-list>
-            <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top: 10px;" ng-if="!ac.scholars_loaded">
-              <md-progress-circular md-diameter="25px"></md-progress-circular>
-            </div>
+            <div class="added-scholar-list" ng-style="resizeList()" resize-md-list  when-scrolled="ac.loadmore()">
               <md-list-item class="md-2-line" ng-repeat="scholar in ac.scholars track by $index" ng-if="ac.scholars_loaded">
                 <img ng-src="{{ scholar.photo | checkScholarPhoto }}" class="md-avatar scholar-image" alt="" />
-                <div class="md-list-item-text" style="max-width: 210px;">
-                  <h4 style="margin: 0px;color: black;">{{scholar.lastname}},&nbsp;{{scholar.firstname}}&nbsp;{{scholar.middlename}}.</h4>
-                  <p style="font-size: 12px;">{{ scholar.school.school_name }} - {{ scholar.degree }}</p>
+                <div class="md-list-item-text">
+                  <h4>{{scholar.lastname}},&nbsp;{{scholar.firstname}}&nbsp;{{scholar.middlename}}.</h4>
+                  <p>{{ scholar.school.school_name }} - {{ scholar.degree }}</p>
                 </div>
                 <span ng-if="$index===ac.selectedIndex" style="margin: 7px 0px;">opening..</span>
                 <md-menu ng-if="$index!==ac.selectedIndex">
@@ -122,12 +118,19 @@
                   </md-menu-content>
                 </md-menu>
               </md-list-item>
+              <div ng-if="!ac.hide_load_more" style="text-align: center;font-size: 13px;">
+                <md-button class="md-hue-2" ng-click="ac.loadmore()">Load more</md-button>
+              </div>
+              <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top: 10px;" ng-if="ac.load_busy">
+                <md-progress-circular md-diameter="25px"></md-progress-circular>
+              </div>
             </div>
           </md-list>
         </md-content>
       </div>
       <div flex layout-padding style="background: #efefef;overflow-y: auto;border-top: 1px solid #c7c7c7;" ng-style="resizeDiv()" resize-div height="145">
         <h3 ng-if="!ac.has_semester">Contract closed.</h3>
+        <form name="ac.scholar_details">
         <div ng-if="ac.has_semester" class="fading-up">
           <md-card style="margin: 0px;">
             <md-card-header style="padding: 22px 25px 0px;">
@@ -143,9 +146,7 @@
                 <span class="md-subhead">{{ ac.semester }}</span>
               </md-card-header-text>
             </md-card-header>
-            <form name="ac.scholar_details" >
             <md-card-content style="padding: 0px 30px;" >
-              <!-- <form name="ac.primary_details" > -->
                 <div layout-xs="column" layout-gt-xs="column" layout-gt-sm="column" layout-gt-md="row">
                     <md-input-container flex>
                       <label>Firstname</label>
@@ -245,7 +246,7 @@
                   </md-autocomplete>
                   <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="15">
                     <label>section</label>
-                    <input ng-model="ac.section">
+                    <input ng-model="ac.section" required>
                   </md-input-container>
                 </div>
                 <div layout-xs="column" layout-gt-xs="column" layout-gt-sm="column" layout-gt-md="row">
@@ -286,7 +287,6 @@
                   md-selected-item="ac.father"
                   md-search-text="ac.search_flastname"
                   md-delay="500"
-                  md-search-text-change="ac.searchFatherTextChange(fdetails)"
                   md-selected-item-change="ac.selectedFatherDetailsChange(fdetails)"
                   md-items="fdetails in ac.fatherSearchQuery(ac.search_flastname)"
                   md-item-text="fdetails.lastname"
@@ -318,7 +318,6 @@
                   md-selected-item="ac.mother"
                   md-search-text="ac.search_maidenname"
                   md-delay="500"
-                  md-search-text-change="ac.searchMotherTextChange(mdetails)"
                   md-selected-item-change="ac.selectedMotherDetailsChange(mdetails)"
                   md-items="mdetails in ac.motherSearchQuery(ac.search_maidenname)"
                   md-item-text="mdetails.lastname"
@@ -347,11 +346,10 @@
               <md-button class="md-raised" ng-click="ac.clear()">Clear</md-button>
             </div>
           </md-card>
-          </form>
         </div>
+        </form>
       </div>
     </section>
   </div>
-<!-- </md-content> -->
 </div>
 <edit-scholar scholar="ac.scholar_to_edit"></edit-scholar>

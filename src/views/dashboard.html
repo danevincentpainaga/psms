@@ -1,121 +1,71 @@
 <ng-include src="'/header.html'"></ng-include> 
 <div class="demo-md-panel-content" >
-  <md-toolbar class="md-menu-toolbar" style="border-bottom: 1px solid #c7c7c7;">
-    <div layout="row" style="min-height: 64px;">
-      <md-toolbar-filler style="display: flex;">
+  <md-toolbar class="md-menu-toolbar dashboard-toolbar">
+    <div layout="row">
+      <md-toolbar-filler>
         <md-icon class="material-icons">home</md-icon>
       </md-toolbar-filler>
-      <h2 class="md-toolbar-tools" style="padding: 20px;">
+      <h2 class="md-toolbar-tools">
         <span>Dashboard</span>
       </h2>
     </div>
   </md-toolbar>
-	<div layout-xs="column" layout-gt-xs="column" layout-gt-sm="row" class="fading-up" style="background: #efefef !important;">
+	<div layout-xs="column" layout-gt-xs="column" layout-gt-sm="row" class="fading-up dashboard-container">
 	  <div flex-xs="100" flex-sm="100" flex-gt-md="25">
-	  	<div layout="column">
+	  	<div layout="column" class="dashboard">
 	  		<div flex>
-	            <div class="card" style="position: relative;
-	    display: -ms-flexbox;
-	    display: flex;
-	    -ms-flex-direction: column;
-	    flex-direction: column;
-	    min-width: 0;
-	    background-clip: border-box;
-	    border-color: rgba(0,0,0,.125);
-	    border-radius: .25rem;margin: 15px 15px 0px 15px;background-image: linear-gradient(to top, #0ba360 0%, #3cba92 100%) !important;box-shadow: 0 0.46875rem 2.1875rem rgb(4 9 20 / 3%), 0 0.9375rem 1.40625rem rgb(4 9 20 / 3%), 0 0.25rem 0.53125rem rgb(4 9 20 / 5%), 0 0.125rem 0.1875rem rgb(4 9 20 / 3%);">
-	                
-	                <div class="card-body" style="padding: 1rem;display: flex;flex:1;align-items: center;">
+	            <div class="card">
+	                <div class="card-body">
 	                    <div>
-	                    	<div style="color: #fff; opacity: .8;font-weight: bold;line-height: 1.5;font-size: .88rem;">Total</div>
-	                    	<div style="color: #fff; opacity: .5;font-weight: bold;line-height: 1.5;font-size: .88rem;">Undergraduate</div>
+	                    	<div>Total</div>
+	                    	<div>Undergraduate</div>
 	                    </div>
-	                    <div style="margin-left: auto;">
-	                    	<span style="font-weight: bold;font-size: 1.5rem;color: #fff;">{{ dc.undergraduate_total }}</span>
+	                    <div>
+	                    	<span>{{ dc.undergraduate_total }}</span>
 	                    </div>
 	                </div>
 	            </div>
 	  		</div>
 	  		<div flex>
-	            <div class="card" style="position: relative;
-	    display: -ms-flexbox;
-	    display: flex;
-	    -ms-flex-direction: column;
-	    flex-direction: column;
-	    min-width: 0;
-	    background-clip: border-box;
-	    border-color: rgba(0,0,0,.125);
-	    border-radius: .25rem;margin: 15px 15px 0px 15px;background-image: radial-gradient(circle 248px at center, #16d9e3 0%, #30c7ec 47%, #46aef7 100%) !important;box-shadow: 0 0.46875rem 2.1875rem rgb(4 9 20 / 3%), 0 0.9375rem 1.40625rem rgb(4 9 20 / 3%), 0 0.25rem 0.53125rem rgb(4 9 20 / 5%), 0 0.125rem 0.1875rem rgb(4 9 20 / 3%);">
-	                
-	                <div class="card-body" style="padding: 1rem;display: flex;flex:1;align-items: center;">
+	            <div class="card">
+	                <div class="card-body">
 	                    <div>
-	                    	<div style="color: #fff; opacity: .8;font-weight: bold;line-height: 1.5;font-size: .88rem;">Total</div>
-	                    	<div style="color: #fff; opacity: .5;font-weight: bold;line-height: 1.5;font-size: .88rem;">Master's</div>
+	                    	<div>Total</div>
+	                    	<div>Master's</div>
 	                    </div>
-	                    <div style="margin-left: auto;">
-	                    	<span style="font-weight: bold;font-size: 1.5rem;color: #fff;">{{ dc.masters_total }}</span>
+	                    <div>
+	                    	<span>{{ dc.masters_total }}</span>
 	                    </div>
 	                </div>
 	            </div>
 	  		</div>
 	  		<div flex>
-	            <div class="card" style="position: relative;
-	    display: -ms-flexbox;
-	    display: flex;
-	    -ms-flex-direction: column;
-	    flex-direction: column;
-	    min-width: 0;
-	    background-clip: border-box;
-	    border-color: rgba(0,0,0,.125);
-	    border-radius: .25rem;margin: 15px 15px 0px 15px;background-image: linear-gradient(-20deg, #2b5876 0%, #4e4376 100%) !important;box-shadow: 0 0.46875rem 2.1875rem rgb(4 9 20 / 3%), 0 0.9375rem 1.40625rem rgb(4 9 20 / 3%), 0 0.25rem 0.53125rem rgb(4 9 20 / 5%), 0 0.125rem 0.1875rem rgb(4 9 20 / 3%);">
-	                
-	                <div class="card-body" style="padding: 1rem;display: flex;flex:1;align-items: center;">
+	            <div class="card">
+	                <div class="card-body">
 	                    <div>
-	                    	<div style="color: #fff; opacity: .8;font-weight: bold;line-height: 1.5;font-size: .88rem;">Total</div>
-	                    	<div style="color: #fff; opacity: .5;font-weight: bold;line-height: 1.5;font-size: .88rem;">Doctorate</div>
+	                    	<div>Total</div>
+	                    	<div>Doctorate</div>
 	                    </div>
-	                    <div style="margin-left: auto;">
-	                    	<span style="font-weight: bold;font-size: 1.5rem;color: #fff;">{{ dc.doctorate_total }}</span>
+	                    <div>
+	                    	<span>{{ dc.doctorate_total }}</span>
 	                    </div>
 	                </div>
 	            </div>
 	  		</div>
- 	  		<div flex>
-	            <div class="card" style="position: relative;
-	    display: -ms-flexbox;
-	    display: flex;
-	    -ms-flex-direction: column;
-	    flex-direction: column;
-	    min-width: 0;
-	    background-color: #fff;
-	    background-clip: border-box;
-	    border-radius: .25rem;margin: 15px 15px 0px 15px;box-shadow: 0 0.46875rem 2.1875rem rgb(4 9 20 / 3%), 0 0.9375rem 1.40625rem rgb(4 9 20 / 3%), 0 0.25rem 0.53125rem rgb(4 9 20 / 5%), 0 0.125rem 0.1875rem rgb(4 9 20 / 3%);">
-	                <div class="card-header" style="padding: .75rem 1.25rem;
-	    margin-bottom: 0;
-	    color: rgba(13,27,62,0.7);
-	    font-weight: bold;
-	    font-size: .88rem;border-bottom:1px solid rgba(26,54,126,0.125); ">Statuses</div>
-	                <div class="card-body" style="padding: 1rem">
+ 	  		<div flex class="statuses">
+	            <div class="card">
+	                <div class="card-header" style="">Statuses</div>
+	                <div class="card-body">
 						<canvas id="base" class="chart-horizontal-bar" chart-data="dc.degree" chart-series="dc.series" chart-labels="dc.degree_labels" chart-options="dc.options" chart-dataset-override="dc.datasetOverride">chart-series="series" ></canvas>
 	                </div>
 	            </div>
   			</div>
-	  		<div flex>
-	            <div class="card" style="position: relative;
-	    display: -ms-flexbox;
-	    display: flex;
-	    -ms-flex-direction: column;
-	    flex-direction: column;
-	    min-width: 0;
-	    background-color: #fff;
-	    background-clip: border-box;
-	    border-color: rgba(0,0,0,.125);
-	    border-radius: .25rem;margin: 15px 15px 0px 15px;box-shadow: 0 0.46875rem 2.1875rem rgb(4 9 20 / 3%), 0 0.9375rem 1.40625rem rgb(4 9 20 / 3%), 0 0.25rem 0.53125rem rgb(4 9 20 / 5%), 0 0.125rem 0.1875rem rgb(4 9 20 / 3%);"  ng-repeat="status in dc.contract_status">
-	                <div class="card-header" style="padding: .75rem 1.25rem;
-    margin-bottom: 0;
-    color: rgba(13,27,62,0.7);
-    font-weight: bold;
-    font-size: .88rem;border-bottom:1px solid rgba(26,54,126,0.125); "><span color-degree degree={{status.degree}}>{{ status.degree }}</span></div>
-	                <div class="card-body" style="padding: .3rem;font-size: 14px;">
+	  		<div flex class="degree">
+	            <div class="card" ng-repeat="status in dc.contract_status">
+	                <div class="card-header">
+	                	<span color-degree degree={{status.degree}}>{{ status.degree }}</span>
+	                </div>
+	                <div class="card-body">
 					  <md-list-item class="secondary-button-padding">
 					    <p>
 					    	<span>Pre-Approved</span>
@@ -147,43 +97,19 @@
 	  	<br />
 	  </div>
 	  <div flex-xs="100" flex-sm="100" flex-gt-md="75">
-		<div layout="column">
-		  <div flex="">
-            <div class="card" style="position: relative;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    min-width: 0;
-    background-color: #fff;
-    background-clip: border-box;
-    border-radius: .25rem;margin: 15px 15px 0px 15px;box-shadow: 0 0.46875rem 2.1875rem rgb(4 9 20 / 3%), 0 0.9375rem 1.40625rem rgb(4 9 20 / 3%), 0 0.25rem 0.53125rem rgb(4 9 20 / 5%), 0 0.125rem 0.1875rem rgb(4 9 20 / 3%);">
-                <div class="card-header" style="padding: .75rem 1.25rem;
-    margin-bottom: 0;
-    color: rgba(13,27,62,0.7);
-    font-weight: bold;
-    font-size: .88rem;border-bottom:1px solid rgba(26,54,126,0.125); ">Undergraduate</div>
-                <div class="card-body" style="padding: 1.25rem;">
+		<div layout="column" class="graph-holder">
+		  <div flex>
+            <div class="card">
+                <div class="card-header">Undergraduate</div>
+                <div class="card-body" style="">
                     <canvas id="bar" class="chart chart-bar" chart-data="dc.undergraduate" chart-series="dc.series" chart-labels="dc.undergraduate_labels" chart-options="dc.options" chart-dataset-override="dc.datasetOverride" ></canvas>
                 </div>
             </div>
 		  </div>
 		  <div flex>
-            <div class="card" style="position: relative;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    min-width: 0;
-    background-color: #fff;
-    background-clip: border-box;
-    border-radius: .25rem;margin: 15px 15px 0px 15px;box-shadow: 0 0.46875rem 2.1875rem rgb(4 9 20 / 3%), 0 0.9375rem 1.40625rem rgb(4 9 20 / 3%), 0 0.25rem 0.53125rem rgb(4 9 20 / 5%), 0 0.125rem 0.1875rem rgb(4 9 20 / 3%);">
-                <div class="card-header" style="padding: .75rem 1.25rem;
-    margin-bottom: 0;
-    color: rgba(13,27,62,0.7);
-    font-weight: bold;
-    font-size: .88rem;border-bottom:1px solid rgba(26,54,126,0.125); ">Master's/Doctorate</div>
-                <div class="card-body" style="padding: 1.25rem;">
+            <div class="card">
+                <div class="card-header">Master's/Doctorate</div>
+                <div class="card-body">
                     <canvas id="bar" class="chart chart-bar" chart-data="dc.masteral_doctorate" chart-series="dc.series" chart-labels="dc.masteral_doctorate_labels" chart-options="dc.options" chart-dataset-override="dc.datasetOverride"> chart-series="series" ></canvas>
                 </div>
             </div>

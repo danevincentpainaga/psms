@@ -225,3 +225,14 @@ angular
       templateUrl: update_scholar
     }
 }]);
+
+angular.module('psmsApp').directive('whenScrolled', function() {
+  return function(scope, element, attr) {
+    var raw = element[0];
+    element.on('scroll', function() {
+      if (raw.scrollTop + raw.offsetHeight >= raw.scrollHeight) {
+        scope.$apply(attr.whenScrolled);
+      }
+    });
+  };
+});

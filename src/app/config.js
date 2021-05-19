@@ -35,7 +35,7 @@ angular
   'ui.grid.resizeColumns',
   'ui.grid.moveColumns',
   'ui.grid.autoResize',
-  'ui.grid.pinning'
+  'ui.grid.pinning',
 ])
 .config(function ($stateProvider, $urlRouterProvider) {
   $stateProvider

@@ -54,8 +54,9 @@ angular.module('psmsApp').factory('scholarApiService', ['$http', '$cookies', '$r
         }
       });
     },
-    getNewUndergraduateScholars: function(searched){
-      return $http.get(baseUrl+'api/scholars/getNewUndergraduateScholars', {
+    getNewUndergraduateScholars: function(searched, url){
+      url = url ?  url : baseUrl+'api/scholars/getNewUndergraduateScholars?page=1';
+      return $http.get(url, {
         params: searched,
         headers: {
           "Content-Type": "application/json",
@@ -63,8 +64,9 @@ angular.module('psmsApp').factory('scholarApiService', ['$http', '$cookies', '$r
         }
       });
     },
-    getNewMastersDoctorateScholars: function(searched){
-      return $http.get(baseUrl+'api/scholars/getNewMastersDoctorateScholars', {
+    getNewMastersDoctorateScholars: function(searched, url){
+      url = url ?  url : baseUrl+'api/scholars/getNewMastersDoctorateScholars?page=1';
+      return $http.get(url, {
         params: searched,
         headers: {
           "Content-Type": "application/json",

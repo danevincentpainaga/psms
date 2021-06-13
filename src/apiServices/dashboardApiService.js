@@ -1,6 +1,8 @@
+import { baseUrl } from '../apiServices/baseUrl';
+
 angular.module('psmsApp').factory('dashboardApiService', ['$http', '$rootScope', function($http, $rootScope){
   
-  var baseUrl = "/";
+  // var baseUrl = "/";
 
   return{
     undergraduateScholarsCount: function(){

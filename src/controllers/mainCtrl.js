@@ -236,3 +236,17 @@ angular.module('psmsApp').directive('whenScrolled', function() {
     });
   };
 });
+
+angular.module('psmsApp').directive('acceptOnlyLetters', function() {
+    return {
+        restrict : 'A',
+        link : function(scope, elem, attrs, ctrl) {
+          let regex = /^[a-zA-Z\s]*$/;
+          elem.bind('keypress', function(event){
+            if (!regex.test(event.key)) {
+              event.preventDefault();
+            }
+          });
+        }
+    };
+});

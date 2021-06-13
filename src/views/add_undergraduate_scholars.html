@@ -150,15 +150,15 @@
                 <div layout-xs="column" layout-gt-xs="column" layout-gt-sm="column" layout-gt-md="row">
                     <md-input-container flex>
                       <label>Firstname</label>
-                      <input type="text" ng-model="ac.firstname" autocomplete="off" required>
+                      <input type="text" ng-model="ac.firstname" autocomplete="off"  accept-only-letters required>
                     </md-input-container>
                     <md-input-container flex>
                       <label>Lastname</label>
-                      <input type="text" ng-model="ac.lastname" required>
+                      <input type="text" ng-model="ac.lastname" accept-only-letters required>
                     </md-input-container>
                     <md-input-container flex>
                       <label>Middlename</label>
-                      <input type="text" ng-model="ac.middlename" required>
+                      <input type="text" ng-model="ac.middlename" accept-only-letters>
                     </md-input-container>
                 </div>
                 <div layout-xs="column" layout-gt-xs="column" layout-gt-sm="column" layout-gt-md="row">
@@ -292,7 +292,7 @@
                   md-item-text="fdetails.lastname"
                   md-autoselect="true"
                   md-escape-options="clear"
-                  md-floating-label="Lastname" required>
+                  md-floating-label="Lastname" accept-only-letters required>
                   <md-item-template>
                     <span md-highlight-text="ac.search_flastname">{{fdetails.lastname}}, {{fdetails.firstname}} {{fdetails.middlename}}</span>
                   </md-item-template>
@@ -302,11 +302,11 @@
                 </md-autocomplete>
                 <md-input-container flex>
                   <label>Firstname</label>
-                  <input type="text" ng-model="ac.f_firstname" required>
+                  <input type="text" ng-model="ac.f_firstname" accept-only-letters  required>
                 </md-input-container>
                 <md-input-container flex>
                   <label>Middlename</label>
-                  <input type="text" ng-model="ac.f_middlename">
+                  <input type="text" ng-model="ac.f_middlename" accept-only-letters >
                 </md-input-container>
               </div>    
               <p>Mother's Details</p>
@@ -323,7 +323,7 @@
                   md-item-text="mdetails.lastname"
                   md-autoselect="true"
                   md-escape-options="clear"
-                  md-floating-label="Maiden name" required>
+                  md-floating-label="Maiden name" accept-only-letters required>
                   <md-item-template>
                     <span md-highlight-text="ac.search_maidenname">{{mdetails.lastname}}, {{mdetails.firstname}} {{mdetails.middlename}}</span>
                   </md-item-template>
@@ -333,11 +333,11 @@
                 </md-autocomplete>
                 <md-input-container flex>
                   <label>Firstname</label>
-                  <input type="text" ng-model="ac.m_firstname" required>
+                  <input type="text" ng-model="ac.m_firstname" accept-only-letters  required>
                 </md-input-container>
                 <md-input-container flex>
                   <label>Middlename</label>
-                  <input type="text" ng-model="ac.m_middlename">
+                  <input type="text" ng-model="ac.m_middlename" accept-only-letters >
                 </md-input-container>
               </div>
             </md-card-content>

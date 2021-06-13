@@ -1,7 +1,9 @@
+import { baseUrl } from '../apiServices/baseUrl';
+
 angular.module('psmsApp')
   .factory('usersApiService', ['$http', '$cookies', '$rootScope', '$q', function($http, $cookies, $rootScope, $q){
 	 
-  var baseUrl = "/";
+  // var baseUrl = "/";
 
   return{
    getUserAccounts: function(searched){

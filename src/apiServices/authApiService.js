@@ -1,7 +1,9 @@
+import { baseUrl } from '../apiServices/baseUrl';
+
 angular.module('psmsApp')
   .factory('authApiService', ['$http', '$cookies', '$rootScope', '$q', function($http, $cookies, $rootScope, $q){
    
-  var baseUrl = "/";
+  // var baseUrl = "/";
   var userData;
 
   return{

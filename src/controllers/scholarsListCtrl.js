@@ -95,6 +95,10 @@ angular.module('psmsApp')
 
     function print(scholarDetails){
 
+      const pdfMake = require("pdfmake/build/pdfmake");
+      const pdfFonts = require("pdfmake/build/vfs_fonts");
+      pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
       let docDefinition = {
           content: [
             {text: 'NAME: '+scholarDetails.firstname.toUpperCase()+" "+scholarDetails.lastname.toUpperCase()+", "+scholarDetails.middlename.toUpperCase()},

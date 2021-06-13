@@ -1,6 +1,8 @@
+import { baseUrl } from '../apiServices/baseUrl';
+
 angular.module('psmsApp').factory('courseApiService', ['$http', '$cookies', '$rootScope', '$q', function($http, $cookies, $rootScope, $q){
 	 
-  var baseUrl = "/";
+  // var baseUrl = "/";
 
   return{
     getCourses: function(searched){

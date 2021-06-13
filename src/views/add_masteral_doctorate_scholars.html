@@ -177,15 +177,15 @@
                 <div layout-xs="column" layout-gt-xs="column" layout-gt-sm="column" layout-gt-md="row">
                     <md-input-container flex>
                       <label>Firstname</label>
-                      <input type="text" ng-model="md.firstname" ng-disabled="!md.degree_has_selected">
+                      <input type="text" ng-model="md.firstname" ng-disabled="!md.degree_has_selected" accept-only-letters required>
                     </md-input-container>
                     <md-input-container flex>
                       <label>Lastname</label>
-                      <textarea ng-model="md.lastname" ng-disabled="!md.degree_has_selected"></textarea>
+                      <input ng-model="md.lastname" ng-disabled="!md.degree_has_selected" accept-only-letters required>
                     </md-input-container>
                     <md-input-container flex>
                       <label>Middlename</label>
-                      <textarea ng-model="md.middlename" ng-disabled="!md.degree_has_selected"></textarea>
+                      <input ng-model="md.middlename" ng-disabled="!md.degree_has_selected" accept-only-letters>
                     </md-input-container>
                 </div>
                 <div layout-xs="column" layout-gt-xs="column" layout-gt-sm="column" layout-gt-md="row">
@@ -319,7 +319,7 @@
                   md-item-text="fdetails.lastname"
                   md-autoselect="true"
                   md-escape-options="clear"
-                  md-floating-label="Lastname" ng-disabled="!md.degree_has_selected">
+                  md-floating-label="Lastname" accept-only-letters ng-disabled="!md.degree_has_selected">
                   <md-item-template>
                     <span md-highlight-text="md.search_flastname">{{fdetails.lastname}}, {{fdetails.firstname}} {{fdetails.middlename}}</span>
                   </md-item-template>
@@ -329,7 +329,7 @@
                 </md-autocomplete>
                 <md-input-container flex>
                   <label>Firstname</label>
-                  <input type="text" ng-model="md.f_firstname" ng-disabled="!md.degree_has_selected">
+                  <input type="text" ng-model="md.f_firstname" ng-disabled="!md.degree_has_selected" accept-only-letters required>
                 </md-input-container>
                 <md-input-container flex>
                   <label>Middlename</label>
@@ -350,7 +350,7 @@
                   md-item-text="mdetails.lastname"
                   md-autoselect="true"
                   md-escape-options="clear"
-                  md-floating-label="Maiden name" ng-disabled="!md.degree_has_selected">
+                  md-floating-label="Maiden name" accept-only-letters ng-disabled="!md.degree_has_selected">
                   <md-item-template>
                     <span md-highlight-text="md.search_maidenname">{{mdetails.lastname}}, {{mdetails.firstname}} {{mdetails.middlename}}</span>
                   </md-item-template>
@@ -360,7 +360,7 @@
                 </md-autocomplete>
                 <md-input-container flex>
                   <label>Firstname</label>
-                  <input type="text" ng-model="md.m_firstname" ng-disabled="!md.degree_has_selected">
+                  <input type="text" ng-model="md.m_firstname" ng-disabled="!md.degree_has_selected" accept-only-letters required>
                 </md-input-container>
                 <md-input-container flex>
                   <label>Middlename</label>

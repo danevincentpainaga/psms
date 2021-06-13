@@ -1,6 +1,8 @@
+import { baseUrl } from '../apiServices/baseUrl';
+
 angular.module('psmsApp').factory('addressApiService', ['$http', '$cookies', '$rootScope', '$q', function($http, $cookies, $rootScope, $q){
 	 
-  var baseUrl = "/";
+  // var baseUrl = "/";
 
   return{
     getAddresses: function(searched){

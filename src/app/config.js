@@ -66,13 +66,13 @@ angular
       controller: 'addUndergraduateCtrl',
       controllerAs: 'ac',
       resolve:{
-        academicContractDetails: function(academicContractService){
+        academicContractDetails: ['academicContractService', 'validateContractStatusService', function(academicContractService, validateContractStatusService){
           return academicContractService.getAcademicContractDetails().then(response => {
-            return response.data[0];
+            return validateContractStatusService.checkStatus(response.data[0]);
           }, err=> {
             return false;
           });
-        }
+        }]
       },
       Authenticated: true,
     })
@@ -82,13 +82,13 @@ angular
       controller: 'addMastersDoctorateCtrl',
       controllerAs: 'md',
       resolve:{
-        academicContractDetails: function(academicContractService){
+        academicContractDetails: ['academicContractService', 'validateContractStatusService', function(academicContractService, validateContractStatusService){
           return academicContractService.getAcademicContractDetails().then(response => {
-            return response.data[0];
+            return validateContractStatusService.checkStatus(response.data[0]);
           }, err=> {
             return false;
           });
-        }
+        }]
       },
       Authenticated: true,
     })
@@ -198,7 +198,7 @@ angular
 
                 protected_route.push('add_masteral_doctorate_scholars');
                 $rootScope.master_doctorate_access = false;
-                return ;
+                return;
                 
             }
             

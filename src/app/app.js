@@ -21,6 +21,7 @@ require('../factories/addScholarsService');
 require('../factories/debounce');
 require('../factories/momentService');
 require('../factories/exportService');
+require('../factories/validateContractStatusService');
 
 require('../apiServices/municipalitiesApiService');
 require('../apiServices/authApiService');

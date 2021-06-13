@@ -60,6 +60,21 @@ angular.module('psmsApp')
       clearInputs();
     }
 
+    c.updateContract = function(){
+      $mdDialog.show({
+        contentElement: '#myStaticDialog',
+        parent: angular.element(document.body)
+      });
+    }
+
+    c.confirm = function(){
+      console.log(c.password);
+    }
+
+    c.closeDialog = function(){
+      $mdDialog.hide();
+    }
+
     function getAcademicYearList(){
        academicSemesterYearApiService.getAcademicYearList().then(response => {
         c.disable_linear_loader = true;

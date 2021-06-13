@@ -137,5 +137,23 @@
     <br />
   </div>
 </div>
+
+<div style="visibility: hidden">
+  <div class="md-dialog-container" id="myStaticDialog">
+    <md-dialog style="padding: 25px;">
+      <div layout="column">
+        <md-input-container flex>
+          <label>Password</label>
+          <input type="password" ng-model="c.password" accept-only-letters>
+        </md-input-container>
+        <div  style="display: flex; justify-content: space-evenly;">
+          <md-button class="md-raised md-primary" ng-click="c.confirm()">Confirm</md-button>
+          <md-button class="md-raised md-warn" ng-click="c.closeDialog()" style="color: #fff;">close</md-button>
+        </div>
+      </div>
+    </md-dialog>
+  </div>
+</div>
+
 <ng-include src="'/add_update_contract.html'"></ng-include>
 

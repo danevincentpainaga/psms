@@ -275,14 +275,14 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
   }
 
   function hasSemester(){
-    if (academicContractDetails && academicContractDetails.contract_state != 'Closed') {
-      md.semester = academicContractDetails.academic_year_semester.semester
+    // if (academicContractDetails && academicContractDetails.contract_state != 'Closed') {
+      md.semester = academicContractDetails.academic_year_semester.semester;
       md.academic_year = academicContractDetails.academic_year_semester.academic_year;
-      md.has_semester = true;
-    }
-    else{
-      md.has_semester = false;
-    }
+      // md.has_semester = true;
+    // }
+    // else{
+    //   md.has_semester = false;
+    // }
   }
 
   hasSemester();

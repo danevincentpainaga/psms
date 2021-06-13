@@ -247,14 +247,8 @@ angular.module('psmsApp')
     }
 
     function hasSemester(){
-      if (academicContractDetails && academicContractDetails.contract_state != 'Closed') {
-          ac.semester = academicContractDetails.academic_year_semester.semester
-          ac.academic_year = academicContractDetails.academic_year_semester.academic_year;
-          ac.has_semester = true;
-      }
-      else{
-        ac.has_semester = false;
-      }
+      ac.semester = academicContractDetails.academic_year_semester.semester;
+      ac.academic_year = academicContractDetails.academic_year_semester.academic_year;
     }
 
     hasSemester();

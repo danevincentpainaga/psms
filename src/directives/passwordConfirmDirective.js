@@ -14,14 +14,13 @@ angular
         scope.confirmAccess = function(){
             if (scope.password) {
                 scope.ConfirmText = 'Confirming...';
-                console.log(scope.password);
+                swalert.toastInfo('Confirming...', 'info', 'top');
                 authApiService.confirmIsAdminAccess({password: scope.password}).then(response => {
                     scope.callFn();
                     scope.closeFn();
                     scope.ConfirmText = 'Confirm';
                 }, err=>{
-                    swalert.dialogBox(err.data.message, 'error', 'Failed');
-                    console.log(err);
+                    swalert.toastInfo(err.data.message, 'error', 'top');
                     scope.ConfirmText = 'Confirm';
                 });
             }

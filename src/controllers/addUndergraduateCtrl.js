@@ -19,12 +19,12 @@ angular.module('psmsApp')
     ac.buttonText = 'Save';
     ac.hide_load_more = true;
     
+
     $scope.$watch('ac.scholar_lastname', debounce(function() {
       ac.scholars_loaded = false;
       ac.scholars = [];
-      ac.hide_load_more = true;
       let show = ac.scholar_lastname ? true : false; 
-      getNewUndergraduateScholars({ searched: ac.scholar_lastname }, ac.toPage = null, show);
+      getNewUndergraduateScholars({ searched: ac.scholar_lastname }, ac.toPage = null);
     }, 500), true);
 
     ac.loadmore = function(){
@@ -46,7 +46,6 @@ angular.module('psmsApp')
       if (!ac.f_firstname && !ac.search_flastname || !ac.m_firstname && !ac.search_maidenname)
       {
         swalert.toastInfo('please complete the form', 'error', 'top-right', 4000);
-        // ac.scholar_details.$setTouched();
         return;
       }
 
@@ -68,7 +67,6 @@ angular.module('psmsApp')
 
       if (!moment.validateDate(ac.date_of_birth)) {
         swalert.toastInfo('Invalid Date of Birth', 'error', 'top-right', 4000);
-        // ac.scholar_detail.date_of_birth.$setValidity("unique", true)
         return;
       }
 
@@ -211,15 +209,15 @@ angular.module('psmsApp')
       });
     }
 
-    function getNewUndergraduateScholars(searched, url, showloadmore){
+    function getNewUndergraduateScholars(searched, url){
        ac.load_busy = true;
        scholarApiService.getNewUndergraduateScholars(searched, url).then(response => {
-        ac.toPage = response.data.next_page_url;
         console.log(response.data);
+        hideLoadMore(response.data.next_page_url);
+        ac.toPage = response.data.next_page_url;
         ac.scholars = [...ac.scholars, ...response.data.data];
         ac.scholars_loaded = true;
         ac.load_busy = false;
-        ac.hide_load_more = showloadmore;
       }, err => {
         console.log(err);
       });    
@@ -244,6 +242,15 @@ angular.module('psmsApp')
       pdfDocGenerator.getDataUrl((dataUrl) => {
         $timeout(()=>{ ac.selectedIndex = undefined }, 1000);
       });
+    }
+
+    function hideLoadMore(next_page_url){
+      if (next_page_url === null) {
+        ac.hide_load_more = true;
+      }
+      else{
+        ac.hide_load_more = false;
+      }
     }
 
     function hasSemester(){

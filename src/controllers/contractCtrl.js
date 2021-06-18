@@ -20,8 +20,12 @@ angular.module('psmsApp')
     c.semester_list = [{semester: "1st Semester"}, {semester: "2nd Semester"}, {semester: "3rd Semester"}];
 
     c.saveOrUpdateAcademicYearList = function(){
-      if (c.semester && c.academic_year){
-        updateOrSave();
+      if (c.semester && c.academic_year && c.undergraduate_amount && c.masteral_doctorate_amount){
+        $mdDialog.show({
+          contentElement: '#myStaticDialog',
+          parent: angular.element(document.body)
+        });
+        c.func = c.functions.updateOrSave;
       }
     }
 
@@ -68,12 +72,12 @@ angular.module('psmsApp')
       clearInputs();
     }
 
-    c.updateContract = function(){
-      $mdDialog.show({
-        contentElement: '#myStaticDialog',
-        parent: angular.element(document.body)
-      });
-    }
+    // c.updateContract = function(){
+    //   $mdDialog.show({
+    //     contentElement: '#myStaticDialog',
+    //     parent: angular.element(document.body)
+    //   });
+    // }
 
     c.confirm = function(){
       console.log(c.password);
@@ -111,10 +115,10 @@ angular.module('psmsApp')
        academicSemesterYearApiService.updateAcademicYearList(details).then(response => {
         console.log(response.data);
         getAcademicYearList();
-        swalert.dialogBox(response.data.message, 'success', 'Success');
+        swalert.toastInfo(response.data.message, 'success', 'top', 4000);
       }, err => {
         console.log(err);
-        swalert.dialogBox(err.data.message, 'error', 'Failed');
+        swalert.toastInfo(err.data.message, 'error', 'top');
       });
     }
 
@@ -137,10 +141,9 @@ angular.module('psmsApp')
          academicContractService.closeContract().then(response => {
           c.showOpenContractBtn = true;
           getAcademicYearList();
-          swalert.dialogBox(response.data.message, 'success', 'Success');
+          swalert.toastInfo(response.data.message, 'success', 'top', 4000);
         }, err => {
-          console.log(err);
-          swalert.dialogBox(err.data.message, 'error', 'Failed');
+          swalert.toastInfo(err.data.message, 'error', 'top');
         });
       },
       setContract: function(){
@@ -158,10 +161,13 @@ angular.module('psmsApp')
         academicContractService.openContract().then(response => {
           c.showOpenContractBtn = false;
           getAcademicYearList();
-          swalert.dialogBox(response.data.message, 'success', 'Success');
+          swalert.toastInfo(response.data.message, 'success', 'top', 4000);
         }, err => {
-          swalert.dialogBox(err.data.message, 'error', 'Failed');
+          swalert.toastInfo(err.data.message, 'error', 'top');
         });
+      },
+      updateOrSave: function(){
+        c.buttonText == 'ADD'? storeAcademicYearList({ semester: c.semester, academic_year: c.academic_year, undergraduate_amount: c.undergraduate_amount, masteral_doctorate_amount: c.masteral_doctorate_amount }) : updateAcademicYearList({ asc_id: c.asc_id, semester: c.semester, academic_year: c.academic_year, undergraduate_amount: c.undergraduate_amount, masteral_doctorate_amount: c.masteral_doctorate_amount });
       }
     }
     // function setContract(details){
@@ -206,9 +212,9 @@ angular.module('psmsApp')
       c.masteral_doctorate_amount = "";
     }
 
-    function updateOrSave(){
-      c.buttonText == 'ADD'? storeAcademicYearList({ semester: c.semester, academic_year: c.academic_year, undergraduate_amount: c.undergraduate_amount, masteral_doctorate_amount: c.masteral_doctorate_amount }) : updateAcademicYearList({ asc_id: c.asc_id, semester: c.semester, academic_year: c.academic_year, undergraduate_amount: c.undergraduate_amount, masteral_doctorate_amount: c.masteral_doctorate_amount });
-    }
+    // function updateOrSave(){
+    //   c.buttonText == 'ADD'? storeAcademicYearList({ semester: c.semester, academic_year: c.academic_year, undergraduate_amount: c.undergraduate_amount, masteral_doctorate_amount: c.masteral_doctorate_amount }) : updateAcademicYearList({ asc_id: c.asc_id, semester: c.semester, academic_year: c.academic_year, undergraduate_amount: c.undergraduate_amount, masteral_doctorate_amount: c.masteral_doctorate_amount });
+    // }
 
     function checkContractState(contract_state){
       c.showOpenContractBtn = contract_state == 'Open'? false : true;

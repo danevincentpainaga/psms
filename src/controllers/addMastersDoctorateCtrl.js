@@ -20,6 +20,12 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
   md.buttonText = 'Save';
   md.hide_load_more = true;
 
+   $scope.$watch('md.scholars', function(newVal, oldVal){
+        if (newVal.length === 0) {
+          md.hide_load_more = true
+        }
+    });
+
   $scope.$watch('md.scholar_lastname', debounce(function() {
     md.scholars_loaded = false;
     md.scholars = [];

@@ -84,7 +84,7 @@
                         </span>
                       </md-card-header-text>
                     </md-card-header>
-                    <md-card-content style="padding: 16px; font-size: 13px;">
+                    <md-card-content style="padding: 16px; font-size: 13px;display: flex;justify-content: center;height: 100%;">
                       <div layout="row" layout-sm="column" layout-align="space-around" style="margin: 20px 0px;" ng-if="!c.not_in_progress">
                         <md-progress-circular md-diameter="25px"></md-progress-circular>
                       </div>
@@ -93,7 +93,7 @@
                         <p style="text-align: center; font-size: 12px;">please create and set contract to start.</p>
                         <br />
                       </div>
-                      <div class="demo-md-panel-content" ng-repeat="contract in c.contract_details" ng-if="c.contract_loaded">
+                      <div class="demo-md-panel-content" ng-repeat="contract in c.contract_details" ng-if="c.contract_loaded" style="width: 100%;">
 
                         <p>
                           State: 
@@ -121,8 +121,8 @@
                           <span>{{ contract.updated_at | formatDate }}</span>
                         </p>
                       </div>
-                      <div style="margin: 3em 0px 1.5em;" ng-if="c.contract_loaded">
-                        <md-button class="md-raised md-primary" ng-click="c.updateContract()" style="width: 100%;margin: 10px 0px !important;">Update</md-button>
+                      <div style="margin: 3em 0px 1.5em;position: absolute;bottom: 3px;" ng-if="c.contract_loaded">
+                        <!-- <md-button class="md-raised md-primary" ng-click="c.updateContract()" style="width: 100%;margin: 10px 0px !important;">Update</md-button> -->
                         <md-button class="md-accent md-raised" ng-click="c.openContract()" ng-if="c.showOpenContractBtn" style="width: 100%;margin: 10px 0px !important;color: #ffff;">Open contract</md-button>
                         <md-button class="md-raised md-warn" ng-click="c.closeContract()" ng-if="!c.showOpenContractBtn" style="width: 100%;margin: 0px !important;color: #ffff;">Close contract</md-button>
                       </div>

@@ -3,7 +3,6 @@ import { baseUrl } from '../apiServices/baseUrl';
 angular.module('psmsApp')
   .factory('authApiService', ['$http', '$cookies', '$rootScope', '$q', function($http, $cookies, $rootScope, $q){
    
-  // var baseUrl = "/";
   var userData;
 
   return{
@@ -59,6 +58,15 @@ angular.module('psmsApp')
         }
       });
     },
-
+    confirmIsAdminAccess: function(password){
+      return $http({
+        method:'POST',
+        url: baseUrl+'api/confirmIsAdminAccess',
+        data: password,
+        headers: {
+          Authorization : 'Bearer '+ $rootScope.token
+        }
+      });
+    },
   }
 }]);

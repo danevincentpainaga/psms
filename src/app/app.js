@@ -13,6 +13,7 @@ require('../directives/colorContractStatusDirective');
 require('../directives/colorContractDirective');
 require('../directives/filereadDirective');
 require('../directives/editScholarDirective');
+require('../directives/passwordConfirmDirective');
 
 require('../filters/filters');
 

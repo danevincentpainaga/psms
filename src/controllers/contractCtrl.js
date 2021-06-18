@@ -48,11 +48,19 @@ angular.module('psmsApp')
     }
 
     c.closeContract = function(){
-      closeContract();
+      $mdDialog.show({
+        contentElement: '#myStaticDialog',
+        parent: angular.element(document.body)
+      });
+      c.func = c.functions.closeContract;
     }
 
     c.openContract = function(){
-      openContract();
+      $mdDialog.show({
+        contentElement: '#myStaticDialog',
+        parent: angular.element(document.body)
+      });
+      c.func = c.functions.openContract;
     }
 
     c.close = function(){
@@ -124,38 +132,71 @@ angular.module('psmsApp')
       });
     } 
 
-    function setContract(details){
-       academicContractService.setContract(details).then(response => {
-        console.log(response.data);
-        getAcademicContractDetails();
-        getAcademicYearList();
-        swalert.dialogBox(response.data.message, 'success', 'Success');
-      }, err => {
-        console.log(err);
-        swalert.dialogBox(err.data.message, 'error', 'Failed');
-      });
-    } 
+    c.functions = {
+      closeContract: function(){
+         academicContractService.closeContract().then(response => {
+          c.showOpenContractBtn = true;
+          getAcademicYearList();
+          swalert.dialogBox(response.data.message, 'success', 'Success');
+        }, err => {
+          console.log(err);
+          swalert.dialogBox(err.data.message, 'error', 'Failed');
+        });
+      },
+      setContract: function(){
+        academicContractService.setContract(details).then(response => {
+          console.log(response.data);
+          getAcademicContractDetails();
+          getAcademicYearList();
+          swalert.dialogBox(response.data.message, 'success', 'Success');
+        }, err => {
+          console.log(err);
+          swalert.dialogBox(err.data.message, 'error', 'Failed');
+        });     
+      },
+      openContract: function(){
+        academicContractService.openContract().then(response => {
+          c.showOpenContractBtn = false;
+          getAcademicYearList();
+          swalert.dialogBox(response.data.message, 'success', 'Success');
+        }, err => {
+          swalert.dialogBox(err.data.message, 'error', 'Failed');
+        });
+      }
+    }
+    // function setContract(details){
+    //    academicContractService.setContract(details).then(response => {
+    //     console.log(response.data);
+    //     getAcademicContractDetails();
+    //     getAcademicYearList();
+    //     swalert.dialogBox(response.data.message, 'success', 'Success');
+    //   }, err => {
+    //     console.log(err);
+    //     swalert.dialogBox(err.data.message, 'error', 'Failed');
+    //   });
+    // } 
 
-    function closeContract(){
-       academicContractService.closeContract().then(response => {
-        c.showOpenContractBtn = true;
-        getAcademicYearList();
-        swalert.dialogBox(response.data.message, 'success', 'Success');
-      }, err => {
-        console.log(err);
-        swalert.dialogBox(err.data.message, 'error', 'Failed');
-      });
-    } 
+    // function closeContract(){
+    //   debugger;
+    //    academicContractService.closeContract().then(response => {
+    //     c.showOpenContractBtn = true;
+    //     getAcademicYearList();
+    //     swalert.dialogBox(response.data.message, 'success', 'Success');
+    //   }, err => {
+    //     console.log(err);
+    //     swalert.dialogBox(err.data.message, 'error', 'Failed');
+    //   });
+    // } 
 
-    function openContract(){
-       academicContractService.openContract().then(response => {
-        c.showOpenContractBtn = false;
-        getAcademicYearList();
-        swalert.dialogBox(response.data.message, 'success', 'Success');
-      }, err => {
-        swalert.dialogBox(err.data.message, 'error', 'Failed');
-      });
-    } 
+    // function openContract(){
+    //    academicContractService.openContract().then(response => {
+    //     c.showOpenContractBtn = false;
+    //     getAcademicYearList();
+    //     swalert.dialogBox(response.data.message, 'success', 'Success');
+    //   }, err => {
+    //     swalert.dialogBox(err.data.message, 'error', 'Failed');
+    //   });
+    // } 
 
     function clearInputs(){
       c.asc_id = "";

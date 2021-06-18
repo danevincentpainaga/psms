@@ -1,6 +1,7 @@
 <md-sidenav class="md-sidenav-right" md-component-id="editScholar" md-disable-close-events style="min-width: 70%;">
-  <md-toolbar class="md-theme-light">
-    <h1 class="md-toolbar-tools">Edit</h1>
+  <md-toolbar class="md-theme-light" style="min-height: 35px;max-height: 35px;">
+    <!-- <h1 class="md-toolbar-tools" ng-click="ec.close()">close</h1> -->
+    <md-icon class="material-icons" ng-click="ec.close()" style="position: absolute;left: 7px;top: 5px; cursor: pointer; background-color: #616dc3;">close</md-icon>
   </md-toolbar>
   <md-content layout-padding style="background-color: #efefef;font-size: 12px;">
     <md-card style="margin: 0px; padding: 12px;">
@@ -267,9 +268,6 @@
         <md-button class="md-raised" ng-click="ec.enableDisableParentsDetails()">{{ ec.enableParentsButtonText }}</md-button>
       </div>
     </md-card>  
-    <md-button ng-click="ec.close()" class="md-warn">
-      Close
-    </md-button>
   </md-content>
 </md-sidenav>
 <edit-profile-photo ng-if="ec.editing"></edit-profile-photo>

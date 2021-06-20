@@ -1,19 +1,13 @@
-<md-sidenav class="md-sidenav-right" md-disable-backdrop="" md-whiteframe="4" md-component-id="importScholars"  style="max-width: 245px;">
-  <md-toolbar class="md-theme-light"> </md-toolbar>
+<md-sidenav class="md-sidenav-right" md-whiteframe="4" md-component-id="importScholars" style="max-width: 290px;">
+  <md-toolbar class="md-theme-light" style="min-height: 35px;max-height: 35px;">
+    <md-icon class="material-icons" ng-click="ic.close()" style="position: absolute;left: 7px;top: 5px; cursor: pointer; background-color: #616dc3;">close</md-icon>
+  </md-toolbar>
   <md-content layout-padding style="font-size: 13px;">
     <div>
-      <md-card style="margin: 5px 0px;" >
-        <md-card-header>
-          <md-card-avatar>
-            <md-icon class="material-icons" style="margin-right: 15px; background-color: #616dc3;">file_upload</md-icon>
-          </md-card-avatar>
-          <md-card-header-text>
-            <span class="md-title">Import</span>
-            <span class="md-subhead">scholars</span>
-          </md-card-header-text>
-        </md-card-header>
-        <md-card-content style="padding: 0px 16px 16px 16px;">
+      <div style="margin: 5px 0px;" >
+        <div style="padding: 0px 16px 16px 16px;">
           <div style="position: relative;" ng-style="resizeDiv()" resize-div height="195">
+            <span class="md-title">Import</span>
             <form>
               <div layout="column" >
                 <md-input-container flex="15">
@@ -32,14 +26,14 @@
               <div style="margin-top: 1.7em;" ng-if="ic.selection_complete" >
                 <input type="file" accept=".xls,.xlsx, .csv,.ods" fileread="" state="ic.show_spinner" opts="ic.gridOptions" checking="ic.isChecking" message="ic.circular_message" multiple="false" style="outline-style: none;" ng-disabled="ic.isChecking"/>
               </div>
-              <div style="position: absolute;bottom: 0px;width: 100%;">
+              <div style="margin-top: 50px; width: 100%;">
                 <md-button class="md-raised md-primary" ng-click="ic.checkImportedScholars()" ng-if="!ic.isChecking && ic.gridOptions.data.length > 0" style="width: 100%;margin: 10px 0px !important;">Check</md-button>
                 <md-button class="md-raised" ng-click="ic.cancel()" style="width: 100%;margin: 0px !important;" ng-if="ic.selection_complete">Cancel</md-button>
               </div>
             </form>
           </div>
-        </md-card-content>
-      </md-card>
+        </div>
+      </div>
     </div>
   </md-content>
 </md-sidenav>

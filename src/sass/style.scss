@@ -4,7 +4,9 @@
 @import '~material-icons/iconfont/material-icons.css';
 
 /*background: linear-gradient(to bottom,#F8F8F8 0,#eeeeee 100%);*/
-
+md-backdrop.md-opaque.md-default-theme, md-backdrop.md-opaque {
+    background-color: #fff !important;
+}
 .sidenav{
   md-list-item, md-list-item .md-list-item-inner{
     min-height: 40px !important;
@@ -223,7 +225,7 @@
 }
 
 .ui-grid-render-container{
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .ui-grid-cell-contents{

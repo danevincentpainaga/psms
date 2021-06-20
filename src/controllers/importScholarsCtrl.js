@@ -113,6 +113,10 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
     $mdSidenav('importScholars').toggle();
   }
 
+  ic.close = function(){
+    $mdSidenav('importScholars').toggle();
+  }
+
   ic.cancel = function(){
     ic.scholars_to_upload = [];
     ic.check_fininshed = false;

@@ -1,4 +1,4 @@
-<md-sidenav class="md-sidenav-right" md-whiteframe="4" md-component-id="importScholars" style="max-width: 290px;">
+<md-sidenav class="md-sidenav-right" md-whiteframe="4" md-component-id="importScholars" style="max-width: 270px;">
   <md-toolbar class="md-theme-light" style="min-height: 35px;max-height: 35px;">
     <md-icon class="material-icons" ng-click="ic.close()" style="position: absolute;left: 7px;top: 5px; cursor: pointer; background-color: #616dc3;">close</md-icon>
   </md-toolbar>
@@ -24,7 +24,7 @@
                 </md-input-container>
               </div>
               <div style="margin-top: 1.7em;" ng-if="ic.selection_complete" >
-                <input type="file" accept=".xls,.xlsx, .csv,.ods" fileread="" state="ic.show_spinner" opts="ic.gridOptions" checking="ic.isChecking" message="ic.circular_message" multiple="false" style="outline-style: none;" ng-disabled="ic.isChecking"/>
+                <input type="file" accept=".xls,.xlsx, .csv,.ods" fileread="" state="ic.show_spinner" opts="ic.gridOptions" checking="ic.isChecking" message="ic.circular_message" multiple="false" style="outline-style: none;width: 100%;" ng-disabled="ic.isChecking"/>
               </div>
               <div style="margin-top: 50px; width: 100%;">
                 <md-button class="md-raised md-primary" ng-click="ic.checkImportedScholars()" ng-if="!ic.isChecking && ic.gridOptions.data.length > 0" style="width: 100%;margin: 10px 0px !important;">Check</md-button>

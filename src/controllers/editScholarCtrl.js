@@ -19,51 +19,42 @@ angular.module('psmsApp')
     ec.enablePrimaryButtonText = 'Enable';
     ec.enableParentsButtonText = 'Enable';
 
-    $scope.$watch('scholar', function(n, o){
-      if (n) {
-        
-        let father = typeof n.father_details === 'object'? n.father_details : JSON.parse(n.father_details);
-        let mother = typeof n.mother_details === 'object'? n.mother_details : JSON.parse(n.mother_details);
+    $scope.$watch('ec.schoolname', function(n, o){
+      addScholarsService.getListOfSchool({searched_school: n}).then(response=>{
+        console.log(response);
+        ec.schools = response;
+      }, err=>{
+        console.log(err);
+      });
+    });
 
-        ec.icon = (n.degree === 'Masters' || n.degree === 'Doctorate')  ? 'school' : 'groups';
-        ec.binded_copy = n;
-        ec.photo = n.photo;
+
+    $scope.$watch('scholar', function(n, o){
+
+      if (o === undefined) {
         ec.copy = angular.copy(n);
-        ec.addressId = n.addressId;
-        ec.schoolId = n.schoolId;
-        ec.courseId = n.courseId;
-      	ec.academic_year = n.academicyear_semester_contract.academic_year;
-      	ec.semester = n.academicyear_semester_contract.semester;
-      	ec.firstname = n.firstname;
-      	ec.lastname = n.lastname;
-      	ec.middlename = n.middlename;
-      	ec.date_of_birth = n.date_of_birth;
-      	ec.gender = n.gender;
-      	ec.year_level = n.year_level;
-      	ec.student_id_number = n.student_id_number;
-      	ec.IP = n.IP;
-      	ec.search_address = n.address.address;
-      	ec.search_school = n.school.school_name;
-      	ec.course = n.course.course;
-        ec.section = n.section;
-      	ec.search_flastname = father.lastname;
-      	ec.f_firstname = father.firstname;
-      	ec.f_middlename = father.middlename;
-      	ec.search_maidenname = mother.maiden_name;
-      	ec.m_firstname = mother.firstname;
-      	ec.m_middlename = mother.middlename;
-        ec.degree = n.degree;
-        ec.f_occupation = father.occupation;
-        ec.m_occupation = mother.occupation;
+      }
+
+      if (n) {
+        filleditedScholar(n);
       }
 
     }, true);
 
-    $scope.$watch('ec.date_of_birth', function(n, o){
+    $scope.$watch('ec.binded_copy.date_of_birth', function(n, o){
       ec.age = addScholarsService.calcAge(n);
       ec.displayedAge = ec.age;
     }, true);  
 
+    ec.closeModal = function(){
+      $mdDialog.hide();
+    }
+
+    ec.selectedSchool = function(school){
+      ec.search_school = school.school_name;
+      ec.schoolId = school.school_id;
+      $mdDialog.hide();
+    }
 
     ec.editPhoto  = function(){
       ec.editing = true;
@@ -124,30 +115,30 @@ angular.module('psmsApp')
     ec.updateScholarPrimaryDetails = function(){
 
       if (
-            ec.firstname && ec.lastname && ec.middlename && ec.addressId && moment.validateDate(ec.date_of_birth) 
-            && ec.age && ec.gender && ec.schoolId && ec.courseId && ec.section && ec.year_level && ec.student_id_number
-            && ec.IP
+            ec.binded_copy.firstname && ec.binded_copy.lastname && ec.binded_copy.middlename && ec.addressId && moment.validateDate(ec.binded_copy.date_of_birth) 
+            && ec.age && ec.binded_copy.gender && ec.schoolId && ec.courseId && ec.binded_copy.section && ec.binded_copy.year_level && ec.binded_copy.student_id_number
+            && ec.binded_copy.IP
         ) {
 
           ec.updatingPrimaryDetails = true;
           ec.primaryButtonText = 'Updating...';
 
           let primary_scholar_details = {
-            scholar_id: ec.copy.scholar_id,
-            student_id_number: ec.student_id_number.toUpperCase(),
-            degree: ec.degree,
-            firstname: ec.firstname.toUpperCase(),
-            lastname: ec.lastname.toUpperCase(),
-            middlename: ec.middlename.toUpperCase(),
+            scholar_id: ec.binded_copy.scholar_id,
+            student_id_number: ec.binded_copy.student_id_number.toUpperCase(),
+            degree: ec.binded_copy.degree,
+            firstname: ec.binded_copy.firstname.toUpperCase(),
+            lastname: ec.binded_copy.lastname.toUpperCase(),
+            middlename: ec.binded_copy.middlename.toUpperCase(),
             addressId: ec.addressId,
-            date_of_birth: ec.date_of_birth,
+            date_of_birth: ec.binded_copy.date_of_birth,
             age: ec.age,
-            gender: ec.gender,
+            gender: ec.binded_copy.gender,
             schoolId: ec.schoolId,
             courseId: ec.courseId,
-            section: ec.section.toUpperCase(),
-            year_level: ec.year_level,
-            IP: ec.IP,
+            section: ec.binded_copy.section.toUpperCase(),
+            year_level: ec.binded_copy.year_level,
+            IP: ec.binded_copy.IP,
           }
 
           updateScholarDetails(primary_scholar_details);
@@ -196,13 +187,13 @@ angular.module('psmsApp')
       ec.enableParentsButtonText = 'Enable';
     }
 
-    ec.selectedSchoolChange = function(school){
-      ec.schoolId = school ? school.school_id : ec.copy.schoolId;
-    }
+    // ec.selectedSchoolChange = function(school){
+    //   ec.schoolId = school ? school.school_id : ec.copy.schoolId;
+    // }
 
-    ec.selectedAddressChange = function(address){
-      ec.addressId = address ? address.address_id : ec.copy.addressId;
-    }
+    // ec.selectedAddressChange = function(address){
+    //   ec.addressId = address ? address.address_id : ec.copy.addressId;
+    // }
 
     ec.selectedFatherDetailsChange = function(fdetails){
       if (fdetails){
@@ -218,26 +209,26 @@ angular.module('psmsApp')
       }
     }
 
-    ec.schoolSearchQuery = function(searched){
-      if (searched != ec.copy.school.school_name) {
-        return addScholarsService.getListOfSchool(searched);
-      }
-      return [ec.copy.school];
-    }
+    // ec.schoolSearchQuery = function(searched){
+    //   if (searched != ec.copy.school.school_name) {
+    //     return addScholarsService.getListOfSchool(searched);
+    //   }
+    //   return [ec.copy.school];
+    // }
 
-    ec.courseSearchQuery = function(searched){
-      if (searched != ec.copy.course.course) {
-        return addScholarsService.getCourses(searched);
-      }
-      return [ec.copy.course];
-    }
+    // ec.courseSearchQuery = function(searched){
+    //   if (searched != ec.copy.course.course) {
+    //     return addScholarsService.getCourses({ searched: searched, degree: JSON.stringify([ec.degree]) });
+    //   }
+    //   return [ec.copy.course];
+    // }
 
-    ec.addressSearchQuery = function(searched){
-      if (searched != ec.copy.address.address) {
-        return addScholarsService.getAddresses(searched);
-      }
-      return [ec.copy.address];
-    }
+    // ec.addressSearchQuery = function(searched){
+    //   if (searched != ec.copy.address.address) {
+    //     return addScholarsService.getAddresses(searched);
+    //   }
+    //   return [ec.copy.address];
+    // }
 
     ec.motherSearchQuery = function(searched){
       if (searched != ec.copy.mother_details.lastname) {
@@ -251,6 +242,13 @@ angular.module('psmsApp')
         return addScholarsService.getFatherList(searched);
       }
       return [ec.copy.father_details];
+    }
+
+    ec.showSchoolModal = function(){
+      $mdDialog.show({
+        contentElement: '#mySchoolDialog',
+        parent: angular.element(document.body)
+      });
     }
 
     function updateScholarDetails(scholarDetails){
@@ -299,26 +297,64 @@ angular.module('psmsApp')
 
 
     function updatePrimaryDetails(response){
-      ec.binded_copy.degree = ec.degree;
-      ec.binded_copy.firstname = ec.firstname;
-      ec.binded_copy.lastname = ec.lastname;
-      ec.binded_copy.middlename = ec.middlename;
-      ec.binded_copy.address.address_id = ec.addressId;
-      ec.binded_copy.addressId = ec.addressId;
-      ec.binded_copy.date_of_birth = ec.date_of_birth;
-      ec.binded_copy.age = ec.age;
-      ec.binded_copy.gender = ec.gender;
-      ec.binded_copy.schoolId = ec.schoolId;
-      ec.binded_copy.school.school_id = ec.schoolId;
-      ec.binded_copy.school.school_name = ec.search_school;
-      ec.binded_copy.courseId = ec.courseId;
-      ec.binded_copy.section = ec.section;
-      ec.binded_copy.course.course = ec.search_course;
-      ec.binded_copy.year_level = ec.year_level;
-      ec.binded_copy.IP = ec.IP;
+      console.log(response);
+      // ec.binded_copy.degree = ec.degree;
+      // ec.binded_copy.firstname = ec.firstname;
+      // ec.binded_copy.lastname = ec.lastname;
+      // ec.binded_copy.middlename = ec.middlename;
+      // ec.binded_copy.address.address_id = ec.addressId;
+      // ec.binded_copy.addressId = ec.addressId;
+      // ec.binded_copy.date_of_birth = ec.date_of_birth;
+      // ec.binded_copy.age = ec.age;
+      // ec.binded_copy.gender = ec.gender;
+      // ec.binded_copy.schoolId = ec.schoolId;
+      // ec.binded_copy.school.school_id = ec.schoolId;
+      // ec.binded_copy.school.school_name = ec.search_school;
+      // ec.binded_copy.courseId = ec.courseId;
+      // ec.binded_copy.section = ec.section;
+      // ec.binded_copy.course.course = ec.search_course;
+      // ec.binded_copy.year_level = ec.year_level;
+      // ec.binded_copy.IP = ec.IP;
       ec.binded_copy.updated_at = response;
     }
 
 
+    function filleditedScholar(scholar){
+        console.log(scholar);
+        let father = typeof scholar.father_details === 'object'? scholar.father_details : JSON.parse(scholar.father_details);
+        let mother = typeof scholar.mother_details === 'object'? scholar.mother_details : JSON.parse(scholar.mother_details);
+
+        ec.icon = (scholar.degree === 'Masters' || scholar.degree === 'Doctorate')  ? 'school' : 'groups';
+        ec.binded_copy = scholar;
+        // ec.photo = scholar.photo;
+        
+        ec.addressId = scholar.addressId;
+        ec.schoolId = scholar.schoolId;
+        ec.courseId = scholar.courseId;
+        // ec.academic_year = scholar.academicyear_semester_contract.academic_year;
+        // ec.semester = scholar.academicyear_semester_contract.semester;
+        // ec.firstname = scholar.firstname;
+        // ec.lastname = scholar.lastname;
+        // ec.middlename = scholar.middlename;
+        // ec.date_of_birth = scholar.date_of_birth;
+        // ec.gender = scholar.gender;
+        // ec.year_level = scholar.year_level;
+        // ec.student_id_number = scholar.student_id_number;
+        // ec.IP = scholar.IP;
+        // ec.search_address = scholar.address.address;
+        // ec.search_school = scholar.school.school_name;
+        // ec.course = scholar.course.course;
+        // ec.section = scholar.section;
+        ec.search_flastname = father.lastname;
+        ec.f_firstname = father.firstname;
+        ec.f_middlename = father.middlename;
+        ec.search_maidenname = mother.maiden_name;
+        ec.m_firstname = mother.firstname;
+        ec.m_middlename = mother.middlename;
+        ec.degree = scholar.degree;
+        ec.f_occupation = father.occupation;
+        ec.m_occupation = mother.occupation;
+
+    }
 
 }]);

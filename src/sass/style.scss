@@ -91,7 +91,7 @@ md-backdrop.md-opaque.md-default-theme, md-backdrop.md-opaque {
     }
     &:nth-child(3){
       .card{
-        background-image: linear-gradient(-20deg, #2b5876 0%, #4e4376 100%) !important;
+        background-image: linear-gradient(-20deg, #ff33ff 0%, #cb52be 100%) !important;
       }
     }
   }
@@ -179,11 +179,11 @@ md-backdrop.md-opaque.md-default-theme, md-backdrop.md-opaque {
 }
 
 .scholar-md-list{
-      background-color: #fff;
-      border-right: 1px solid #c7c7c7;
+    background-color: #fff;
+    border-right: 1px solid #c7c7c7;
 
   &:nth-child(1){
-    min-width: 340px;
+    min-width: 376px;
 
     md-content{
       height: 100%;

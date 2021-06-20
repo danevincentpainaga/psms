@@ -20,18 +20,12 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
   md.buttonText = 'Save';
   md.hide_load_more = true;
 
-   $scope.$watch('md.scholars', function(newVal, oldVal){
-        if (newVal.length === 0) {
-          md.hide_load_more = true
-        }
-    });
 
   $scope.$watch('md.scholar_lastname', debounce(function() {
     md.scholars_loaded = false;
     md.scholars = [];
-    md.hide_load_more = true;
     let show = md.scholar_lastname ? true : false; 
-    getNewMastersDoctorateScholars({ searched: md.scholar_lastname }, md.toPage = null, show);
+    getNewMastersDoctorateScholars({ searched: md.scholar_lastname }, md.toPage = null);
   }, 500), true);
 
   md.loadmore = function(){
@@ -40,7 +34,7 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
       md.hide_load_more = true;
       return;
     }
-    getNewMastersDoctorateScholars({ searched: md.scholar_lastname }, md.toPage, false);
+    getNewMastersDoctorateScholars({ searched: md.scholar_lastname }, md.toPage);
   }
 
   md.clear = function(){
@@ -244,16 +238,15 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
     });
   }
 
-  function getNewMastersDoctorateScholars(searched, url, showloadmore){  
+  function getNewMastersDoctorateScholars(searched, url){  
      md.load_busy = true;
      scholarApiService.getNewMastersDoctorateScholars(searched, url).then(response => {
       console.log(response.data);
+      hideLoadMore(response.data.next_page_url);
       md.toPage = response.data.next_page_url;
       md.scholars = [...md.scholars, ...response.data.data];
       md.scholars_loaded = true;
       md.load_busy = false;
-      md.hide_load_more = showloadmore;
-      console.log(md.scholars);
     }, err => {
       console.log(err);
     }); 
@@ -278,6 +271,15 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
     pdfDocGenerator.getDataUrl((dataUrl) => {
       $timeout(()=>{ md.selectedIndex = undefined }, 1000);
     });
+  }
+
+  function hideLoadMore(next_page_url){
+    if (next_page_url === null) {
+      md.hide_load_more = true;
+    }
+    else{
+      md.hide_load_more = false;
+    }
   }
 
   function hasSemester(){

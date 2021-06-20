@@ -33,7 +33,7 @@ angular.module('psmsApp')
         ac.hide_load_more = true;
         return;
       }
-      getNewUndergraduateScholars({ searched: ac.scholar_lastname }, ac.toPage, false);
+      getNewUndergraduateScholars({ searched: ac.scholar_lastname }, ac.toPage);
     }
 
     ac.clear = function(){

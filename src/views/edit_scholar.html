@@ -31,7 +31,7 @@
             <div flex style="display: flex;justify-content: flex-end;">
               <md-input-container flex style="margin-bottom: 0px;" ng-if="ec.binded_copy.degree !== 'Undergraduate'">
                 <label>Select degree</label>
-                <md-select ng-model="ec.degree" ng-disabled="!ec.primary_details" >
+                <md-select ng-model="ec.binded_copy.degree" ng-disabled="!ec.primary_details" >
                   <md-option value="Masters"><em>Masters</em></md-option>
                   <md-option value="Doctorate"><em>Doctorate</em></md-option>
                 </md-select>
@@ -39,8 +39,8 @@
             </div>
             <div flex="35" style="display: flex;justify-content: flex-end;">
               <div layout="column"style="text-align: right;">
-                <span class="md-subhead" style="color: #008300;">AY - {{ ec.academic_year }}</span>
-                <span class="md-subhead">{{ ec.semester }}</span> 
+                <span class="md-subhead" style="color: #008300;">AY - {{ ec.binded_copy.academicyear_semester_contract.academic_year }}</span>
+                <span class="md-subhead">{{ ec.binded_copy.academicyear_semester_contract.semester }}</span> 
               </div>
             </div>
           </div>
@@ -54,25 +54,29 @@
                   <button ng-click="ec.editPhoto()">edit</button>
                 </div>
                 <div layout="column" class="file-image">
-                  <img ng-src="{{ ec.photo | checkScholarPhoto }}" style="border-radius: 1em;">
+                  <img ng-src="{{ ec.binded_copy.photo | checkScholarPhoto }}" style="border-radius: 1em;">
                 </div>
               </div>
               <md-input-container flex="" style="margin-top: 50px;margin-bottom: 0px;">
                 <label>Firstname</label>
-                <input type="text" ng-model="ec.firstname" ng-disabled="!ec.primary_details">
+                <input type="text" ng-model="ec.binded_copy.firstname" ng-disabled="!ec.primary_details">
               </md-input-container>
               <md-input-container flex=""  style="margin-top: 50px;margin-bottom: 0px;">
                 <label>Lastname</label>
-                <input ng-model="ec.lastname" ng-disabled="!ec.primary_details" >
+                <input ng-model="ec.binded_copy.lastname" ng-disabled="!ec.primary_details" >
               </md-input-container>
 
               <md-input-container flex=""  style="margin-top: 50px;margin-bottom: 0px;">
                 <label>Middlename</label>
-                <input ng-model="ec.middlename" ng-disabled="!ec.primary_details" >
+                <input ng-model="ec.binded_copy.middlename" ng-disabled="!ec.primary_details" >
               </md-input-container>
           </div>
           <div layout="row" layout-xs="column">
-            <div style="display: flex;width: 100%;position: relative;">
+            <md-input-container flex>
+              <label>Address</label>
+              <input ng-model="ec.binded_copy.address.address" ng-click="ec.showSchoolModal()" ng-disabled="!ec.primary_details" required>
+            </md-input-container>
+<!--             <div style="display: flex;width: 100%;position: relative;">
               <md-autocomplete flex
                 md-input-name="autocompleteField"
                 md-input-minlength="1"
@@ -93,10 +97,10 @@
                   No address matching "{{ec.search_address}}" were found.
                 </md-not-found>
               </md-autocomplete>
-            </div>
+            </div> -->
             <md-input-container flex="20">
               <label>Date of Birth</label>
-              <input type="text" ng-model="ec.date_of_birth" add-double-slashes-directive ng-disabled="!ec.primary_details"/>
+              <input type="text" ng-model="ec.binded_copy.date_of_birth" add-double-slashes-directive ng-disabled="!ec.primary_details"/>
             </md-input-container>
             <md-input-container flex="10">
               <label>Age</label>
@@ -104,14 +108,22 @@
             </md-input-container>
             <md-input-container flex="20">
               <label>Gender</label>
-              <md-select ng-model="ec.gender" ng-disabled="!ec.primary_details">
+              <md-select ng-model="ec.binded_copy.gender" ng-disabled="!ec.primary_details">
                 <md-option value="Male"><em>Male</em></md-option>
                 <md-option value="Female"><em>Female</em></md-option>
               </md-select>
             </md-input-container>
           </div>
           <div layout="row" layout-xs="column">
-            <md-autocomplete flex
+            <md-input-container flex>
+              <label>School</label>
+              <input ng-model="ec.binded_copy.school.school_name" ng-click="ec.showSchoolModal()" ng-disabled="!ec.primary_details" required>
+            </md-input-container>
+            <md-input-container flex>
+              <label>School</label>
+              <input ng-model="ec.binded_copy.course.course" ng-click="ec.showSchoolModal()" ng-disabled="!ec.primary_details" required>
+            </md-input-container>
+<!--             <md-autocomplete flex
               md-input-name="autocompleteField"
               md-input-minlength="1"
               md-no-cache="ec.noCache"
@@ -130,8 +142,8 @@
               <md-not-found>
                 No states matching "{{ec.search_school}}" were found.
               </md-not-found>
-            </md-autocomplete>
-            <md-autocomplete flex
+            </md-autocomplete> -->
+<!--             <md-autocomplete flex
               md-input-name="autocompleteField"
               md-input-minlength="1"
               md-no-cache="ec.noCache"
@@ -151,16 +163,16 @@
               <md-not-found>
                 No address matching "{{ec.search_course}}" were found.
               </md-not-found>
-            </md-autocomplete>
+            </md-autocomplete> -->
             <md-input-container flex="15">
               <label>section</label>
-              <input ng-model="ec.section"  ng-disabled="!ec.primary_details">
+              <input ng-model="ec.binded_copy.section"  ng-disabled="!ec.primary_details">
             </md-input-container>
           </div>
           <div layout="row" layout-xs="column">
             <md-input-container flex>
               <label>Year level.</label>
-              <md-select ng-model="ec.year_level" ng-disabled="!ec.primary_details">
+              <md-select ng-model="ec.binded_copy.year_level" ng-disabled="!ec.primary_details">
                 <md-option value="I"><em>1st year</em></md-option>
                 <md-option value="II"><em>2nd year</em></md-option>
                 <md-option value="III"><em>3rd year</em></md-option>
@@ -171,11 +183,11 @@
             </md-input-container>
             <md-input-container flex="30">
               <label>ID NO.</label>
-              <input ng-model="ec.student_id_number" ng-disabled="!ec.primary_details">
+              <input ng-model="ec.binded_copy.student_id_number" ng-disabled="!ec.primary_details">
             </md-input-container>
             <md-input-container flex="20">
               <label>IP.</label>
-              <md-select ng-model="ec.IP" ng-disabled="!ec.primary_details">
+              <md-select ng-model="ec.binded_copy.IP" ng-disabled="!ec.primary_details">
                 <md-option value="YES"><em>YES</em></md-option>
                 <md-option value="NO"><em>NO</em></md-option>
               </md-select>
@@ -271,3 +283,27 @@
   </md-content>
 </md-sidenav>
 <edit-profile-photo ng-if="ec.editing"></edit-profile-photo>
+
+<div style="visibility: hidden">
+  <div class="md-dialog-container" id="mySchoolDialog">
+    <md-dialog style="padding: 15px;min-width: 400px;">
+      <div layout="column">
+        <md-input-container flex style="margin-bottom: 0px;">
+          <label>Search</label>
+          <input type="text" ng-model="ec.schoolname">
+        </md-input-container>
+        <ul class="list-group" style="padding: 0px;margin: 0px;">
+          <li style="position: relative;
+    display: block;
+    padding: .75rem 1.25rem;
+    margin-bottom: -1px;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,.125);cursor: pointer;" ng-repeat="school in ec.schools" ng-click="ec.selectedSchool(school)">{{ school.school_name }}</li>
+        </ul>
+        <div style="display: flex; justify-content: flex-end;margin-top: 15px;">
+          <md-button class="md-raised" ng-click="ec.closeModal()">close</md-button>
+        </div>
+      </div>
+    </md-dialog>
+  </div>
+</div>

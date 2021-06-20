@@ -23,7 +23,7 @@ angular.module('psmsApp')
 	ad.add = function(){
 		ad.isUpdating = false;
 		ad.saveUpdateBtnText = 'Save';
-		ad.labelText = 'Save';
+		ad.labelText = 'Add';
 		$mdSidenav('addUpdateAddress').toggle();
 	}
 
@@ -83,7 +83,6 @@ angular.module('psmsApp')
 		addressApiService.updateAddress(address_details).then(response => {
 			ad.binded_address.address = response.data.address;
 			ad.binded_address.municipality = response.data.municipality;
-			clearInputs();
 			ad.saving_updating = false;
 			swalert.dialogBox('Address updated.', 'success',  'successful');
 		}, err => {

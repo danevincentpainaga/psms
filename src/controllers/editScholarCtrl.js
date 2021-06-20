@@ -21,13 +21,27 @@ angular.module('psmsApp')
 
     $scope.$watch('ec.schoolname', function(n, o){
       addScholarsService.getListOfSchool({searched_school: n}).then(response=>{
-        console.log(response);
         ec.schools = response;
       }, err=>{
         console.log(err);
       });
     });
 
+    $scope.$watch('ec.addressname', function(n, o){
+      addScholarsService.getAddresses(n).then(response=>{
+        ec.addresses = response;
+      }, err=>{
+        console.log(err);
+      });
+    });
+
+    $scope.$watch('ec.coursename', function(n, o){
+      addScholarsService.getCourses({ searched: n, degree: JSON.stringify([ec.degree]) }).then(response=>{
+        ec.courses = response;
+      }, err=>{
+        console.log(err);
+      });
+    });
 
     $scope.$watch('scholar', function(n, o){
 
@@ -36,7 +50,7 @@ angular.module('psmsApp')
       }
 
       if (n) {
-        filleditedScholar(n);
+        fillEditedScholar(n);
       }
 
     }, true);
@@ -51,8 +65,23 @@ angular.module('psmsApp')
     }
 
     ec.selectedSchool = function(school){
-      ec.search_school = school.school_name;
-      ec.schoolId = school.school_id;
+      ec.binded_copy.school.school_name = school.school_name;
+      ec.binded_copy.schoolId = school.school_id;
+      ec.binded_copy.school.school_id = school.school_id;
+      $mdDialog.hide();
+    }
+
+    ec.selectedAddress = function(address){
+      ec.binded_copy.address.address = address.address;
+      ec.binded_copy.addressId = address.address_id;
+      ec.binded_copy.address.address_id = address.address_id;
+      $mdDialog.hide();
+    }
+
+    ec.selectedCourse = function(course){
+      ec.binded_copy.course.course = course.course;
+      ec.binded_copy.courseId = course.courses_id;
+      ec.binded_copy.course.course_id = course.courses_id;
       $mdDialog.hide();
     }
 
@@ -115,8 +144,8 @@ angular.module('psmsApp')
     ec.updateScholarPrimaryDetails = function(){
 
       if (
-            ec.binded_copy.firstname && ec.binded_copy.lastname && ec.binded_copy.middlename && ec.addressId && moment.validateDate(ec.binded_copy.date_of_birth) 
-            && ec.age && ec.binded_copy.gender && ec.schoolId && ec.courseId && ec.binded_copy.section && ec.binded_copy.year_level && ec.binded_copy.student_id_number
+            ec.binded_copy.firstname && ec.binded_copy.lastname && ec.binded_copy.middlename && ec.binded_copy.addressId && moment.validateDate(ec.binded_copy.date_of_birth) 
+            && ec.age && ec.binded_copy.gender && ec.binded_copy.schoolId && ec.binded_copy.courseId && ec.binded_copy.section && ec.binded_copy.year_level && ec.binded_copy.student_id_number
             && ec.binded_copy.IP
         ) {
 
@@ -130,12 +159,12 @@ angular.module('psmsApp')
             firstname: ec.binded_copy.firstname.toUpperCase(),
             lastname: ec.binded_copy.lastname.toUpperCase(),
             middlename: ec.binded_copy.middlename.toUpperCase(),
-            addressId: ec.addressId,
+            addressId: ec.binded_copy.addressId,
             date_of_birth: ec.binded_copy.date_of_birth,
             age: ec.age,
             gender: ec.binded_copy.gender,
-            schoolId: ec.schoolId,
-            courseId: ec.courseId,
+            schoolId: ec.binded_copy.schoolId,
+            courseId: ec.binded_copy.courseId,
             section: ec.binded_copy.section.toUpperCase(),
             year_level: ec.binded_copy.year_level,
             IP: ec.binded_copy.IP,
@@ -245,8 +274,20 @@ angular.module('psmsApp')
     }
 
     ec.showSchoolModal = function(){
+      showDialog('#mySchoolDialog');
+    }
+
+    ec.showAddressModal = function(){
+      showDialog('#myAddressDialog');
+    }
+
+    ec.showCourseModal = function(){
+      showDialog('#myCourseDialog');
+    }
+
+    function showDialog(dialogName) {
       $mdDialog.show({
-        contentElement: '#mySchoolDialog',
+        contentElement: dialogName,
         parent: angular.element(document.body)
       });
     }
@@ -260,7 +301,6 @@ angular.module('psmsApp')
       }, err => {
         ec.primaryButtonText = 'Update';
         swalert.dialogBox(err.data.message, 'error', 'Failed');
-        console.log(err);
       });
     }
 
@@ -278,7 +318,6 @@ angular.module('psmsApp')
       }, err => {
         ec.parentsButtonText = 'Update';
         swalert.dialogBox(err.data.message, 'error', 'Failed');
-        console.log(err);
       });
     }
 
@@ -291,7 +330,6 @@ angular.module('psmsApp')
         swalert.toastInfo('Profile updated', 'success', 'top-right', 4000);
       }, err => {
         swalert.toastInfo(err.data, 'error', 'top-right', 4000);
-        console.log(err);
       });
     }
 
@@ -319,7 +357,7 @@ angular.module('psmsApp')
     }
 
 
-    function filleditedScholar(scholar){
+    function fillEditedScholar(scholar){
         console.log(scholar);
         let father = typeof scholar.father_details === 'object'? scholar.father_details : JSON.parse(scholar.father_details);
         let mother = typeof scholar.mother_details === 'object'? scholar.mother_details : JSON.parse(scholar.mother_details);
@@ -328,9 +366,9 @@ angular.module('psmsApp')
         ec.binded_copy = scholar;
         // ec.photo = scholar.photo;
         
-        ec.addressId = scholar.addressId;
-        ec.schoolId = scholar.schoolId;
-        ec.courseId = scholar.courseId;
+        // ec.addressId = scholar.addressId;
+        // ec.schoolId = scholar.schoolId;
+        // ec.courseId = scholar.courseId;
         // ec.academic_year = scholar.academicyear_semester_contract.academic_year;
         // ec.semester = scholar.academicyear_semester_contract.semester;
         // ec.firstname = scholar.firstname;

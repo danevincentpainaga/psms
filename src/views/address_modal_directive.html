@@ -1,0 +1,23 @@
+<div style="visibility: hidden">
+  <div class="md-dialog-container" id="myAddressDialog">
+    <md-dialog style="padding: 15px;min-width: 400px;font-size: 13px;">
+      <div layout="column">
+        <md-input-container flex style="margin-bottom: 0px;">
+          <label>Search</label>
+          <input type="text" ng-model="ec.addressname">
+        </md-input-container>
+        <ul class="list-group" style="padding: 0px;margin: 0px;">
+          <li style="position: relative;
+    display: block;
+    padding: .75rem 1.25rem;
+    margin-bottom: -1px;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,.125);cursor: pointer;" ng-repeat="address in ec.addresses" ng-click="ec.selectedAddress(address)">{{ address.address }}</li>
+        </ul>
+        <div style="display: flex; justify-content: flex-end;margin-top: 15px;">
+          <md-button class="md-raised" ng-click="ec.closeModal()">close</md-button>
+        </div>
+      </div>
+    </md-dialog>
+  </div>
+</div>

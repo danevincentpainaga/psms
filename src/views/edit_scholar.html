@@ -1,23 +1,9 @@
 <md-sidenav class="md-sidenav-right" md-component-id="editScholar" md-whiteframe="5" md-disable-close-events style="min-width: 70%;">
   <md-toolbar class="md-theme-light" style="min-height: 35px;max-height: 35px;">
-    <!-- <h1 class="md-toolbar-tools" ng-click="ec.close()">close</h1> -->
     <md-icon class="material-icons" ng-click="ec.close()" style="position: absolute;left: 7px;top: 5px; cursor: pointer; background-color: #616dc3;">close</md-icon>
   </md-toolbar>
   <md-content layout-padding style="background-color: #efefef;font-size: 12px;">
     <md-card style="margin: 0px; padding: 12px;">
-<!--       <md-card-header>
-        <md-card-avatar>
-          <md-icon class="material-icons" style="margin-right: 15px; background-color: #616dc3;">{{ ec.icon }}</md-icon>
-        </md-card-avatar>
-        <md-card-header-text>
-          <span class="md-title">Details</span>
-          <span class="md-subhead">{{ ec.degree }}</span>
-        </md-card-header-text>
-        <md-card-header-text style="text-align: right;">
-          <span class="md-subhead" style="color: #008300;">AY - {{ ec.academic_year }}</span>
-          <span class="md-subhead">{{ ec.semester }}</span>
-        </md-card-header-text>
-      </md-card-header> -->
       <md-card-header style="padding: 15px 17px 15px;">
         <md-card-avatar>
           <md-icon class="material-icons" style="margin-right: 15px; background-color: #616dc3;">{{ ec.icon }}</md-icon>
@@ -74,7 +60,7 @@
           <div layout="row" layout-xs="column">
             <md-input-container flex>
               <label>Address</label>
-              <input ng-model="ec.binded_copy.address.address" ng-click="ec.showSchoolModal()" ng-disabled="!ec.primary_details" required>
+              <input ng-model="ec.binded_copy.address.address" ng-click="ec.showAddressModal()" ng-disabled="!ec.primary_details" disable-input required>
             </md-input-container>
 <!--             <div style="display: flex;width: 100%;position: relative;">
               <md-autocomplete flex
@@ -117,11 +103,11 @@
           <div layout="row" layout-xs="column">
             <md-input-container flex>
               <label>School</label>
-              <input ng-model="ec.binded_copy.school.school_name" ng-click="ec.showSchoolModal()" ng-disabled="!ec.primary_details" required>
+              <input ng-model="ec.binded_copy.school.school_name" ng-click="ec.showSchoolModal()" ng-disabled="!ec.primary_details" disable-input  required>
             </md-input-container>
             <md-input-container flex>
-              <label>School</label>
-              <input ng-model="ec.binded_copy.course.course" ng-click="ec.showSchoolModal()" ng-disabled="!ec.primary_details" required>
+              <label>Course</label>
+              <input ng-model="ec.binded_copy.course.course" ng-click="ec.showCourseModal()" ng-disabled="!ec.primary_details" disable-input required>
             </md-input-container>
 <!--             <md-autocomplete flex
               md-input-name="autocompleteField"
@@ -284,26 +270,7 @@
 </md-sidenav>
 <edit-profile-photo ng-if="ec.editing"></edit-profile-photo>
 
-<div style="visibility: hidden">
-  <div class="md-dialog-container" id="mySchoolDialog">
-    <md-dialog style="padding: 15px;min-width: 400px;">
-      <div layout="column">
-        <md-input-container flex style="margin-bottom: 0px;">
-          <label>Search</label>
-          <input type="text" ng-model="ec.schoolname">
-        </md-input-container>
-        <ul class="list-group" style="padding: 0px;margin: 0px;">
-          <li style="position: relative;
-    display: block;
-    padding: .75rem 1.25rem;
-    margin-bottom: -1px;
-    background-color: #fff;
-    border: 1px solid rgba(0,0,0,.125);cursor: pointer;" ng-repeat="school in ec.schools" ng-click="ec.selectedSchool(school)">{{ school.school_name }}</li>
-        </ul>
-        <div style="display: flex; justify-content: flex-end;margin-top: 15px;">
-          <md-button class="md-raised" ng-click="ec.closeModal()">close</md-button>
-        </div>
-      </div>
-    </md-dialog>
-  </div>
-</div>
+
+<school-modal-directive></school-modal-directive>
+<address-modal-directive></address-modal-directive>
+<course-modal-directive></course-modal-directive>

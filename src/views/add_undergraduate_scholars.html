@@ -129,7 +129,7 @@
         </md-content>
       </div>
       <div flex style="background: #efefef;overflow-y: auto;border-top: 1px solid #c7c7c7;padding: 10px;" ng-style="resizeDiv()" resize-div height="145">
-        <form name="ac.scholar_details">
+        <form name="ac.scholar_details" class="uppercase">
         <div class="fading-up">
           <md-card style="margin: 0px;">
             <md-card-header style="padding: 22px 25px 0px;">
@@ -175,7 +175,8 @@
                       md-autoselect="true"
                       md-escape-options="clear"
                       md-require-match=""
-                      md-floating-label="Address" required>
+                      md-floating-label="Address"
+                      required>
                       <md-item-template>
                         <span md-highlight-text="ac.search_address" md-highlight-flags="^i">{{address.address}}</span>
                       </md-item-template>
@@ -214,7 +215,8 @@
                     md-autoselect="true"
                     md-escape-options="clear"
                     md-require-match=""
-                    md-floating-label="School" required>
+                    md-floating-label="School"
+                    required>
                     <md-item-template>
                       <span md-highlight-text="ac.search_school" md-highlight-flags="^i">{{school.school_name}}</span>
                     </md-item-template>
@@ -235,7 +237,8 @@
                     md-autoselect="true"
                     md-escape-options="clear"
                     md-require-match=""
-                    md-floating-label="Course" required>
+                    md-floating-label="Course"
+                    required>
                     <md-item-template>
                       <span md-highlight-text="ac.search_course" md-highlight-flags="^i">{{course.course}}</span>
                     </md-item-template>
@@ -291,7 +294,9 @@
                   md-item-text="fdetails.lastname"
                   md-autoselect="true"
                   md-escape-options="clear"
-                  md-floating-label="Lastname" accept-only-letters required>
+                  md-floating-label="Lastname"
+                  accept-only-letters
+                  required>
                   <md-item-template>
                     <span md-highlight-text="ac.search_flastname">{{fdetails.lastname}}, {{fdetails.firstname}} {{fdetails.middlename}}</span>
                   </md-item-template>
@@ -322,7 +327,9 @@
                   md-item-text="mdetails.lastname"
                   md-autoselect="true"
                   md-escape-options="clear"
-                  md-floating-label="Maiden name" accept-only-letters required>
+                  md-floating-label="Maiden name"
+                  accept-only-letters
+                  required>
                   <md-item-template>
                     <span md-highlight-text="ac.search_maidenname">{{mdetails.lastname}}, {{mdetails.firstname}} {{mdetails.middlename}}</span>
                   </md-item-template>
@@ -341,8 +348,8 @@
               </div>
             </md-card-content>
             <div style="width: 100%;text-align: right;padding-bottom: 10px;">
-              <md-button class="md-raised md-primary" ng-click="ac.saveNewUndergraduateDetails()" ng-disabled="ac.saving">{{ ac.buttonText }}</md-button>
-              <md-button class="md-raised" ng-click="ac.clear()">Clear</md-button>
+              <md-button class="md-raised md-primary" ng-click="ac.saveNewUndergraduateDetails()" ng-disabled="!ac.scholar_details.$valid || ac.saving">{{ ac.buttonText }}</md-button>
+              <md-button class="md-raised" ng-click="ac.clear()" ng-disabled="ac.saving">Clear</md-button>
             </div>
           </md-card>
         </div>

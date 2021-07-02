@@ -129,6 +129,7 @@
         </md-content>
       </div>
       <div flex style="background: #efefef; overflow-y: auto;border-top: 1px solid #c7c7c7;padding: 10px;" ng-style="resizeDiv()" resize-div height="145">
+      <form name="md.scholar_details" class="uppercase">
         <div class="fading-up">
           <md-card style="margin: 0px;">
             <md-card-header style="padding: 22px 25px 0px;">
@@ -163,7 +164,6 @@
               </md-card-header-text>
             </md-card-header>
             <md-card-content style="padding: 0px 30px;" >
-              <form name="primary_details">
                 <div layout-xs="column" layout-gt-xs="column" layout-gt-sm="column" layout-gt-md="row" hide-gt-md>
                   <md-input-container flex>
                     <label>Select degree</label>
@@ -190,7 +190,7 @@
                 <div layout-xs="column" layout-gt-xs="column" layout-gt-sm="column" layout-gt-md="row">
                   <div style="display: flex;width: 100%;position: relative;">
                     <md-autocomplete flex
-                      md-input-name="autocompleteField"
+                      md-input-name="autocompleteAddress"
                       md-input-minlength="1"
                       md-no-cache="md.noCache"
                       md-selected-item="md.address"
@@ -217,7 +217,7 @@
                   </md-input-container>
                   <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="10">
                     <label>Age</label>
-                    <textarea ng-model="md.displayedAge" disabled></textarea>
+                    <input type="text" ng-model="md.displayedAge" disabled>
                   </md-input-container>
                   <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="20">
                     <label>Gender</label>
@@ -229,7 +229,7 @@
                 </div>
                 <div layout-xs="column" layout-gt-xs="column" layout-gt-sm="column" layout-gt-md="row">
                   <md-autocomplete flex
-                    md-input-name="autocompleteField"
+                    md-input-name="autocompleteSchool"
                     md-input-minlength="1"
                     md-no-cache="md.noCache"
                     md-selected-item="md.school"
@@ -250,7 +250,7 @@
                     </md-not-found>
                   </md-autocomplete>
                   <md-autocomplete flex
-                    md-input-name="autocompleteField"
+                    md-input-name="autocompleteCourse"
                     md-input-minlength="1"
                     md-no-cache="md.noCache"
                     md-selected-item="md.course"
@@ -289,7 +289,7 @@
                   </md-input-container>
                   <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="30">
                     <label>ID NO.</label>
-                    <textarea ng-model="md.student_id_number" ng-disabled="!md.degree_has_selected"></textarea>
+                    <input type="text" ng-model="md.student_id_number" ng-disabled="!md.degree_has_selected">
                   </md-input-container>
                   <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="20">
                     <label>IP.</label>
@@ -299,7 +299,6 @@
                     </md-select>
                   </md-input-container>
                 </div>
-              </form>
             </md-card-content>
           </md-card>
           <md-card style="margin: 5px 0px;">
@@ -307,7 +306,7 @@
               <p>Father's Details</p>
               <div layout-xs="column" layout-gt-xs="column" layout-gt-sm="column" layout-gt-md="row">
                 <md-autocomplete flex
-                  md-input-name="autocompleteField"
+                  md-input-name="autocompleteFatherLastname"
                   md-input-minlength="2"
                   md-no-cache="md.noCache"
                   md-selected-item="md.father"
@@ -318,7 +317,10 @@
                   md-item-text="fdetails.lastname"
                   md-autoselect="true"
                   md-escape-options="clear"
-                  md-floating-label="Lastname" accept-only-letters ng-disabled="!md.degree_has_selected">
+                  md-floating-label="Lastname"
+                  accept-only-letters
+                  ng-disabled="!md.degree_has_selected"
+                  required>
                   <md-item-template>
                     <span md-highlight-text="md.search_flastname">{{fdetails.lastname}}, {{fdetails.firstname}} {{fdetails.middlename}}</span>
                   </md-item-template>
@@ -338,7 +340,7 @@
               <p>Mother's Details</p>
               <div layout-xs="column" layout-gt-xs="column" layout-gt-sm="column" layout-gt-md="row">
                 <md-autocomplete flex
-                  md-input-name="autocompleteField"
+                  md-input-name="autocompleteMotherLastname"
                   md-input-minlength="2"
                   md-no-cache="md.noCache"
                   md-selected-item="md.mother"
@@ -349,7 +351,10 @@
                   md-item-text="mdetails.lastname"
                   md-autoselect="true"
                   md-escape-options="clear"
-                  md-floating-label="Maiden name" accept-only-letters ng-disabled="!md.degree_has_selected">
+                  md-floating-label="Maiden name"
+                  accept-only-letters
+                  ng-disabled="!md.degree_has_selected"
+                  required>
                   <md-item-template>
                     <span md-highlight-text="md.search_maidenname">{{mdetails.lastname}}, {{mdetails.firstname}} {{mdetails.middlename}}</span>
                   </md-item-template>
@@ -368,11 +373,12 @@
               </div>
             </md-card-content>
             <div style="width: 100%;text-align: right;padding-bottom: 10px;">
-              <md-button class="md-raised md-primary" ng-click="md.saveNewMasterDoctorateDetails()" ng-disabled="md.saving">{{ md.buttonText }}</md-button>
-              <md-button class="md-raised" ng-click="md.clear()">Clear</md-button>
+              <md-button class="md-raised md-primary" ng-click="md.saveNewMasterDoctorateDetails()" ng-disabled="!md.scholar_details.$valid || md.saving">{{ md.buttonText }}</md-button>
+              <md-button class="md-raised" ng-click="md.clear()" ng-disabled="md.saving">Clear</md-button>
             </div>
           </md-card>  
         </div>
+        </form>
       </div>
     </section>
   </div>

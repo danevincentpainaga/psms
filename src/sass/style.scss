@@ -4,6 +4,12 @@
 @import '~material-icons/iconfont/material-icons.css';
 
 /*background: linear-gradient(to bottom,#F8F8F8 0,#eeeeee 100%);*/
+.uppercase{
+  input {text-transform: uppercase;}
+  input::-webkit-input-placeholder {text-transform: lowercase;}
+  input::-moz-placeholder {text-transform: lowercase;}
+}
+
 md-backdrop.md-opaque.md-default-theme, md-backdrop.md-opaque {
     background-color: #fff !important;
 }
@@ -221,7 +227,7 @@ md-backdrop.md-opaque.md-default-theme, md-backdrop.md-opaque {
 
 
 .row-no{
-  background-color: #f6c08e !important;
+  background: linear-gradient(to bottom, #F8F8F8 0, #eeeeee 100%) !important;
 }
 
 .ui-grid-render-container{

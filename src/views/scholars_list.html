@@ -80,7 +80,7 @@
       </thead>
       <tbody class="hasFading">
         <tr ng-repeat="scholar in sc.scholars track by $index">
-          <td style="background-color: #f6c08e;">{{ $index+1 }}.</td>
+          <td style="background: linear-gradient(to bottom, #F8F8F8 0, #eeeeee 100%) !important;">{{ $index+1 }}.</td>
           <td>
             <span>
               <img ng-src="{{ scholar.photo | checkScholarPhoto }}" class="md-avatar scholar-image" alt="" style="width:25px;height: 25px;margin: 5px 5px 5px 0px;border: 2px solid #ebebeb;"/>

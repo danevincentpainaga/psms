@@ -18,7 +18,6 @@ angular.module('psmsApp')
     ac.scholars = [];
     ac.buttonText = 'Save';
     ac.hide_load_more = true;
-    
 
     $scope.$watch('ac.scholar_lastname', debounce(function() {
       ac.scholars_loaded = false;
@@ -38,6 +37,7 @@ angular.module('psmsApp')
 
     ac.clear = function(){
       addScholarsService.clearInputs(this);
+      ac.scholar_details.$setPristine();
       ac.scholar_details.$setUntouched();
     }  
 

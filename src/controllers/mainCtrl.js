@@ -213,21 +213,38 @@ angular
   };
 });
 
-
-
 const update_scholar = require('../views/update_scholar_photo.html');
 const schoolDirective = require('../views/school_modal_directive.html');
 const addressDirective = require('../views/address_modal_directive.html');
 const courseDirective = require('../views/course_modal_directive.html');
 
-angular
-  .module('psmsApp').directive('editProfilePhoto',[ function(){
-
+angular.module('psmsApp').directive('editProfilePhoto', function(){
     return{
       restrict:'E',
       templateUrl: update_scholar
     }
-}]);
+});
+
+angular.module('psmsApp').directive('schoolModalDirective', function() {
+    return {
+        restrict : 'E',
+        templateUrl: schoolDirective,
+    };
+});
+
+angular.module('psmsApp').directive('addressModalDirective', function() {
+    return {
+        restrict : 'E',
+        templateUrl: addressDirective,
+    };
+});
+
+angular.module('psmsApp').directive('courseModalDirective', function() {
+    return {
+        restrict : 'E',
+        templateUrl: courseDirective,
+    };
+});
 
 angular.module('psmsApp').directive('whenScrolled', function() {
   return function(scope, element, attr) {
@@ -266,24 +283,14 @@ angular.module('psmsApp').directive('disableInput', function() {
     };
 });
 
-
-angular.module('psmsApp').directive('schoolModalDirective', function() {
-    return {
-        restrict : 'E',
-        templateUrl: schoolDirective,
-    };
-});
-
-angular.module('psmsApp').directive('addressModalDirective', function() {
-    return {
-        restrict : 'E',
-        templateUrl: addressDirective,
-    };
-});
-
-angular.module('psmsApp').directive('courseModalDirective', function() {
-    return {
-        restrict : 'E',
-        templateUrl: courseDirective,
-    };
-});
+// angular.module('psmsApp').directive('uppercase', function() {
+//     return {
+//         require: 'ngModel',
+//         link: function(scope, element, attrs, modelCtrl) {
+//             modelCtrl.$parsers.push(function(input) {
+//                 return input ? input.toUpperCase() : "";
+//             });
+//             element.css("text-transform","uppercase");
+//         }
+//     };
+// })

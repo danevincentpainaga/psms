@@ -62,28 +62,6 @@
               <label>Address</label>
               <input ng-model="ec.binded_copy.address.address" ng-click="ec.showAddressModal()" ng-disabled="!ec.primary_details" disable-input required>
             </md-input-container>
-<!--             <div style="display: flex;width: 100%;position: relative;">
-              <md-autocomplete flex
-                md-input-name="autocompleteField"
-                md-input-minlength="1"
-                md-no-cache="ec.noCache"
-                md-selected-item="ec.address"
-                md-search-text="ec.search_address"
-                md-delay="500"
-                md-selected-item-change="ec.selectedAddressChange(address)"
-                md-items="address in ec.addressSearchQuery(ec.search_address)"
-                md-item-text="address.address"
-                md-escape-options="clear"
-                md-require-match=""
-                md-floating-label="Address" ng-disabled="!ec.primary_details">
-                <md-item-template>
-                  <span md-highlight-text="ec.search_address" md-highlight-flags="^i">{{address.address}}</span>
-                </md-item-template>
-                <md-not-found>
-                  No address matching "{{ec.search_address}}" were found.
-                </md-not-found>
-              </md-autocomplete>
-            </div> -->
             <md-input-container flex="20">
               <label>Date of Birth</label>
               <input type="text" ng-model="ec.binded_copy.date_of_birth" add-double-slashes-directive ng-disabled="!ec.primary_details"/>
@@ -109,47 +87,6 @@
               <label>Course</label>
               <input ng-model="ec.binded_copy.course.course" ng-click="ec.showCourseModal()" ng-disabled="!ec.primary_details" disable-input required>
             </md-input-container>
-<!--             <md-autocomplete flex
-              md-input-name="autocompleteField"
-              md-input-minlength="1"
-              md-no-cache="ec.noCache"
-              md-selected-item="ec.school"
-              md-search-text="ec.search_school"
-              md-delay="500"
-              md-selected-item-change="ec.selectedSchoolChange(school)"
-              md-items="school in ec.schoolSearchQuery(ec.search_school)"
-              md-item-text="school.school_name"
-              md-escape-options="clear"
-              md-require-match=""
-              md-floating-label="School" ng-disabled="!ec.primary_details">
-              <md-item-template>
-                <span md-highlight-text="ec.search_school" md-highlight-flags="^i">{{school.school_name}}</span>
-              </md-item-template>
-              <md-not-found>
-                No states matching "{{ec.search_school}}" were found.
-              </md-not-found>
-            </md-autocomplete> -->
-<!--             <md-autocomplete flex
-              md-input-name="autocompleteField"
-              md-input-minlength="1"
-              md-no-cache="ec.noCache"
-              md-selected-item="ec.course"
-              md-search-text="ec.search_course"
-              md-delay="500"
-              md-selected-item-change="ec.selectedCourseChange(course)"
-              md-items="course in ec.courseSearchQuery(ec.search_course)"
-              md-item-text="course.course"
-              md-autoselect="true"
-              md-escape-options="clear"
-              md-require-match=""
-              md-floating-label="Course" ng-disabled="!ec.primary_details">
-              <md-item-template>
-                <span md-highlight-text="ec.search_course" md-highlight-flags="^i">{{course.course}}</span>
-              </md-item-template>
-              <md-not-found>
-                No address matching "{{ec.search_course}}" were found.
-              </md-not-found>
-            </md-autocomplete> -->
             <md-input-container flex="15">
               <label>section</label>
               <input ng-model="ec.binded_copy.section"  ng-disabled="!ec.primary_details">
@@ -268,9 +205,8 @@
     </md-card>  
   </md-content>
 </md-sidenav>
+
 <edit-profile-photo ng-if="ec.editing"></edit-profile-photo>
-
-
 <school-modal-directive></school-modal-directive>
 <address-modal-directive></address-modal-directive>
 <course-modal-directive></course-modal-directive>

@@ -221,7 +221,6 @@ angular.module('psmsApp')
     }
 
     function showPrompt(selected) {
-      console.log(selected)
       var confirm = $mdDialog.prompt()
         .title('Set as contract?')
         .textContent('Confirm your password to update.')

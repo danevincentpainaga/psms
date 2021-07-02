@@ -15,44 +15,14 @@
             <md-menu-content>
               <md-menu-item class="md-indent">
                 <md-icon class="material-icons">save</md-icon>
-                <md-button ng-click="ctrl.sampleAction('redo', $event)">
-                  Save
-                  <span class="md-alt-text">Ctrl-S</span>
+                <md-button ng-click="md.saveNewMasterDoctorateDetails()" ng-disabled="!md.scholar_details.$valid || md.saving">
+                  {{ md.buttonText }}
                 </md-button>
               </md-menu-item>
               <md-menu-item class="md-indent">
                 <md-icon class="material-icons">clear_all</md-icon>
-                <md-button ng-click="ctrl.sampleAction('redo', $event)">
+                <md-button ng-click="md.clear()" ng-disabled="md.saving">
                   Clear
-                  <span class="md-alt-text">Ctrl-E</span>
-                </md-button>
-              </md-menu-item>
-            </md-menu-content>
-          </md-menu>
-          <md-menu>
-            <button ng-click="$mdMenu.open()">
-              View list
-            </button>
-            <md-menu-content>
-              <md-menu-item class="md-indent">
-                <md-icon class="material-icons">person</md-icon>
-                <md-button ng-click="ctrl.sampleAction('redo', $event)">
-                  Addresses
-                  <span class="md-alt-text">Ctrl-B</span>
-                </md-button>
-              </md-menu-item>
-              <md-menu-item class="md-indent">
-                <md-icon class="material-icons">account_balance</md-icon>
-                <md-button ng-click="ctrl.sampleAction('redo', $event)">
-                  Schools
-                  <span class="md-alt-text">Ctrl-M</span>
-                </md-button>
-              </md-menu-item>
-              <md-menu-item class="md-indent">
-                <md-icon class="material-icons">business</md-icon>
-                <md-button ng-click="ctrl.sampleAction('redo', $event)">
-                  Courses
-                  <span class="md-alt-text">Ctrl-D</span>
                 </md-button>
               </md-menu-item>
             </md-menu-content>
@@ -234,7 +204,7 @@
                     md-no-cache="md.noCache"
                     md-selected-item="md.school"
                     md-search-text="md.search_school"
-                    md-delay="500"
+                    md-delay="300"
                     md-selected-item-change="md.selectedSchoolChange(school)"
                     md-items="school in md.schoolSearchQuery(md.search_school)"
                     md-item-text="school.school_name"
@@ -255,7 +225,7 @@
                     md-no-cache="md.noCache"
                     md-selected-item="md.course"
                     md-search-text="md.search_course"
-                    md-delay="500"
+                    md-delay="300"
                     md-selected-item-change="md.selectedCourseChange(course)"
                     md-items="course in md.courseSearchQuery(md.search_course)"
                     md-item-text="course.course"
@@ -311,7 +281,7 @@
                   md-no-cache="md.noCache"
                   md-selected-item="md.father"
                   md-search-text="md.search_flastname"
-                  md-delay="500"
+                  md-delay="300"
                   md-selected-item-change="md.selectedFatherDetailsChange(fdetails)"
                   md-items="fdetails in md.fatherSearchQuery(md.search_flastname)"
                   md-item-text="fdetails.lastname"
@@ -345,10 +315,10 @@
                   md-no-cache="md.noCache"
                   md-selected-item="md.mother"
                   md-search-text="md.search_maidenname"
-                  md-delay="500"
+                  md-delay="300"
                   md-selected-item-change="md.selectedMotherDetailsChange(mdetails)"
                   md-items="mdetails in md.motherSearchQuery(md.search_maidenname)"
-                  md-item-text="mdetails.lastname"
+                  md-item-text="mdetails.maiden_name"
                   md-autoselect="true"
                   md-escape-options="clear"
                   md-floating-label="Maiden name"
@@ -356,7 +326,7 @@
                   ng-disabled="!md.degree_has_selected"
                   required>
                   <md-item-template>
-                    <span md-highlight-text="md.search_maidenname">{{mdetails.lastname}}, {{mdetails.firstname}} {{mdetails.middlename}}</span>
+                    <span md-highlight-text="md.search_maidenname">{{mdetails.maiden_name}}, {{mdetails.firstname}} {{mdetails.middlename}}</span>
                   </md-item-template>
                   <md-not-found>
                     No records matching "{{md.search_school}}" were found.

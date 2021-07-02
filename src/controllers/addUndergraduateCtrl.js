@@ -123,7 +123,7 @@ angular.module('psmsApp')
     }
 
     ac.selectedMotherDetailsChange = function(mdetails){
-      validateParentDetails(fdetails, 'm_firstname', 'm_middlename');
+      validateParentDetails(mdetails, 'm_firstname', 'm_middlename');
     }
 
     ac.selectedSchoolChange = function(school){

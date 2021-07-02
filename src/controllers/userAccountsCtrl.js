@@ -14,7 +14,6 @@ angular.module('psmsApp')
     function ($scope, $rootScope, usersApiService, debounce, swalert, $mdSidenav, municipalitiesApiService) {
 
     var u = this;
-    // u.degree_list = [{degree:"All"}, {degree:'Undergraduate'},{degree:'Masters'},{degree:'Doctorate'}];
     u.saveText = 'save';
     u.degree_list = ['Undergraduate', 'Masters', 'Doctorate'];
     u.degree_options = "All";
@@ -31,8 +30,6 @@ angular.module('psmsApp')
 
       u.users_list_loaded = false;
       let searched = { searched: u.searched_user };
-      // u.selectedMunicipalities = [];
-      // u.selectedDegree = [];
       getUserAccounts(searched);
 
     }, 500), true);
@@ -84,6 +81,10 @@ angular.module('psmsApp')
       return chip.municipality;
     }
 
+    u.transformDegree = function(chip){
+     return u.degree_list.indexOf(chip) !== -1 ? chip : null;
+    }
+
     u.selectedDegreeOptions = function(){
       if (u.selected_degree_options === 'Custom') {
         u.selectedDegree = [];
@@ -96,7 +97,6 @@ angular.module('psmsApp')
     }
 
     u.selectedMunicipalityOptions = function(){
-      // u.custom_municipality = u.selected_municipality_options === 'Custom'? true : false;
       if (u.selected_municipality_options === 'Custom') {
         u.selectedMunicipalities = [];
         u.custom_municipality = true;
@@ -109,14 +109,12 @@ angular.module('psmsApp')
 
     u.queryMunicipality = function(searched){
 
-      return searched ? u.municipalities.filter(value => value.municipality.toLowerCase().match(searched)) : [];
+      return u.municipalities.filter(value => value.municipality.toLowerCase().match(searched));
 
     }
 
     u.queryDegree = function(searched){
-
       return searched ? u.degree_list.filter(value => value.toLowerCase().match(searched)) : [];
-
     }
 
     function getUserAccounts(details){

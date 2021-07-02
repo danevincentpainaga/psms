@@ -15,44 +15,14 @@
             <md-menu-content>
               <md-menu-item class="md-indent">
                 <md-icon class="material-icons">save</md-icon>
-                <md-button ng-click="ctrl.sampleAction('redo', $event)">
-                  Save
-                  <span class="md-alt-text">Ctrl-S</span>
+                <md-button ng-click="ac.saveNewUndergraduateDetails()" ng-disabled="!ac.scholar_details.$valid || ac.saving">
+                  {{ac.buttonText}}
                 </md-button>
               </md-menu-item>
               <md-menu-item class="md-indent">
                 <md-icon class="material-icons">clear_all</md-icon>
-                <md-button ng-click="ctrl.sampleAction('redo', $event)">
+                <md-button ng-click="ac.clear()" ng-disabled="ac.saving">
                   Clear
-                  <span class="md-alt-text">Ctrl-E</span>
-                </md-button>
-              </md-menu-item>
-            </md-menu-content>
-          </md-menu>
-          <md-menu>
-            <button ng-click="$mdMenu.open()">
-              View list
-            </button>
-            <md-menu-content>
-              <md-menu-item class="md-indent">
-                <md-icon class="material-icons">person</md-icon>
-                <md-button ng-click="ctrl.sampleAction('redo', $event)">
-                  Addresses
-                  <span class="md-alt-text">Ctrl-B</span>
-                </md-button>
-              </md-menu-item>
-              <md-menu-item class="md-indent">
-                <md-icon class="material-icons">account_balance</md-icon>
-                <md-button ng-click="ctrl.sampleAction('redo', $event)">
-                  Schools
-                  <span class="md-alt-text">Ctrl-M</span>
-                </md-button>
-              </md-menu-item>
-              <md-menu-item class="md-indent">
-                <md-icon class="material-icons">business</md-icon>
-                <md-button ng-click="ctrl.sampleAction('redo', $event)">
-                  Courses
-                  <span class="md-alt-text">Ctrl-D</span>
                 </md-button>
               </md-menu-item>
             </md-menu-content>
@@ -324,14 +294,14 @@
                   md-delay="500"
                   md-selected-item-change="ac.selectedMotherDetailsChange(mdetails)"
                   md-items="mdetails in ac.motherSearchQuery(ac.search_maidenname)"
-                  md-item-text="mdetails.lastname"
+                  md-item-text="mdetails.maiden_name"
                   md-autoselect="true"
                   md-escape-options="clear"
                   md-floating-label="Maiden name"
                   accept-only-letters
                   required>
                   <md-item-template>
-                    <span md-highlight-text="ac.search_maidenname">{{mdetails.lastname}}, {{mdetails.firstname}} {{mdetails.middlename}}</span>
+                    <span md-highlight-text="ac.search_maidenname">{{mdetails.maiden_name}}, {{mdetails.firstname}} {{mdetails.middlename}}</span>
                   </md-item-template>
                   <md-not-found>
                     No records matching "{{ac.search_school}}" were found.

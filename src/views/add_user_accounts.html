@@ -66,12 +66,26 @@
               {{u.addUserForm.$invalid}}{{u.addUserForm.selectedDegree.$invalid}}
               <div ng-if="u.custom_degree">
                 <label id="selectedDegree">Degree access, ex. (Undergraduate/Masters/Doctorate).</label>
-                <md-chips ng-model="u.selectedDegree" name="selectedDegree" md-autocomplete-snap  style="background: whitesmoke;margin-top: 5px;" ng-required="true">
+<!--                    <md-contact-chips
+                      ng-model="u.selectedDegree"
+                      ng-change="u.onModelChange(u.selectedDegree)"
+                      md-contacts="u.queryDegree($query)"
+                      md-contact-name="degree"
+                      md-require-match="true"
+                      md-highlight-flags="i"
+                      placeholder="Type name to see matches"
+                      secondary-placeholder="Add Municipality"
+                      input-aria-label="Intended Recipients"
+                      name="selectedDegree"
+                      ng-required="true">
+                  </md-contact-chips> -->
+                <md-chips ng-model="u.selectedDegree" name="selectedDegree" md-transform-chip="u.transformDegree($chip)" md-autocomplete-snap md-required-match="true" style="background: whitesmoke;margin-top: 5px;" ng-required="true">
                   <md-autocomplete
                       md-selected-item="u.selectedItem"
                       md-search-text="u.searchDegree"
                       md-items="item in u.queryDegree(u.searchDegree)"
                       md-item-text="item"
+                      md-autoselect="true"
                       md-required-match="true">
                     <span md-highlight-text="u.searchDegree">{{item}}</span>
                   </md-autocomplete>
@@ -114,21 +128,16 @@
                 </md-chips>
               </div>
 
-<!--                <md-contact-chips
-                  ng-model="u.selectedDegree"
-                  ng-change="u.onModelChange(u.selectedDegree)"
-                  md-contacts="u.queryDegree($query)"
-                  md-contact-name="degree"
-                  md-require-match="true"
-                  md-highlight-flags="i"
-                  placeholder="Type name to see matches"
-                  secondary-placeholder="Add Municipality"
-                  input-aria-label="Intended Recipients">
-              </md-contact-chips>
-               -->
-
-          <div style="text-align: right;">
-            <md-button class="md-raised md-primary" ng-click="u.save()" ng-disabled="u.addUserForm.$invalid || u.addUserForm.selectedDegree.$invalid || u.addUserForm.selectedMunicipalities.$invalid || u.isSaving">{{u.saveText}}</md-button>
+          <div style="text-align: right;margin-top: 3em;">
+            <md-button class="md-raised md-primary"
+              ng-click="u.save()"
+              ng-disabled="u.addUserForm.$invalid || u.addUserForm.selectedDegree.$invalid || u.addUserForm.selectedMunicipalities.$invalid || u.isSaving">{{u.saveText}}
+            </md-button>
+            <md-button
+              class="md-raised"
+              ng-disabled="u.isSaving">
+              Clear
+            </md-button>
           </div>
     </form>
   </md-content>

@@ -39,10 +39,10 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
 
   md.clear = function(){
     md.degree = "";
-    md.degree_has_selected = false;
     addScholarsService.clearInputs(this);
     md.scholar_details.$setPristine();
     md.scholar_details.$setUntouched();
+    md.degree_has_selected = false;
   }  
 
   md.saveNewMasterDoctorateDetails = function(){
@@ -108,7 +108,7 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
           },
         }
             
-        storeNewScholarDetails(scholar_details);   
+        storeNewScholarDetails(scholar_details);
         console.log(scholar_details); 
   }
 
@@ -184,7 +184,7 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
   }
 
   md.selectedMotherDetailsChange = function(mdetails){
-    validateParentDetails(fdetails, 'm_firstname', 'm_middlename');
+    validateParentDetails(mdetails, 'm_firstname', 'm_middlename');
   }
 
   md.selectedDateOfBirth = function(dateOfBirth){
@@ -226,9 +226,7 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
   function storeNewScholarDetails(scholarDetails){
      scholarApiService.storeNewScholarDetails(scholarDetails).then(response => {
       md.scholars = [];
-      md.degree = "";
-      md.degree_has_selected = false;
-      addScholarsService.clearInputs(md);
+      md.clear();
       swalert.dialogBox('Scholar saved!', 'success', 'Success');
       md.buttonText = 'Save';
       md.saving = false;
@@ -236,7 +234,9 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
       getNewMastersDoctorateScholars({ searched: md.scholar_lastname }, md.toPage);
     }, err => {
       console.log(err);
-      swalert.dialogBox(err.data.message, 'success', 'Success');
+      md.saving = false;
+      md.buttonText = 'Save';
+      swalert.dialogBox(err.data.message, 'error', 'Failed');
     });
   }
 

@@ -127,9 +127,9 @@ app.controller('exportScholarsCtrl',['$scope', '$filter', '$timeout', 'schoolApi
     ],
     enableGridMenu: true,
     enableSelectAll: true,
-    exporterCsvFilename: 'Imported_scholars.csv',
+    exporterCsvFilename: 'Exported_scholars.csv',
     exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
-    exporterExcelFilename: 'Imported_scholars.xlsx',
+    exporterExcelFilename: 'Exported_scholars.xlsx',
     exporterExcelSheetName: 'Scholars',
     onRegisterApi: function(gridApi){
       

@@ -83,9 +83,9 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
     ],
     enableGridMenu: true,
     enableSelectAll: true,
-    exporterCsvFilename: 'Imported_scholars.csv',
+    exporterCsvFilename: 'Scholars list.csv',
     exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
-    exporterExcelFilename: 'Imported_scholars.xlsx',
+    exporterExcelFilename: 'Scholars list.xlsx',
     exporterExcelSheetName: 'Scholars',
     onRegisterApi: function(gridApi){
       ic.gridApi = gridApi;
@@ -103,6 +103,11 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
       
     }
   };
+
+  ic.gridOptions.exporterFieldCallback = function ( grid, row, col, value ) {
+    console.log(row);
+    console.log(col);
+  }
 
   ic.toggleFiltering = function(){
     ic.gridOptions.enableFiltering = !ic.gridOptions.enableFiltering;

@@ -67,7 +67,7 @@
                 <img ng-src="{{ scholar.photo | checkScholarPhoto }}" class="md-avatar scholar-image" alt="" />
                 <div class="md-list-item-text" style="max-width: 210px;">
                   <h4 style="margin: 0px;color: black;">{{scholar.lastname}},&nbsp;{{scholar.firstname}}&nbsp;{{scholar.middlename}}.</h4>
-                  <p style="font-size: 12px;">{{ scholar.school.school_name }} - {{ scholar.degree }}</p>
+                  <p>{{ scholar.school.school_name }} - {{ scholar.degree }}</p>
                 </div>
                 <span ng-if="$index===md.selectedIndex" style="margin: 7px 0px;">opening..</span>
                 <md-menu ng-if="$index!==md.selectedIndex">

@@ -33,7 +33,7 @@
         </md-card-header-text>
       </md-card-header>
       <md-card-content style="padding: 0px 16px;" >
-        <!-- <form name="primary_details"> -->
+        <form name="primaryDetailsForm">
           <div layout="row" layout-xs="column" style="margin-bottom: 15px;">
               <div flex="13" class="image-holder">
                 <div class="file-input">
@@ -45,16 +45,16 @@
               </div>
               <md-input-container flex="" style="margin-top: 50px;margin-bottom: 0px;">
                 <label>Firstname</label>
-                <input type="text" ng-model="ec.binded_copy.firstname" ng-disabled="!ec.primary_details">
+                <input type="text" ng-model="ec.binded_copy.firstname" ng-disabled="!ec.primary_details" required>
               </md-input-container>
               <md-input-container flex=""  style="margin-top: 50px;margin-bottom: 0px;">
                 <label>Lastname</label>
-                <input ng-model="ec.binded_copy.lastname" ng-disabled="!ec.primary_details" >
+                <input ng-model="ec.binded_copy.lastname" ng-disabled="!ec.primary_details" required>
               </md-input-container>
 
               <md-input-container flex=""  style="margin-top: 50px;margin-bottom: 0px;">
                 <label>Middlename</label>
-                <input ng-model="ec.binded_copy.middlename" ng-disabled="!ec.primary_details" >
+                <input ng-model="ec.binded_copy.middlename" ng-disabled="!ec.primary_details">
               </md-input-container>
           </div>
           <div layout="row" layout-xs="column">
@@ -68,11 +68,11 @@
             </md-input-container>
             <md-input-container flex="10">
               <label>Age</label>
-              <input ng-model="ec.displayedAge" disabled>
+              <input ng-model="ec.displayedAge" disabled required>
             </md-input-container>
             <md-input-container flex="20">
               <label>Gender</label>
-              <md-select ng-model="ec.binded_copy.gender" ng-disabled="!ec.primary_details">
+              <md-select ng-model="ec.binded_copy.gender" ng-disabled="!ec.primary_details" required>
                 <md-option value="Male"><em>Male</em></md-option>
                 <md-option value="Female"><em>Female</em></md-option>
               </md-select>
@@ -81,7 +81,7 @@
           <div layout="row" layout-xs="column">
             <md-input-container flex>
               <label>School</label>
-              <input ng-model="ec.binded_copy.school.school_name" ng-click="ec.showSchoolModal()" ng-disabled="!ec.primary_details" disable-input  required>
+              <input ng-model="ec.binded_copy.school.school_name" ng-click="ec.showSchoolModal()" ng-disabled="!ec.primary_details" disable-input required>
             </md-input-container>
             <md-input-container flex>
               <label>Course</label>
@@ -89,13 +89,13 @@
             </md-input-container>
             <md-input-container flex="15">
               <label>section</label>
-              <input ng-model="ec.binded_copy.section"  ng-disabled="!ec.primary_details">
+              <input ng-model="ec.binded_copy.section"  ng-disabled="!ec.primary_details" required>
             </md-input-container>
           </div>
           <div layout="row" layout-xs="column">
             <md-input-container flex>
               <label>Year level.</label>
-              <md-select ng-model="ec.binded_copy.year_level" ng-disabled="!ec.primary_details">
+              <md-select ng-model="ec.binded_copy.year_level" ng-disabled="!ec.primary_details" required>
                 <md-option value="I"><em>1st year</em></md-option>
                 <md-option value="II"><em>2nd year</em></md-option>
                 <md-option value="III"><em>3rd year</em></md-option>
@@ -106,100 +106,104 @@
             </md-input-container>
             <md-input-container flex="30">
               <label>ID NO.</label>
-              <input ng-model="ec.binded_copy.student_id_number" ng-disabled="!ec.primary_details">
+              <input ng-model="ec.binded_copy.student_id_number" ng-disabled="!ec.primary_details" required>
             </md-input-container>
             <md-input-container flex="20">
               <label>IP.</label>
-              <md-select ng-model="ec.binded_copy.IP" ng-disabled="!ec.primary_details">
+              <md-select ng-model="ec.binded_copy.IP" ng-disabled="!ec.primary_details" required>
                 <md-option value="YES"><em>YES</em></md-option>
                 <md-option value="NO"><em>NO</em></md-option>
               </md-select>
             </md-input-container>
           </div>
-        <!-- </form> -->
+        </form>
       </md-card-content>
       <div style="width: 100%;text-align: right;">
-        <md-button class="md-raised md-primary" ng-click="ec.updateScholarPrimaryDetails()" ng-if="ec.primary_details" ng-disabled="ec.updatingPrimaryDetails">{{ ec.primaryButtonText }}</md-button>
+        <md-button class="md-raised md-primary" ng-click="ec.updateScholarPrimaryDetails()" ng-if="ec.primary_details" ng-disabled="primaryDetailsForm.$invalid || !primaryDetailsForm.$dirty || ec.updatingPrimaryDetails">{{ ec.primaryButtonText }}</md-button>
         <md-button class="md-raised" ng-click="ec.enableDisablePrimaryDetails()">{{ ec.enablePrimaryButtonText }}</md-button>
       </div>
     </md-card>
     <md-card style="margin: 5px 0px;">
       <md-card-content style="padding: 15px 16px 0px 16px;">
-        <p>Father's Details</p>
-        <div layout="row" layout-xs="column">
-          <md-autocomplete flex 
-            md-input-name="autocompleteField"
-            md-input-minlength="1"
-            md-no-cache="ec.noCache"
-            md-selected-item="ec.father"
-            md-search-text="ec.search_flastname"
-            md-delay="500"
-            md-selected-item-change="ec.selectedFatherDetailsChange(fdetails)"
-            md-items="fdetails in ec.fatherSearchQuery(ec.search_flastname)"
-            md-item-text="fdetails.lastname"
-            md-escape-options="clear"
-            md-floating-label="Lastname" ng-disabled="!ec.parents_details">
-            <md-item-template>
-              <span md-highlight-text="ec.search_flastname">{{fdetails.lastname}}, {{fdetails.firstname}}{{fdetails.middlename}}</span>
-            </md-item-template>
-            <md-not-found>
-              No records matching "{{ec.search_school}}" were found.
-            </md-not-found>
-          </md-autocomplete>
-          <md-input-container flex="">
-            <label>Firstname</label>
-            <input type="text" ng-model="ec.f_firstname" ng-disabled="!ec.parents_details">
-          </md-input-container>
-          <md-input-container flex="">
-            <label>Middlename</label>
-            <input type="text" ng-model="ec.f_middlename" ng-disabled="!ec.parents_details">
-          </md-input-container>
-        </div> 
-        <div layout="row" layout-xs="column">
-           <md-input-container flex="50">
-            <label>Occupation</label>
-            <input type="text" ng-model="ec.f_occupation" ng-disabled="!ec.parents_details">
-          </md-input-container>         
-        </div>
-        <p>Mother's Details</p>
-        <div layout="row" layout-xs="column">
-          <md-autocomplete flex 
-            md-input-name="autocompleteField"
-            md-input-minlength="1"
-            md-no-cache="ec.noCache"
-            md-selected-item="ec.mother"
-            md-search-text="ec.search_maidenname"
-            md-delay="500"
-            md-selected-item-change="ec.selectedMotherDetailsChange(mdetails)"
-            md-items="mdetails in ec.motherSearchQuery(ec.search_maidenname)"
-            md-item-text="mdetails.lastname"
-            md-escape-options="clear"
-            md-floating-label="Lastname" ng-disabled="!ec.parents_details">
-            <md-item-template>
-              <span md-highlight-text="ec.search_maidenname">{{mdetails.lastname}}, {{mdetails.firstname}}{{mdetails.middlename}}</span>
-            </md-item-template>
-            <md-not-found>
-              No records matching "{{ec.search_school}}" were found.
-            </md-not-found>
-          </md-autocomplete>
-          <md-input-container flex="">
-            <label>Firstname</label>
-            <input type="text" ng-model="ec.m_firstname" ng-disabled="!ec.parents_details">
-          </md-input-container>
-          <md-input-container flex="">
-            <label>Middlename</label>
-            <input type="text" ng-model="ec.m_middlename" ng-disabled="!ec.parents_details">
-          </md-input-container>
-        </div>
-        <div layout="row" layout-xs="column">
-           <md-input-container flex="50">
-            <label>Occupation</label>
-            <input type="text" ng-model="ec.m_occupation" ng-disabled="!ec.parents_details">
-          </md-input-container>         
-        </div>
+        <form name="parentsDetailsForm">
+          <p>Father's Details</p>
+          <div layout="row" layout-xs="column">
+            <md-autocomplete flex 
+              md-input-name="autocompleteFatherLastname"
+              required="true"
+              md-input-minlength="1"
+              md-no-cache="ec.noCache"
+              md-selected-item="ec.father"
+              md-search-text="ec.search_flastname"
+              md-delay="500"
+              md-selected-item-change="ec.selectedFatherDetailsChange(fdetails)"
+              md-items="fdetails in ec.fatherSearchQuery(ec.search_flastname)"
+              md-item-text="fdetails.lastname"
+              md-escape-options="clear"
+              md-floating-label="Lastname" ng-disabled="!ec.parents_details">
+              <md-item-template>
+                <span md-highlight-text="ec.search_flastname">{{fdetails.lastname}}, {{fdetails.firstname}}{{fdetails.middlename}}</span>
+              </md-item-template>
+              <md-not-found>
+                No records matching "{{ec.search_school}}" were found.
+              </md-not-found>
+            </md-autocomplete>
+            <md-input-container flex="">
+              <label>Firstname</label>
+              <input type="text" ng-model="ec.f_firstname" ng-disabled="!ec.parents_details" required>
+            </md-input-container>
+            <md-input-container flex="">
+              <label>Middlename</label>
+              <input type="text" ng-model="ec.f_middlename" ng-disabled="!ec.parents_details">
+            </md-input-container>
+          </div> 
+          <div layout="row" layout-xs="column">
+             <md-input-container flex="50">
+              <label>Occupation</label>
+              <input type="text" ng-model="ec.f_occupation" ng-disabled="!ec.parents_details">
+            </md-input-container>         
+          </div>
+          <p>Mother's Details</p>
+          <div layout="row" layout-xs="column">
+            <md-autocomplete flex 
+              md-input-name="autocompleteMotherMaiden"
+              required="true"
+              md-input-minlength="1"
+              md-no-cache="ec.noCache"
+              md-selected-item="ec.mother"
+              md-search-text="ec.search_maidenname"
+              md-delay="500"
+              md-selected-item-change="ec.selectedMotherDetailsChange(mdetails)"
+              md-items="mdetails in ec.motherSearchQuery(ec.search_maidenname)"
+              md-item-text="mdetails.lastname"
+              md-escape-options="clear"
+              md-floating-label="Lastname" ng-disabled="!ec.parents_details">
+              <md-item-template>
+                <span md-highlight-text="ec.search_maidenname">{{mdetails.lastname}}, {{mdetails.firstname}}{{mdetails.middlename}}</span>
+              </md-item-template>
+              <md-not-found>
+                No records matching "{{ec.search_school}}" were found.
+              </md-not-found>
+            </md-autocomplete>
+            <md-input-container flex="">
+              <label>Firstname</label>
+              <input type="text" ng-model="ec.m_firstname" ng-disabled="!ec.parents_details" required>
+            </md-input-container>
+            <md-input-container flex="">
+              <label>Middlename</label>
+              <input type="text" ng-model="ec.m_middlename" ng-disabled="!ec.parents_details">
+            </md-input-container>
+          </div>
+          <div layout="row" layout-xs="column">
+             <md-input-container flex="50">
+              <label>Occupation</label>
+              <input type="text" ng-model="ec.m_occupation" ng-disabled="!ec.parents_details">
+            </md-input-container>         
+          </div>
+        </form>
       </md-card-content>
       <div style="width: 100%;text-align: right;">
-        <md-button class="md-raised md-primary" ng-click="ec.updateScholarParentsDetails()" ng-if="ec.parents_details" ng-disabled="ec.updatingParentsDetails">{{ ec.parentsButtonText }}</md-button>
+        <md-button class="md-raised md-primary" ng-click="ec.updateScholarParentsDetails()" ng-if="ec.parents_details" ng-disabled="parentsDetailsForm.$invalid || !parentsDetailsForm.$dirty || ec.updatingParentsDetails">{{ ec.parentsButtonText }}</md-button>
         <md-button class="md-raised" ng-click="ec.enableDisableParentsDetails()">{{ ec.enableParentsButtonText }}</md-button>
       </div>
     </md-card>  

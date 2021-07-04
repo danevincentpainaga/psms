@@ -104,3 +104,15 @@ app.filter('formatYear', function(){
   }
 
 });
+
+app.filter('trim', function(){
+  return function(value){
+    let scholar = value.lastname+value.firstname+value.middlename;
+    let newVal = value.lastname+', '+value.firstname+' '+value.middlename;
+    if (scholar.length > 33) {
+      return newVal.slice(0, 33)+'...';
+    }
+    return newVal;
+  }
+});
+

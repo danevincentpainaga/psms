@@ -84,7 +84,8 @@
           <td>
             <span>
               <img ng-src="{{ scholar.photo | checkScholarPhoto }}" class="md-avatar scholar-image" alt="" style="width:25px;height: 25px;margin: 5px 5px 5px 0px;border: 2px solid #ebebeb;"/>
-              {{ scholar.lastname }}, {{ scholar.firstname }} {{ scholar.middlename }}
+              <!-- {{ scholar.lastname | trim }}, {{ scholar.firstname }} {{ scholar.middlename }} -->
+              {{ scholar | trim }}
             </span>
           </td>
           <td>{{ scholar.date_of_birth }}</td>
@@ -118,7 +119,7 @@
           <td>{{ scholar | amount:true | currency : '' : 0 }}</td>
           <td>{{ scholar.IP }}</td>
           <td>{{ scholar.created_at | formatDate }}</td>
-          <td style="display: flex;align-items: center;">
+          <td style="align-items: center;">
             <span style="margin-right: 20px;">{{ scholar.updated_at | formatDate }}</span>
             <md-icon class="material-icons" style="font-size: 17px; box-sizing: border-box;padding: 3px;cursor: pointer;outline-style: none;" ng-click="sc.edit(scholar)">
               <md-tooltip>Edit</md-tooltip>

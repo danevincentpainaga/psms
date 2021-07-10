@@ -204,7 +204,7 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
      scholarApiService.storeNewScholarDetails(scholarDetails).then(response => {
       md.scholars = [];
       md.clear();
-      swalert.dialogBox('Scholar saved!', 'success', 'Success');
+      swalert.toastInfo('Scholar saved!', 'success', 'top-right');
       md.buttonText = 'Save';
       md.saving = false;
       print(scholarDetails);
@@ -213,7 +213,7 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
       console.log(err);
       md.saving = false;
       md.buttonText = 'Save';
-      swalert.dialogBox(err.data.message, 'error', 'Failed');
+      swalert.toastInfo(err.data.message,  'error', 'top-right');
     });
   }
 

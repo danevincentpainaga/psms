@@ -272,6 +272,27 @@ angular.module('psmsApp').directive('acceptOnlyLetters', function() {
 });
 
 
+angular.module('psmsApp').directive('acceptOnlyNumbers', function() {
+    return {
+        restrict : 'A',
+        require: 'ngModel',
+        link: function (scope, element, attr, ngModelCtrl) {
+            function fromUser(text) {
+                if (text) {
+                    var transformedInput = text.replace(/[^0-9]/g, '');
+                    if (transformedInput !== text) {
+                        ngModelCtrl.$setViewValue(transformedInput);
+                        ngModelCtrl.$render();
+                    }
+                    return transformedInput;
+                }
+                return undefined;
+            }            
+            ngModelCtrl.$parsers.push(fromUser);
+        }
+    };
+});
+
 angular.module('psmsApp').directive('disableInput', function() {
     return {
         restrict : 'A',

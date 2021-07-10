@@ -69,6 +69,8 @@ angular.module('psmsApp')
 
     c.close = function(){
       $mdSidenav('addUpdateContract').toggle();
+      c.add_update_contract.$setPristine();
+      c.add_update_contract.$setUntouched();
       clearInputs();
     }
 

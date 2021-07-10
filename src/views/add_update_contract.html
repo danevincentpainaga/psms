@@ -6,33 +6,33 @@
     <div>
         <div style="padding: 0px 16px 0px 16px;">
           <span class="md-title">{{ c.labelText }}</span>
-          <form>
+          <form name="c.add_update_contract">
             <div layout="column" >
               <md-input-container flex="">
                 <label>Semester</label>
-                <md-select ng-model="c.semester">
+                <md-select ng-model="c.semester" required>
                   <md-option ng-value="sem.semester" ng-repeat="sem in c.semester_list"><em>{{ sem.semester }}</em></md-option>
                 </md-select>
               </md-input-container>
               <md-input-container flex="">
                 <label>Academic year</label>
-                <input type="text" ng-model="c.academic_year">
+                <input type="text" ng-model="c.academic_year" required>
               </md-input-container>
               <div layout="column">
                 <span>Undergraduate:</span>
                 <md-input-container flex="">
                   <label>Amount</label>
-                  <input type="text" ng-model="c.undergraduate_amount">
+                  <input type="text" ng-model="c.undergraduate_amount" accept-only-numbers autocomplete="off" required>
                 </md-input-container>
                 <span>Master/Doctorate:</span>
                 <md-input-container flex="">
                   <label>Amount</label>
-                  <input type="text" ng-model="c.masteral_doctorate_amount">
+                  <input type="text" ng-model="c.masteral_doctorate_amount" accept-only-numbers autocomplete="off" required>
                 </md-input-container>
               </div>
             </div>
             <div style="margin-bottom: 1.5em">
-              <md-button class="md-raised md-primary" ng-click="c.saveOrUpdateAcademicYearList()" style="width: 100%;margin: 10px 0px !important;">{{ c.buttonText }}</md-button>
+              <md-button class="md-raised md-primary" ng-disabled="c.add_update_contract.$invalid" ng-click="c.saveOrUpdateAcademicYearList()" style="width: 100%;margin: 10px 0px !important;">{{ c.buttonText }}</md-button>
             </div>
           </form>
         </div>

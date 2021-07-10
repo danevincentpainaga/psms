@@ -402,7 +402,7 @@ table{
 
     tr{
       th{
-        height: 37px;
+        height: 32px;
         text-align: left;
         padding: 0 15px 0px 7px;
         border: 1px solid #ddd;
@@ -458,7 +458,7 @@ table{
         }
       }
       td {
-        height: 37px;
+        height: 32px;
         background: #fff;
         border: 1px solid #ddd;
         &:nth-child(1){
@@ -619,9 +619,9 @@ th,
 
 
 .hasFading tr.ng-enter{
-  transition:0.3s linear all;
+  transition:0.2s linear all;
   opacity:0;
-  transform: translateX(40px);
+  transform: translateX(20px);
 }
 .hasFading tr.ng-enter.ng-enter-active{
   opacity:1;

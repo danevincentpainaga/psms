@@ -197,14 +197,14 @@ angular.module('psmsApp')
         ac.clear();
         ac.buttonText = 'Save';
         ac.saving = false;
-        swalert.dialogBox('Scholar saved!', 'success', 'Success');
+        swalert.toastInfo('Scholar saved!', 'success', 'top-right');
         print(scholarDetails);
         ac.scholar_details.$setUntouched();
         getNewUndergraduateScholars({ searched: ac.scholar_lastname }, ac.toPage );
       }, err => {
         ac.buttonText = 'Save';
         ac.saving = false;
-        swalert.dialogBox(err.data.message, 'error', 'Failed');
+        swalert.toastInfo(err.data.message,  'error', 'top-right');
         console.log(err);
       });
     }

@@ -2,7 +2,7 @@
   width: 100%;
   height: 100%;
   top: 0px;
-  background: #0000008f;z-index: 2;overflow: auto;z-index: 999999;">
+  background: #0000008f;z-index: 2;overflow: auto;z-index: 60;">
 	<div style="margin: 1.75rem auto;
   max-width: 25%;">
 		<div style="background-color: #6fc76f;">
@@ -22,7 +22,7 @@
             </md-card-content>
             <div style="margin: 3em 0px 1.5em;display: flex;justify-content: center;" >
               <md-button class="md-primary md-raised" ng-click="ec.updatePhoto()" ng-if="ec.image_selected" ng-disabled="ec.updating" style="color: #ffff;">{{ ec.updatePhotoBtnText }}</md-button>
-              <md-button class="md-raised md-warn" ng-click="ec.cancel()" style="color: #ffff;">Cancel</md-button>
+              <md-button class="md-raised md-warn" ng-click="ec.closeEditPhotoModal()" style="color: #ffff;">Close</md-button>
             </div>
           </md-card>
       </div>

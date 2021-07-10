@@ -107,7 +107,7 @@ angular.module('psmsApp')
       uploadProfilePic(ec.new_photo);
     }
 
-    ec.cancel = function(){
+    ec.closeEditPhotoModal = function(){
       ec.editing = false;
       ec.new_photo = "";
       ec.result_photo = undefined;
@@ -289,13 +289,13 @@ angular.module('psmsApp')
 
     function uploadProfilePic(image){
       scholarApiService.uploadProfilePic(image).then(response => {
+        ec.image_selected = false;
         ec.binded_copy.photo = response.data;
-        ec.cancel();
         ec.updating = false;
         ec.updatePhotoBtnText = 'Update';
-        swalert.toastInfo('Profile updated', 'success', 'top-right', 4000);
+        swalert.toastInfo('Profile updated', 'success', 'top-right');
       }, err => {
-        swalert.toastInfo(err.data, 'error', 'top-right', 4000);
+        swalert.toastInfo(err.data, 'error', 'top-right');
       });
     }
 

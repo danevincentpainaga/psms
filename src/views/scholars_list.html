@@ -14,17 +14,14 @@
   <md-progress-linear md-mode="indeterminate" ng-if="!sc.scholars_loaded" style="position: absolute;"></md-progress-linear>
   <ul class="custom-nav">
     <li>
-      <a href="" class="active">Undergraduate</a>
+      <a href="" class="active">Active scholars</a>
     </li>
     <li>
-      <a href="">Masteral</a>
-    </li>
-    <li>
-      <a href="">Doctorate</a>
+      <a href="">Trashed</a>
     </li>
   </ul>
   <div layout="column" layout-xs="column" style="padding: 5px;"  class="fading" >
-    <div flex style="background-color: #fff; overflow: auto;border: 1px solid #b0b1b3;" ng-style="resizeDiv()" resize-div height="160" class="container" fixed-column-table >
+    <div flex style="background-color: #fff; overflow: auto;border: 1px solid #b0b1b3;" ng-style="resizeDiv()" resize-div height="160" class="container" fixed-column-table fixed-columns="test">
     <table>
       <thead>
         <tr class="scholars">

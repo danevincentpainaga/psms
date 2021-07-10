@@ -43,11 +43,11 @@ angular.module('psmsApp')
 
     ac.saveNewUndergraduateDetails = function(){
 
-      if (!ac.f_firstname && !ac.search_flastname || !ac.m_firstname && !ac.search_maidenname)
-      {
-        swalert.toastInfo('please complete the form', 'error', 'top-right', 4000);
-        return;
-      }
+      // if (!ac.f_firstname && !ac.search_flastname || !ac.m_firstname && !ac.search_maidenname)
+      // {
+      //   swalert.toastInfo('please complete the form', 'error', 'top-right', 4000);
+      //   return;
+      // }
 
       if (!ac.firstname || !ac.lastname || !ac.addressId || !ac.age || !ac.gender || !ac.schoolId || !ac.courseId || !ac.section || !ac.year_level || !ac.student_id_number || !ac.IP || !academicContractDetails.ascId)
       {
@@ -194,7 +194,7 @@ angular.module('psmsApp')
 
     function storeNewScholarDetails(scholarDetails){
         scholarApiService.storeNewScholarDetails(scholarDetails).then(response => {
-        addScholarsService.clearInputs(ac);
+        ac.clear();
         ac.buttonText = 'Save';
         ac.saving = false;
         swalert.dialogBox('Scholar saved!', 'success', 'Success');

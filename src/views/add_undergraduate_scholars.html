@@ -265,8 +265,7 @@
                   md-autoselect="true"
                   md-escape-options="clear"
                   md-floating-label="Lastname"
-                  accept-only-letters
-                  required>
+                  accept-only-letters>
                   <md-item-template>
                     <span md-highlight-text="ac.search_flastname">{{fdetails.lastname}}, {{fdetails.firstname}} {{fdetails.middlename}}</span>
                   </md-item-template>
@@ -276,11 +275,11 @@
                 </md-autocomplete>
                 <md-input-container flex>
                   <label>Firstname</label>
-                  <input type="text" ng-model="ac.f_firstname" accept-only-letters  required>
+                  <input type="text" ng-model="ac.f_firstname" accept-only-letters >
                 </md-input-container>
                 <md-input-container flex>
                   <label>Middlename</label>
-                  <input type="text" ng-model="ac.f_middlename" accept-only-letters >
+                  <input type="text" ng-model="ac.f_middlename" accept-only-letters>
                 </md-input-container>
               </div>    
               <p>Mother's Details</p>

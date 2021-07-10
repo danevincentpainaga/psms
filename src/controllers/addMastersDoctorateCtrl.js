@@ -47,11 +47,11 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
 
   md.saveNewMasterDoctorateDetails = function(){
 
-      if (!md.f_firstname && !md.search_flastname || !md.m_firstname && !md.search_maidenname)
-      {
-        swalert.toastInfo('please complete the form', 'error', 'top-right', 4000);
-        return;
-      }
+      // if (!md.f_firstname && !md.search_flastname || !md.m_firstname && !md.search_maidenname)
+      // {
+      //   swalert.toastInfo('please complete the form', 'error', 'top-right', 4000);
+      //   return;
+      // }
 
       if (!md.firstname || !md.lastname || !md.addressId || !md.gender || !md.schoolId || !md.courseId || !md.section || !md.year_level || !md.student_id_number || !md.IP || !academicContractDetails.ascId)
       {
@@ -125,29 +125,6 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
   md.selectedDegree = function(){
     md.degree_has_selected = md.degree ?  true : false;
   }
-
-  // md.selectedFatherDetailsChange = function(fdetails){
-  //   if (md.father) {
-  //     md.f_firstname = fdetails.firstname;
-  //     md.f_middlename = fdetails.middlename;
-  //   }
-  //   else{
-  //     md.f_firstname = "";
-  //     md.f_middlename = "";
-  //   }
-  // }
-
-  // md.selectedMotherDetailsChange = function(mdetails){
-  //   if (md.mother) {
-  //     md.m_firstname = mdetails.firstname;
-  //     md.m_middlename = mdetails.middlename;
-  //   }
-  //   else{
-  //     md.m_firstname = "";
-  //     md.m_middlename = "";
-  //   }
-  // }
-
 
   md.selectedSchoolChange = function(school){
     if (school) {

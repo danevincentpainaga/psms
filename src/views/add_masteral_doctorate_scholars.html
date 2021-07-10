@@ -289,8 +289,7 @@
                   md-escape-options="clear"
                   md-floating-label="Lastname"
                   accept-only-letters
-                  ng-disabled="!md.degree_has_selected"
-                  required>
+                  ng-disabled="!md.degree_has_selected">
                   <md-item-template>
                     <span md-highlight-text="md.search_flastname">{{fdetails.lastname}}, {{fdetails.firstname}} {{fdetails.middlename}}</span>
                   </md-item-template>
@@ -300,7 +299,7 @@
                 </md-autocomplete>
                 <md-input-container flex>
                   <label>Firstname</label>
-                  <input type="text" ng-model="md.f_firstname" ng-disabled="!md.degree_has_selected" accept-only-letters required>
+                  <input type="text" ng-model="md.f_firstname" ng-disabled="!md.degree_has_selected" accept-only-letters>
                 </md-input-container>
                 <md-input-container flex>
                   <label>Middlename</label>

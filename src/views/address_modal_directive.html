@@ -15,7 +15,7 @@
     border: 1px solid rgba(0,0,0,.125);cursor: pointer;" ng-repeat="address in ec.addresses" ng-click="ec.selectedAddress(address)">{{ address.address }}</li>
         </ul>
         <div style="display: flex; justify-content: flex-end;margin-top: 15px;">
-          <md-button class="md-raised" ng-click="ec.closeModal()">close</md-button>
+          <md-button ng-click="ec.closeModal()">close</md-button>
         </div>
       </div>
     </md-dialog>

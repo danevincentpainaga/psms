@@ -9,7 +9,7 @@ angular
         var container = element[0];
 
         function activate() {
-            
+            console.log(scope.fixedColumns);
             container.addEventListener('scroll', function () {
 
                 var x = container.scrollLeft;

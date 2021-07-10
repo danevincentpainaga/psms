@@ -48,7 +48,7 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
       // console.log(newObjects);
     },
     columnDefs: [
-      { field: 'index', displayName: 'NO.', field: 'number', width: '50', enableFiltering: false, enableSorting: false, cellClass: 'row-no',  cellTemplate: '<div class="ui-grid-cell-contents">{{grid.renderContainers.body.visibleRowCache.indexOf(row)+1}}</div>' },
+      { displayName: 'NO.', field: 'index', width: '50', enableFiltering: false, enableSorting: false, cellClass: 'row-no',  cellTemplate: '<div class="ui-grid-cell-contents">{{grid.renderContainers.body.visibleRowCache.indexOf(row)+1}}</div>' },
       { displayName: 'Error', field: 'error', width: '15%', enableFiltering: false,
         cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
           let error = grid.getCellValue(row,col);
@@ -60,26 +60,26 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
       { field: 'Lastname', width: '15%'},
       { field: 'Firstname', width: '15%' },
       { field: 'Middlename', width: '15%' },
-      { field: 'Date of Birth', width: '15%' },
-      { field: 'Age', width: '15%' },
-      { field: 'Gender', width: '15%' },
-      { field:'Address', width: '30%'},
-      { field:'Father_lastname', width: '30%' },
-      { field:'Father_firstname', width: '30%' },
-      { field:'Father_middlename', width: '30%' },
-      { field:'Mother_maiden_name', width: '30%' },
-      { field:'Mother_firstname', width: '30%' },
-      { field:'Mother_middlename', width: '30%' },
-      { field:'School',  width: '30%' },
-      { field:'Degree',  width: '30%' },
-      { field:'Student ID NO',  width: '15%' },
-      { field:'Course',  width: '30%' },
-      { field:'Section',  width: '30%' },
-      { field:'Year level', width: '15%' },
-      { field:'Semester',width: '15%' },
-      { field:'Academic year', width: '15%' },
+      { field: 'Date of Birth', width: '10%' },
+      { field: 'Age', width: '5%' },
+      { field: 'Gender', width: '7%' },
+      { field:'Address', width: '20%'},
+      { field:'Father_lastname', displayName: 'Father_lastname', width: '15%' },
+      { field:'Father_firstname', displayName: 'Father_firstname', width: '15%' },
+      { field:'Father_middlename', displayName: 'Father_middlename', width: '15%' },
+      { field:'Mother_maiden_name', displayName: 'Mother_maiden_name', width: '15%' },
+      { field:'Mother_firstname', displayName: 'Mother_firstname', width: '15%' },
+      { field:'Mother_middlename', displayName: 'Mother_middlename', width: '15%' },
+      { field:'School',  width: '20%' },
+      { field:'Degree',  width: '7%' },
+      { field:'Student ID NO', displayName: 'Student ID NO', width: '10%' },
+      { field:'Course',  width: '25%' },
+      { field:'Section',  width: '15%' },
+      { field:'Year level', width: '10%' },
+      { field:'Semester',width: '10%' },
+      { field:'Academic year', width: '10%' },
       { field:'Status',  width: '10%' },
-      { displayName: 'IP', field:'IP', width: '10%' },
+      { displayName: 'IP', field:'IP', width: '5%' },
     ],
     enableGridMenu: true,
     enableSelectAll: true,
@@ -103,11 +103,6 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
       
     }
   };
-
-  ic.gridOptions.exporterFieldCallback = function ( grid, row, col, value ) {
-    console.log(row);
-    console.log(col);
-  }
 
   ic.toggleFiltering = function(){
     ic.gridOptions.enableFiltering = !ic.gridOptions.enableFiltering;
@@ -440,7 +435,7 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
   }
 
   function validateMother(scholarsObj, idx){
-    if (!scholarsObj.Mother_maiden_name || !scholarsObj.Mother_firstname || !scholarsObj.Mother_middlename) {
+    if (!scholarsObj.Mother_maiden_name || !scholarsObj.Mother_firstname) {
       ic.gridOptions.data[idx].error.push("Error: Mother details is required");
       ic.total_errors += 1;
       return;
@@ -465,6 +460,7 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
     if (!str || !/^[a-zA-Z\s]+$/.test(str) || str.toLowerCase() === "none") {
       ic.gridOptions.data[idx].error.push("Error: Invalid "+value_name+" "+value);
       ic.total_errors += 1;
+      return;
     }
   }
 

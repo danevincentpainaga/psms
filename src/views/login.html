@@ -1,18 +1,18 @@
 <div style="width: 100%;background: #3f51b5;height: 3%;"></div>
 <md-content class="md-padding" layout-xs="column" layout="row"  style="display: flex; justify-content: center;font-size: 14px;height: 97%; background-color: #fff;">
   <div flex-xs="100" flex-gt-xs="70" flex-gt-sm="50" flex-gt-md="30" layout="column">
-    <form ng-submit="lg.login()">
+    <form name="lg.loginForm" ng-submit="lg.login()">
       <div layout="column" style="box-sizing: border-box;padding: 50px 10px;">
         <p style="text-align: center;">Sign in</p>
         <md-input-container flex="" style="margin: 5px 10px 5px 10px;">
           <label>Username</label>
           <md-icon class="material-icons">how_to_reg</md-icon>
-          <input type="email" ng-model="lg.email">
+          <input type="email" ng-model="lg.email" required>
         </md-input-container>
         <md-input-container flex="" style="margin: 5px 10px 5px 10px;">
           <label>Password</label>
           <md-icon class="material-icons">lock</md-icon>
-          <input type="password" ng-model="lg.password">
+          <input type="password" ng-model="lg.password" required>
         </md-input-container>
         <md-button 
             type="submit" 

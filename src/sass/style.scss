@@ -4,6 +4,15 @@
 @import '~material-icons/iconfont/material-icons.css';
 
 /*background: linear-gradient(to bottom,#F8F8F8 0,#eeeeee 100%);*/
+.ui-grid-row:nth-child(odd) .ui-grid-cell {
+    background-color: #fff;
+}
+.ui-grid-row:nth-child(even) .ui-grid-cell {
+   background-color: #fff;
+}
+.ui-grid-cell {
+    border-bottom: 1px solid #d4d4d4;
+}
 .uppercase{
   input {text-transform: uppercase;}
   input::-webkit-input-placeholder {text-transform: lowercase;}
@@ -617,7 +626,7 @@ th,
   to{ opacity: 1; }
 }
 
-
+/*animation for tr*/
 .hasFading tr.ng-enter{
   transition:0.2s linear all;
   opacity:0;
@@ -628,6 +637,21 @@ th,
   transform: translateX(0);
 }
 .hasFading tr.ng-enter-stagger{
+  transition-delay: 0.1s;
+}
+
+
+/*animation for ui-grid*/
+.ui-grid-row.ng-enter{
+  transition:0.2s linear all;
+  opacity:0;
+  transform: translateX(20px);
+}
+.ui-grid-row.ng-enter.ng-enter-active{
+  opacity:1;
+  transform: translateX(0);
+}
+.ui-grid-row.ng-enter-stagger{
   transition-delay: 0.1s;
 }
 

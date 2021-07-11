@@ -19,13 +19,10 @@ app.controller('loginCtrl',['$scope', '$rootScope', '$cookies', '$window', '$loc
 
   lg.login =function(){
     if(!lg.email || !lg.password){
-
-      console.log('please complete the form');
       swalert.toastInfo('please complete the form', 'info', 'top');
-
     }else{
 
-      swalert.toastInfo('Please wait...', 'info', 'top', 2000);
+      swalert.toastInfo('Please wait...', 'info', 'top');
       $rootScope.route_loader = true;
       // $rootScope.logging_in = true;
       lg.buttonMessage = 'Logging In...';
@@ -45,6 +42,7 @@ app.controller('loginCtrl',['$scope', '$rootScope', '$cookies', '$window', '$loc
                 let exp = new Date(now.getFullYear()+1, now.getMonth(), now.getDate());
                 $cookies.putObject('auth', response.data,  {'expires' : exp});
                 $location.path('/dashboard');
+                $timeout(() => { swalert.toastInfo('Welcome', 'success', 'top-right', 2500); }, 200);
             }, function(err){
                 lg.buttonMessage = 'LOGIN';
                 lg.disableLogginBtn = false;

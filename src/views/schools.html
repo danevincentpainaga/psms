@@ -16,8 +16,13 @@
       <div flex class="fading-up">
         <br />
         <md-content flex style="height: 100%;background-color: #fff; padding: 8px;" class="container" ng-if="!s.editing_state">
-        <div>
-          <md-input-container style="width: 50%;margin: 25px 0px 0px 0px;height: 40px;">
+          <div>
+            <md-button class="md-fab md-mini md-primary" ng-click="s.showDialog($event)" ng-if="s.disable_linear_loader" style="float: right;">
+              <md-icon class="material-icons">add</md-icon>
+            </md-button>
+          </div>
+          <div>
+            <md-input-container style="width: 50%;margin: 25px 0px 0px 0px;height: 40px;">
               <label>Search</label>
               <input type="text" ng-model="s.searched_school" autocomplete="off">
               <md-progress-circular class="md-hue-2" md-diameter="15px" style="position: absolute;right: 0px;top: 10px;" ng-if="!s.school_list_loaded"></md-progress-circular>

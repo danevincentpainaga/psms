@@ -14,43 +14,51 @@
   <div layout="column">
     <div layout="row">
       <div flex></div>
-      <div flex-xs="100" flex-sm="100" flex-gt-md="70" class="fading-up">
+      <div flex-xs="100" flex-sm="100" flex-gt-md="75" class="fading-up">
           <br />
           <div layout="column">
             <section layout="row" flex layout-xs="column">
-              <div flex-xs="100" flex-sm="100" flex-gt-md="70" layout-xs="column" style="background-color: #fff; border-right: 1px solid #c7c7c7;;border: 1px solid #c7c7c7;">
+              <div flex-xs="100" flex-sm="100" flex-gt-md="75" layout-xs="column" style="background-color: #fff;">
                 <md-content flex style="height: 100%;background-color: #fff; padding: 8px;" class="container" >
-                    <div style="max-height: 475px;min-height: 470px;overflow: auto;border: 1px solid rgb(176, 177, 179);" class="container" fixed-column-table>
-                      <div>
-                        <md-progress-linear md-mode="indeterminate" ng-if="!c.disable_linear_loader"></md-progress-linear>
-                      </div>
-                      <table>
-                        <thead>
-                          <tr>
-                            <th style="background-color: #dddddd;"><span>No.</span></th>
-                            <th style="background-color: #dddddd;"><span>Semester/Academic year</span></th>
-                            <th style="background-color: #dddddd;"><span>State</span></th>
-                            <th style="background-color: #dddddd;"><span>Undergraduate amount</span></th>
-                            <th style="background-color: #dddddd;"><span>Masteral/Doctorate amount</span></th>
-                            <th style="background-color: #dddddd;"><span>Date created</span></th>
-                            <th style="background-color: #dddddd;"><span>Date updated</span></th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr ng-repeat="ay in c.academic_year_sem track by $index">
-                            <td style="background: linear-gradient(to bottom, #F8F8F8 0, #eeeeee 100%) !important;">{{ $index+1 }}.</td>
-                            <td>
-                              <span>{{ ay.semester }} - {{ ay.academic_year }}</span>
-                            </td>
-                            <td><span color-contract={{ay.state}}>{{ ay.state }}</span></td>
-                            <td>
-                              <span>{{ ay.undergraduate_amount | currency : '' : 0}}</span>
-                            </td>
-                            <td>
-                              <span>{{ ay.masteral_doctorate_amount | currency : '' : 0}}</span>
-                            </td>
-                            <td><span>{{ ay.created_at | formatDate }}</span></td>
-                            <td style="display: flex;align-items: center;">
+                <div>
+                  <md-input-container style="width: 50%;margin: 10px 0px 0px 0px;height: 40px;">
+                    <label>Search</label>
+                    <input type="text" ng-model="ad.searched_address" autocomplete="off">
+                    <md-progress-circular class="md-hue-2" md-diameter="15px" style="position: absolute;right: 0px;top: 10px;" ng-if="ad.searching"></md-progress-circular>
+                  </md-input-container>
+                </div>
+                  <div style="max-height: 415px;min-height: 410px;overflow: auto;border: 1px solid rgb(176, 177, 179);" class="container" fixed-column-table>
+                    <div>
+                      <md-progress-linear md-mode="indeterminate" ng-if="!c.disable_linear_loader"></md-progress-linear>
+                    </div>
+                    <table>
+                      <thead>
+                        <tr>
+                          <th style="background-color: #dddddd;"><span>No.</span></th>
+                          <th style="background-color: #dddddd;"><span>Semester/Academic year</span></th>
+                          <th style="background-color: #dddddd;"><span>State</span></th>
+                          <th style="background-color: #dddddd;"><span>Undergraduate amount</span></th>
+                          <th style="background-color: #dddddd;"><span>Masteral/Doctorate amount</span></th>
+                          <th style="background-color: #dddddd;"><span>Date created</span></th>
+                          <th style="background-color: #dddddd;"><span>Date updated</span></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr ng-repeat="ay in c.academic_year_sem track by $index">
+                          <td style="background: linear-gradient(to bottom, #F8F8F8 0, #eeeeee 100%) !important;">{{ $index+1 }}.</td>
+                          <td>
+                            <span>{{ ay.semester }} - {{ ay.academic_year }}</span>
+                          </td>
+                          <td><span color-contract={{ay.state}}>{{ ay.state }}</span></td>
+                          <td>
+                            <span>{{ ay.undergraduate_amount | currency : '' : 0}}</span>
+                          </td>
+                          <td>
+                            <span>{{ ay.masteral_doctorate_amount | currency : '' : 0}}</span>
+                          </td>
+                          <td><span>{{ ay.created_at | formatDate }}</span></td>
+                          <td>
+                            <div style="display: flex;align-items: center;">
                               <span style="margin-right: 20px;">{{ ay.updated_at | formatDate }}</span>
                               <md-icon class="material-icons" style="font-size: 17px; box-sizing: border-box;padding: 3px;cursor: pointer;outline-style: none;" ng-click="c.setContract(ay)" ng-if="ay.state === 'Available'">
                                 <md-tooltip>Set as Contract.</md-tooltip>
@@ -64,14 +72,15 @@
                                 <md-tooltip>Delete</md-tooltip>
                                 close
                               </md-icon>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
                 </md-content>
               </div>
-                <div flex style="background: #efefef;border: 1px solid #c7c7c7;position: relative;" >
+              <div flex style="background: #efefef;position: relative;" >
                 <md-button class="md-fab md-mini md-primary" ng-click="c.add()" style="position: absolute;top: 0;right: 0;">
                   <md-icon class="material-icons">add</md-icon>
                 </md-button>
@@ -98,17 +107,17 @@
                         <p>
                           State: 
                           &nbsp;
-                          <span  color-contract={{c.contract_status}}>{{ c.contract_status }}</span>
+                          <span  color-contract={{c.contract_status}} style="font-size: 11px;">{{ c.contract_status }}</span>
                         </p>
                         <p>
                           Semester: 
                           &nbsp;
-                          <span style="background: #48d448;color: #ffff;padding: 2px 5px;border-radius: 3pt;">{{ contract.academic_year_semester.semester }}</span>
+                          <span style="background: #48d448;color: #ffff;padding: 2px 5px;border-radius: 3pt;font-size: 11px;">{{ contract.academic_year_semester.semester }}</span>
                         </p>
                         <p>
                           Academic year:
                           &nbsp;
-                          <span style="background: #d641b7;color: #ffff;padding: 2px 5px;border-radius: 3pt;">{{ contract.academic_year_semester.academic_year }}</span>
+                          <span style="background: #d641b7;color: #ffff;padding: 2px 5px;border-radius: 3pt;font-size: 11px;">{{ contract.academic_year_semester.academic_year }}</span>
                         </p>
                         <p>
                           <span style="color: rgb(17 207 38);">Date started:</span>
@@ -120,11 +129,35 @@
                         <p> 
                           <span>{{ contract.updated_at | formatDate }}</span>
                         </p>
+                        <div ng-if="c.contract_loaded">
+                          <button
+                            class="md-raised md-warn" 
+                            ng-click="c.openContract()"
+                            ng-if="c.showOpenContractBtn" 
+                            style="color: #ffff;
+                                  padding: 5px;
+                                  background-color: #0d6efd;
+                                  border: none;
+                                  border-radius: 3px;">
+                            Close contract
+                          </button>
+                          <button
+                            class="md-raised md-warn" 
+                            ng-click="c.closeContract()" 
+                            ng-if="!c.showOpenContractBtn" 
+                            style="color: #ffff;
+                                  padding: 5px;
+                                  background-color: rgb(255,87,34);
+                                  border: none;
+                                  border-radius: 3px;">
+                            Close contract
+                          </button>
+                        </div>
                       </div>
                       <div style="margin: 3em 0px 1.5em;position: absolute;bottom: 3px;" ng-if="c.contract_loaded">
                         <!-- <md-button class="md-raised md-primary" ng-click="c.updateContract()" style="width: 100%;margin: 10px 0px !important;">Update</md-button> -->
-                        <md-button class="md-accent md-raised" ng-click="c.openContract()" ng-if="c.showOpenContractBtn" style="width: 100%;margin: 10px 0px !important;color: #ffff;">Open contract</md-button>
-                        <md-button class="md-raised md-warn" ng-click="c.closeContract()" ng-if="!c.showOpenContractBtn" style="width: 100%;margin: 0px !important;color: #ffff;">Close contract</md-button>
+ <!--                        <md-button class="md-accent md-raised" ng-click="c.openContract()" ng-if="c.showOpenContractBtn" style="width: 100%;margin: 10px 0px !important;color: #ffff;">Open contract</md-button>
+                        <md-button class="md-raised md-warn" ng-click="c.closeContract()" ng-if="!c.showOpenContractBtn" style="width: 100%;margin: 0px !important;color: #ffff;">Close contract</md-button> -->
                       </div>
                     </md-card-content>
                   </md-card>

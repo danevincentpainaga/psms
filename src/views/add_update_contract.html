@@ -32,7 +32,7 @@
               </div>
             </div>
             <div style="margin-bottom: 1.5em">
-              <md-button class="md-raised md-primary" ng-disabled="c.add_update_contract.$invalid" ng-click="c.saveOrUpdateAcademicYearList()" style="width: 100%;margin: 10px 0px !important;">{{ c.buttonText }}</md-button>
+              <md-button class="md-raised md-primary" ng-disabled="c.add_update_contract.$invalid || !c.add_update_contract.$dirty" ng-click="c.saveOrUpdateAcademicYearList()" style="width: 100%;margin: 10px 0px !important;">{{ c.buttonText }}</md-button>
             </div>
           </form>
         </div>

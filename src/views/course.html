@@ -16,51 +16,56 @@
       <div flex class="fading-up">
         <br />
         <md-content flex style="height: 100%;background-color: #fff; padding: 8px;" class="container" >
-        <div>
-          <md-input-container style="width: 50%;margin: 25px 0px 0px 0px;height: 40px;">
+          <div>
+            <md-button class="md-fab md-mini md-primary" ng-click="cc.add($event)" ng-if="!s.disable_linear_loader" style="float: right;">
+              <md-icon class="material-icons">add</md-icon>
+            </md-button>
+          </div>
+          <div>
+            <md-input-container style="width: 50%;margin: 25px 0px 0px 0px;height: 40px;">
               <label>Search</label>
               <input type="text" ng-model="cc.searched_course" autocomplete="off">
               <md-progress-circular class="md-hue-2" md-diameter="15px" style="position: absolute;right: 0px;top: 10px;" ng-if="cc.searching"></md-progress-circular>
             </md-input-container>
           </div>
-            <div style="max-height: 475px;overflow: auto;border: 1px solid rgb(176, 177, 179);" class="container" fixed-column-table>
-              <div>
-                <md-progress-linear md-mode="indeterminate" ng-if="!cc.course_list_loaded"></md-progress-linear>
-              </div>
-              <table>
-                <thead>
-                  <tr>
-                    <th style="background-color: #dddddd; width: 20px;"><span>No.</span></th>
-                    <th style="background-color: #dddddd;"><span>Course</span></th>
-                    <th style="background-color: #dddddd;"><span>Degree</span></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr ng-repeat="course in cc.courses track by $index">
-                    <td style="background: linear-gradient(to bottom, #F8F8F8 0, #eeeeee 100%) !important;">{{ $index+1 }}.</td>
-                    <td>
-                      <span>{{ course.course }}</span>
-                    </td>
-                    <td>
-                      <div style="display: flex; align-items: center;justify-content: space-between;">
-                        <div>
-                          <span>{{ course.course_degree }}</span>
-                        </div>
-                        <div>
-                           <md-icon class="material-icons" style="font-size: 17px; box-sizing: border-box;padding: 3px;cursor: pointer;outline-style: none;" ng-click="cc.edit(course)">
-                            <md-tooltip>Edit</md-tooltip>
-                            edit
-                          </md-icon>
-                          <md-icon class="material-icons" style="font-size: 17px; box-sizing: border-box;padding: 3px;cursor: pointer;outline-style: none;">
-                            <md-tooltip>Delete</md-tooltip>
-                            close
-                          </md-icon>
-                        </div>
+          <div style="max-height: 475px;overflow: auto;border: 1px solid rgb(176, 177, 179);" class="container" fixed-column-table>
+            <div>
+              <md-progress-linear md-mode="indeterminate" ng-if="!cc.course_list_loaded"></md-progress-linear>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th style="background-color: #dddddd; width: 20px;"><span>No.</span></th>
+                  <th style="background-color: #dddddd;"><span>Course</span></th>
+                  <th style="background-color: #dddddd;"><span>Degree</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="course in cc.courses track by $index">
+                  <td style="background: linear-gradient(to bottom, #F8F8F8 0, #eeeeee 100%) !important;">{{ $index+1 }}.</td>
+                  <td>
+                    <span>{{ course.course }}</span>
+                  </td>
+                  <td>
+                    <div style="display: flex; align-items: center;justify-content: space-between;">
+                      <div>
+                        <span>{{ course.course_degree }}</span>
                       </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                      <div>
+                         <md-icon class="material-icons" style="font-size: 17px; box-sizing: border-box;padding: 3px;cursor: pointer;outline-style: none;" ng-click="cc.edit(course)">
+                          <md-tooltip>Edit</md-tooltip>
+                          edit
+                        </md-icon>
+                        <md-icon class="material-icons" style="font-size: 17px; box-sizing: border-box;padding: 3px;cursor: pointer;outline-style: none;">
+                          <md-tooltip>Delete</md-tooltip>
+                          close
+                        </md-icon>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </md-content>
       </div>

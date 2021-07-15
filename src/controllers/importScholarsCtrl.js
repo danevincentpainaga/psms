@@ -25,7 +25,7 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
 
   $scope.$watch('ic.isOpen', function(isOpen) {
     if (isOpen) {
-      $timeout(function() { ic.tooltipVisible = ic.isOpen; }, 500);
+      $timeout(function() { ic.tooltipVisible = ic.isOpen; }, 300);
     } else {
       ic.tooltipVisible = ic.isOpen;
     }
@@ -62,7 +62,7 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
       { field: 'Middlename', width: '15%' },
       { field: 'Date of Birth', width: '10%' },
       { field: 'Age', width: '5%' },
-      { field: 'Gender', width: '7%' },
+      { field: 'Gender', width: '10%' },
       { field:'Address', width: '20%'},
       { field:'Father_lastname', displayName: 'Father_lastname', width: '15%' },
       { field:'Father_firstname', displayName: 'Father_firstname', width: '15%' },
@@ -71,18 +71,24 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
       { field:'Mother_firstname', displayName: 'Mother_firstname', width: '15%' },
       { field:'Mother_middlename', displayName: 'Mother_middlename', width: '15%' },
       { field:'School',  width: '20%' },
-      { field:'Degree',  width: '7%' },
+      { field:'Degree',  width: '10%' },
       { field:'Student ID NO', displayName: 'Student ID NO', width: '10%' },
       { field:'Course',  width: '25%' },
-      { field:'Section',  width: '15%' },
+      { field:'Section',  width: '10%' },
       { field:'Year level', width: '10%' },
       { field:'Semester',width: '10%' },
       { field:'Academic year', width: '10%' },
       { field:'Status',  width: '10%' },
-      { displayName: 'IP', field:'IP', width: '5%' },
+      { displayName: 'IP', field:'IP', width: '7%' },
     ],
     enableGridMenu: true,
     enableSelectAll: true,
+    exporterPdfOrientation: 'landscape',
+    exporterPdfPageSize: 'LEGAL',
+    exporterPdfDefaultStyle: {fontSize: 7},
+    exporterPdfTableStyle: {margin: [-30, -30, 0, 0], fontSize: 7 },
+    exporterPdfMaxGridWidth: 765,
+    exporterPdfTableHeaderStyle: {fontSize: 7, bold: true, italics: true, color: 'red'},
     exporterCsvFilename: 'Scholars list.csv',
     exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
     exporterExcelFilename: 'Scholars list.xlsx',
@@ -175,8 +181,6 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
             console.log('Hit');
             return;
           }
-
-          debugger;
 
           if (checkedItem.indexOf(concatAndLower(value)) > -1) return;
 
@@ -279,16 +283,16 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
 
       ic.show_spinner = false;
 
-      if (!scholarsObj.Lastname || !scholarsObj.Firstname || !scholarsObj.Middlename) {
+      if (!scholarsObj.Lastname || !scholarsObj.Firstname) {
         ic.progress_value = Math.ceil(idx / total * 100) -1;
         return;
       };
 
       ic.checking_in = scholarsObj.Lastname+" "+scholarsObj.Firstname+", "+scholarsObj.Middlename;
 
-      validateLettersSpaces(scholarsObj.Lastname, "Lastname", idx);
-      validateLettersSpaces(scholarsObj.Firstname, "Firstname", idx);
-      validateLettersSpaces(scholarsObj.Middlename, "Middlename", idx);
+      // validateLettersSpaces(scholarsObj.Lastname, "Lastname", idx);
+      // validateLettersSpaces(scholarsObj.Firstname, "Firstname", idx);
+      // validateLettersSpaces(scholarsObj.Middlename, "Middlename", idx);
 
       const result = response[0].data.find(item => {
 
@@ -492,7 +496,8 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
     if (referenceArray.indexOf(fieldname) === -1) {
         ic.gridOptions.data[idx].error.push(error);
         ic.total_errors += 1;
-    }   
+    }
+    return;
   }
 
   function concatAndLower(value){

@@ -24,20 +24,20 @@ app.controller('exportScholarsCtrl',['$scope', '$filter', '$timeout', 'schoolApi
     enableColumnResizing: true,
     enableGridMenu: true,
     data: ex.mergedChunks,
-    importerDataAddCallback: function ( grid, newObjects ) {
+    // importerDataAddCallback: function ( grid, newObjects ) {
 
-    },
+    // },
     columnDefs: [
       { field: 'index', displayName: 'NO.', width: '50',  enableFiltering: false, pinnedLeft:true, enableSorting: false, cellClass: 'row-no', cellTemplate: '<div class="ui-grid-cell-contents">{{grid.renderContainers.body.visibleRowCache.indexOf(row)+1}}</div>' },
-      { field: 'lastname', width: '15%', enablePinning:true,
+      { field: 'lastname', width: '25%', enablePinning:true,
         filter: {
           condition: uiGridConstants.filter.EXACT,
         } 
       },
-      { field: 'firstname', width: '20%', enablePinning:true },
-      { field: 'middlename', width: '15%', enablePinning:true },
-      { field: 'date_of_birth', width: '10%' },
-      { field: 'gender', width: '10%',
+      { field: 'firstname', width: '25%', enablePinning:true },
+      { field: 'middlename', width: '25%', enablePinning:true },
+      { field: 'date_of_birth', width: '18%' },
+      { field: 'gender', width: '11%',
         filter: {
           type: uiGridConstants.filter.SELECT,
           condition: uiGridConstants.filter.EXACT,
@@ -51,7 +51,7 @@ app.controller('exportScholarsCtrl',['$scope', '$filter', '$timeout', 'schoolApi
           selectOptions: [ { value: 'NEW', label: 'NEW' }, { value: 'OLD', label: 'OLD' } ]
         }
       },
-      { displayName:'Contract Status', field: 'contract_status', width: '10%',
+      { displayName:'Contract Status', field: 'contract_status', width: '14%',
         filter: {
           type: uiGridConstants.filter.SELECT,
           condition: uiGridConstants.filter.EXACT,
@@ -59,7 +59,7 @@ app.controller('exportScholarsCtrl',['$scope', '$filter', '$timeout', 'schoolApi
         }
       },
       { displayName:'Address', field: 'address', width: '30%' },
-      { displayName:'Municipality', field: 'municipality', width: '10%',
+      { displayName:'Municipality', field: 'municipality', width: '15%',
         filter: {
           type: uiGridConstants.filter.SELECT,
           condition: uiGridConstants.filter.EXACT,
@@ -75,7 +75,7 @@ app.controller('exportScholarsCtrl',['$scope', '$filter', '$timeout', 'schoolApi
           selectOptions: ex.schools
         }
       },
-      { displayName:'Degree', field: 'degree', width: '10%',
+      { displayName:'Degree', field: 'degree', width: '15%',
         filter: {
           type: uiGridConstants.filter.SELECT,
           condition: uiGridConstants.filter.EXACT,
@@ -86,10 +86,10 @@ app.controller('exportScholarsCtrl',['$scope', '$filter', '$timeout', 'schoolApi
           ]
         }
       },
-      { displayName:'Student ID NO.', field: 'student_id_number', width: '10%' },
+      { displayName:'Student ID NO.', field: 'student_id_number', width: '15%' },
       { displayName:'Course', field: 'course', width: '30%' },
-      { displayName:'Section', field: 'section', width: '10%' },
-      { displayName:'Yearl level', field: 'year_level', width: '10%',
+      { displayName:'Section', field: 'section', width: '6%' },
+      { displayName:'Yearl level', field: 'year_level', width: '7%',
         filter: {
           type: uiGridConstants.filter.SELECT,
           condition: uiGridConstants.filter.EXACT,
@@ -117,7 +117,7 @@ app.controller('exportScholarsCtrl',['$scope', '$filter', '$timeout', 'schoolApi
       },
       { displayName:'Academic year', field: 'academic_year', width: '10%' },
       { displayName:'Amount', field: 'amount', width: '10%' },
-      { displayName:'IP', field: 'IP', width: '10%',
+      { displayName:'IP', field: 'IP', width: '6%',
         filter: {
           type: uiGridConstants.filter.SELECT,
           condition: uiGridConstants.filter.EXACT,
@@ -127,6 +127,12 @@ app.controller('exportScholarsCtrl',['$scope', '$filter', '$timeout', 'schoolApi
     ],
     enableGridMenu: true,
     enableSelectAll: true,
+    exporterPdfOrientation: 'landscape',
+    exporterPdfPageSize: 'LEGAL',
+    exporterPdfDefaultStyle: {fontSize: 7},
+    exporterPdfTableStyle: {margin: [-30, -30, 0, 0], fontSize: 7 },
+    exporterPdfMaxGridWidth: 790,
+    exporterPdfTableHeaderStyle: {fontSize: 7, bold: true, italics: true, color: 'red'},
     exporterCsvFilename: 'Exported_scholars.csv',
     exporterCsvLinkElement: angular.element(document.querySelectorAll(".custom-csv-link-location")),
     exporterExcelFilename: 'Exported_scholars.xlsx',

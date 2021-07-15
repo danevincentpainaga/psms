@@ -200,7 +200,7 @@ angular.module('psmsApp')
         swalert.toastInfo('Scholar saved!', 'success', 'top-right');
         print(scholarDetails);
         ac.scholar_details.$setUntouched();
-        getNewUndergraduateScholars({ searched: ac.scholar_lastname }, ac.toPage );
+        getNewUndergraduateScholars({ searched: undefined }, null );
       }, err => {
         ac.buttonText = 'Save';
         ac.saving = false;
@@ -215,7 +215,7 @@ angular.module('psmsApp')
         console.log(response.data);
         hideLoadMore(response.data.next_page_url);
         ac.toPage = response.data.next_page_url;
-        ac.scholars = [...ac.scholars, ...response.data.data];
+        ac.scholars = url? [...ac.scholars, ...response.data.data] : response.data.data;
         ac.scholars_loaded = true;
         ac.load_busy = false;
       }, err => {

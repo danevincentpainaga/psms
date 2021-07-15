@@ -12,55 +12,56 @@
   </md-toolbar>
   <div layout="column">
     <div layout="row">
-      <div flex="0" flex-gt-sm="20"></div>
+      <div flex="0" flex-gt-sm="30"></div>
       <div flex class="fading-up">
-          <div style="margin-top: 1em;">
-            <md-progress-linear md-mode="indeterminate" ng-if="!s.disable_linear_loader"></md-progress-linear>
+        <br />
+        <md-content flex style="height: 100%;background-color: #fff; padding: 8px;" class="container" ng-if="!s.editing_state">
+        <div>
+          <md-input-container style="width: 50%;margin: 25px 0px 0px 0px;height: 40px;">
+              <label>Search</label>
+              <input type="text" ng-model="s.searched_school" autocomplete="off">
+              <md-progress-circular class="md-hue-2" md-diameter="15px" style="position: absolute;right: 0px;top: 10px;" ng-if="!s.school_list_loaded"></md-progress-circular>
+            </md-input-container>
           </div>
-          <md-content flex layout-padding style="height: 100%;background-color: #fff; padding: 0px;border: 1px solid #c7c7c7;" ng-if="!s.editing_state">
-              <md-list class="fixedRows">
-                <div style="padding: 0px 13px;">
-                  <md-input-container style="width: 40%;margin: 25px 0px 0px 0px;height: 40px;">
-                    <label>Search</label>
-                    <input type="text" ng-model="s.searched_school" style="text-transform: uppercase;" autocomplete="off">
-                    <md-progress-circular class="md-hue-2" md-diameter="15px" style="position: absolute;right: 0px;top: 10px;" ng-if="!s.school_list_loaded"></md-progress-circular>
-                  </md-input-container>
-                  <md-button class="md-fab md-mini md-primary" ng-click="s.showDialog($event)" ng-if="s.disable_linear_loader" style="float: right;">
-                    <md-icon class="material-icons">add</md-icon>
-                  </md-button>
-                </div>
-                <md-subheader class="md-no-sticky">List of School</md-subheader>
-                  <div layout="row" style="flex-wrap: wrap;">
-                    <md-list-item class="md-2-line" flex="100" flex-gt-sm="33" ng-repeat="school in s.list_of_schools">
-                      <img src="/images/school.png" class="md-avatar" alt="" />
-                      <div class="md-list-item-text">
-                        <h5 style="margin: 0px;">{{school.school_name}}</h5>
-                        <p style="font-size: 12px;">{{ school.province.province_name }}</p>
+            <div style="max-height: 475px;overflow: auto;border: 1px solid rgb(176, 177, 179);" class="container" fixed-column-table>
+              <div>
+                <md-progress-linear md-mode="indeterminate" ng-if="!s.disable_linear_loader"></md-progress-linear>
+              </div>
+              <table>
+                <thead>
+                  <tr>
+                    <th style="background-color: #dddddd; width: 20px;"><span>No.</span></th>
+                    <th style="background-color: #dddddd;"><span>School</span></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="school in s.list_of_schools track by $index">
+                    <td style="background: linear-gradient(to bottom, #F8F8F8 0, #eeeeee 100%) !important;">{{ $index+1 }}.</td>
+                    <td>
+                      <div style="display: flex; align-items: center;justify-content: space-between;">
+                        <div>
+                          <span>{{ school.school_name }}</span>
+                        </div>
+                        <div>
+                          <md-icon class="material-icons" style="font-size: 17px; box-sizing: border-box;padding: 3px;cursor: pointer;outline-style: none;" ng-click="s.edit(school)">
+                            <md-tooltip>Edit</md-tooltip>
+                            edit
+                          </md-icon>
+                          <md-icon class="material-icons" style="font-size: 17px; box-sizing: border-box;padding: 3px;cursor: pointer;outline-style: none;">
+                            <md-tooltip>Delete</md-tooltip>
+                            close
+                          </md-icon>
+                        </div>
                       </div>
-                      <md-menu style="margin: auto;">
-                        <md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdMenu.open($event)" style="padding: 0px;margin: 0;">
-                          <md-icon class="material-icons" >more_horiz</md-icon>
-                        </md-button>
-                        <md-menu-content width="2">
-                          <md-menu-item>
-                            <md-button ng-click="s.edit(school)">
-                              Edit
-                            </md-button>
-                          </md-menu-item>
-                          <md-menu-item>
-                            <md-button ng-click="ctrl.redial($event)">
-                              Delete
-                            </md-button>
-                          </md-menu-item>
-                        </md-menu-content>
-                      </md-menu>
-                    </md-list-item>
-                  </div>
-              </md-list>
-          </md-content>
-          <add-school-directive schooldetails="s.school_to_update" ng-if="s.editing_state" editing="s.editing_state"></add-school-directive>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+          </div>
+        </md-content>
+        <add-school-directive schooldetails="s.school_to_update" ng-if="s.editing_state" editing="s.editing_state"></add-school-directive>
       </div>
-      <div flex="0" flex-gt-sm="20"></div>
+      <div flex="0" flex-gt-sm="30"></div>
     </div>
   </div>
 </div>

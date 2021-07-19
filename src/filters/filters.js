@@ -1,5 +1,6 @@
 var moment = require('moment');
 var app = angular.module('psmsApp');
+import { baseUrl } from '../apiServices/baseUrl';
 
 app.filter('formatDate', function(){
 
@@ -24,7 +25,7 @@ app.filter('checkScholarPhoto', function(){
 
   return function(photo){
     if (photo) {
-    	return 'http://localhost:8000/storage/'+photo;
+    	return baseUrl+'storage/'+photo;
     } 
     return '/images/user.png';
   }

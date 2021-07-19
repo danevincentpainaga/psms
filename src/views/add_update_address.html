@@ -10,14 +10,18 @@
           <form>
             <div layout="column" >
               <md-input-container flex="">
-                <label>Address</label>
-                <input type="text" ng-model="ad.address">
+                <label>Brgy.</label>
+                <input type="text" ng-model="ad.address" >
               </md-input-container>
               <md-input-container flex="">
                 <label>Municipality</label>
                 <md-select ng-model="ad.municipality">
                   <md-option ng-value="mun.municipality" ng-repeat="mun in ad.municipalities"><em>{{ mun.municipality }}</em></md-option>
                 </md-select>
+              </md-input-container>
+              <md-input-container>
+                <label>Province</label>
+                <input type="text" placeholder="ANTIQUE" disabled>
               </md-input-container>
             </div>
             <div style="margin-bottom: 2em; margin-top: 3em;">

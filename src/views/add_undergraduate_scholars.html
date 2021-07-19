@@ -1,5 +1,5 @@
 <ng-include src="'/header.html'"></ng-include> 
-<div class="undergraduate fading">
+<div class="undergraduate fading" show-change-view mobile="ac.isMobile">
   <md-toolbar class="md-menu-toolbar">
     <div layout="row">
       <md-toolbar-filler>
@@ -33,17 +33,15 @@
             </button>
             <md-menu-content>
               <md-menu-item class="md-indent">
-                <md-icon class="material-icons">save</md-icon>
-                <md-button ng-click="ctrl.sampleAction('redo', $event)">
-                  Maximize
-                  <span class="md-alt-text">F11</span>
+                <md-icon class="material-icons">fullscreen</md-icon>
+                <md-button ng-click="ac.changeView()">
+                  Full screen
                 </md-button>
               </md-menu-item>
-              <md-menu-item class="md-indent">
-                <md-icon class="material-icons">clear_all</md-icon>
-                <md-button ng-click="ctrl.sampleAction('redo', $event)">
-                  Minimize
-                  <span class="md-alt-text">Ctrl-N</span>
+              <md-menu-item class="md-indent" ng-if="ac.isMobile">
+                <md-icon class="material-icons">{{ac.displayview == true? 'view_list' : 'add_to_drive'}}</md-icon>
+                <md-button ng-click="ac.changeView()">
+                  {{ac.displayview == true? 'List view' : 'Add view'}}
                 </md-button>
               </md-menu-item>
             </md-menu-content>
@@ -54,7 +52,7 @@
   </md-toolbar>
   <div layout="column">
     <section layout="row" layout-xs="column" layout-gt-xs="column" layout-gt-sm="row">
-      <div layout="row" layout-xs="column" class="scholar-md-list">
+      <div layout="row" layout-xs="column" class="scholar-md-list" ng-hide="ac.displayview && ac.isMobile">
         <md-content flex layout-padding>
           <md-list flex>
             <md-input-container class="md-container">
@@ -98,7 +96,7 @@
           </md-list>
         </md-content>
       </div>
-      <div flex style="background: #efefef;overflow-y: auto;border-top: 1px solid #c7c7c7;padding: 10px;" ng-style="resizeDiv()" resize-div height="145">
+      <div flex style="background: #efefef;overflow-y: auto;border-top: 1px solid #c7c7c7;padding: 10px;" ng-style="resizeDiv()" resize-div height="145" ng-hide="!ac.displayview && ac.isMobile">
         <form name="ac.scholar_details" class="uppercase">
         <div class="fading-up">
           <md-card style="margin: 0px;">
@@ -146,6 +144,7 @@
                       md-escape-options="clear"
                       md-require-match=""
                       md-floating-label="Address"
+                      ng-trim="true"
                       required>
                       <md-item-template>
                         <span md-highlight-text="ac.search_address" md-highlight-flags="^i">{{address.address}}</span>
@@ -175,7 +174,7 @@
                   <md-autocomplete flex
                     md-input-name="autocompleteField"
                     md-input-minlength="1"
-                    md-no-cache="ac.noCache"
+                    md-no-cache="false"
                     md-selected-item="ac.school"
                     md-search-text="ac.search_school"
                     md-delay="500"
@@ -186,6 +185,7 @@
                     md-escape-options="clear"
                     md-require-match=""
                     md-floating-label="School"
+                    ng-trim="true"
                     required>
                     <md-item-template>
                       <span md-highlight-text="ac.search_school" md-highlight-flags="^i">{{school.school_name}}</span>
@@ -197,7 +197,7 @@
                   <md-autocomplete flex
                     md-input-name="autocompleteField"
                     md-input-minlength="1"
-                    md-no-cache="ac.noCache"
+                    md-no-cache="false"
                     md-selected-item="ac.course"
                     md-search-text="ac.search_course"
                     md-delay="500"
@@ -208,6 +208,7 @@
                     md-escape-options="clear"
                     md-require-match=""
                     md-floating-label="Course"
+                    ng-trim="true"
                     required>
                     <md-item-template>
                       <span md-highlight-text="ac.search_course" md-highlight-flags="^i">{{course.course}}</span>
@@ -245,7 +246,6 @@
                     </md-select>
                   </md-input-container>
                 </div>
-              <!-- </form> -->
             </md-card-content>
           </md-card>
           <md-card style="margin: 5px 0px;">
@@ -255,7 +255,7 @@
                 <md-autocomplete flex
                   md-input-name="autocompleteField"
                   md-input-minlength="2"
-                  md-no-cache="ac.noCache"
+                  md-no-cache="false"
                   md-selected-item="ac.father"
                   md-search-text="ac.search_flastname"
                   md-delay="500"
@@ -265,6 +265,7 @@
                   md-autoselect="true"
                   md-escape-options="clear"
                   md-floating-label="Lastname"
+                  ng-trim="true"
                   accept-only-letters>
                   <md-item-template>
                     <span md-highlight-text="ac.search_flastname">{{fdetails.lastname}}, {{fdetails.firstname}} {{fdetails.middlename}}</span>
@@ -287,7 +288,7 @@
                 <md-autocomplete flex 
                   md-input-name="autocompleteField"
                   md-input-minlength="2"
-                  md-no-cache="ac.noCache"
+                  md-no-cache="false"
                   md-selected-item="ac.mother"
                   md-search-text="ac.search_maidenname"
                   md-delay="500"
@@ -297,6 +298,7 @@
                   md-autoselect="true"
                   md-escape-options="clear"
                   md-floating-label="Maiden name"
+                  ng-trim="true"
                   accept-only-letters
                   required>
                   <md-item-template>

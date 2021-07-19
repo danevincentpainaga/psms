@@ -26,6 +26,10 @@ angular.module('psmsApp')
       getNewUndergraduateScholars({ searched: ac.scholar_lastname }, ac.toPage = null);
     }, 500), true);
 
+    ac.changeView = function(){
+      ac.displayview = ac.displayview ? false : true;
+    }
+
     ac.loadmore = function(){
       ac.hide_load_more = true;
       if (ac.load_busy || ac.toPage === null) {
@@ -42,12 +46,6 @@ angular.module('psmsApp')
     }  
 
     ac.saveNewUndergraduateDetails = function(){
-
-      // if (!ac.f_firstname && !ac.search_flastname || !ac.m_firstname && !ac.search_maidenname)
-      // {
-      //   swalert.toastInfo('please complete the form', 'error', 'top-right', 4000);
-      //   return;
-      // }
 
       if (!ac.firstname || !ac.lastname || !ac.addressId || !ac.age || !ac.gender || !ac.schoolId || !ac.courseId || !ac.section || !ac.year_level || !ac.student_id_number || !ac.IP || !academicContractDetails.ascId)
       {
@@ -237,7 +235,13 @@ angular.module('psmsApp')
         };
 
       let pdfDocGenerator = pdfMake.createPdf(docDefinition);
-      pdfDocGenerator.print({}, window.frames['printPdf']);
+      if (isMobile()) {
+        // This print is for mobile browsers
+        pdfDocGenerator.print({}, window);
+      }else{
+        // This print is for desktop browsers
+        pdfDocGenerator.print({}, window.frames['printPdf']);
+      }
       
       pdfDocGenerator.getDataUrl((dataUrl) => {
         $timeout(()=>{ ac.selectedIndex = undefined }, 1000);
@@ -251,6 +255,10 @@ angular.module('psmsApp')
       else{
         ac.hide_load_more = false;
       }
+    }
+
+    function isMobile() {
+      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     }
 
     function hasSemester(){

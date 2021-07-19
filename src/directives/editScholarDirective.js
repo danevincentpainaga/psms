@@ -1,7 +1,7 @@
 const edit_scholar_template = require('../views/edit_scholar.html');
 
 angular
-  .module('psmsApp').directive('editScholar', [ function($mdSidenav){
+  .module('psmsApp').directive('editScholar', ['$mdSidenav', function($mdSidenav){
   
   return{
     restrict:'E',

@@ -68,13 +68,13 @@ angular
         scope.getWindowDimensions = function () {
             return {
                 'h': $window.innerHeight,
-                'w': $window.innerwidth,
+                'w': $window.innerWidth,
             };
         };
         scope.$watch(scope.getWindowDimensions, function (newValue, oldValue) {
             scope.windowHeight = newValue.h;
             scope.windowWidth = newValue.w;
-            
+              
             scope.resizeDiv = function () {
                 return {
                   'min-height': (newValue.h - parseInt(attrs.height)) + 'px',
@@ -133,8 +133,8 @@ angular
             
             scope.resizeList = function () {
                 return {
-                  'min-height': (newValue.h - 297) + 'px',
-                  'max-height': (newValue.h - 297) + 'px'
+                  'min-height': (newValue.h - 280) + 'px',
+                  'max-height': (newValue.h - 280) + 'px'
                 };
             };
         }, true);
@@ -304,6 +304,20 @@ angular.module('psmsApp').directive('disableInput', function() {
     };
 });
 
+angular.module('psmsApp').directive('showChangeView',['$window', function($window) {
+    return {
+        restrict : 'A',
+        scope:{
+          mobile:'='
+        },
+        link : function(scope, elem, attrs, ctrl) {
+          scope.getWidth = function () { return $window.innerWidth; };
+          scope.$watch(scope.getWidth, function (newValue, oldValue) {
+            scope.mobile = newValue > 959? false : true;
+          }, true);
+        }
+    };
+}]);
 // angular.module('psmsApp').directive('uppercase', function() {
 //     return {
 //         require: 'ngModel',

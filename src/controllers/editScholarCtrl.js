@@ -19,35 +19,14 @@ angular.module('psmsApp')
     ec.enablePrimaryButtonText = 'Enable';
     ec.enableParentsButtonText = 'Enable';
 
-    $scope.$watch('ec.schoolname', function(n, o){
-      addScholarsService.getListOfSchool({searched_school: n}).then(response=>{
-        ec.schools = response;
-      }, err=>{
-        console.log(err);
-      });
-    });
 
-    $scope.$watch('ec.addressname', function(n, o){
-      addScholarsService.getAddresses(n).then(response=>{
-        ec.addresses = response;
-      }, err=>{
-        console.log(err);
-      });
-    });
-
-    $scope.$watch('ec.coursename', function(n, o){
-      addScholarsService.getCourses({ searched: n, degree: JSON.stringify([ec.degree]) }).then(response=>{
-        ec.courses = response;
-      }, err=>{
-        console.log(err);
-      });
-    });
 
     $scope.$watch('scholar', function(n, o){
       if (o === undefined) {
         ec.copy = angular.copy(n);
       }
       if (n) {
+        runIfHasScholar();
         fillEditedScholar(n);
       }
     }, true);
@@ -226,7 +205,7 @@ angular.module('psmsApp')
     }
 
     ec.motherSearchQuery = function(searched){
-      if (searched != ec.copy.mother_details.lastname) {
+      if (searched != ec.copy.mother_details.maiden_name) {
         return addScholarsService.getMotherList(searched);
       }
       return [ec.copy.mother_details];
@@ -314,6 +293,38 @@ angular.module('psmsApp')
         ec.degree = scholar.degree;
         ec.f_occupation = father.occupation;
         ec.m_occupation = mother.occupation;
+    }
+
+    function runIfHasScholar(){
+      $scope.$watch('ec.schoolname', function(n, o){
+        if (n) {
+          addScholarsService.getListOfSchool({searched_school: n}).then(response=>{
+            ec.schools = response;
+          }, err=>{
+            console.log(err);
+          });
+        }
+      });
+
+      $scope.$watch('ec.addressname', function(n, o){
+        if (n) {
+          addScholarsService.getAddresses(n).then(response=>{
+            ec.addresses = response;
+          }, err=>{
+            console.log(err);
+          });
+        }
+      });
+
+      $scope.$watch('ec.coursename', function(n, o){
+        if (n) {
+          addScholarsService.getCourses({ searched: n, degree: JSON.stringify([ec.degree]) }).then(response=>{
+            ec.courses = response;
+          }, err=>{
+            console.log(err);
+          });
+        }
+      });
     }
 
 }]);

@@ -17,7 +17,7 @@ angular.module('psmsApp')
 
 	$scope.$watch('ad.searched_address', debounce(function(){
 		ad.searching = true;
-		getAdresses(ad.searched_address);
+		getAddresses(ad.searched_address);
 	}, 500), true);
 
 	ad.add = function(){
@@ -51,7 +51,7 @@ angular.module('psmsApp')
 
 			let address_details = {
 				address: ad.address.toUpperCase(),
-				municipality: ad.municipality
+				municipality: ad.municipality.toUpperCase(),
 			};
 
 			if (!ad.isUpdating) {
@@ -100,7 +100,7 @@ angular.module('psmsApp')
 		  });
 	}
 
-	function getAdresses(searched){
+	function getAddresses(searched){
 		addressApiService.getAddresses({searched: searched}).then(response=>{
 		  ad.addresses = response.data;
 		  ad.searching = false;

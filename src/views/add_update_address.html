@@ -9,11 +9,11 @@
           <span class="md-title">{{ ad.labelText }}</span>
           <form>
             <div layout="column" >
-              <md-input-container flex="">
+              <md-input-container style="margin: 17px 0px 0px 0px;">
                 <label>Brgy.</label>
-                <input type="text" ng-model="ad.address" >
+                <input type="text" ng-model="ad.address" autocomplete="off">
               </md-input-container>
-              <md-input-container flex="">
+              <md-input-container style="margin: 10px 0px 20px 0px;">
                 <label>Municipality</label>
                 <md-select ng-model="ad.municipality">
                   <md-option ng-value="mun.municipality" ng-repeat="mun in ad.municipalities"><em>{{ mun.municipality }}</em></md-option>

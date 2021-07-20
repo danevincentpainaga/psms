@@ -44,7 +44,7 @@
                   <tr ng-repeat="address in ad.addresses track by $index">
                     <td style="background: linear-gradient(to bottom, #F8F8F8 0, #eeeeee 100%) !important;">{{ $index+1 }}.</td>
                     <td>
-                      <span>{{ address.address }}</span>
+                      <span>{{ address | formatAddress }}</span>
                     </td>
                     <td>
                       <div style="display: flex; align-items: center;justify-content: space-between;">

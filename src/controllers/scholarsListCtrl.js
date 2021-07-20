@@ -9,8 +9,28 @@
  */ 
 
 angular.module('psmsApp')
-  .controller('scholarsListCtrl',['$scope', '$window', '$timeout', '$mdSidenav', 'schoolApiService', 'addressApiService', 'scholarApiService', 'municipalitiesApiService', 'debounce',
-    function ($scope, $window, $timeout, $mdSidenav, schoolApiService, addressApiService, scholarApiService, municipalitiesApiService, debounce) {
+  .controller('scholarsListCtrl', [
+    '$scope',
+    '$window',
+    '$timeout',
+    '$mdSidenav',
+    'schoolApiService',
+    'addressApiService',
+    'scholarApiService',
+    'municipalitiesApiService',
+    'printContract',
+    'debounce',
+    function (
+      $scope,
+      $window,
+      $timeout,
+      $mdSidenav,
+      schoolApiService,
+      addressApiService,
+      scholarApiService,
+      municipalitiesApiService,
+      printContract,
+      debounce) {
 
     var sc = this;
 
@@ -29,7 +49,7 @@ angular.module('psmsApp')
 
     sc.print = function(scholarDetails, idx){
       sc.selectedIndex = idx;
-      print(scholarDetails);
+      printContract.print(scholarDetails, sc);
     }
 
     sc.edit = function(scholarDetails){
@@ -93,25 +113,25 @@ angular.module('psmsApp')
         });
     }
 
-    function print(scholarDetails){
+    // function print(scholarDetails){
 
-      const pdfMake = require("pdfmake/build/pdfmake");
-      const pdfFonts = require("pdfmake/build/vfs_fonts");
-      pdfMake.vfs = pdfFonts.pdfMake.vfs;
+    //   const pdfMake = require("pdfmake/build/pdfmake");
+    //   const pdfFonts = require("pdfmake/build/vfs_fonts");
+    //   pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
-      let docDefinition = {
-          content: [
-            {text: 'NAME: '+scholarDetails.firstname.toUpperCase()+" "+scholarDetails.lastname.toUpperCase()+", "+scholarDetails.middlename.toUpperCase()},
-          ]
-        };
+    //   let docDefinition = {
+    //       content: [
+    //         {text: 'NAME: '+scholarDetails.firstname.toUpperCase()+" "+scholarDetails.lastname.toUpperCase()+", "+scholarDetails.middlename.toUpperCase()},
+    //       ]
+    //     };
 
-      let pdfDocGenerator = pdfMake.createPdf(docDefinition);
-      pdfDocGenerator.print({}, window.frames['printPdf']);
+    //   let pdfDocGenerator = pdfMake.createPdf(docDefinition);
+    //   pdfDocGenerator.print({}, window.frames['printPdf']);
       
-      pdfDocGenerator.getDataUrl((dataUrl) => {
-        $timeout(()=>{ sc.selectedIndex = undefined }, 1000);
-      });
-    }
+    //   pdfDocGenerator.getDataUrl((dataUrl) => {
+    //     $timeout(()=>{ sc.selectedIndex = undefined }, 1000);
+    //   });
+    // }
 
     getMunicipalities();
 

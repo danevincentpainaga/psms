@@ -223,7 +223,14 @@ app.controller('exportScholarsCtrl',['$scope', '$filter', '$timeout', 'schoolApi
       includeMunicipalityForFilter(chunk[i].municipality);
       includeSchoolForFilter(chunk[i].school_name);
 
-      Object.assign(chunk[i], { row_no: ex.number++, amount: $filter('currency')($filter('amount')(chunk[i]), '', 0), father: $filter('fatherDetails')(chunk[i].father_details), mother: $filter('motherDetails')(chunk[i].mother_details) });
+      Object.assign(chunk[i], { 
+        row_no: ex.number++,
+        amount: $filter('currency')($filter('amount')(chunk[i]), '', 0),
+        father: $filter('fatherDetails')(chunk[i].father_details),
+        mother: $filter('motherDetails')(chunk[i].mother_details),
+        address: chunk[i].address+' '+chunk[i].municipality+', ANTIQUE',
+      });
+
       ex.mergedChunks.push(chunk[i]);
    
     }

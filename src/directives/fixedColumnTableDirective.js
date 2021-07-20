@@ -47,14 +47,9 @@ angular
 
         scope.$watch(scope.getWidth, function (newValue, oldValue) {
             scope.mobile = newValue > 695 ? false : true;
-            // if (newValue > 695) {
-                $timeout(function () {
-                    activate();
-                });
-            // }
-            // else{
-            //     angular.element(container).unbind('scroll');
-            // }
+            $timeout(function () {
+                activate();
+            });
         }, true);
 
     }

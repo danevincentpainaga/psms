@@ -10,8 +10,41 @@
 
 
 angular.module('psmsApp')
-  .controller('addUndergraduateCtrl',['$scope', '$rootScope', '$cookies', '$window', '$location', '$timeout', 'schoolApiService', 'addressApiService', 'scholarApiService', 'academicContractDetails', 'debounce', 'moment', 'swalert', 'addScholarsService', '$mdSidenav',
-    function ($scope, $rootScope, $cookies, $window, $location, $timeout, schoolApiService, addressApiService, scholarApiService, academicContractDetails, debounce, moment, swalert, addScholarsService, $mdSidenav) {
+  .controller('addUndergraduateCtrl',
+    [
+      '$scope',
+      '$rootScope',
+      '$cookies',
+      '$window',
+      '$location',
+      '$timeout',
+      'schoolApiService',
+      'addressApiService',
+      'scholarApiService',
+      'academicContractDetails',
+      'debounce',
+      'moment',
+      'swalert',
+      'addScholarsService',
+      'printContract',
+      '$mdSidenav',
+    function (
+      $scope,
+      $rootScope,
+      $cookies,
+      $window,
+      $location,
+      $timeout,
+      schoolApiService,
+      addressApiService,
+      scholarApiService,
+      academicContractDetails,
+      debounce,
+      moment,
+      swalert,
+      addScholarsService,
+      printContract,
+      $mdSidenav) {
 
     var ac = this;
     ac.list_of_schools = [];
@@ -113,7 +146,7 @@ angular.module('psmsApp')
 
     ac.print = function(scholarDetails, idx){
       ac.selectedIndex = idx;
-      print(scholarDetails);
+      printContract.print(scholarDetails, ac);
     }
 
     ac.selectedFatherDetailsChange = function(fdetails){
@@ -168,7 +201,12 @@ angular.module('psmsApp')
     }
 
     ac.addressSearchQuery = function(searched){
-      return addScholarsService.getAddresses(searched);
+      return addScholarsService.getAddresses(searched).then(response => {
+        for (var i = 0; i < response.length; i++) {
+          Object.assign(response[i], { address: response[i].address+' '+response[i].municipality+', ANTIQUE' });
+        }
+        return response;
+      });
     }
 
     ac.motherSearchQuery = function(searched){
@@ -196,7 +234,7 @@ angular.module('psmsApp')
         ac.buttonText = 'Save';
         ac.saving = false;
         swalert.toastInfo('Scholar saved!', 'success', 'top-right');
-        print(scholarDetails);
+        printContract.print(scholarDetails, ac);
         ac.scholar_details.$setUntouched();
         getNewUndergraduateScholars({ searched: undefined }, null );
       }, err => {
@@ -221,33 +259,6 @@ angular.module('psmsApp')
       });    
     }
 
-    function print(scholarDetails){
-
-      const pdfMake = require("pdfmake/build/pdfmake");
-      const pdfFonts = require("pdfmake/build/vfs_fonts");
-      pdfMake.vfs = pdfFonts.pdfMake.vfs;
-
-
-      let docDefinition = {
-          content: [
-            {text: 'NAME: '+scholarDetails.firstname.toUpperCase()+" "+scholarDetails.lastname.toUpperCase()+", "+scholarDetails.middlename.toUpperCase()},
-          ]
-        };
-
-      let pdfDocGenerator = pdfMake.createPdf(docDefinition);
-      if (isMobile()) {
-        // This print is for mobile browsers
-        pdfDocGenerator.print({}, window);
-      }else{
-        // This print is for desktop browsers
-        pdfDocGenerator.print({}, window.frames['printPdf']);
-      }
-      
-      pdfDocGenerator.getDataUrl((dataUrl) => {
-        $timeout(()=>{ ac.selectedIndex = undefined }, 1000);
-      });
-    }
-
     function hideLoadMore(next_page_url){
       if (next_page_url === null) {
         ac.hide_load_more = true;
@@ -255,10 +266,6 @@ angular.module('psmsApp')
       else{
         ac.hide_load_more = false;
       }
-    }
-
-    function isMobile() {
-      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     }
 
     function hasSemester(){

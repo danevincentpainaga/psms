@@ -106,6 +106,12 @@ app.filter('formatYear', function(){
 
 });
 
+app.filter('formatAddress', function(){
+  return function(addressObj){
+    return addressObj.address+' '+addressObj.municipality+', ANTIQUE';
+  }
+});
+
 app.filter('trim', function(){
   return function(value){
     let scholar = value.lastname+value.firstname+value.middlename;

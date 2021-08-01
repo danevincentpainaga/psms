@@ -13,7 +13,6 @@ import 'angular-cookies/angular-cookies.min';
 import 'angular-sanitize/angular-sanitize.min';
 import 'angular-touch/angular-touch.min';
 import 'angular-resource/angular-resource.min';
-// import 'angular-resource/angular-resource.min';
 // import 'angular-ui-grid/ui-grid.min';
 import 'angular-ui-grid/ui-grid.core.min';
 import 'angular-ui-grid/ui-grid.exporter.min';

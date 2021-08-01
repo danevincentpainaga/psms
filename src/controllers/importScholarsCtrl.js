@@ -9,8 +9,38 @@
  */ 
 
 var app = angular.module('psmsApp');
-app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importScholarApiService', 'municipalitiesApiService', 'schoolApiService', 'scholarApiService', 'courseApiService', 'academicContractService', 'addScholarsService', 'moment', '$timeout', 'swalert', 'uiGridConstants',
-  function ($scope, $q, $mdSidenav, importScholarApiService, municipalitiesApiService, schoolApiService, scholarApiService, courseApiService, academicContractService, addScholarsService, moment, $timeout, swalert, uiGridConstants) {
+  app.controller('importScholarsCtrl',
+    [
+      '$scope',
+      '$q',
+      '$mdSidenav',
+      'importScholarApiService',
+      'municipalitiesApiService',
+      'schoolApiService',
+      'scholarApiService',
+      'courseApiService',
+      'academicContractService',
+      'addScholarsService',
+      'moment',
+      '$timeout',
+      'swalert',
+      'uiGridConstants',
+    function (
+      $scope,
+      $q,
+      $mdSidenav,
+      importScholarApiService,
+      municipalitiesApiService,
+      schoolApiService,
+      scholarApiService,
+      courseApiService,
+      academicContractService,
+      addScholarsService,
+      moment,
+      $timeout,
+      swalert,
+      uiGridConstants
+    ) {
 
   var ic = this;
   var year_level = ['I', 'II', 'III', 'IV', 'V', 'VI'];
@@ -125,7 +155,7 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
 
   ic.cancel = function(){
     ic.scholars_to_upload = [];
-    ic.check_fininshed = false;
+    ic.check_finished = false;
     ic.gridOptions.data = [];
     ic.progress_value = 0;
     ic.total_errors = 0;
@@ -168,8 +198,7 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
           ic.gridOptions.data[idx].error = [];
 
           if (!value.Firstname && !value.Lastname && !value.Middlename) {
-            ic.gridOptions.data[idx].error.push("Error: Empty scholar name");
-            ic.total_errors += 1;
+            addError("Error: Empty scholar name", idx);
             return;
           }
 
@@ -263,7 +292,7 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
             if (i === ic.imported_scholars.length -1) {
               ic.progress_value = 100;
               ic.checking_in = 'Finished';
-              ic.check_fininshed = true;
+              ic.check_finished = true;
               ic.gridApi.core.notifyDataChange( uiGridConstants.dataChange.COLUMN );
               swalert.toastInfo('Check Finished', 'success', 'top-right');
             }
@@ -297,8 +326,7 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
       const result = response[0].data.find(item => {
 
         if (trimAndLower(item.lastname) === trimAndLower(scholarsObj.Lastname) && trimAndLower(item.firstname) === trimAndLower(scholarsObj.Firstname) && trimAndLower(item.middlename) === trimAndLower(scholarsObj.Middlename)) {
-            ic.gridOptions.data[idx].error.push("Error: Scholar already exist");
-            ic.total_errors += 1;
+            addError("Error: Scholar already exist", idx);
             return true;
         }
 
@@ -322,37 +350,42 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
       validateCourse(response[3].data, scholarsObj, idx);
       validateContractDetails(response[4].data, scholarsObj, idx);
 
-      if (!scholarsObj.Degree || upperCase(scholarsObj.Degree) !== upperCase(ic.degree)) {
-          ic.gridOptions.data[idx].error.push("Error: Degree is Invalid");
-          ic.total_errors += 1;
+      if (!scholarsObj.Degree) {
+        addError("Error: Degree is empty", idx);
+      }
+
+      if (scholarsObj.Degree && upperCase(scholarsObj.Degree) !== upperCase(ic.degree)) {
+        addError("Error: Degree is Invalid", idx);
       }
 
       if (!scholarsObj.Section) {
-          ic.gridOptions.data[idx].error.push("Error: Section is required");
-          ic.total_errors += 1;
+        addError("Error: Section is empty", idx);
       }
 
-      if (!moment.validateDate(scholarsObj['Date of Birth'])) {
-          ic.gridOptions.data[idx].error.push("Error: Invalid Date of Birth");
-          ic.total_errors += 1;
+      if (!scholarsObj['Date of Birth']) {
+        addError("Error: Date of Birth is empty", idx);
+      }
+
+      if (scholarsObj['Date of Birth'] && !moment.validateDate(scholarsObj['Date of Birth'])) {
+        addError("Error: Invalid Date of Birth", idx);
       }
 
       let fdetails = {
           firstname: upperCase((scholarsObj.Father_firstname || "")),
           lastname: upperCase((scholarsObj.Father_lastname || "")),
-          middlename: upperCase((scholarsObj.Father_middlename || "")),
+          middlename: upperCase((scholarsObj.Father_middlename || null)),
       };
       let mdetails = { 
           firstname: upperCase((scholarsObj.Mother_firstname)), 
           maiden_name: upperCase((scholarsObj.Mother_maiden_name)), 
-          middlename: upperCase((scholarsObj.Mother_middlename)), 
+          middlename: upperCase((scholarsObj.Mother_middlename || null)), 
       };
 
       let scholar = {
           student_id_number: upperCase(scholarsObj['Student ID NO']),
           lastname: upperCase(scholarsObj.Lastname),
           firstname: upperCase(scholarsObj.Firstname),
-          middlename: upperCase(scholarsObj.Middlename),
+          middlename: upperCase(scholarsObj.Middlename || null),
           addressId: scholarsObj.Address,
           date_of_birth: scholarsObj['Date of Birth'],
           age: addScholarsService.calcAge(scholarsObj['Date of Birth']),
@@ -376,59 +409,85 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
   }
 
   function validateAddress(addressesArray, scholarsObj, idx){
-      const address = addressesArray.find(item => {
-        if (item.address.replace(/ |,/g,'').toLowerCase() === scholarsObj.Address.replace(/ |,/g,'').toLowerCase()) {
-            scholarsObj.Address = item.address_id;
-            return true;
-        }
-      });
+    if (!scholarsObj.Address) {
+      addError("Error: Address is empty", idx);
+      return;
+    }
 
-      if (!address) {
-        ic.gridOptions.data[idx].error.push("Error: Address "+scholarsObj.Address+" does not exist in database ");
-        ic.total_errors += 1;
+    const address = addressesArray.find(item => {
+      if ((item.address+item.municipality+'antique').replace(/ |,/g,'').toLowerCase() === scholarsObj.Address.replace(/ |,/g,'').toLowerCase()) {
+          scholarsObj.Address = item.address_id;
+          return true;
       }
+    });
+
+    if (!address) {
+      addError("Error: Address "+scholarsObj.Address+" not found", idx);
+    }
   }
 
   function validateSchool(schoolsArray, scholarsObj, idx){
-      const school = schoolsArray.find(item => {
-        if (item.school_name.replace(/ |,/g,'').toLowerCase() === scholarsObj.School.replace(/ |,/g,'').toLowerCase()) {
-            scholarsObj.School = item.school_id;
-            return true;
-        }
-      });
+    if (!scholarsObj.Address) {
+      addError("Error: School is empty", idx);
+      return;
+    }
 
-      if (!school) {
-          ic.gridOptions.data[idx].error.push("Error: School "+scholarsObj.School+" does not exist in database ");
-          ic.total_errors += 1;
+    const school = schoolsArray.find(item => {
+      if (item.school_name.replace(/ |,/g,'').toLowerCase() === scholarsObj.School.replace(/ |,/g,'').toLowerCase()) {
+          scholarsObj.School = item.school_id;
+          return true;
       }
+    });
+
+    if (!school) {
+      addError("Error: School "+scholarsObj.School+" not found", idx);
+    }
   }
 
   function validateCourse(coursesArray, scholarsObj, idx){
-      const course = coursesArray.find(item => {
-        if (item.course.replace(/ |,/g,'').toLowerCase() === scholarsObj.Course.replace(/ |,/g,'').toLowerCase()) {
-            scholarsObj.Course = item.course_id;
-            return true;
-        }
-      });
+    if (!scholarsObj.Course) {
+      addError("Error: Course is empty", idx);
+      return;
+    }
 
-      if (!course) {
-        ic.gridOptions.data[idx].error.push("Error: Course "+scholarsObj.Course+" does not exist in database ");
-        ic.total_errors += 1;
+    const course = coursesArray.find(item => {
+      if (item.course.replace(/ |,/g,'').toLowerCase() === scholarsObj.Course.replace(/ |,/g,'').toLowerCase()) {
+          scholarsObj.Course = item.course_id;
+          return true;
       }
+    });
+
+    if (!course) {
+      addError("Error: Course "+scholarsObj.Course+" not found", idx);
+    }
   }
 
   function validateContractDetails(contractDetailsArray, scholarsObj, idx){
-      const contract = contractDetailsArray.find(item => {
-        if (item.academic_year_semester.semester.trim() === scholarsObj.Semester.trim() && item.academic_year_semester.academic_year.trim() === scholarsObj['Academic year'].trim()) {
-            scholarsObj.contract_id = item.ascId;
-            return true;
-        }
-      });
 
-      if (!contract) {
-        ic.gridOptions.data[idx].error.push("Error: Academic year semester Invalid");
-        ic.total_errors += 1;
+    let hasError;
+
+    if (!scholarsObj.Semester) {
+      addError("Error: Semester is empty", idx);
+      hasError = true;
+    }
+
+    if (!scholarsObj['Academic year']) {
+      addError("Error: Academic year is empty", idx);
+      hasError = true; 
+    }
+
+    if (hasError) return;
+
+    const contract = contractDetailsArray.find(item => {
+      if (item.academic_year_semester.semester.trim() === scholarsObj.Semester.trim() && item.academic_year_semester.academic_year.trim() === scholarsObj['Academic year'].trim()) {
+          scholarsObj.contract_id = item.ascId;
+          return true;
       }
+    });
+
+    if (!contract) {
+      addError("Error: Academic year semester Invalid", idx);
+    }
   }
 
   function upperCase(value){
@@ -476,16 +535,14 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
     if (!value && midname.indexOf(value_name) > -1) return;
 
     if (!value) {
-      ic.gridOptions.data[idx].error.push("Error: Empty "+value_name);
-      ic.total_errors += 1;
+      addError("Error: Empty "+value_name, idx);
       return true;     
     }
 
     let str = value.toString().trim();
 
     if (!str || !/^[a-zA-Z\s]+$/.test(str) || str.toLowerCase() === "none" || str.toLowerCase() === "none" && midname.indexOf(value_name) > -1) {
-      ic.gridOptions.data[idx].error.push("Error: Invalid "+value_name+" "+value);
-      ic.total_errors += 1;
+      addError("Error: Invalid "+value_name+" "+value, idx);
       return true;
     }
 
@@ -500,6 +557,11 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
     return;
   }
 
+  function addError(error, idx){
+    ic.gridOptions.data[idx].error.push(error);
+    ic.total_errors += 1;
+  }
+
   function concatAndLower(value){
     // if (!value.Firstname || !value.Lastname || !value.Middlename) return undefined;
     let mname = value.Middlename ? value.Middlename : "";
@@ -512,10 +574,12 @@ app.controller('importScholarsCtrl',['$scope', '$q', '$mdSidenav', 'importSchola
 
   function importScholarsData(imported_data){
     importScholarApiService.importScholars(imported_data).then(response =>{
+      ic.check_finished = false;
       swalert.dialogBox('Import successful!', 'success', 'Success');
       ic.show_spinner = false;
     }, err => {
       console.log(err);
+      ic.check_finished = false;
       swalert.dialogBox(err.data.message, 'error', 'Failed');
       ic.show_spinner = false;
     });

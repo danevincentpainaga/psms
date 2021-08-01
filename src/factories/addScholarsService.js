@@ -17,6 +17,7 @@ angular.module('psmsApp')
 	    },
 	    getAddresses: function(searched){
 			return addressApiService.getAddresses({searched: searched}).then(response=>{
+				console.log(response.data);
 			  return response.data;
 			}, err => {
 			  console.log(err);

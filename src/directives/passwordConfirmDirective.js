@@ -6,8 +6,8 @@ angular
     restrict:'E',
     templateUrl: passwordConfirm, 
     scope: {
-        callFn: "&",
-        closeFn: "&"
+        callFn: '&',
+        closeFn: '&'
     },
     link: function (scope, element) {
         scope.ConfirmText = 'Confirm';
@@ -21,6 +21,7 @@ angular
                     scope.closeFn();
                     scope.ConfirmText = 'Confirm';
                     scope.disable_confirm = false;
+                    scope.password = '';
                 }, err=>{
                     swalert.toastInfo(err.data.message, 'error', 'top');
                     scope.ConfirmText = 'Confirm';

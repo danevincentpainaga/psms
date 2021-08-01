@@ -15,49 +15,49 @@
     <div layout="row">
       <div flex="20"></div>
       <div flex="">
-          <br />
-          <md-content flex layout-padding style="height: 100%;background-color: #fff; padding: 0px;border-radius: 1rem;" ng-if="!u.editing_state">
-              <md-list class="fixedRows">
-                  <div>
-                    <md-button class="md-fab md-mini md-primary" ng-click="u.add()" ng-if="!s.disable_linear_loader" style="float: right;">
-                      <md-icon class="material-icons">add</md-icon>
-                    </md-button>
-                    <md-input-container style="width: 40%;margin: 25px 0px 0px 0px;height: 40px;">
-                      <label>Search</label>
-                      <input type="text" ng-model="u.searched_user" style="text-transform: uppercase;" autocomplete="off">
-                      <md-progress-circular class="md-hue-2" md-diameter="15px" style="position: absolute;right: 0px;top: 10px;" ng-if="!u.users_list_loaded"></md-progress-circular>
-                    </md-input-container>
-                  </div>
-                  <md-subheader class="md-no-sticky">List of users</md-subheader>
-                  <div layout="row" style="flex-wrap: wrap;">
-                    <md-list-item class="md-2-line" flex="33" ng-repeat="user in u.users_list">
-                      <img src="/images/user-2.jpg" class="md-avatar" alt="" />
-                      <div class="md-list-item-text" style="max-width: 210px;">
-                        <h5 style="margin: 0px;">{{user.name}}</h5>
-                        <p style="font-size: 12px;">{{ user.email }}</p>
-                        <p style="font-size: 12px;">{{ user.status }}</p>
-                      </div>
-                      <md-menu>
-                        <md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdMenu.open($event)" style="padding: 0px;margin: 0;">
-                          <md-icon class="material-icons" >more_horiz</md-icon>
-                        </md-button>
-                        <md-menu-content>
-                          <md-menu-item>
-                            <md-button ng-click="u.edit(user)">
-                              Edit
-                            </md-button>
-                          </md-menu-item>
-                          <md-menu-item>
-                            <md-button ng-click="ctrl.redial($event)">
-                              Delete
-                            </md-button>
-                          </md-menu-item>
-                        </md-menu-content>
-                      </md-menu>
-                    </md-list-item>
-                  </div>
-              </md-list>
-          </md-content>
+        <br />
+        <md-content flex layout-padding style="height: 100%;background-color: #fff; padding: 0px;border-radius: 1rem;" ng-if="!u.editing_state">
+          <md-list class="fixedRows">
+            <div>
+              <md-button class="md-fab md-mini md-primary" ng-click="u.add()" ng-if="!s.disable_linear_loader" style="float: right;">
+                <md-icon class="material-icons">add</md-icon>
+              </md-button>
+              <md-input-container style="width: 40%;margin: 25px 0px 0px 0px;height: 40px;">
+                <label>Search</label>
+                <input type="text" ng-model="u.searched_user" style="text-transform: uppercase;" autocomplete="off">
+                <md-progress-circular class="md-hue-2" md-diameter="15px" style="position: absolute;right: 0px;top: 10px;" ng-if="!u.users_list_loaded"></md-progress-circular>
+              </md-input-container>
+            </div>
+            <md-subheader class="md-no-sticky">List of users</md-subheader>
+            <div layout="row" style="flex-wrap: wrap;">
+              <md-list-item class="md-2-line" flex="33" ng-repeat="user in u.users_list">
+                <img src="/images/user-2.jpg" class="md-avatar" alt="" />
+                <div class="md-list-item-text" style="max-width: 210px;">
+                  <h5 style="margin: 0px;">{{user.name}}</h5>
+                  <p style="font-size: 12px;">{{ user.email }}</p>
+                  <p style="font-size: 12px;">{{ user.status }}</p>
+                </div>
+                <md-menu>
+                  <md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdMenu.open($event)" style="padding: 0px;margin: 0;">
+                    <md-icon class="material-icons" >more_horiz</md-icon>
+                  </md-button>
+                  <md-menu-content>
+                    <md-menu-item>
+                      <md-button ng-click="u.edit(user)">
+                        Edit
+                      </md-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                      <md-button ng-click="ctrl.redial($event)">
+                        Delete
+                      </md-button>
+                    </md-menu-item>
+                  </md-menu-content>
+                </md-menu>
+              </md-list-item>
+            </div>
+          </md-list>
+        </md-content>
       </div>
       <div flex="20"></div>
     </div>

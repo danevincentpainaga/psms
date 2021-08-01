@@ -9,8 +9,26 @@
  */ 
 
 angular.module('psmsApp')
-  .controller('editScholarCtrl', ['$scope', '$mdDialog', '$mdSidenav', 'addScholarsService', 'scholarApiService', 'swalert', 'moment', 'fileReader',
-    function ($scope, $mdDialog, $mdSidenav, addScholarsService, scholarApiService, swalert, moment, fileReader) {
+  .controller('editScholarCtrl', [
+      '$scope',
+      '$mdDialog',
+      '$mdSidenav',
+      'addScholarsService',
+      'scholarApiService',
+      'swalert',
+      'moment',
+      'fileReader',
+      '$filter',
+    function (
+      $scope,
+      $mdDialog,
+      $mdSidenav,
+      addScholarsService,
+      scholarApiService,
+      swalert,
+      moment,
+      fileReader,
+      $filter) {
 
     var ec = this;
     ec.updatePhotoBtnText = 'Update';
@@ -18,8 +36,6 @@ angular.module('psmsApp')
     ec.parentsButtonText = 'Update';
     ec.enablePrimaryButtonText = 'Enable';
     ec.enableParentsButtonText = 'Enable';
-
-
 
     $scope.$watch('scholar', function(n, o){
       if (o === undefined) {
@@ -29,7 +45,7 @@ angular.module('psmsApp')
         runIfHasScholar();
         fillEditedScholar(n);
       }
-    }, true);
+    });
 
     $scope.$watch('ec.binded_copy.date_of_birth', function(n, o){
       ec.age = addScholarsService.calcAge(n);
@@ -48,7 +64,8 @@ angular.module('psmsApp')
     }
 
     ec.selectedAddress = function(address){
-      ec.binded_copy.address.address = address.address;
+      ec.newaddress = $filter('formatAddress')(address);
+      ec.binded_copy.address = address;
       ec.binded_copy.addressId = address.address_id;
       ec.binded_copy.address.address_id = address.address_id;
       $mdDialog.hide();
@@ -284,6 +301,7 @@ angular.module('psmsApp')
         let mother = typeof scholar.mother_details === 'object'? scholar.mother_details : JSON.parse(scholar.mother_details);
         ec.icon = (scholar.degree === 'Masters' || scholar.degree === 'Doctorate')  ? 'school' : 'groups';
         ec.binded_copy = scholar;
+        ec.newaddress = $filter('formatAddress')(scholar.address);
         ec.search_flastname = father.lastname;
         ec.f_firstname = father.firstname;
         ec.f_middlename = father.middlename;

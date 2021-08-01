@@ -4,7 +4,7 @@
       <div layout="column">
         <md-input-container flex style="margin-bottom: 0px;">
           <label>Search</label>
-          <input type="text" ng-model="ec.addressname">
+          <input type="text" ng-model="ec.addressname" autocomplete="off">
         </md-input-container>
         <ul class="list-group" style="padding: 0px;margin: 0px;">
           <li style="position: relative;
@@ -12,7 +12,7 @@
     padding: .75rem 1.25rem;
     margin-bottom: -1px;
     background-color: #fff;
-    border: 1px solid rgba(0,0,0,.125);cursor: pointer;" ng-repeat="address in ec.addresses" ng-click="ec.selectedAddress(address)">{{ address.address }}</li>
+    border: 1px solid rgba(0,0,0,.125);cursor: pointer;" ng-repeat="address in ec.addresses" ng-click="ec.selectedAddress(address)">{{ address | formatAddress }}</li>
         </ul>
         <div style="display: flex; justify-content: flex-end;margin-top: 15px;">
           <md-button ng-click="ec.closeModal()">close</md-button>

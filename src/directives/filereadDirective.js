@@ -7,21 +7,21 @@ angular.module('psmsApp').directive("fileread", ['$timeout',  function ($timeout
       checking: '=',
       message: '='
     },
-    link: function ($scope, $elm, $attrs) {
+    link: function (scope, $elm, $attrs) {
 
       var file;
 
       $elm.on('change', function (changeEvent) {
 
-        if (!changeEvent.target.files[0] || $scope.checking) {
+        if (!changeEvent.target.files[0] || scope.checking) {
             changeEvent.target.files = file;
             return;
         }
 
         file = changeEvent.target.files;
-        $scope.message = 'Importing';
-        $scope.state = true;
-        $scope.$apply($scope.state);
+        scope.message = 'Importing';
+        scope.state = true;
+        scope.$apply(scope.state);
 
         var reader = new FileReader();
         
@@ -29,7 +29,7 @@ angular.module('psmsApp').directive("fileread", ['$timeout',  function ($timeout
 
                 $timeout(()=>{
 
-                  $scope.$apply(function () {
+                  scope.$apply(function () {
 
                     var errors = [];
                     var headers = [
@@ -43,19 +43,26 @@ angular.module('psmsApp').directive("fileread", ['$timeout',  function ($timeout
                     var data = evt.target.result;
                     
                     var workbook = XLSX.read(data, {type: 'binary'});
+
+                    scope.json_data = XLSX.utils.sheet_to_json(workbook.Sheets['Scholars list']);
+
+                    if (scope.json_data.length < 1) {
+                        scope.state = false;
+                        $elm.val(null);
+                        alert('File is empty');
+                        return;
+                    }
                     
                     var sheet_name = workbook.SheetNames.indexOf('Scholars list');
 
                     if (sheet_name === -1){
-                        $scope.state = false;
+                        scope.state = false;
                         alert('Can\'t find sheet name Scholars list. Note! dont include spaces before and after Scholars list sheet');
                         $elm.val(null);
                         return;
                     }
 
                     var headerNames = XLSX.utils.sheet_to_json(workbook.Sheets['Scholars list'], { header: 1 })[0];
-                    
-                    $scope.json_data = XLSX.utils.sheet_to_json(workbook.Sheets['Scholars list']);
                     
                     headers.forEach(function(val, i){ 
               
@@ -66,17 +73,17 @@ angular.module('psmsApp').directive("fileread", ['$timeout',  function ($timeout
                     })
 
                     if (errors.length > 0) {
-                        $scope.state = false;
+                        scope.state = false;
                         console.log(errors);
                         $elm.val(null);
                         alert(errors);
                         return;
                     }
                     
-                    $scope.opts.data = $scope.json_data;
+                    scope.opts.data = scope.json_data;
                     // $elm.val(null);
 
-                    $scope.state = false;
+                    scope.state = false;
 
                   });
 

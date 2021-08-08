@@ -9,8 +9,21 @@
  */ 
 
 angular.module('psmsApp')
-.controller('addressCtrl',['$scope', 'municipalitiesApiService', 'addressApiService', 'debounce', 'swalert', '$mdSidenav',
-	function ($scope, municipalitiesApiService, addressApiService, debounce, swalert, $mdSidenav) {
+.controller('addressCtrl',
+	[
+		'$scope',
+		'municipalitiesApiService',
+		'addressApiService',
+		'debounce',
+		'swalert',
+		'$mdSidenav',
+	function (
+		$scope,
+		municipalitiesApiService,
+		addressApiService,
+		debounce,
+		swalert,
+		$mdSidenav) {
 
 	var ad = this;
 	ad.isUpdating = false;

@@ -2,8 +2,6 @@ import { baseUrl } from '../apiServices/baseUrl';
 
 angular.module('psmsApp').factory('academicContractService', ['$http', '$cookies', '$rootScope', '$q', function($http, $cookies, $rootScope, $q){
 
-  // var baseUrl = "/";
-  
   return{
     getAcademicContractDetails: function(searched){
       return $http({

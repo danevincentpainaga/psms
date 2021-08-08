@@ -3,6 +3,9 @@
 /*@import '~angular-material-data-table/dist/md-data-table.min.css';*/
 @import '~material-icons/iconfont/material-icons.css';
 
+.invalid{
+  border-color: rgb(221,44,0) !important;
+}
 /*background: linear-gradient(to bottom,#F8F8F8 0,#eeeeee 100%);*/
 .ui-grid-row:nth-child(odd) .ui-grid-cell {
     background-color: #fff;

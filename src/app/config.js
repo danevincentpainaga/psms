@@ -28,6 +28,7 @@ angular
   'ui.router.state.events',
   'ngSanitize',
   'ngMaterial',
+  'ngAria',
   'chart.js',
   'ui.grid',
   'ui.grid.exporter',
@@ -37,7 +38,7 @@ angular
   'ui.grid.autoResize',
   'ui.grid.pinning',
 ])
-.config(function ($stateProvider, $urlRouterProvider) {
+.config(['$stateProvider', '$urlRouterProvider', '$mdAriaProvider', function ($stateProvider, $urlRouterProvider, $mdAriaProvider) {
   $stateProvider
     .state('base', {
       url: '/',
@@ -139,12 +140,23 @@ angular
       templateUrl: import_view,
       controller: 'importScholarsCtrl',
       controllerAs: 'ic',
+      resolve:{
+        academicContractDetails: ['academicContractService', 'validateContractStatusService', function(academicContractService, validateContractStatusService){
+          return academicContractService.getAcademicContractDetails().then(response => {
+            return validateContractStatusService.checkStatus(response.data[0]);
+          }, err=> {
+            return false;
+          });
+        }]
+      },
       Authenticated: true,
     }) 
     
   $urlRouterProvider.otherwise('/');
 
-})
+  $mdAriaProvider.disableWarnings();
+
+}])
 .run(['$transitions', '$rootScope', '$cookies', 'authApiService', function($transitions, $rootScope, $cookies, authApiService){
 
   $transitions.onBefore({}, function(transition) {

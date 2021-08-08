@@ -11,8 +11,23 @@
 const addd_school = require('../views/add_school_dialog.tmpl.html');
 
 angular.module('psmsApp')
-  .controller('schoolsCtrl',['$scope', '$rootScope', '$timeout', 'schoolApiService', 'debounce', 'moment', '$mdDialog',
-    function ($scope, $rootScope, $timeout, schoolApiService, debounce, moment, $mdDialog) {
+  .controller('schoolsCtrl',
+    [
+      '$scope',
+      '$rootScope',
+      '$timeout',
+      'schoolApiService',
+      'debounce',
+      'moment',
+      '$mdDialog',
+    function (
+      $scope,
+      $rootScope,
+      $timeout,
+      schoolApiService,
+      debounce,
+      moment,
+      $mdDialog) {
 
     var s = this;
 
@@ -46,7 +61,6 @@ angular.module('psmsApp')
     }, 500), true);
 
     s.showDialog = function (ev) {
-
       $mdDialog.show({
         controller: 'addSchoolCtrl',
         controllerAs: 'as',

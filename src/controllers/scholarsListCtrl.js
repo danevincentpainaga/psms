@@ -85,12 +85,12 @@ angular.module('psmsApp')
 
     function getScholars(){
 
-       let searched = { 
-          searched_name: sc.scholar_lastname,
-          scholar_status: sc.selected_status,
-          contract_status: sc.selected_contract_status,
-          degree: sc.selected_degree,
-          municipality: sc.selected_municipality,
+      let searched = { 
+        searched_name: sc.scholar_lastname,
+        scholar_status: sc.selected_status,
+        contract_status: sc.selected_contract_status,
+        degree: sc.selected_degree,
+        municipality: sc.selected_municipality,
       };
 
        scholarApiService.getScholars(searched).then(response => {

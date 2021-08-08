@@ -35,8 +35,27 @@ angular.module('psmsApp')
 
     c.semester_list = [{semester: "1st Semester"}, {semester: "2nd Semester"}, {semester: "3rd Semester"}];
 
+    $scope.$watch('c.academic_year_from', function(n, o){
+      if (n && n.length === 4) {
+        let fromDate = new Date(n).getFullYear();
+        let yearNow = new Date().getFullYear();
+        if (fromDate > yearNow || fromDate < yearNow-1) {
+          c.invalid_year = true;
+        }
+        else{
+          c.invalid_year = false;
+          c.academic_year_to = fromDate+1;
+          c.display_academic_year = fromDate+1;
+        }
+      }
+      else{
+        c.display_academic_year = "";
+        c.academic_year_to = "";
+      }
+    });
+
     c.saveOrUpdateAcademicYearList = function(){
-      if (c.semester && c.academic_year && c.undergraduate_amount && c.masteral_doctorate_amount){
+      if (c.semester && c.academic_year_from && c.academic_year_to && c.undergraduate_amount && c.masteral_doctorate_amount){
         $mdDialog.show({
           contentElement: '#myStaticDialog',
           parent: angular.element(document.body)
@@ -46,9 +65,11 @@ angular.module('psmsApp')
     }
 
     c.edit = function(selected){
+      let ay = selected.academic_year.split('-');
       c.asc_id = selected.asc_id;
       c.semester = selected.semester;
-      c.academic_year = selected.academic_year;
+      c.academic_year_from = ay[0];
+      c.academic_year_to = ay[1];
       c.undergraduate_amount = selected.undergraduate_amount;
       c.masteral_doctorate_amount = selected.masteral_doctorate_amount;
       c.buttonText = "UPDATE";
@@ -106,9 +127,9 @@ angular.module('psmsApp')
       console.log(c.password);
     }
 
-    c.closeDialog = function(){
-      $mdDialog.hide();
-    }
+    // c.closeDialog = function(){
+    //   $mdDialog.hide();
+    // }
 
     function getAcademicYearList(){
        academicSemesterYearApiService.getAcademicYearList().then(response => {
@@ -168,28 +189,28 @@ angular.module('psmsApp')
 
     c.functions = {
       storeAcademicYearList: function(){
-         academicSemesterYearApiService.storeAcademicYearList({ 
+        academicSemesterYearApiService.storeAcademicYearList({
             semester: c.semester,
-            academic_year: c.academic_year,
+            academic_year: c.academic_year_from+'-'+c.academic_year_to,
             undergraduate_amount: c.undergraduate_amount,
             masteral_doctorate_amount: c.masteral_doctorate_amount
           })
-         .then(response => {
-            clearInputs()
+          .then(response => {
+            clearInputs();
             console.log(response.data);
             clearRequired();
             getAcademicYearList();
             swalert.dialogBox(response.data.message, 'success', 'Success');
-        }, err => {
-          console.log(err);
-          swalert.dialogBox(err.data.message, 'error', 'Failed');
+          }, err => {
+            console.log(err);
+            swalert.dialogBox(err.data.message, 'error', 'Failed');
         });
       },
       updateAcademicYearList: function(){
          academicSemesterYearApiService.updateAcademicYearList({ 
           asc_id: c.asc_id,
           semester: c.semester,
-          academic_year: c.academic_year,
+          academic_year: c.academic_year_from+'-'+c.academic_year_to,
           undergraduate_amount: c.undergraduate_amount,
           masteral_doctorate_amount: c.masteral_doctorate_amount
          })
@@ -273,7 +294,8 @@ angular.module('psmsApp')
     function clearInputs(){
       c.asc_id = "";
       c.semester = "";
-      c.academic_year ="";
+      c.academic_year_from ="";
+      c.academic_year_to ="";
       c.undergraduate_amount = "";
       c.masteral_doctorate_amount = "";
     }

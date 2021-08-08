@@ -1,7 +1,7 @@
 var passwordConfirm = require('../views/password_confirm_directive.html');
 
 angular
-.module('psmsApp').directive('passwordConfirm', ['authApiService', 'swalert', function(authApiService, swalert){
+.module('psmsApp').directive('passwordConfirm', ['authApiService', 'swalert', '$mdDialog', function(authApiService, swalert, $mdDialog){
   return{
     restrict:'E',
     templateUrl: passwordConfirm, 
@@ -18,16 +18,20 @@ angular
                 swalert.toastInfo('Confirming...', 'info', 'top');
                 authApiService.confirmIsAdminAccess({password: scope.password}).then(response => {
                     scope.callFn();
-                    scope.closeFn();
+                    scope.closeDialog();
                     scope.ConfirmText = 'Confirm';
                     scope.disable_confirm = false;
-                    scope.password = '';
                 }, err=>{
                     swalert.toastInfo(err.data.message, 'error', 'top');
                     scope.ConfirmText = 'Confirm';
                     scope.disable_confirm = false;
                 });
             }
+        }
+
+        scope.closeDialog = function(){
+            scope.password = '';
+            $mdDialog.hide();
         }
     }
   }

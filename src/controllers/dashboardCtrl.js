@@ -9,7 +9,13 @@
  */ 
 
 angular.module('psmsApp')
-  .controller('dashboardCtrl', ['$scope', 'dashboardApiService', function ($scope, dashboardApiService) {
+  .controller('dashboardCtrl', 
+    [
+      '$scope',
+      'dashboardApiService',
+    function (
+      $scope,
+      dashboardApiService) {
 
   var dc = this;
 

@@ -9,17 +9,26 @@
  */ 
 
 var app = angular.module('psmsApp');
-app.controller('updateSchoolCtrl', ['$scope', '$rootScope', '$mdDialog', 'schoolApiService', 'swalert',
-  function ($scope, $rootScope, $mdDialog, schoolApiService, swalert) {
+app.controller('updateSchoolCtrl',
+  [
+    '$scope',
+    '$rootScope',
+    '$mdDialog',
+    'schoolApiService',
+    'swalert',
+  function (
+    $scope,
+    $rootScope,
+    $mdDialog,
+    schoolApiService,
+    swalert) {
 
   var up = this;
 
   $scope.$watch('schooldetails', function(o, v){
     if ($scope.schooldetails) {
-
       up.school_name = $scope.schooldetails.school_name;
       up.has_school_name = true; 
-
     }
   }, true);
 
@@ -33,7 +42,6 @@ app.controller('updateSchoolCtrl', ['$scope', '$rootScope', '$mdDialog', 'school
       let new_school_name = { school_id: $scope.schooldetails.school_id, school_name: up.school_name.toUpperCase(), s_province_id: up.province_id };
       updateSchoolDetails(new_school_name);
     }
-
   };
 
   function updateSchoolDetails(details){

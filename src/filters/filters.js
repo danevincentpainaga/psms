@@ -3,33 +3,27 @@ var app = angular.module('psmsApp');
 import { baseUrl } from '../apiServices/baseUrl';
 
 app.filter('formatDate', function(){
-
   return function(date){
     return moment(date).format("MMMM Do YYYY, h:mm:ss a");
   }
-
 });
 
 app.filter('checkPhoto', function(){
-
   return function(photo){
     if (photo) {
     	return photo
     } 
     return '/images/user.png';
   }
-
 });
 
 app.filter('checkScholarPhoto', function(){
-
   return function(photo){
     if (photo) {
     	return baseUrl+'storage/'+photo;
     } 
     return '/images/user.png';
   }
-
 });
 
 app.filter('fatherDetails', function(){
@@ -122,4 +116,3 @@ app.filter('trim', function(){
     return newVal;
   }
 });
-

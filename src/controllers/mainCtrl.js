@@ -8,8 +8,27 @@
  */
 
 angular.module('psmsApp')
-  .controller('mainCtrl',['$scope', '$rootScope', '$mdSidenav', '$mdDialog', '$cookies', '$location', '$timeout', '$window', 'authApiService',
-     function ($scope, $rootScope, $mdSidenav, $mdDialog, $cookies, $location, $timeout, $window, authApiService) {
+  .controller('mainCtrl',
+    [
+      '$scope',
+      '$rootScope',
+      '$mdSidenav',
+      '$mdDialog',
+      '$cookies',
+      '$location',
+      '$timeout',
+      '$window',
+      'authApiService',
+     function (
+      $scope,
+      $rootScope,
+      $mdSidenav,
+      $mdDialog,
+      $cookies,
+      $location,
+      $timeout,
+      $window,
+      authApiService) {
 
     $scope.toggleSidenav = buildToggler('sidebar-menu');
 
@@ -161,7 +180,7 @@ angular
 }]);
 
 angular
-.module('psmsApp').factory("fileReader", function($q, $log) {
+.module('psmsApp').factory("fileReader", ['$q', '$log', function($q, $log) {
   var onLoad = function(reader, deferred, scope) {
     return function() {
       scope.$apply(function() {
@@ -211,7 +230,7 @@ angular
   return {
     readAsDataUrl: readAsDataURL
   };
-});
+}]);
 
 const update_scholar = require('../views/update_scholar_photo.html');
 const schoolDirective = require('../views/school_modal_directive.html');
@@ -275,23 +294,57 @@ angular.module('psmsApp').directive('acceptOnlyLetters', function() {
 angular.module('psmsApp').directive('acceptOnlyNumbers', function() {
     return {
         restrict : 'A',
-        require: 'ngModel',
-        link: function (scope, element, attr, ngModelCtrl) {
-            function fromUser(text) {
-                if (text) {
-                    var transformedInput = text.replace(/[^0-9]/g, '');
-                    if (transformedInput !== text) {
-                        ngModelCtrl.$setViewValue(transformedInput);
-                        ngModelCtrl.$render();
-                    }
-                    return transformedInput;
-                }
-                return undefined;
-            }            
-            ngModelCtrl.$parsers.push(fromUser);
+        // require: 'ngModel',
+        link: function (scope, elem, attr, ngModelCtrl) {
+          // element.bind('keydown', function(evt){
+          //     evt = (evt) ? evt : window.event;
+          //     var charCode = (evt.which) ? evt.which : evt.keyCode;
+          //     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+          //         evt.preventDefault();
+          //     }
+          //     return true;
+          // });
+          let regex = /^[0-9]*$/;
+          elem.bind('keypress', function(event){
+            if (!regex.test(event.key)) {
+              event.preventDefault();
+            }
+          });
+            // function fromUser(text) {
+            //     if (text) {
+            //         var transformedInput = text.replace(/[^0-9]/g, '');
+            //         if (transformedInput !== text) {
+            //             ngModelCtrl.$setViewValue(transformedInput);
+            //             ngModelCtrl.$render();
+            //         }
+            //         return transformedInput;
+            //     }
+            //     return undefined;
+            // }            
+            // ngModelCtrl.$parsers.push(fromUser);
         }
     };
 });
+
+angular.module('psmsApp').directive('contractAcademicYear', function() {
+    return {
+        restrict : 'A',
+        link : function(scope, elem, attrs, ctrl) {
+          let regex = /^[0-9]*$/;
+          elem.bind('keypress', function(event){
+            if (!regex.test(event.key)) {
+              event.preventDefault();
+            }
+            else{
+              if (event.target.value.length === 4) {
+                event.preventDefault();
+              }
+            }
+          });
+        }
+    };
+});
+
 
 angular.module('psmsApp').directive('disableInput', function() {
     return {
@@ -304,7 +357,7 @@ angular.module('psmsApp').directive('disableInput', function() {
     };
 });
 
-angular.module('psmsApp').directive('showChangeView',['$window', function($window) {
+angular.module('psmsApp').directive('showChangeView', ['$window', function($window) {
     return {
         restrict : 'A',
         scope:{

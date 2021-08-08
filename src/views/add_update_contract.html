@@ -8,16 +8,24 @@
           <span class="md-title">{{ c.labelText }}</span>
           <form name="c.add_update_contract">
             <div layout="column" >
-              <md-input-container flex="">
+              <md-input-container>
                 <label>Semester</label>
                 <md-select ng-model="c.semester" required>
                   <md-option ng-value="sem.semester" ng-repeat="sem in c.semester_list"><em>{{ sem.semester }}</em></md-option>
                 </md-select>
               </md-input-container>
-              <md-input-container flex="">
-                <label>Academic year</label>
-                <input type="text" ng-model="c.academic_year" required>
-              </md-input-container>
+              <span style="margin-bottom: 20px;">Academic year:</span>
+              <div layout="column">
+                <span>From:</span>
+                <md-input-container style="margin: 0px;">
+                  <input type="text" ng-model="c.academic_year_from" name="academic_year_from" accept-only-numbers autocomplete="off" contract-date ng-class="{ 'invalid': c.invalid_year === true }" required> 
+                  <span ng-if="c.invalid_year && c.add_update_contract.$dirty" style="color:red;">Invalid year</span>
+                </md-input-container>
+                <span>To:</span>
+                <md-input-container style="margin: 0px;">
+                  <input type="text" ng-model="c.display_academic_year" accept-only-numbers autocomplete="off" disabled contract-academic-year required>
+                </md-input-container>
+              </div>
               <div layout="column">
                 <span>Undergraduate:</span>
                 <md-input-container flex="">

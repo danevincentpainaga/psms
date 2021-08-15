@@ -7,18 +7,18 @@ const path = require('path');
 var SRC = path.resolve(__dirname, './src/app/app.js');
 
 module.exports = {
-  mode: 'production',
-  // mode: 'development',
-  // devServer: {
-  //   contentBase: path.join(__dirname, 'dist'),
-  //   compress: true,
-  //   port: 9000,
-  // },
-  performance: {
-      hints: false,
-      maxEntrypointSize: 512000,
-      maxAssetSize: 512000
+  // mode: 'production',
+  mode: 'development',
+  devServer: {
+    contentBase: path.join(__dirname, 'dist'),
+    compress: true,
+    port: 9000,
   },
+  // performance: {
+  //     hints: false,
+  //     maxEntrypointSize: 512000,
+  //     maxAssetSize: 512000
+  // },
   entry: {
     vendor: './src/app/vendor.js',
     main: './src/app/app.js',
@@ -28,8 +28,8 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].bundle.js',
   },
-  // devtool: "eval-cheap-source-map",
-  devtool: false,
+  devtool: "eval-cheap-source-map",
+  // devtool: false,
   module: {
     rules: [
       {

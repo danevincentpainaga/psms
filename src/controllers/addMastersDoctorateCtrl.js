@@ -47,12 +47,6 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
 
   md.saveNewMasterDoctorateDetails = function(){
 
-      // if (!md.f_firstname && !md.search_flastname || !md.m_firstname && !md.search_maidenname)
-      // {
-      //   swalert.toastInfo('please complete the form', 'error', 'top-right', 4000);
-      //   return;
-      // }
-
       if (!md.firstname || !md.lastname || !md.addressId || !md.gender || !md.schoolId || !md.courseId || !md.section || !md.year_level || !md.student_id_number || !md.IP || !academicContractDetails.ascId)
       {
         swalert.toastInfo('please complete the form', 'error', 'top-right', 4000);
@@ -167,6 +161,11 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
   md.selectedDateOfBirth = function(dateOfBirth){
     md.age = addScholarsService.calcAge(dateOfBirth);
     md.displayedAge = md.age;
+    if (!moment.validateDate(dateOfBirth)) {
+      md.scholar_details.date_of_birth.$setValidity("date_of_birth", false);
+      return;
+    }
+    md.scholar_details.date_of_birth.$setValidity("date_of_birth", true);
   }
 
   md.courseSearchQuery = function(searched){

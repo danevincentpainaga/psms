@@ -1,8 +1,6 @@
 import { baseUrl } from '../apiServices/baseUrl';
 
 angular.module('psmsApp').factory('municipalitiesApiService', ['$http', '$rootScope', function($http, $rootScope){
-  
-  // var baseUrl = "/";
 
   return{
     getMunicipalities: function(){

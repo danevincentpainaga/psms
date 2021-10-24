@@ -1,8 +1,6 @@
 import { baseUrl } from '../apiServices/baseUrl';
 
 angular.module('psmsApp').factory('schoolApiService', ['$http', '$cookies', '$rootScope', '$q', function($http, $cookies, $rootScope, $q){
-	 
-  // var baseUrl = "/";
 
   return{
     getListOfSchool: function(searched){

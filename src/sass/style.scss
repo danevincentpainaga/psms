@@ -6,6 +6,10 @@
 .invalid{
   border-color: rgb(221,44,0) !important;
 }
+.md-input{
+  font-size: 12px !important;
+  padding-top: 9px !important;
+}
 /*background: linear-gradient(to bottom,#F8F8F8 0,#eeeeee 100%);*/
 .ui-grid-row:nth-child(odd) .ui-grid-cell {
     background-color: #fff;
@@ -22,6 +26,9 @@
   input::-moz-placeholder {text-transform: lowercase;}
 }
 
+.md-raised{
+  font-size: 12px !important;
+}
 md-backdrop.md-opaque.md-default-theme, md-backdrop.md-opaque {
     background-color: #fff !important;
 }
@@ -30,6 +37,10 @@ md-backdrop.md-opaque.md-default-theme, md-backdrop.md-opaque {
     min-height: 40px !important;
     max-height: 40px !important;
   }
+}
+
+.md-input{
+  border-width: 0 0 1px 0 !important;
 }
 
 .dashboard-toolbar{
@@ -597,6 +608,26 @@ th,
           }
         }
     }
+}
+
+.renew-scholar-list{
+  md-list-item{
+    min-height: 53px !important;
+    max-height: 53px !important;
+    .md-no-style {
+      align-items: center !important;
+      .md-list-item-text{
+        h4{
+          margin: 0px !important;
+          color: black !important;
+          font-size: 13px !important;
+        }
+        p{
+          font-size: 12px !important;
+        }
+      }
+    }
+  }
 }
 
 .scholar-image{

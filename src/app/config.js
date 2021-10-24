@@ -18,6 +18,7 @@ const user_accounts_view = require('../views/user_accounts.html');
 const contract_view = require('../views/contract.html');
 const export_view = require('../views/export.html');
 const import_view = require('../views/import.html');
+const renew_scholars_view = require('../views/renew_scholars.html');
 
 angular
 .module('psmsApp', [
@@ -150,7 +151,23 @@ angular
         }]
       },
       Authenticated: true,
-    }) 
+    })
+    .state('renew_scholars', {
+      url: '/renew_scholars',
+      templateUrl: renew_scholars_view,
+      controller: 'addUndergraduateCtrl',
+      controllerAs: 'ac',
+      resolve:{
+        academicContractDetails: ['academicContractService', 'validateContractStatusService', function(academicContractService, validateContractStatusService){
+          return academicContractService.getAcademicContractDetails().then(response => {
+            return validateContractStatusService.checkStatus(response.data[0]);
+          }, err=> {
+            return false;
+          });
+        }]
+      },
+      Authenticated: true,
+    })
     
   $urlRouterProvider.otherwise('/');
 

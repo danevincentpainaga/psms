@@ -190,6 +190,11 @@ angular.module('psmsApp')
     ac.selectedDateOfBirth = function(dateOfBirth){
       ac.age = addScholarsService.calcAge(dateOfBirth);
       ac.displayedAge = ac.age;
+      if (!moment.validateDate(dateOfBirth)) {
+        ac.scholar_details.date_of_birth.$setValidity("date_of_birth", false);
+        return;
+      }
+      ac.scholar_details.date_of_birth.$setValidity("date_of_birth", true);
     }
 
      ac.courseSearchQuery = function(searched){

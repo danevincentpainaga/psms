@@ -1,27 +1,27 @@
 <div layout="row">
-  <div flex="0" flex-gt-sm="25"></div>
-  <div flex>
+  <div flex></div>
+  <div flex="75">
     <div layout="column" style="padding: 1px; min-height: 270px;margin: 20px 0px;background: #fff;margin-top: 3em;border: 1px solid #e2d2d2;box-shadow: 1px 0 5px rgba(0,0,0,.1);position: relative;">
       <div style="display: flex; align-items: center;justify-content: center; height: 50px;background: #3f51b5;align-items: center; color: #ffff;">
         Update
       </div>
-        <div style="display: flex;justify-content: center;align-items: center;height: 100%;position: absolute;width: 100%;" ng-if="!up.has_school_name">
-          <md-progress-circular md-diameter="25px"></md-progress-circular>
+      <div style="display: flex;justify-content: center;align-items: center;height: 100%;position: absolute;width: 100%;" ng-if="!up.has_school_name">
+        <md-progress-circular md-diameter="25px"></md-progress-circular>
+      </div>
+      <div ng-if="up.has_school_name">
+        <div layout="column" style="padding: 25px 27px 15px 17px; " >
+          <md-input-container>
+            <md-icon class="material-icons">account_balance</md-icon>
+            <label>School name</label>
+            <input type="text" ng-model="up.school_name" required>
+          </md-input-container>
         </div>
-        <div ng-if="up.has_school_name">
-          <div layout="column" style="padding: 25px 27px 15px 17px; " >
-            <md-input-container>
-              <md-icon class="material-icons">account_balance</md-icon>
-              <label>School name</label>
-              <input type="text" ng-model="up.school_name" required>
-            </md-input-container>
-          </div>
-          <div style="display: flex; justify-content: center;margin-top: 3em;">
-            <md-button class="md-raised md-primary" style="min-width: 45%;" ng-click="up.update()" ng-disabled="up.updating">Update</md-button>
-            <md-button class="md-raised" style="min-width: 45%;" ng-click="up.cancelEditing()">Cancel</md-button>
-          </div>
+        <div style="display: flex; justify-content: center;margin-top: 3em;">
+          <md-button class="md-raised md-primary" style="min-width: 45%;" ng-click="up.update()" ng-disabled="up.updating">Update</md-button>
+          <md-button class="md-raised" style="min-width: 45%;" ng-click="up.cancelEditing()">Cancel</md-button>
         </div>
-        </div>
+      </div>
+    </div>
   </div>
-  <div flex="0" flex-gt-sm="25"></div>
+  <div flex></div>
 </div>

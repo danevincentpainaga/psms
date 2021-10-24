@@ -8,47 +8,6 @@ angular.module('psmsApp').factory('printContract', ['$timeout','$q', function($t
 
   self.print = function(scholarDetails, ctrl){
 
-    // console.log(pdfMake.vfs['Times-Bold.ttf']);
-    // return;
-
-    // let docDefinition = {
-    //     content: [
-    //       {text: 'NAME: '+scholarDetails.firstname.toUpperCase()+" "+scholarDetails.lastname.toUpperCase()+", "+scholarDetails.middlename.toUpperCase()},
-    //     ]
-    //   };
-
-    // pdfMake.fonts = {
-    //     // All 4 components must be defined
-    //     TimesNewRoman: {
-    //         normal: 'Times-Bold.ttf',
-    //         bold: 'Times-New-Roman-Bold.ttf',
-    //         italics: 'Times-Italic.ttf',
-    //         bolditalics: 'Times-BoldItalic.ttf'
-    //     }
-    // };
-
-    // var fonts = {
-    //   TimesNewRoman: {
-    //       normal: 'Times-Bold.ttf',
-    //       bold: 'Times-New-Roman-Bold.ttf',
-    //       italics: 'Times-Italic.ttf',
-    //       bolditalics: 'Times-BoldItalic.ttf'
-    //   }
-    // };
-
-    // let docDefinition = {
-    //     content:[  
-    //       {  
-    //          text: 'your text with Times New Roman font',
-    //       }
-    //     ],
-    //     defaultStyle: {
-    //       font: 'TimesNewRoman'
-    //     }
-    // };
-    
-    // let pdfDocGenerator = pdfMake.createPdf(self.contract(), null, fonts, pdfMake.vfs);
-
     let pdfDocGenerator = self.contract();
 
     if (self.isMobile()) {
@@ -266,16 +225,6 @@ angular.module('psmsApp').factory('printContract', ['$timeout','$q', function($t
           fontSize: 12,
         },
         pageSize: 'Folio',
-        // styles: {
-        //   header: {
-        //     fontSize: 12,
-        //     alignment:'center',
-        //     bold: true
-        //   },
-        //   header1and2: {
-        //     alignment:'center'
-        //   },
-        // }
       };
 
       return pdfMake.createPdf(docDefinition, null, fonts, pdfMake.vfs);;

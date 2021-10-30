@@ -17,7 +17,7 @@
       <md-icon class="material-icons" style="margin-right: 15px;color: rgba(245, 158, 11, 11);">source</md-icon>
       <p style="margin-top: 5px;"> Scholars list</p>
     </md-list-item>
-    <md-list-item ng-click="navigateTo('/add_undergraduate_scholars')">
+    <md-list-item ng-click="navigateTo('/add_undergraduate_scholars')" ng-if="undergraduate_access">
       <md-icon class="material-icons" style="margin-right: 15px;color: #ef4444;">groups</md-icon>
       <p style="margin-top: 5px;"> Undergraduate</p>
     </md-list-item>
@@ -25,7 +25,7 @@
       <md-icon class="material-icons" style="margin-right: 15px;color: #3b82f6;">school</md-icon>
       <p style="margin-top: 5px;"> Master's/Doctorate</p>
     </md-list-item>
-    <md-list-item ng-click="navigateTo('/renew_scholars')">
+    <md-list-item ng-click="navigateTo('/renew_scholars')" ng-if="renewal_access">
       <md-icon class="material-icons" style="margin-right: 15px;color: #81c0f4;">update</md-icon>
       <p style="margin-top: 5px;"> Renew scholar's</p>
     </md-list-item>

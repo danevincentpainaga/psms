@@ -81,7 +81,7 @@
                 </md-content>
               </div>
               <div flex style="background: #efefef;position: relative;" >
-                <md-button class="md-fab md-mini md-primary" ng-click="c.add()" style="position: absolute;top: 0;right: 0;">
+                <md-button class="md-fab md-mini md-primary" ng-click="c.add()" style="position: absolute;top: 0;right: 0;z-index: 1;">
                   <md-icon class="material-icons">add</md-icon>
                 </md-button>
                   <md-card style="margin: 0px; position: relative; width: 100%;height: 100%;">
@@ -164,6 +164,8 @@
               </div>
             </section>
           </div>
+          <br />
+          <governor-directive></governor-directive>
       </div>
       <div flex></div>
     </div>

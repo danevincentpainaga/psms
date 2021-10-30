@@ -4,6 +4,7 @@ require('angular-material');
 require('angular-animate');
 require('angular-aria');
 
+// Directives section
 require('../directives/fixedColumnTableDirective');
 require('../directives/addSchoolDirective');
 require('../directives/addDoubleSlashesDirective');
@@ -14,9 +15,12 @@ require('../directives/colorContractDirective');
 require('../directives/filereadDirective');
 require('../directives/editScholarDirective');
 require('../directives/passwordConfirmDirective');
+require('../directives/governorDirective');
 
+// filters section
 require('../filters/filters');
 
+// factories section
 require('../factories/alertDialog');
 require('../factories/addScholarsService');
 require('../factories/debounce');
@@ -25,6 +29,7 @@ require('../factories/exportService');
 require('../factories/validateContractStatusService');
 require('../factories/printContractService');
 
+// Services section
 require('../apiServices/municipalitiesApiService');
 require('../apiServices/authApiService');
 require('../apiServices/schoolApiService');
@@ -37,7 +42,9 @@ require('../apiServices/dashboardApiService');
 require('../apiServices/courseApiService');
 require('../apiServices/importScholarApiService');
 require('../apiServices/exportScholarsApiService');
+require('../apiServices/governorService');
 
+// Controller section
 require('../controllers/mainCtrl');
 require('../controllers/dashboardCtrl');
 require('../controllers/loginCtrl');
@@ -54,3 +61,4 @@ require('../controllers/importScholarsCtrl');
 require('../controllers/editScholarCtrl');
 require('../controllers/addressCtrl');
 require('../controllers/courseCtrl');
+require('../controllers/governorCtrl');

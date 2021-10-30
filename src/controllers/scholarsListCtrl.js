@@ -113,6 +113,9 @@ angular.module('psmsApp')
         });
     }
 
+    sc.allowPrint = function(scholar){
+      return scholar.contract_status === 'Approved';
+    }
     // function print(scholarDetails){
 
     //   const pdfMake = require("pdfmake/build/pdfmake");

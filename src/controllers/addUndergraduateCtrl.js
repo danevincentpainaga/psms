@@ -47,6 +47,8 @@ angular.module('psmsApp')
       $mdSidenav) {
 
     var ac = this;
+    ac.gender_list = ['Male', 'Female'];
+    ac.civil_status_list = ['Single', 'Married', 'Widowed', 'Divorced'];
     ac.list_of_schools = [];
     ac.scholars = [];
     ac.buttonText = 'Save';
@@ -80,7 +82,7 @@ angular.module('psmsApp')
 
     ac.saveNewUndergraduateDetails = function(){
 
-      if (!ac.firstname || !ac.lastname || !ac.addressId || !ac.age || !ac.gender || !ac.schoolId || !ac.courseId || !ac.section || !ac.year_level || !ac.student_id_number || !ac.IP || !academicContractDetails.ascId)
+      if (!ac.firstname || !ac.lastname || !ac.addressId || !ac.age || !ac.gender || !ac.civil_status || !ac.schoolId || !ac.courseId || !ac.section || !ac.year_level || !ac.student_id_number || !ac.IP || !academicContractDetails.ascId)
       {
         swalert.toastInfo('please complete the form', 'error', 'top-right', 4000);
         return;
@@ -109,9 +111,11 @@ angular.module('psmsApp')
           lastname: ac.lastname.toUpperCase(),
           middlename: (ac.middlename || "").toUpperCase(),
           addressId: ac.addressId,
+          address: ac.fulladdress,
           date_of_birth: ac.date_of_birth,
           age: ac.age,
           gender: ac.gender,
+          civil_status: ac.civil_status,
           schoolId: ac.schoolId,
           courseId: ac.courseId,
           section: ac.section.toUpperCase(),
@@ -208,7 +212,7 @@ angular.module('psmsApp')
     ac.addressSearchQuery = function(searched){
       return addScholarsService.getAddresses(searched).then(response => {
         for (var i = 0; i < response.length; i++) {
-          Object.assign(response[i], { address: response[i].address+' '+response[i].municipality+', ANTIQUE' });
+          Object.assign(response[i], { fulladdress: response[i].address+' '+response[i].municipality+', ANTIQUE' });
         }
         return response;
       });

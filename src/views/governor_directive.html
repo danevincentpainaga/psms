@@ -1,0 +1,26 @@
+<div style="background-color: #fff;">
+    <md-card style="margin: 0px; ">
+      <md-card-header style="padding-bottom: 0px !important;">
+        <md-card-header-text>
+            <span class="md-subhead">
+                Governor's details
+            </span>
+          </md-card-header-text>
+      </md-card-header>
+      <md-card-content ng-if="gov.governor_loaded">
+        <md-input-container style="margin: 17px 0px 0px 0px;">
+          <label>Firstname</label>
+          <input type="text" ng-model="gov.firstname" autocomplete="off">
+        </md-input-container>
+        <md-input-container style="margin: 17px 0px 0px 0px;">
+            <label>Initial</label>
+            <input type="text" ng-model="gov.initial" autocomplete="off">
+          </md-input-container>
+          <md-input-container style="margin: 17px 0px 0px 0px;">
+            <label>Lastname</label>
+            <input type="text" ng-model="gov.lastname" autocomplete="off">
+          </md-input-container>
+        <md-button class="md-raised md-primary" ng-click="gov.updateGovernor()" ng-disabled="gov.updating">{{ gov.updating? 'Updating...' : 'Update' }}</md-button>
+      </md-card-content>
+    </md-card>
+  </div>

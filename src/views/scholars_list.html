@@ -98,7 +98,7 @@
               {{ scholar.contract_status }}
             </span>
           </td>
-          <td>{{ scholar.address.address }}</td>
+          <td>{{ scholar.address | formatAddress }}</td>
           <td>{{ scholar.address.municipality }}</td>
           <td>{{ scholar.father_details | fatherDetails }}</td>
           <td>{{ scholar.mother_details | motherDetails }}</td>
@@ -127,7 +127,7 @@
               close
             </md-icon>
             <span ng-if="$index===sc.selectedIndex" style="margin: 7px 0px;">opening..</span>
-            <md-icon class="material-icons" style="font-size: 17px; box-sizing: border-box;padding: 3px;cursor: pointer;outline-style: none;" ng-click="sc.print(scholar, $index)" ng-hide="$index===sc.selectedIndex">
+            <md-icon class="material-icons" ng-if="sc.allowPrint(scholar)" style="font-size: 17px; box-sizing: border-box;padding: 3px;cursor: pointer;outline-style: none;" ng-click="sc.print(scholar, $index)" ng-hide="$index===sc.selectedIndex">
               <md-tooltip>Print contract</md-tooltip>
               print
             </md-icon>

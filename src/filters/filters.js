@@ -116,3 +116,9 @@ app.filter('trim', function(){
     return newVal;
   }
 });
+
+app.filter('concatName', function(){
+  return function(value){
+    return value.firstname+' '+value.middlename+' '+value.lastname;
+  }
+});

@@ -17,7 +17,7 @@ angular.module('psmsApp')
       'scholarApiService',
       'swalert',
       'moment',
-      'fileReader',
+      // 'fileReader',
       '$filter',
     function (
       $scope,
@@ -27,7 +27,7 @@ angular.module('psmsApp')
       scholarApiService,
       swalert,
       moment,
-      fileReader,
+      // fileReader,
       $filter) {
 
     var ec = this;
@@ -84,17 +84,32 @@ angular.module('psmsApp')
 
     ec.getTheFiles = function(file){
       var formdata = new FormData();
-      formdata.append('file', file[0]);
+      // formdata.append('file', file[0]);
       formdata.append('scholar_id', ec.copy.scholar_id);
       ec.new_photo = formdata;
+      console.log(file[0]);
 
-      fileReader.readAsDataUrl(file[0], $scope)
-        .then(function(result) {
-          ec.result_photo = result;
+      // fileReader.readAsDataUrl(file[0], $scope)
+      //   .then(function(result) {
+      //     ec.result_photo = result;
+      //     ec.image_selected = true;
+      //     console.log(result);
+      //   }, function(err){
+      //     console.log(err);
+      //   });
+
+      ec.resizeImage({
+        file: file[0],
+        maxSize: 300
+      }).then(function (resizedImage) {
+          ec.result_photo = resizedImage.dataurl;
           ec.image_selected = true;
-        }, function(err){
-          console.log(err);
-        });
+          $scope.$apply(ec.image_selected);
+          formdata.append('file', resizedImage.newfile);
+          console.log(resizedImage.newfile)
+      }).catch(function (err) {
+          console.error(err);
+      });
     }
 
     ec.updatePhoto = function(){
@@ -344,5 +359,60 @@ angular.module('psmsApp')
         }
       });
     }
+
+    ec.resizeImage = function (settings) {
+      var file = settings.file;
+      var maxSize = settings.maxSize;
+      var reader = new FileReader();
+      var image = new Image();
+      var canvas = document.createElement('canvas');
+      
+      var dataURItoBlob = function (dataURI) {
+          var bytes = dataURI.split(',')[0].indexOf('base64') >= 0 ?
+              atob(dataURI.split(',')[1]) :
+              unescape(dataURI.split(',')[1]);
+          var mime = dataURI.split(',')[0].split(':')[1].split(';')[0];
+          var max = bytes.length;
+          var ia = new Uint8Array(max);
+          for (var i = 0; i < max; i++)
+              ia[i] = bytes.charCodeAt(i);
+          return new File([ia], file.name, { type: mime });
+      };
+      
+      var resize = function () {
+          var width = image.width;
+          var height = image.height;
+          if (width > height) {
+              if (width > maxSize) {
+                  height *= maxSize / width;
+                  width = maxSize;
+              }
+          } else {
+              if (height > maxSize) {
+                  width *= maxSize / height;
+                  height = maxSize;
+              }
+          }
+          canvas.width = width;
+          canvas.height = height;
+          canvas.getContext('2d').drawImage(image, 0, 0, width, height);
+          var dataUrl = canvas.toDataURL('image/jpeg');
+          return { newfile: dataURItoBlob(dataUrl), dataurl: dataUrl };
+      };
+
+      return new Promise(function (resolve, reject) {
+          if (!file.type.match(/image.*/)) {
+              reject(new Error("Not an image"));
+              return;
+          }
+          reader.onload = function (readerEvent) {
+              image.onload = function () { 
+                return resolve(resize());
+              };
+              image.src = readerEvent.target.result;
+          };
+          reader.readAsDataURL(file);
+      });
+    };
 
 }]);

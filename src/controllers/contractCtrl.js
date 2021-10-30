@@ -57,7 +57,7 @@ angular.module('psmsApp')
     c.saveOrUpdateAcademicYearList = function(){
       if (c.semester && c.academic_year_from && c.academic_year_to && c.undergraduate_amount && c.masteral_doctorate_amount){
         $mdDialog.show({
-          contentElement: '#myStaticDialog',
+          contentElement: '#confirmPasswordDialog',
           parent: angular.element(document.body)
         });
         c.func = c.buttonText == 'ADD'? c.functions.storeAcademicYearList : c.functions.updateAcademicYearList;
@@ -86,7 +86,7 @@ angular.module('psmsApp')
 
     c.setContract = function(selected){
       $mdDialog.show({
-        contentElement: '#myStaticDialog',
+        contentElement: '#confirmPasswordDialog',
         parent: angular.element(document.body)
       });
       c.ascId = selected.asc_id;
@@ -95,7 +95,7 @@ angular.module('psmsApp')
 
     c.closeContract = function(){
       $mdDialog.show({
-        contentElement: '#myStaticDialog',
+        contentElement: '#confirmPasswordDialog',
         parent: angular.element(document.body)
       });
       c.func = c.functions.closeContract;
@@ -103,7 +103,7 @@ angular.module('psmsApp')
 
     c.openContract = function(){
       $mdDialog.show({
-        contentElement: '#myStaticDialog',
+        contentElement: '#confirmPasswordDialog',
         parent: angular.element(document.body)
       });
       c.func = c.functions.openContract;
@@ -118,7 +118,7 @@ angular.module('psmsApp')
 
     // c.updateContract = function(){
     //   $mdDialog.show({
-    //     contentElement: '#myStaticDialog',
+    //     contentElement: '#confirmPasswordDialog',
     //     parent: angular.element(document.body)
     //   });
     // }

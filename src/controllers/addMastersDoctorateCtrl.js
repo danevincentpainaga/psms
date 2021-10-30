@@ -177,7 +177,12 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
   }
 
   md.addressSearchQuery = function(searched){
-    return addScholarsService.getAddresses(searched);
+    return addScholarsService.getAddresses(searched).then(response => {
+      for (var i = 0; i < response.length; i++) {
+        Object.assign(response[i], { address: response[i].address+' '+response[i].municipality+', ANTIQUE' });
+      }
+      return response;
+    });
   }
 
   md.motherSearchQuery = function(searched){

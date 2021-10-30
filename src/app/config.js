@@ -70,9 +70,9 @@ angular
       resolve:{
         academicContractDetails: ['academicContractService', 'validateContractStatusService', function(academicContractService, validateContractStatusService){
           return academicContractService.getAcademicContractDetails().then(response => {
-            return validateContractStatusService.checkStatus(response.data[0]);
+            return validateContractStatusService.checkStatus(response);
           }, err=> {
-            return false;
+            return validateContractStatusService.checkStatus(err);
           });
         }]
       },
@@ -86,9 +86,9 @@ angular
       resolve:{
         academicContractDetails: ['academicContractService', 'validateContractStatusService', function(academicContractService, validateContractStatusService){
           return academicContractService.getAcademicContractDetails().then(response => {
-            return validateContractStatusService.checkStatus(response.data[0]);
+            return validateContractStatusService.checkStatus(response);
           }, err=> {
-            return false;
+            return validateContractStatusService.checkStatus(err);
           });
         }]
       },
@@ -144,9 +144,9 @@ angular
       resolve:{
         academicContractDetails: ['academicContractService', 'validateContractStatusService', function(academicContractService, validateContractStatusService){
           return academicContractService.getAcademicContractDetails().then(response => {
-            return validateContractStatusService.checkStatus(response.data[0]);
+            return validateContractStatusService.checkStatus(response);
           }, err=> {
-            return false;
+            return validateContractStatusService.checkStatus(err);
           });
         }]
       },
@@ -160,9 +160,9 @@ angular
       resolve:{
         academicContractDetails: ['academicContractService', 'validateContractStatusService', function(academicContractService, validateContractStatusService){
           return academicContractService.getAcademicContractDetails().then(response => {
-            return validateContractStatusService.checkStatus(response.data[0]);
+            return validateContractStatusService.checkStatus(response);
           }, err=> {
-            return false;
+            return validateContractStatusService.checkStatus(err);
           });
         }]
       },
@@ -197,7 +197,7 @@ angular
       var auth = $cookies.getObject('auth');
       console.log(auth);
 
-        $rootScope.token = auth.success;
+        $rootScope.token = auth.token;
 
         return authApiService.getAuthenticatedUser().then(response=>{
 
@@ -220,18 +220,29 @@ angular
             
           }
 
+        }, function(err){
+          console.log(err);
         });
 
         function validateDegree(degree_access, protected_route) {
-            if (degree_access.indexOf('Masters') == -1 || degree_access.indexOf('Doctorate') == -1) {
 
-                protected_route.push('add_masteral_doctorate_scholars');
-                $rootScope.master_doctorate_access = false;
-                return;
-                
+            $rootScope.master_doctorate_access = ['Masters', 'Doctorate', '*'].some(degree => degree_access.indexOf(degree) !== -1);
+            $rootScope.undergraduate_access = ['Undergraduate', '*'].some(degree => degree_access.indexOf(degree) !== -1)
+            $rootScope.renewal_access = ['Masters', 'Doctorate', 'Undergraduate', '*'].some(degree => degree_access.indexOf(degree) !== -1)
+            
+            if (!$rootScope.master_doctorate_access) {
+              protected_route.push('add_masteral_doctorate_scholars');
+            }
+
+            if (!$rootScope.undergraduate_access ) {
+              protected_route.push('add_undergraduate_scholars');
+            }
+
+            if (!$rootScope.renewal_access ) {
+              protected_route.push('renew_scholars');
             }
             
-            return $rootScope.master_doctorate_access = true;
+            return;
         }
 
         function validateRoute(protected_route) {

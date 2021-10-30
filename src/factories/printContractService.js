@@ -2,13 +2,22 @@ const pdfMake = require("pdfmake/build/pdfmake");
 const pdfFonts = require("pdfmake/build/vfs_fonts_times");
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
-angular.module('psmsApp').factory('printContract', ['$timeout','$q', function($timeout, $q) {
+angular.module('psmsApp').
+  factory('printContract', 
+  [
+    '$timeout',
+    '$q',
+    '$filter',
+  function (
+    $timeout,
+    $q,
+    $filter) {
   
   var self = this;
 
   self.print = function(scholarDetails, ctrl){
 
-    let pdfDocGenerator = self.contract();
+    let pdfDocGenerator = self.contract(scholarDetails);
 
     if (self.isMobile()) {
       // This print is for mobile browsers
@@ -27,7 +36,7 @@ angular.module('psmsApp').factory('printContract', ['$timeout','$q', function($t
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   }
 
-  self.contract = function(){
+  self.contract = function(scholarDetails){
     
       let fonts = {
         TimesNewRoman: {
@@ -60,14 +69,14 @@ angular.module('psmsApp').factory('printContract', ['$timeout','$q', function($t
             columns: [
               {
                 text: [
-                    { text:'Name of Student: MARIA LUIS MANZANO DELOS SANTOS CRUZ\n' },
-                    { text:'Residence Address: PIAPI I HAMTIC, ANTIQUE' },
+                    { text:'Name of Student: '+$filter('concatName')(scholarDetails)+'\n' },
+                    { text:'Residence Address: '+$filter('formatAddress')(scholarDetails.address) },
                 ],
                 width: '65%'
               },
               {
                   text: [
-                      { text:'Date of Birth: 07/15/2000 \n' },
+                      { text:'Date of Birth: '+scholarDetails.date_of_birth+' \n' },
                       { text:'Civil Status: Single' }
                   ],
               }

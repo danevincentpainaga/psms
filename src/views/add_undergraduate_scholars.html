@@ -134,12 +134,12 @@
                       md-input-name="autocompleteField"
                       md-input-minlength="1"
                       md-no-cache="false"
-                      md-selected-item="ac.address"
+                      md-selected-item="ac.fulladdress"
                       md-search-text="ac.search_address"
                       md-delay="500"
                       md-selected-item-change="ac.selectedAddressChange(address)"
                       md-items="address in ac.addressSearchQuery(ac.search_address)"
-                      md-item-text="address.address"
+                      md-item-text="address.fulladdress"
                       md-autoselect="true"
                       md-escape-options="clear"
                       md-require-match=""
@@ -147,7 +147,7 @@
                       ng-trim="true"
                       required>
                       <md-item-template>
-                        <span md-highlight-text="ac.search_address" md-highlight-flags="^i">{{address.address}}</span>
+                        <span md-highlight-text="ac.search_address" md-highlight-flags="^i">{{address.fulladdress}}</span>
                       </md-item-template>
                       <md-not-found>
                         No address matching "{{ac.search_address}}" were found.
@@ -165,12 +165,17 @@
                   <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="20">
                     <label>Gender</label>
                     <md-select ng-model="ac.gender" required>
-                      <md-option value="Male"><em>Male</em></md-option>
-                      <md-option value="Female"><em>Female</em></md-option>
+                      <md-option ng-repeat="gender in ac.gender_list" ng-value="gender"><em>{{gender}}</em></md-option>
                     </md-select>
                   </md-input-container>
                 </div>
                 <div layout-xs="column" layout-gt-xs="column" layout-gt-sm="column" layout-gt-md="row">
+                  <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="20" style="padding-right:10px">
+                    <label>Civil status</label>
+                    <md-select ng-model="ac.civil_status" required>
+                      <md-option ng-repeat="civil_status in ac.civil_status_list" ng-value="civil_status"><em>{{ civil_status }}</em></md-option>
+                    </md-select>
+                  </md-input-container>
                   <md-autocomplete flex
                     md-input-name="autocompleteField"
                     md-input-minlength="1"
@@ -217,10 +222,6 @@
                       No address matching "{{ac.search_course}}" were found.
                     </md-not-found>
                   </md-autocomplete>
-                  <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="15">
-                    <label>section</label>
-                    <input ng-model="ac.section" required>
-                  </md-input-container>
                 </div>
                 <div layout-xs="column" layout-gt-xs="column" layout-gt-sm="column" layout-gt-md="row">
                   <md-input-container flex>
@@ -233,6 +234,10 @@
                       <md-option value="V"><em>5th year</em></md-option>
                       <md-option value="VI"><em>6th year</em></md-option>
                     </md-select>
+                  </md-input-container>
+                  <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="15">
+                    <label>section</label>
+                    <input ng-model="ac.section" required>
                   </md-input-container>
                   <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="30" required>
                     <label>ID NO.</label>

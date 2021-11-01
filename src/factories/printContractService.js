@@ -15,9 +15,9 @@ angular.module('psmsApp').
   
   var self = this;
 
-  self.print = function(scholarDetails, ctrl){
+  self.print = function(scholarDetails, ctrl, governor){
 
-    let pdfDocGenerator = self.contract(scholarDetails);
+    let pdfDocGenerator = self.contract(scholarDetails, governor);
 
     if (self.isMobile()) {
       // This print is for mobile browsers
@@ -36,7 +36,7 @@ angular.module('psmsApp').
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   }
 
-  self.contract = function(scholarDetails){
+  self.contract = function(scholarDetails, governor){
     
       let fonts = {
         TimesNewRoman: {
@@ -69,15 +69,15 @@ angular.module('psmsApp').
             columns: [
               {
                 text: [
-                    { text:'Name of Student: '+$filter('concatName')(scholarDetails)+'\n' },
-                    { text:'Residence Address: '+$filter('formatAddress')(scholarDetails.address) },
+                    { text:'Name of Student: '+ $filter('concatName')(scholarDetails) +'\n' },
+                    { text:'Residence Address: '+ $filter('formatAddress')(scholarDetails.address) },
                 ],
                 width: '65%'
               },
               {
                   text: [
                       { text:'Date of Birth: '+scholarDetails.date_of_birth+' \n' },
-                      { text:'Civil Status: Single' }
+                      { text:'Civil Status: '+scholarDetails.civil_status }
                   ],
               }
             ],
@@ -90,42 +90,44 @@ angular.module('psmsApp').
             alignment: 'justify',
             columns: [
                       { text:'Father: \n', margin: [39, 0], width: '40%'},
-                      { text:': JOSE G. TOLEDO' }
+                      { text:': ', width: 6},
+                      { text: $filter('fatherDetails')(scholarDetails.father_details), width:230 }
             ],
           },
           {
             alignment: 'justify',
             columns: [
               { text:'Mother: \n', margin: [39, 0], width: '40%' },
-              { text:': MARJORIE SANTILLAN PANCHO \n' }
+              { text:': ', width: 6},
+              { text: $filter('motherDetails')(scholarDetails.mother_details)+' \n', width:220 }
             ],
           },
           {
             alignment: 'justify',
             columns: [
               { text:'Name of School where Enrolled: \n', width: '40%' },
-              { text:': ST. ANTHONY\'S COLLEGE \n' }
+              { text:': '+scholarDetails.school.school_name+' \n' }
             ]
           },
           {
             alignment: 'justify',
             columns: [
               { text:'Course and Year Level: \n', width: '40%'},
-              { text:': BS INFORMATION TECHNOLGY I', margin: [0, 0, 20, 0]}
+              { text:': '+scholarDetails.course.course, margin: [0, 0, 20, 0]}
             ]
           },
           {
             alignment: 'justify',
             columns: [
               { text:'Applicable SY and Semester: \n', width: '40%'},
-              { text:': 2020-2021 1st Semester', margin: [0, 0, 20, 0]}
+              { text:': '+scholarDetails.academicyear_semester_contract.academic_year+' '+scholarDetails.academicyear_semester_contract.semester, margin: [0, 0, 20, 0]}
             ]
           },
           {
             alignment: 'justify',
             columns: [
               { text:'Amount of Educational Assistance for on (1) Semester', width: '59%' },
-              { text:': Php 5,000.00'}
+              { text:': Php '+$filter('currency')($filter('displayAmount')(scholarDetails.degree, scholarDetails.academicyear_semester_contract), '', 2)}
             ]
           },
           {
@@ -174,7 +176,7 @@ angular.module('psmsApp').
             alignment: 'justify',
             columns: [
               { text:'1.', width: 'auto', margin: [35, 0, 0, 0]},
-              {margin: [13, 0, 0, 0], text:'Shall release the amout of Php 5,000.00 to the student as a grant for the applicable semester;'},
+              {margin: [13, 0, 0, 0], text:'Shall release the amout of Php '+ $filter('currency')($filter('displayAmount')(scholarDetails.degree, scholarDetails.academicyear_semester_contract), '', 2) +' to the student as a grant for the applicable semester;'},
             ]
           },
           {
@@ -193,8 +195,8 @@ angular.module('psmsApp').
           {
             alignment: 'center',
             columns: [
-              { text:'JOSE P. TOLEDO'},
-              { text:'RHODORA J. CADIAO'}
+              { text: $filter('concatName')(scholarDetails) },
+              { text: governor }
             ]
           },
           {
@@ -210,7 +212,7 @@ angular.module('psmsApp').
               {
                 text: [
                   {text: 'SUBSCRIBED AND SWORN TO '},
-                  {text: 'before me, this ______ day of __________________, ______ by JOSE P. TOLEDO, JR and RHODORA J. CADIAO who exhibited to me their STUDENT I.D NO. 438501150107 and Tax Identification No. 117-574-963 issued on Nov. 5, 1999 at San Jose de Buenavista, Province of Antique, Philippines respectively.'},
+                  {text: 'before me, this ______ day of __________________, ______ by '+ $filter('concatName')(scholarDetails) +' and '+ governor +' who exhibited to me their STUDENT I.D NO. '+ scholarDetails.student_id_number +' and Tax Identification No. 117-574-963 issued on Nov. 5, 1999 at San Jose de Buenavista, Province of Antique, Philippines respectively.'},
                 ]
               }
             ]

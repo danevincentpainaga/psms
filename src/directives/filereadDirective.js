@@ -45,13 +45,6 @@ angular.module('psmsApp').directive("fileread", ['$timeout',  function ($timeout
                     var workbook = XLSX.read(data, {type: 'binary'});
 
                     scope.json_data = XLSX.utils.sheet_to_json(workbook.Sheets['Scholars list']);
-
-                    if (scope.json_data.length < 1) {
-                        scope.state = false;
-                        $elm.val(null);
-                        alert('File is empty');
-                        return;
-                    }
                     
                     var sheet_name = workbook.SheetNames.indexOf('Scholars list');
 
@@ -60,6 +53,13 @@ angular.module('psmsApp').directive("fileread", ['$timeout',  function ($timeout
                         alert('Can\'t find sheet name Scholars list. Note! dont include spaces before and after Scholars list sheet');
                         $elm.val(null);
                         return;
+                    }
+                    
+                    if (scope.json_data.length < 1) {
+                      scope.state = false;
+                      $elm.val(null);
+                      alert('File is empty');
+                      return;
                     }
 
                     var headerNames = XLSX.utils.sheet_to_json(workbook.Sheets['Scholars list'], { header: 1 })[0];

@@ -70,6 +70,7 @@ angular
       resolve:{
         academicContractDetails: ['academicContractService', 'validateContractStatusService', function(academicContractService, validateContractStatusService){
           return academicContractService.getAcademicContractDetails().then(response => {
+            debugger;
             return validateContractStatusService.checkStatus(response);
           }, err=> {
             return validateContractStatusService.checkStatus(err);
@@ -201,20 +202,19 @@ angular
 
         return authApiService.getAuthenticatedUser().then(response=>{
 
-          $rootScope.access_degree = JSON.parse(response.data.degree_access);
+          $rootScope.access_degree =  JSON.parse(response.data.degree_access).indexOf("*") > -1? ['Masters', 'Doctorate', 'Undergraduate'] :  JSON.parse(response.data.degree_access);
           $rootScope.username = response.data.name;
-          let degree_access = JSON.parse(response.data.degree_access);
 
           if (response.data.user_type === 'User') {
 
-            validateDegree(degree_access, usersCannotAccess);
+            validateDegree($rootScope.access_degree, usersCannotAccess);
             validateRoute(usersCannotAccess);
             $rootScope.isAdmin = false;
 
           }
           else{
 
-            validateDegree(degree_access, adminCannotAccess);
+            validateDegree($rootScope.access_degree, adminCannotAccess);
             validateRoute(adminCannotAccess);
             $rootScope.isAdmin = true;
             

@@ -199,7 +199,7 @@ app.controller('exportScholarsCtrl',['$scope', '$filter', '$timeout', 'schoolApi
     //     IP: ex.IP,
     // };
 
-     exportScholarsApiService.getScholarsToExport().then(response => {
+    exportScholarsApiService.getScholarsToExport().then(response => {
       console.log(response);
       splitArrayOfChunks(response.data);
 

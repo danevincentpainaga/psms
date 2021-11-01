@@ -48,7 +48,7 @@ angular.module('psmsApp')
 
     var ac = this;
     ac.gender_list = ['Male', 'Female'];
-    ac.civil_status_list = ['Single', 'Married', 'Widowed', 'Divorced'];
+    ac.civil_status_list = ['SINGLE', 'MARRIED', 'WIDOWED', 'DIVORCED'];
     ac.list_of_schools = [];
     ac.scholars = [];
     ac.buttonText = 'Save';
@@ -110,6 +110,7 @@ angular.module('psmsApp')
           firstname: ac.firstname.toUpperCase(),
           lastname: ac.lastname.toUpperCase(),
           middlename: (ac.middlename || "").toUpperCase(),
+          academicyear_semester_contract: academicContractDetails.academic_year_semester,
           addressId: ac.addressId,
           address: ac.fulladdress,
           date_of_birth: ac.date_of_birth,
@@ -117,7 +118,9 @@ angular.module('psmsApp')
           gender: ac.gender,
           civil_status: ac.civil_status,
           schoolId: ac.schoolId,
+          school: ac.school,
           courseId: ac.courseId,
+          course: ac.course,
           section: ac.section.toUpperCase(),
           year_level: ac.year_level.toUpperCase(),
           student_id_number: ac.student_id_number.toUpperCase(),
@@ -150,7 +153,7 @@ angular.module('psmsApp')
 
     ac.print = function(scholarDetails, idx){
       ac.selectedIndex = idx;
-      printContract.print(scholarDetails, ac);
+      printContract.print(scholarDetails, ac, academicContractDetails.governor);
     }
 
     ac.selectedFatherDetailsChange = function(fdetails){
@@ -239,11 +242,12 @@ angular.module('psmsApp')
 
     function storeNewScholarDetails(scholarDetails){
         scholarApiService.storeNewScholarDetails(scholarDetails).then(response => {
+          debugger
         ac.clear();
         ac.buttonText = 'Save';
         ac.saving = false;
         swalert.toastInfo('Scholar saved!', 'success', 'top-right');
-        printContract.print(scholarDetails, ac);
+        printContract.print(scholarDetails, ac, academicContractDetails.governor);
         ac.scholar_details.$setUntouched();
         getNewUndergraduateScholars({ searched: undefined }, null );
       }, err => {
@@ -280,6 +284,7 @@ angular.module('psmsApp')
     function hasSemester(){
       ac.semester = academicContractDetails.academic_year_semester.semester;
       ac.academic_year = academicContractDetails.academic_year_semester.academic_year;
+      debugger;
     }
 
     hasSemester();

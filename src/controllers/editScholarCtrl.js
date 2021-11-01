@@ -36,6 +36,8 @@ angular.module('psmsApp')
     ec.parentsButtonText = 'Update';
     ec.enablePrimaryButtonText = 'Enable';
     ec.enableParentsButtonText = 'Enable';
+    ec.gender_list = ['Male', 'Female'];
+    ec.civil_status_list = ['SINGLE', 'MARRIED', 'WIDOWED', 'DIVORCED'];
 
     $scope.$watch('scholar', function(n, o){
       if (o === undefined) {
@@ -173,6 +175,7 @@ angular.module('psmsApp')
             courseId: ec.binded_copy.courseId,
             section: ec.binded_copy.section.toUpperCase(),
             year_level: ec.binded_copy.year_level,
+            civil_status: ec.binded_copy.civil_status,
             IP: ec.binded_copy.IP,
           }
 

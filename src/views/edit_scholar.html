@@ -73,8 +73,7 @@
             <md-input-container flex="20">
               <label>Gender</label>
               <md-select ng-model="ec.binded_copy.gender" ng-disabled="!ec.primary_details" required>
-                <md-option value="Male"><em>Male</em></md-option>
-                <md-option value="Female"><em>Female</em></md-option>
+                <md-option ng-repeat="gender in ec.gender_list" ng-value="gender"><em>{{gender}}</em></md-option>
               </md-select>
             </md-input-container>
           </div>
@@ -88,8 +87,10 @@
               <input ng-model="ec.binded_copy.course.course" ng-click="ec.showCourseModal()" ng-disabled="!ec.primary_details" disable-input required>
             </md-input-container>
             <md-input-container flex="15">
-              <label>section</label>
-              <input ng-model="ec.binded_copy.section"  ng-disabled="!ec.primary_details" required>
+              <label>Civil status</label>
+              <md-select ng-model="ec.binded_copy.civil_status" ng-disabled="!ec.primary_details" required>
+                <md-option ng-repeat="civil_status in ec.civil_status_list" ng-value="civil_status"><em>{{ civil_status }}</em></md-option>
+              </md-select>
             </md-input-container>
           </div>
           <div layout="row" layout-xs="column">
@@ -103,6 +104,10 @@
                 <md-option value="V"><em>5th year</em></md-option>
                 <md-option value="VI"><em>6th year</em></md-option>
               </md-select>
+            </md-input-container>
+            <md-input-container flex="15">
+              <label>section</label>
+              <input ng-model="ec.binded_copy.section"  ng-disabled="!ec.primary_details" required>
             </md-input-container>
             <md-input-container flex="30">
               <label>ID NO.</label>

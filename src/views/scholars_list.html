@@ -116,21 +116,27 @@
           <td>{{ scholar | amount:true | currency : '' : 0 }}</td>
           <td>{{ scholar.IP }}</td>
           <td>{{ scholar.created_at | formatDate }}</td>
-          <td style="align-items: center;">
-            <span style="margin-right: 20px;">{{ scholar.updated_at | formatDate }}</span>
-            <md-icon class="material-icons" style="font-size: 17px; box-sizing: border-box;padding: 3px;cursor: pointer;outline-style: none;" ng-click="sc.edit(scholar)">
-              <md-tooltip>Edit</md-tooltip>
-              edit
-            </md-icon>
-            <md-icon class="material-icons" style="font-size: 17px; box-sizing: border-box;padding: 3px;cursor: pointer;outline-style: none;" hide-btn-actions="{{ ay.state }}">
-              <md-tooltip>Delete</md-tooltip>
-              close
-            </md-icon>
-            <span ng-if="$index===sc.selectedIndex" style="margin: 7px 0px;">opening..</span>
-            <md-icon class="material-icons" ng-if="sc.allowPrint(scholar)" style="font-size: 17px; box-sizing: border-box;padding: 3px;cursor: pointer;outline-style: none;" ng-click="sc.print(scholar, $index)" ng-hide="$index===sc.selectedIndex">
-              <md-tooltip>Print contract</md-tooltip>
-              print
-            </md-icon>
+          <td>
+            <div style="align-items: center;display: flex;justify-content: space-between;min-width: 250px;">
+              <div>
+                <span style="margin-right: 20px;">{{ scholar.updated_at | formatDate }}</span>
+              </div>
+              <div>
+                <md-icon class="material-icons" style="font-size: 17px; box-sizing: border-box;padding: 3px;cursor: pointer;outline-style: none;" ng-click="sc.edit(scholar)">
+                  <md-tooltip>Edit</md-tooltip>
+                  edit
+                </md-icon>
+                <md-icon class="material-icons" style="font-size: 17px; box-sizing: border-box;padding: 3px;cursor: pointer;outline-style: none;" hide-btn-actions="{{ ay.state }}">
+                  <md-tooltip>Delete</md-tooltip>
+                  close
+                </md-icon>
+                <span ng-if="$index===sc.selectedIndex" style="margin: 7px 0px;">opening..</span>
+                <md-icon class="material-icons" ng-if="sc.allowPrint(scholar)" style="font-size: 17px; box-sizing: border-box;padding: 3px;cursor: pointer;outline-style: none;" ng-click="sc.print(scholar, $index)" ng-hide="$index===sc.selectedIndex">
+                  <md-tooltip>Print contract</md-tooltip>
+                  print
+                </md-icon>
+              </div>
+            </div>
           </td>
         </tr>
       </tbody>

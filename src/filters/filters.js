@@ -39,7 +39,7 @@ app.filter('fatherDetails', function(){
       }
 
       if (parent_details.firstname && parent_details.lastname && parent_details.middlename) {
-        return parent_details.firstname+" "+parent_details.lastname+", "+parent_details.middlename;
+        return parent_details.firstname+" "+parent_details.middlename+" "+parent_details.lastname;
       }
 
       return 'NONE';
@@ -57,7 +57,7 @@ app.filter('motherDetails', function(){
       if (!parent_details.middlename) {
         return parent_details.firstname+" "+parent_details.maiden_name;
       }
-      return parent_details.firstname+" "+parent_details.maiden_name+", "+parent_details.middlename;
+      return parent_details.firstname+" "+parent_details.middlename+" "+parent_details.maiden_name;
     }
   }
 
@@ -120,5 +120,14 @@ app.filter('trim', function(){
 app.filter('concatName', function(){
   return function(value){
     return value.firstname+' '+value.middlename+' '+value.lastname;
+  }
+});
+
+app.filter('displayAmount', function(){
+  return function(degree, contract){
+    if(degree === 'Undergraduate') {
+      return contract.undergraduate_amount;
+    }
+    return contract.masteral_doctorate_amount;
   }
 });

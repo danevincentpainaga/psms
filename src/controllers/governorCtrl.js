@@ -15,7 +15,7 @@ angular.module('psmsApp')
 
 	gov.updateGovernor = function(){
 		gov.updating = true;
-		let governor = gov.firstname+' '+gov.initial+'. '+gov.lastname;
+		let governor = (gov.firstname+' '+gov.initial+'. '+gov.lastname).toUpperCase();
 		governorService.updateGovernor({ governor: governor }).then(response => {
 			console.log(response);
 			gov.updating = false;

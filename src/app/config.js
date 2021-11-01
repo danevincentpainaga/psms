@@ -70,7 +70,6 @@ angular
       resolve:{
         academicContractDetails: ['academicContractService', 'validateContractStatusService', function(academicContractService, validateContractStatusService){
           return academicContractService.getAcademicContractDetails().then(response => {
-            debugger;
             return validateContractStatusService.checkStatus(response);
           }, err=> {
             return validateContractStatusService.checkStatus(err);

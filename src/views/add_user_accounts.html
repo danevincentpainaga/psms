@@ -34,19 +34,17 @@
               <span ng-if="u.password_not_match" style="color: red;">Password does not match</span>
             </md-input-container>
             <md-input-container flex>
-              <label>User type</label>
+              <label>Role</label>
               <md-select ng-model="u.user_type" name="user_type" required>
-                <md-option value="Admin"><em>Admin</em></md-option>
-                <md-option value="User"><em>User</em></md-option>
+                <md-option ng-repeat="user_type in u.user_type_list" ng-value="user_type"><em>{{ user_type }}</em></md-option>
               </md-select>
             </md-input-container>
           </div>
           <div layout="row" layout-xs="column">
             <md-input-container flex="35">
               <label>Status</label>
-              <md-select ng-model="u.year_level" name="year_level" required>
-                <md-option value="Active"><em>Active</em></md-option>
-                <md-option value="In-Active"><em>In-Active</em></md-option>
+              <md-select ng-model="u.status" name="status" required>
+                <md-option ng-repeat="status in u.status_list" ng-value="status"><em>{{ status }}</em></md-option>
               </md-select>
             </md-input-container>
           </div>
@@ -58,7 +56,7 @@
           <md-radio-button value="*" aria-label="All" class="md-primary">
             All
           </md-radio-button>
-          <md-radio-button value="Custom" aria-label="Custom" class="md-primary" ng-if="u.degree_access">
+          <md-radio-button value="Custom" aria-label="Custom" class="md-primary">
             Custom
           </md-radio-button>
         </div>
@@ -103,7 +101,7 @@
           <md-radio-button value="*" aria-label="All" class="md-primary">
             All
           </md-radio-button>
-          <md-radio-button value="Custom" aria-label="Custom" class="md-primary" ng-if="u.municipality_access">
+          <md-radio-button value="Custom" aria-label="Custom" class="md-primary">
             Custom
           </md-radio-button>
         </div>
@@ -130,8 +128,8 @@
 
       <div style="text-align: right;margin-top: 3em;">
         <md-button class="md-raised md-primary"
-          ng-click="u.save()"
-          ng-disabled="u.addUserForm.$invalid || u.addUserForm.selectedDegree.$invalid || u.addUserForm.selectedMunicipalities.$invalid || u.isSaving">{{u.saveText}}
+          ng-click="u.saveUser()"
+          ng-disabled="u.addUserForm.$invalid || u.addUserForm.selectedDegree.$invalid || u.addUserForm.selectedMunicipalities.$invalid || u.isSaving">{{ u.isSaving? 'saving...' : 'save' }}
         </md-button>
         <md-button
           class="md-raised"

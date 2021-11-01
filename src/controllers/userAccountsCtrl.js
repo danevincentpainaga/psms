@@ -14,16 +14,17 @@ angular.module('psmsApp')
     function ($scope, $rootScope, usersApiService, debounce, swalert, $mdSidenav, municipalitiesApiService) {
 
     var u = this;
-    u.saveText = 'save';
+    u.user_type_list = ['Admin', 'User'];
     u.degree_list = ['Undergraduate', 'Masters', 'Doctorate'];
+    u.status_list = ['Active', 'In-Active'];
     u.degree_options = "All";
     u.selected_degree_options = "*";
     u.selected_municipality_options = "*";
     u.selectedDegree = [];
-    u.selectedMunicipalities = ['*'];
-    u.selectedDegree = ['*'];
+    u.selectedMunicipalities = ["*"];
+    u.selectedDegree = ["*"];
 
-    showCustomDegreeMunicpality($rootScope.isAdmin);
+    // showCustomDegreeMunicpality($rootScope.isAdmin);
     getMunicipalities();
 
     $scope.$watch('u.searched_user', debounce(function() {
@@ -36,8 +37,8 @@ angular.module('psmsApp')
 
     u.edit = function(selectedUser){
       console.log(selectedUser);
-     let bool = selectedUser.user_type === 'User'? false : true;
-     showCustomDegreeMunicpality(bool);
+    //  let bool = selectedUser.user_type === 'User'? false : true;
+    //  showCustomDegreeMunicpality(bool);
      $mdSidenav('addUpdateUser').toggle();
     }
 
@@ -45,10 +46,10 @@ angular.module('psmsApp')
       $mdSidenav('addUpdateUser').toggle();
     }
 
-    u.save = function(){
+    u.saveUser = function(){
 
       console.log(u.selectedDegree.length, u.selectedMunicipalities.length);
-      if (!u.name && !u.email && !u.password && !u.c_password && !u.user_type && !u.year_level && !u.selectedDegree.length <= 0 && u.selectedMunicipalities.length <= 0) {
+      if (!u.name && !u.email && !u.password && !u.c_password && !u.user_type && !u.status && !u.year_level && !u.selectedDegree.length <= 0 && !u.selectedMunicipalities.length <= 0) {
         return;
       }
 
@@ -58,19 +59,30 @@ angular.module('psmsApp')
       }
 
       u.isSaving = true;
-      u.saveText = 'saving...';
 
       let newUser = {
         name: u.name,
         email: u.email,
         password: u.password,
-        c_password: u.c_password,
-        user_type: u.user_type,
-        year_level: u.year_level,
+        municipal_access: u.selectedMunicipalities,
         degree_access: u.selectedDegree,
-        municipality_access: u.selectedMunicipalities
+        user_type: u.user_type,
+        status: u.status
       }
       console.log(newUser);
+
+      usersApiService.createUsersAccount(newUser).then(response => {
+        console.log(response);
+        swalert.toastInfo('User saved!', 'success', 'top-right');
+        u.isSaving = false;
+        clearUserInputs();
+        getUserAccounts();
+      }, err => {
+        console.log(err);
+        swalert.toastInfo(err.data.message,  'error', 'top-right');
+        u.isSaving = false;
+      });
+
     }
 
     u.close = function(){
@@ -91,7 +103,7 @@ angular.module('psmsApp')
         u.custom_degree = true;   
       }
       else{
-        u.selectedDegree = ['*'];
+        u.selectedDegree = ["*"];
         u.custom_degree = false;
       }
     }
@@ -102,7 +114,7 @@ angular.module('psmsApp')
         u.custom_municipality = true;
       }
       else{
-        u.selectedMunicipalities = ['*'];
+        u.selectedMunicipalities = ["*"];
         u.custom_municipality = false;
       }
     }
@@ -117,7 +129,7 @@ angular.module('psmsApp')
       return searched ? u.degree_list.filter(value => value.toLowerCase().match(searched)) : [];
     }
 
-    function getUserAccounts(details){
+    function getUserAccounts(details = ""){
       usersApiService.getUserAccounts(details).then(response => {
         console.log(response.data);
         u.users_list = response.data;
@@ -145,6 +157,19 @@ angular.module('psmsApp')
         u.degree_access = false;
         u.municipality_access = false;
       }
+    }
+
+    function clearUserInputs(){
+      u.name = "";
+      u.email = "";
+      u.password = "";
+      u.c_password = "";
+      u.user_type = "";
+      u.status = "";
+      u.selectedMunicipalities = ["*"];
+      u.selectedDegree = ["*"];
+      u.addUserForm.$setPristine();
+      u.addUserForm.$setUntouched();
     }
 
 }]);

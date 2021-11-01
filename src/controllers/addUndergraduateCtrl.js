@@ -284,7 +284,6 @@ angular.module('psmsApp')
     function hasSemester(){
       ac.semester = academicContractDetails.academic_year_semester.semester;
       ac.academic_year = academicContractDetails.academic_year_semester.academic_year;
-      debugger;
     }
 
     hasSemester();

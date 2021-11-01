@@ -69,10 +69,10 @@ angular.module('psmsApp').
             columns: [
               {
                 text: [
-                    { text:'Name of Student: '+ $filter('concatName')(scholarDetails) +'\n' },
+                    { text:'Name of Student: '+ $filter('concatName')(scholarDetails) +'\n'},
                     { text:'Residence Address: '+ $filter('formatAddress')(scholarDetails.address) },
                 ],
-                width: '65%'
+                width: '65%',
               },
               {
                   text: [
@@ -91,7 +91,7 @@ angular.module('psmsApp').
             columns: [
                       { text:'Father: \n', margin: [39, 0], width: '40%'},
                       { text:': ', width: 6},
-                      { text: $filter('fatherDetails')(scholarDetails.father_details), width:230 }
+                      { text: $filter('fatherDetails')(scholarDetails.father_details), width:220 }
             ],
           },
           {
@@ -222,13 +222,13 @@ angular.module('psmsApp').
             text: 'Doc. No. : _________ ;',
           },
           {
-            text: 'Page No.: _________ ;',
+            text: 'Page No. : _________ ;',
           },
           {
             text: 'Book No.: _________ ;',
           },
           {
-            text: 'Series of __________ ;',
+            text: 'Series of  __________ ;',
           },
         ],
         defaultStyle: {

@@ -36,8 +36,9 @@ angular.module('psmsApp').
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   }
 
-  self.contract = function(scholarDetails, governor){
-    
+  self.contract = function(scholarDetails, gov){
+      let governor = $filter('formatGovernor')(JSON.parse(gov));
+
       let fonts = {
         TimesNewRoman: {
             normal: 'Times-Regular.ttf',
@@ -193,18 +194,21 @@ angular.module('psmsApp').
           },
           '\n\n\n\n',
           {
-            alignment: 'center',
             columns: [
-              { text: $filter('concatName')(scholarDetails) },
-              { text: governor }
-            ]
-          },
-          {
+              {
+                text: [
+                    { text: $filter('concatName')(scholarDetails) +'\n'},
+                    { text:'Student', bold: true },
+                ]
+              },
+              {
+                  text: [
+                      { text: governor +' \n' },
+                      { text:'Governor', bold: true  }
+                  ]
+              }
+            ],
             alignment: 'center',
-            columns: [
-              { text:'Student', bold: true },
-              { text:'Governor', bold: true }
-            ]
           },
           '\n\n',
           {

@@ -18,6 +18,7 @@ angular.module('psmsApp')
     'swalert',
     '$mdSidenav',
     '$mdDialog',
+    '$filter',
     function (
       $scope,
       academicSemesterYearApiService,
@@ -26,7 +27,8 @@ angular.module('psmsApp')
       moment,
       swalert,
       $mdSidenav,
-      $mdDialog) {
+      $mdDialog,
+      $filter) {
 
     var c = this;
 

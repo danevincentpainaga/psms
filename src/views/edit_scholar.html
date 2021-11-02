@@ -45,16 +45,16 @@
               </div>
               <md-input-container flex="" style="margin-top: 50px;margin-bottom: 0px;">
                 <label>Firstname</label>
-                <input type="text" ng-model="ec.binded_copy.firstname" ng-disabled="!ec.primary_details" required>
+                <input type="text" ng-model="ec.binded_copy.firstname" uppercase ng-disabled="!ec.primary_details" required>
               </md-input-container>
               <md-input-container flex=""  style="margin-top: 50px;margin-bottom: 0px;">
                 <label>Lastname</label>
-                <input ng-model="ec.binded_copy.lastname" ng-disabled="!ec.primary_details" required>
+                <input ng-model="ec.binded_copy.lastname" uppercase ng-disabled="!ec.primary_details" required>
               </md-input-container>
 
               <md-input-container flex=""  style="margin-top: 50px;margin-bottom: 0px;">
                 <label>Middlename</label>
-                <input ng-model="ec.binded_copy.middlename" ng-disabled="!ec.primary_details">
+                <input ng-model="ec.binded_copy.middlename" uppercase ng-disabled="!ec.primary_details">
               </md-input-container>
           </div>
           <div layout="row" layout-xs="column">
@@ -107,11 +107,11 @@
             </md-input-container>
             <md-input-container flex="15">
               <label>section</label>
-              <input ng-model="ec.binded_copy.section"  ng-disabled="!ec.primary_details" required>
+              <input ng-model="ec.binded_copy.section" uppercase ng-disabled="!ec.primary_details" required>
             </md-input-container>
             <md-input-container flex="30">
               <label>ID NO.</label>
-              <input ng-model="ec.binded_copy.student_id_number" ng-disabled="!ec.primary_details" required>
+              <input ng-model="ec.binded_copy.student_id_number" uppercase ng-disabled="!ec.primary_details" required>
             </md-input-container>
             <md-input-container flex="20">
               <label>IP.</label>
@@ -133,7 +133,7 @@
         <form name="parentsDetailsForm">
           <p>Father's Details</p>
           <div layout="row" layout-xs="column">
-            <md-autocomplete flex 
+            <md-autocomplete flex class="uppercase"
               md-input-name="autocompleteFatherLastname"
               required="true"
               md-input-minlength="1"
@@ -155,22 +155,22 @@
             </md-autocomplete>
             <md-input-container flex="">
               <label>Firstname</label>
-              <input type="text" ng-model="ec.f_firstname" ng-disabled="!ec.parents_details" required>
+              <input type="text" ng-model="ec.f_firstname" uppercase ng-disabled="!ec.parents_details" required>
             </md-input-container>
             <md-input-container flex="">
               <label>Middlename</label>
-              <input type="text" ng-model="ec.f_middlename" ng-disabled="!ec.parents_details">
+              <input type="text" ng-model="ec.f_middlename" uppercase ng-disabled="!ec.parents_details">
             </md-input-container>
           </div> 
           <div layout="row" layout-xs="column">
              <md-input-container flex="50">
               <label>Occupation</label>
-              <input type="text" ng-model="ec.f_occupation" ng-disabled="!ec.parents_details">
+              <input type="text" ng-model="ec.f_occupation" uppercase ng-disabled="!ec.parents_details">
             </md-input-container>         
           </div>
           <p>Mother's Details</p>
           <div layout="row" layout-xs="column">
-            <md-autocomplete flex 
+            <md-autocomplete flex class="uppercase"
               md-input-name="autocompleteMotherMaiden"
               required="true"
               md-input-minlength="1"
@@ -192,17 +192,17 @@
             </md-autocomplete>
             <md-input-container flex="">
               <label>Firstname</label>
-              <input type="text" ng-model="ec.m_firstname" ng-disabled="!ec.parents_details" required>
+              <input type="text" ng-model="ec.m_firstname" uppercase ng-disabled="!ec.parents_details" required>
             </md-input-container>
             <md-input-container flex="">
               <label>Middlename</label>
-              <input type="text" ng-model="ec.m_middlename" ng-disabled="!ec.parents_details">
+              <input type="text" ng-model="ec.m_middlename" uppercase ng-disabled="!ec.parents_details">
             </md-input-container>
           </div>
           <div layout="row" layout-xs="column">
              <md-input-container flex="50">
               <label>Occupation</label>
-              <input type="text" ng-model="ec.m_occupation" ng-disabled="!ec.parents_details">
+              <input type="text" ng-model="ec.m_occupation" uppercase ng-disabled="!ec.parents_details">
             </md-input-container>         
           </div>
         </form>

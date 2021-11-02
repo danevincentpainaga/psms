@@ -3,22 +3,26 @@
       <md-card-header style="padding-bottom: 0px !important;">
         <md-card-header-text>
             <span class="md-subhead">
-                Governor's details
+                Governor details
             </span>
           </md-card-header-text>
       </md-card-header>
       <md-card-content ng-if="gov.governor_loaded">
         <md-input-container style="margin: 17px 0px 0px 0px;">
           <label>Firstname</label>
-          <input type="text" ng-model="gov.firstname" autocomplete="off">
+          <input type="text" ng-model="gov.firstname" uppercase autocomplete="off">
         </md-input-container>
         <md-input-container style="margin: 17px 0px 0px 0px;">
             <label>Initial</label>
-            <input type="text" ng-model="gov.initial" autocomplete="off">
+            <input type="text" ng-model="gov.initial" uppercase autocomplete="off">
           </md-input-container>
           <md-input-container style="margin: 17px 0px 0px 0px;">
             <label>Lastname</label>
-            <input type="text" ng-model="gov.lastname" autocomplete="off">
+            <input type="text" ng-model="gov.lastname" uppercase autocomplete="off">
+          </md-input-container>
+          <md-input-container style="margin: 17px 0px 0px 0px;">
+            <label>Suffix</label>
+            <input type="text" ng-model="gov.suffix" uppercase autocomplete="off">
           </md-input-container>
         <md-button class="md-raised md-primary" ng-click="gov.updateGovernor()" ng-disabled="gov.updating">{{ gov.updating? 'Updating...' : 'Update' }}</md-button>
       </md-card-content>

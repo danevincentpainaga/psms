@@ -371,14 +371,40 @@ angular.module('psmsApp').directive('showChangeView', ['$window', function($wind
         }
     };
 }]);
-// angular.module('psmsApp').directive('uppercase', function() {
-//     return {
-//         require: 'ngModel',
-//         link: function(scope, element, attrs, modelCtrl) {
-//             modelCtrl.$parsers.push(function(input) {
-//                 return input ? input.toUpperCase() : "";
-//             });
-//             element.css("text-transform","uppercase");
-//         }
-//     };
-// })
+
+angular.module('psmsApp').directive('currencyFormatter', ['$filter', function ($filter) {
+
+    var formatter = function (num) {
+      return $filter('currency')(num, '', 2);
+    };
+
+    return {
+    restrict: 'A',
+    require: 'ngModel',
+    link: function (scope, element, attr, ngModel) {
+      ngModel.$parsers.push(function (str) {
+      return str ? Number(str) : '';
+      });
+      ngModel.$formatters.push(formatter);
+
+      element.bind('blur', function() {
+        element.val(formatter(ngModel.$modelValue))
+      });
+      element.bind('focus', function () {
+        element.val(ngModel.$modelValue);
+      });
+    }
+  };
+}]);
+
+angular.module('psmsApp').directive('uppercase', function() {
+    return {
+        require: 'ngModel',
+        link: function(scope, element, attrs, modelCtrl) {
+            modelCtrl.$parsers.push(function(input) {
+                return input ? input.toUpperCase() : "";
+            });
+            element.css("text-transform","uppercase");
+        }
+    };
+})

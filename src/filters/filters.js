@@ -131,3 +131,11 @@ app.filter('displayAmount', function(){
     return contract.masteral_doctorate_amount;
   }
 });
+
+app.filter('formatGovernor', function(){
+  return function(gov){
+    let suffix = gov.suffix? (", "+gov.suffix) : "";
+    return gov.firstname +" "+ gov.initial +". "+ gov.lastname + suffix;
+  }
+});
+

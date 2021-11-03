@@ -7,15 +7,15 @@
       <div style="margin: 5px 0px;">
         <div style="padding: 15px 16px 0px 16px;">
           <span class="md-title">{{ ad.labelText }}</span>
-          <form>
+          <form name="ad.addressForm">
             <div layout="column" >
               <md-input-container style="margin: 17px 0px 0px 0px;">
                 <label>Brgy.</label>
-                <input type="text" ng-model="ad.address" uppercase autocomplete="off">
+                <input type="text" ng-model="ad.address" uppercase autocomplete="off" required>
               </md-input-container>
               <md-input-container style="margin: 10px 0px 20px 0px;">
                 <label>Municipality</label>
-                <md-select ng-model="ad.municipality">
+                <md-select ng-model="ad.municipality" required>
                   <md-option ng-value="mun.municipality" ng-repeat="mun in ad.municipalities"><em>{{ mun.municipality }}</em></md-option>
                 </md-select>
               </md-input-container>
@@ -25,7 +25,7 @@
               </md-input-container>
             </div>
             <div style="margin-bottom: 2em; margin-top: 3em;">
-              <md-button class="md-raised md-primary" ng-click="ad.saveUpdateAddress()" ng-disabled="ad.saving_updating" style="width: 100%;margin: 10px 0px !important;">{{ ad.saveUpdateBtnText }}</md-button>
+              <md-button class="md-raised md-primary" ng-click="ad.saveUpdateAddress()" ng-disabled="ad.addressForm.$invalid || ad.addressForm.$pristine || ad.saving_updating" style="width: 100%;margin: 10px 0px !important;">{{ ad.saveUpdateBtnText }}</md-button>
             </div>
           </form>
         </div>

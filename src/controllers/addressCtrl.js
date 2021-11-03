@@ -127,6 +127,8 @@ angular.module('psmsApp')
 		ad.binded_address = "";
 		ad.address = "";
 		ad.municipality = "";
+		ad.addressForm.$setPristine();
+		ad.addressForm.$setUntouched();
 	}
 
 	getMunicipalities();

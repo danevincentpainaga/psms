@@ -41,11 +41,11 @@
       <md-icon class="material-icons" style="margin-right: 15px;color: #ec4899;">location_on</md-icon>
       <p style="margin-top: 5px;"> Address</p>
     </md-list-item>
-    <md-list-item ng-click="navigateTo('/contract')" ng-if="isAdmin">
+    <md-list-item ng-click="navigateTo('/contract')" ng-if="contractAccess">
       <md-icon class="material-icons" style="margin-right: 15px;color: #2fbeb1!important">history_edu</md-icon>
       <p style="margin-top: 5px;"> Contract</p>
     </md-list-item>
-    <md-list-item ng-click="navigateTo('/user_accounts')" ng-if="isAdmin">
+    <md-list-item ng-click="navigateTo('/user_accounts')" ng-if="userAccountAccess">
       <md-icon class="material-icons" style="margin-right: 15px;color: #28dd25!important;">admin_panel_settings</md-icon>
       <p style="margin-top: 5px;"> User accounts</p>
     </md-list-item>
@@ -57,7 +57,7 @@
       <md-icon class="material-icons" style="margin-right: 15px;">exit_to_app</md-icon>
       <p style="margin-top: 5px;"> Export</p>
     </md-list-item>
-    <md-list-item ng-click="navigateTo('/import')" ng-if="isAdmin">
+    <md-list-item ng-click="navigateTo('/import')" ng-if="importAccess">
       <md-icon class="material-icons" style="margin-right: 15px;">file_upload</md-icon>
       <p style="margin-top: 5px;"> Import</p>
     </md-list-item>

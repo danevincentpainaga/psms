@@ -9,17 +9,19 @@
         <md-progress-circular md-diameter="25px"></md-progress-circular>
       </div>
       <div ng-if="up.has_school_name">
-        <div layout="column" style="padding: 25px 27px 15px 17px; " >
-          <md-input-container>
-            <md-icon class="material-icons">account_balance</md-icon>
-            <label>School name</label>
-            <input type="text" ng-model="up.school_name" uppercase required>
-          </md-input-container>
-        </div>
-        <div style="display: flex; justify-content: center;margin-top: 3em;">
-          <md-button class="md-raised md-primary" style="min-width: 45%;" ng-click="up.update()" ng-disabled="up.updating">Update</md-button>
-          <md-button class="md-raised" style="min-width: 45%;" ng-click="up.cancelEditing()">Cancel</md-button>
-        </div>
+        <form name="schoolForm">
+          <div layout="column" style="padding: 25px 27px 15px 17px; " >
+            <md-input-container>
+              <md-icon class="material-icons">account_balance</md-icon>
+              <label>School name</label>
+              <input type="text" ng-model="up.school_name" uppercase required>
+            </md-input-container>
+          </div>
+          <div style="display: flex; justify-content: center;margin-top: 3em;">
+            <md-button class="md-raised md-primary" style="min-width: 45%;" ng-click="up.update()" ng-disabled="schoolForm.$invalid || up.updating">Update</md-button>
+            <md-button class="md-raised" style="min-width: 45%;" ng-click="up.cancelEditing()">Cancel</md-button>
+          </div>
+        </form>
       </div>
     </div>
   </div>

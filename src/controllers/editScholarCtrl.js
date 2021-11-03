@@ -38,6 +38,8 @@ angular.module('psmsApp')
     ec.enableParentsButtonText = 'Enable';
     ec.gender_list = ['Male', 'Female'];
     ec.civil_status_list = ['SINGLE', 'MARRIED', 'WIDOWED', 'DIVORCED'];
+    ec.year_level_list = ['I', 'II', 'III', 'IV', 'V', 'VI'];
+    ec.IP_list = ['YES', 'NO'];
 
     $scope.$watch('scholar', function(n, o){
       if (o === undefined) {

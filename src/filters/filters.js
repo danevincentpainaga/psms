@@ -92,7 +92,7 @@ app.filter('formatYear', function(){
             return '4th year';
       case 'V':
             return '5th year';
-      case 'Vi':
+      case 'VI':
             return '6th year';
     }
 

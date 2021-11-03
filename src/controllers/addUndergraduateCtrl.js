@@ -49,6 +49,7 @@ angular.module('psmsApp')
     var ac = this;
     ac.gender_list = ['Male', 'Female'];
     ac.civil_status_list = ['SINGLE', 'MARRIED', 'WIDOWED', 'DIVORCED'];
+    ac.IP_list = ['YES', 'NO'];
     ac.list_of_schools = [];
     ac.scholars = [];
     ac.buttonText = 'Save';

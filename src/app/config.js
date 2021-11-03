@@ -174,94 +174,124 @@ angular
   $mdAriaProvider.disableWarnings();
 
 }])
-.run(['$transitions', '$rootScope', '$cookies', 'authApiService', function($transitions, $rootScope, $cookies, authApiService){
+.run([
+  '$transitions',
+  '$rootScope',
+  '$cookies',
+  'authApiService',
+  '$mdDialog',
+  function(
+    $transitions,
+    $rootScope,
+    $cookies,
+    authApiService,
+    $mdDialog){
 
-  $transitions.onBefore({}, function(transition) {
+    $transitions.onBefore({}, function(transition) {
 
-      if (transition.to().Authenticated && !authApiService.AuthenticatedUser()) {
-          return transition.router.stateService.target('base');
-      }
-
-      if (!transition.to().Authenticated && authApiService.AuthenticatedUser()) {
-          return transition.router.stateService.target('dashboard');
-      }
-  })
-
-  $transitions.onStart({}, function(transition) {
-
-    if (transition.to().Authenticated) {
-      $rootScope.route_loader = true;
-      var adminCannotAccess = [];
-      var usersCannotAccess = ['user_accounts', 'contract'];
-      var $state = transition.router.stateService;
-      var auth = $cookies.getObject('auth');
-      console.log(auth);
-
-        $rootScope.token = auth.token;
-
-        return authApiService.getAuthenticatedUser().then(response=>{
-
-          $rootScope.access_degree =  JSON.parse(response.data.degree_access).indexOf("*") > -1? ['Masters', 'Doctorate', 'Undergraduate'] :  JSON.parse(response.data.degree_access);
-          $rootScope.username = response.data.name;
-
-          if (response.data.user_type === 'User') {
-
-            validateDegree($rootScope.access_degree, usersCannotAccess);
-            validateRoute(usersCannotAccess);
-            $rootScope.isAdmin = false;
-
-          }
-          else{
-
-            validateDegree($rootScope.access_degree, adminCannotAccess);
-            validateRoute(adminCannotAccess);
-            $rootScope.isAdmin = true;
-            
-          }
-
-        }, function(err){
-          console.log(err);
-        });
-
-        function validateDegree(degree_access, protected_route) {
-
-            $rootScope.master_doctorate_access = ['Masters', 'Doctorate', '*'].some(degree => degree_access.indexOf(degree) !== -1);
-            $rootScope.undergraduate_access = ['Undergraduate', '*'].some(degree => degree_access.indexOf(degree) !== -1)
-            $rootScope.renewal_access = ['Masters', 'Doctorate', 'Undergraduate', '*'].some(degree => degree_access.indexOf(degree) !== -1)
-            
-            if (!$rootScope.master_doctorate_access) {
-              protected_route.push('add_masteral_doctorate_scholars');
-            }
-
-            if (!$rootScope.undergraduate_access ) {
-              protected_route.push('add_undergraduate_scholars');
-            }
-
-            if (!$rootScope.renewal_access ) {
-              protected_route.push('renew_scholars');
-            }
-            
-            return;
+        if (transition.to().Authenticated && !authApiService.AuthenticatedUser()) {
+            return transition.router.stateService.target('base');
         }
 
-        function validateRoute(protected_route) {
-          if (protected_route.indexOf(transition.to().name) > -1) {
-              transition.abort();
-              $rootScope.route_loader = false;
-              $state.$current.name ? $state.go($state.$current.name) : $state.go('dashboard') ;
-          }
+        if (!transition.to().Authenticated && authApiService.AuthenticatedUser()) {
+            return transition.router.stateService.target('dashboard');
         }
-      
-    }
+    })
 
-  });
+    $transitions.onStart({}, function(transition) {
 
-  $transitions.onStart({ to: 'base'}, function(transition) {
-      $rootScope.route_loader = false;
-  });
+      if (transition.to().Authenticated) {
+        $rootScope.route_loader = true;
+        var adminCannotAccess = [];
+        var usersCannotAccess = ['user_accounts', 'contract'];
+        var $state = transition.router.stateService;
+        var auth = $cookies.getObject('auth');
+        console.log(auth);
 
-  $transitions.onSuccess({}, function(transition) {
-      $rootScope.route_loader = false;
-  });
+          $rootScope.token = auth.token;
+          $rootScope.uid = auth.id;
+
+          return authApiService.getAuthenticatedUser().then(response=>{
+
+            $rootScope.access_degree =  JSON.parse(response.data.degree_access).indexOf("*") > -1? ['Masters', 'Doctorate', 'Undergraduate'] :  JSON.parse(response.data.degree_access);
+            $rootScope.username = response.data.name;
+
+            if (response.data.user_type === 'SuperAdmin') {
+              $rootScope.contractAccess = true;
+              $rootScope.userAccountAccess = true;
+              $rootScope.importAccess = true;
+              $rootScope.master_doctorate_access = true;
+              $rootScope.undergraduate_access = true;
+              $rootScope.renewal_access = true;
+              return;
+            }
+
+            if (response.data.user_type === 'Admin') {
+              validateDegree($rootScope.access_degree, adminCannotAccess);
+              validateRoute(adminCannotAccess);
+              $rootScope.userAccountAccess = true;
+              $rootScope.importAccess = true;
+            }
+
+            if (response.data.user_type === 'User') {
+              validateDegree($rootScope.access_degree, usersCannotAccess);
+              validateRoute(usersCannotAccess);
+            }
+
+          }, function(err){
+            console.log(err);
+            if(err.xhrStatus === 'error'){
+              $mdDialog.show(
+                $mdDialog.alert()
+                  .parent(angular.element(document.body))
+                  .clickOutsideToClose(true)
+                  .title('ERROR!')
+                  .textContent('Connection lost')
+                  .ariaLabel('Access failed')
+                  .ok('Okay')
+              );
+            }
+          });
+
+          function validateDegree(degree_access, protected_route) {
+
+              $rootScope.master_doctorate_access = ['Masters', 'Doctorate', '*'].some(degree => degree_access.indexOf(degree) !== -1);
+              $rootScope.undergraduate_access = ['Undergraduate', '*'].some(degree => degree_access.indexOf(degree) !== -1)
+              $rootScope.renewal_access = ['Masters', 'Doctorate', 'Undergraduate', '*'].some(degree => degree_access.indexOf(degree) !== -1)
+              
+              if (!$rootScope.master_doctorate_access) {
+                protected_route.push('add_masteral_doctorate_scholars');
+              }
+
+              if (!$rootScope.undergraduate_access ) {
+                protected_route.push('add_undergraduate_scholars');
+              }
+
+              if (!$rootScope.renewal_access ) {
+                protected_route.push('renew_scholars');
+              }
+              
+              return;
+          }
+
+          function validateRoute(protected_route) {
+            if (protected_route.indexOf(transition.to().name) > -1) {
+                transition.abort();
+                $rootScope.route_loader = false;
+                $state.$current.name ? $state.go($state.$current.name) : $state.go('dashboard') ;
+            }
+          }
+        
+      }
+
+    });
+
+    $transitions.onStart({ to: 'base'}, function(transition) {
+        $rootScope.route_loader = false;
+    });
+
+    $transitions.onSuccess({}, function(transition) {
+        $rootScope.route_loader = false;
+    });
 
 }]);

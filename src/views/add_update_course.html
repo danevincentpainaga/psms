@@ -8,21 +8,21 @@
         </md-card-header>
         <div style="padding: 15px 16px 0px 16px;">
           <span class="md-title">{{ cc.labelText }}</span>
-          <form>
+          <form name="cc.courseForm">
             <div layout="column" >
               <md-input-container flex="">
                 <label>Course</label>
-                <input type="text" ng-model="cc.course" uppercase>
+                <input type="text" ng-model="cc.course" uppercase required>
               </md-input-container>
               <md-input-container>
                 <label>Select degree</label>
-                <md-select ng-model="cc.selected_degree">
+                <md-select ng-model="cc.selected_degree" required>
                   <md-option ng-value="degree" ng-repeat="degree in cc.degrees"><em>{{ degree }}</em></md-option>
                 </md-select>
               </md-input-container>
             </div>
             <div style="margin-bottom: 2em; margin-top: 3em;">
-              <md-button class="md-raised md-primary" ng-click="cc.saveUpdateCourse()" ng-disabled="cc.saving_updating" style="width: 100%;margin: 10px 0px !important;">{{ cc.saveUpdateBtnText }}</md-button>
+              <md-button class="md-raised md-primary" ng-click="cc.saveUpdateCourse()" ng-disabled="cc.courseForm.$invalid || cc.saving_updating" style="width: 100%;margin: 10px 0px !important;">{{ cc.saveUpdateBtnText }}</md-button>
             </div>
           </form>
         </div>

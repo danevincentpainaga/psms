@@ -62,15 +62,15 @@
               <label>Address</label>
               <input ng-model="ec.newaddress" ng-click="ec.showAddressModal()" ng-disabled="!ec.primary_details" disable-input required>
             </md-input-container>
-            <md-input-container flex="20">
+            <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="20">
               <label>Date of Birth</label>
               <input type="text" ng-model="ec.binded_copy.date_of_birth" add-double-slashes-directive ng-disabled="!ec.primary_details"/>
             </md-input-container>
-            <md-input-container flex="10">
+            <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="10">
               <label>Age</label>
               <input ng-model="ec.displayedAge" disabled required>
             </md-input-container>
-            <md-input-container flex="20">
+            <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="20">
               <label>Gender</label>
               <md-select ng-model="ec.binded_copy.gender" ng-disabled="!ec.primary_details" required>
                 <md-option ng-repeat="gender in ec.gender_list" ng-value="gender"><em>{{gender}}</em></md-option>
@@ -86,7 +86,7 @@
               <label>Course</label>
               <input ng-model="ec.binded_copy.course.course" ng-click="ec.showCourseModal()" ng-disabled="!ec.primary_details" disable-input required>
             </md-input-container>
-            <md-input-container flex="15">
+            <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="15">
               <label>Civil status</label>
               <md-select ng-model="ec.binded_copy.civil_status" ng-disabled="!ec.primary_details" required>
                 <md-option ng-repeat="civil_status in ec.civil_status_list" ng-value="civil_status"><em>{{ civil_status }}</em></md-option>
@@ -97,27 +97,21 @@
             <md-input-container flex>
               <label>Year level.</label>
               <md-select ng-model="ec.binded_copy.year_level" ng-disabled="!ec.primary_details" required>
-                <md-option value="I"><em>1st year</em></md-option>
-                <md-option value="II"><em>2nd year</em></md-option>
-                <md-option value="III"><em>3rd year</em></md-option>
-                <md-option value="IV"><em>4th year</em></md-option>
-                <md-option value="V"><em>5th year</em></md-option>
-                <md-option value="VI"><em>6th year</em></md-option>
+                <md-option ng-repeat="year_level in ec.year_level_list" ng-value="year_level"><em>{{ year_level | formatYear }}</em></md-option>
               </md-select>
             </md-input-container>
-            <md-input-container flex="15">
+            <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="15">
               <label>section</label>
               <input ng-model="ec.binded_copy.section" uppercase ng-disabled="!ec.primary_details" required>
             </md-input-container>
-            <md-input-container flex="30">
+            <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="30">
               <label>ID NO.</label>
               <input ng-model="ec.binded_copy.student_id_number" uppercase ng-disabled="!ec.primary_details" required>
             </md-input-container>
-            <md-input-container flex="20">
+            <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="20">
               <label>IP.</label>
               <md-select ng-model="ec.binded_copy.IP" ng-disabled="!ec.primary_details" required>
-                <md-option value="YES"><em>YES</em></md-option>
-                <md-option value="NO"><em>NO</em></md-option>
+                <md-option ng-repeat="ip_option in ec.IP_list" ng-value="ip_option"><em>{{ ip_option }}</em></md-option>
               </md-select>
             </md-input-container>
           </div>
@@ -163,7 +157,7 @@
             </md-input-container>
           </div> 
           <div layout="row" layout-xs="column">
-             <md-input-container flex="50">
+             <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="50">
               <label>Occupation</label>
               <input type="text" ng-model="ec.f_occupation" uppercase ng-disabled="!ec.parents_details">
             </md-input-container>         
@@ -200,7 +194,7 @@
             </md-input-container>
           </div>
           <div layout="row" layout-xs="column">
-             <md-input-container flex="50">
+             <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="50">
               <label>Occupation</label>
               <input type="text" ng-model="ec.m_occupation" uppercase ng-disabled="!ec.parents_details">
             </md-input-container>         

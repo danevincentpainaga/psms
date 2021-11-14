@@ -108,6 +108,8 @@ angular.module('psmsApp')
 		cc.binded_course = "";
 		cc.course = "";
 		cc.selected_degree = "";
+		cc.courseForm.$setPristine();
+		cc.courseForm.$setUntouched();
 	}
 
 }]);

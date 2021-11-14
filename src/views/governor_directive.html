@@ -1,5 +1,5 @@
-<div style="background-color: #fff;">
-    <md-card style="margin: 0px; ">
+<div layout="row" style="background-color: #fff;">
+    <md-card flex style="margin: 0px;">
       <md-card-header style="padding-bottom: 0px !important;">
         <md-card-header-text>
             <span class="md-subhead">
@@ -7,24 +7,29 @@
             </span>
           </md-card-header-text>
       </md-card-header>
-      <md-card-content ng-if="gov.governor_loaded">
-        <md-input-container style="margin: 17px 0px 0px 0px;">
-          <label>Firstname</label>
-          <input type="text" ng-model="gov.firstname" uppercase autocomplete="off">
-        </md-input-container>
-        <md-input-container style="margin: 17px 0px 0px 0px;">
-            <label>Initial</label>
-            <input type="text" ng-model="gov.initial" uppercase autocomplete="off">
-          </md-input-container>
-          <md-input-container style="margin: 17px 0px 0px 0px;">
-            <label>Lastname</label>
-            <input type="text" ng-model="gov.lastname" uppercase autocomplete="off">
-          </md-input-container>
-          <md-input-container style="margin: 17px 0px 0px 0px;">
-            <label>Suffix</label>
-            <input type="text" ng-model="gov.suffix" uppercase autocomplete="off">
-          </md-input-container>
-        <md-button class="md-raised md-primary" ng-click="gov.updateGovernor()" ng-disabled="gov.updating">{{ gov.updating? 'Updating...' : 'Update' }}</md-button>
+      <md-card-content flex ng-if="gov.governor_loaded">
+        <form name="governorForm">
+          <div layout-xs="column" layout-gt-xs="column" layout-gt-sm="column" layout-gt-md="row">
+            <md-input-container flex style="margin: 17px 0px 0px 0px;">
+              <label>Firstname</label>
+              <input type="text" ng-model="gov.firstname" ng-disabled="!gov.enabled" accept-only-letters uppercase autocomplete="off" required>
+            </md-input-container>
+            <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="5" style="margin: 17px 0px 0px 0px;">
+              <label>Initial</label>
+              <input type="text" ng-model="gov.initial" ng-disabled="!gov.enabled" prevent-paste uppercase required>
+            </md-input-container>
+            <md-input-container flex style="margin: 17px 0px 0px 0px;">
+              <label>Lastname</label>
+              <input type="text" ng-model="gov.lastname" ng-disabled="!gov.enabled" accept-only-letters uppercase autocomplete="off" required>
+            </md-input-container>
+            <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="10" style="margin: 17px 0px 0px 0px;">
+              <label>Suffix</label>
+              <input type="text" ng-model="gov.suffix" ng-disabled="!gov.enabled" accept-only-letters uppercase autocomplete="off">
+            </md-input-container>
+          </div>
+          <md-button class="md-raised md-primary" ng-click="gov.updateGovernor()" ng-if="gov.enabled" ng-disabled="gov.updating || governorForm.$invalid" style="margin: 0px;">{{ gov.updating? 'Updating...' : 'Update' }}</md-button>
+          <md-button class="md-raised" ng-click="gov.enableDisable()" ng-if="!gov.updating" style="margin: 0px;">{{ gov.enabled ? 'Disable' : 'Enable' }}</md-button>
+        </form>
       </md-card-content>
     </md-card>
   </div>

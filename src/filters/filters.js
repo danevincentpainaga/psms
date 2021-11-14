@@ -54,10 +54,12 @@ app.filter('motherDetails', function(){
   return function(details){
     if (details) {
       let parent_details = typeof details === 'object'? details : JSON.parse(details);
-      if (!parent_details.middlename) {
-        return parent_details.firstname+" "+parent_details.maiden_name;
-      }
-      return parent_details.firstname+" "+parent_details.middlename+" "+parent_details.maiden_name;
+      let middlename = parent_details.middlename ? parent_details.middlename : "";
+      return parent_details.firstname+" "+ middlename +" "+parent_details.maiden_name;
+      // if (!parent_details.middlename) {
+      //   return parent_details.firstname+" "+parent_details.maiden_name;
+      // }
+      // return parent_details.firstname+" "+parent_details.middlename+" "+parent_details.maiden_name;
     }
   }
 

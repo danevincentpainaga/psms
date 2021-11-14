@@ -9,11 +9,23 @@
  */ 
 
 angular.module('psmsApp')
-.controller('governorCtrl', ['governorService', 'swalert', function (governorService, swalert) {
+.controller('governorCtrl', ['$scope', 'governorService', 'swalert', function ($scope, governorService, swalert) {
 
     var gov = this;
+	// gov.sufffixes = ['JR', 'SR', 'VII', 'VI', 'V', 'IV', 'III', 'II', 'I'];
+
+	$scope.$watch('gov.initial', function(n, o){
+		if(n){
+			gov.initial = gov.initial.replace(/[^A-Z]+/g, '');
+			if(gov.initial.length > 1){
+				gov.initial = gov.initial.slice(0, 1);
+			}
+		}
+	});
 
 	gov.updateGovernor = function(){
+		
+		if(!gov.firstname || !gov.initial || !gov.lastname) return;
 		gov.updating = true;
 		
 		let governor = {
@@ -22,14 +34,21 @@ angular.module('psmsApp')
 			lastname: gov.lastname,
 			suffix: gov.suffix
 		}
-		
+
 		governorService.updateGovernor(governor).then(response => {
 			console.log(response);
 			gov.updating = false;
+			gov.enabled = false;
 			swalert.dialogBox(response.data.message, 'success', 'Success');
 		}, err => {
 			console.log(err);
+			swalert.dialogBox(err.data.message, 'error', 'Failed');
+			gov.enabled = false;
 		});
+	}
+
+	gov.enableDisable = function(){
+		gov.enabled = gov.enabled ? false : true;
 	}
 
 	function getGovernoDetails(){

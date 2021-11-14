@@ -12,7 +12,7 @@
           <span class="md-title">Details</span>
           <span class="md-subhead">{{ ec.degree }}</span>
         </md-card-header-text>
-        <md-card-header-text flex="40">
+        <md-card-header-text flex-xs="100" flex-sm="100" flex-gt-md="40">
           <div layout="row">
             <div flex style="display: flex;justify-content: flex-end;">
               <md-input-container flex style="margin-bottom: 0px;" ng-if="ec.binded_copy.degree !== 'Undergraduate'">
@@ -23,7 +23,7 @@
                 </md-select>
               </md-input-container>
             </div>
-            <div flex="35" style="display: flex;justify-content: flex-end;">
+            <div flex-xs="100" flex-sm="100" flex-gt-md="35" style="display: flex;justify-content: flex-end;">
               <div layout="column"style="text-align: right;">
                 <span class="md-subhead" style="color: #008300;">AY - {{ ec.binded_copy.academicyear_semester_contract.academic_year }}</span>
                 <span class="md-subhead">{{ ec.binded_copy.academicyear_semester_contract.semester }}</span> 

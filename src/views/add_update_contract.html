@@ -18,7 +18,7 @@
               <div layout="column">
                 <span>From:</span>
                 <md-input-container style="margin: 0px;">
-                  <input type="text" ng-model="c.academic_year_from" name="academic_year_from" accept-only-numbers autocomplete="off" contract-date ng-class="{ 'invalid': c.invalid_year === true }" required> 
+                  <input type="text" ng-model="c.academic_year_from" name="academic_year_from" accept-only-numbers year-length autocomplete="off" contract-date ng-class="{ 'invalid': c.invalid_year === true }" required> 
                   <span ng-if="c.invalid_year && c.add_update_contract.$dirty" style="color:red;">Invalid year</span>
                 </md-input-container>
                 <span>To:</span>

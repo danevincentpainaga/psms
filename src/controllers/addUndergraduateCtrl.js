@@ -243,13 +243,11 @@ angular.module('psmsApp')
 
     function storeNewScholarDetails(scholarDetails){
         scholarApiService.storeNewScholarDetails(scholarDetails).then(response => {
-          debugger
         ac.clear();
         ac.buttonText = 'Save';
         ac.saving = false;
         swalert.toastInfo('Scholar saved!', 'success', 'top-right');
         printContract.print(scholarDetails, ac, academicContractDetails.governor);
-        ac.scholar_details.$setUntouched();
         getNewUndergraduateScholars({ searched: undefined }, null );
       }, err => {
         ac.buttonText = 'Save';

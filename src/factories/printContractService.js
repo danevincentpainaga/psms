@@ -66,7 +66,7 @@ angular.module('psmsApp').
           },
           '\n',
           {
-            alignment: 'justify',
+            alignment: 'left',
             columns: [
               {
                 text: [
@@ -88,37 +88,37 @@ angular.module('psmsApp').
             text: 'Name of Parents:',
           },
           {
-            alignment: 'justify',
+            alignment: 'left',
             columns: [
-                      { text:'Father: \n', margin: [39, 0], width: '40%'},
-                      { text:': ', width: 6},
-                      { text: $filter('fatherDetails')(scholarDetails.father_details), width:220 }
+              { text:'Father: \n', margin: [39, 0], width: '40%'},
+              { text:': ', width: 6},
+              { text: $filter('fatherDetails')(scholarDetails.father_details), width:'50%' }
             ],
           },
           {
-            alignment: 'justify',
+            alignment: 'left',
             columns: [
               { text:'Mother: \n', margin: [39, 0], width: '40%' },
               { text:': ', width: 6},
-              { text: $filter('motherDetails')(scholarDetails.mother_details)+' \n', width:220 }
+              { text: $filter('motherDetails')(scholarDetails.mother_details)+' \n', width:'50%' }
             ],
           },
           {
-            alignment: 'justify',
+            alignment: 'left',
             columns: [
               { text:'Name of School where Enrolled: \n', width: '40%' },
               { text:': '+scholarDetails.school.school_name+' \n' }
             ]
           },
           {
-            alignment: 'justify',
+            alignment: 'left',
             columns: [
               { text:'Course and Year Level: \n', width: '40%'},
               { text:': '+scholarDetails.course.course, margin: [0, 0, 20, 0]}
             ]
           },
           {
-            alignment: 'justify',
+            alignment: 'left',
             columns: [
               { text:'Applicable SY and Semester: \n', width: '40%'},
               { text:': '+scholarDetails.academicyear_semester_contract.academic_year+' '+scholarDetails.academicyear_semester_contract.semester, margin: [0, 0, 20, 0]}

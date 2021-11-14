@@ -22,7 +22,7 @@
               </md-input-container>
             </div>
             <div style="margin-bottom: 2em; margin-top: 3em;">
-              <md-button class="md-raised md-primary" ng-click="cc.saveUpdateCourse()" ng-disabled="cc.courseForm.$invalid || cc.saving_updating" style="width: 100%;margin: 10px 0px !important;">{{ cc.saveUpdateBtnText }}</md-button>
+              <md-button class="md-raised md-primary" ng-click="cc.saveUpdateCourse()" ng-disabled="cc.courseForm.$invalid || cc.courseForm.$pristine || cc.saving_updating" style="width: 100%;margin: 10px 0px !important;">{{ cc.saveUpdateBtnText }}</md-button>
             </div>
           </form>
         </div>

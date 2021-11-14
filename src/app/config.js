@@ -240,17 +240,15 @@ angular
 
           }, function(err){
             console.log(err);
-            if(err.xhrStatus === 'error'){
-              $mdDialog.show(
-                $mdDialog.alert()
-                  .parent(angular.element(document.body))
-                  .clickOutsideToClose(true)
-                  .title('ERROR!')
-                  .textContent('Connection lost')
-                  .ariaLabel('Access failed')
-                  .ok('Okay')
-              );
-            }
+            $mdDialog.show(
+              $mdDialog.alert()
+                .parent(angular.element(document.body))
+                .clickOutsideToClose(true)
+                .title('ERROR!')
+                .textContent('Connection lost')
+                .ariaLabel('Access failed')
+                .ok('Okay')
+            );
           });
 
           function validateDegree(degree_access, protected_route) {

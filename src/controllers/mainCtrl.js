@@ -310,6 +310,9 @@ angular.module('psmsApp').directive('acceptOnlyNumbers', function() {
               event.preventDefault();
             }
           });
+          elem.bind('paste', function(event){
+            event.preventDefault();
+          });
             // function fromUser(text) {
             //     if (text) {
             //         var transformedInput = text.replace(/[^0-9]/g, '');
@@ -341,6 +344,9 @@ angular.module('psmsApp').directive('contractAcademicYear', function() {
               }
             }
           });
+          elem.bind('paste', function(event){
+            event.preventDefault();
+          });
         }
     };
 });
@@ -351,6 +357,9 @@ angular.module('psmsApp').directive('disableInput', function() {
         restrict : 'A',
         link : function(scope, elem, attrs, ctrl) {
           elem.bind('keydown', function(event){
+            event.preventDefault();
+          });
+          elem.bind('paste', function(event){
             event.preventDefault();
           });
         }
@@ -407,4 +416,31 @@ angular.module('psmsApp').directive('uppercase', function() {
             element.css("text-transform","uppercase");
         }
     };
-})
+});
+
+angular.module('psmsApp').directive('preventPaste', function() {
+  return {
+      restrict: 'A',
+      link: function(scope, element, attrs) {
+          element.bind('paste', function(event){
+            event.preventDefault();
+          });
+      }
+  };
+});
+
+angular.module('psmsApp').directive('yearLength', function() {
+  return {
+      restrict: 'A',
+      link: function(scope, element, attrs) {
+          element.bind('keypress', function(event){
+            if (event.target.value.length === 4) {
+              event.preventDefault();
+            }
+          });
+          element.bind('paste', function(event){
+            event.preventDefault();
+          });
+      }
+  };
+});

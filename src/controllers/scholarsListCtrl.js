@@ -38,13 +38,16 @@ angular.module('psmsApp')
     sc.contract_status = "Contract status";
     sc.degree = "Degree";
     sc.municipality = "Municipality";
+    sc.selected_page = 1;
 
-
-    $scope.$watch('sc.scholar_lastname', debounce(function() {
-
-      sc.scholars_loaded = false;
-      getScholars();
-
+    $scope.$watch('sc.scholar_lastname', debounce(function(n, o) {
+      if(n){
+        sc.scholars_loaded = false;
+        getScholars(true);
+      }
+      else{
+        getScholars(false, sc.selected_page);
+      }
     }, 500), true);
 
     sc.print = function(scholarDetails, idx){
@@ -83,7 +86,9 @@ angular.module('psmsApp')
       getScholars();
     }
 
-    function getScholars(){
+    function getScholars(bySearch = false, page = 1){
+      
+      sc.scholars_loaded = false;
 
       let searched = { 
         searched_name: sc.scholar_lastname,
@@ -93,12 +98,14 @@ angular.module('psmsApp')
         municipality: sc.selected_municipality,
       };
 
-       scholarApiService.getScholars(searched).then(response => {
+       scholarApiService.getScholars(searched, page).then(response => {
         console.log(response.data);
-        sc.pagination_data = response.data;
         sc.scholars = response.data.data;
         sc.scholars_loaded = true;
         sc.hide_spinner = true;
+        if(!bySearch){
+          sc.pages = new Array(Math.ceil(response.data.total / response.data.per_page));
+        }
       }, err => {
         console.log(err);
       });    
@@ -115,6 +122,11 @@ angular.module('psmsApp')
 
     sc.allowPrint = function(scholar){
       return scholar.contract_status === 'Approved';
+    }
+
+    sc.selectPage = function(pageNum){
+      sc.selected_page = pageNum;
+      getScholars(false, pageNum);
     }
     // function print(scholarDetails){
 

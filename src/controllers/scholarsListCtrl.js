@@ -41,13 +41,8 @@ angular.module('psmsApp')
     sc.selected_page = 1;
 
     $scope.$watch('sc.scholar_lastname', debounce(function(n, o) {
-      if(n){
         sc.scholars_loaded = false;
         getScholars(true);
-      }
-      else{
-        getScholars(false, sc.selected_page);
-      }
     }, 500), true);
 
     sc.print = function(scholarDetails, idx){
@@ -86,7 +81,7 @@ angular.module('psmsApp')
       getScholars();
     }
 
-    function getScholars(bySearch = false, page = 1){
+    function getScholars(page = 1){
       
       sc.scholars_loaded = false;
 
@@ -103,12 +98,11 @@ angular.module('psmsApp')
         sc.scholars = response.data.data;
         sc.scholars_loaded = true;
         sc.hide_spinner = true;
-        if(!bySearch){
-          sc.pages = new Array(Math.ceil(response.data.total / response.data.per_page));
-        }
+        sc.pages = new Array(Math.ceil(response.data.total / response.data.per_page));
+        sc.selected_page = response.data.current_page;
       }, err => {
         console.log(err);
-      });    
+      });
     }
 
     function getMunicipalities(){
@@ -125,8 +119,7 @@ angular.module('psmsApp')
     }
 
     sc.selectPage = function(pageNum){
-      sc.selected_page = pageNum;
-      getScholars(false, pageNum);
+      getScholars(pageNum);
     }
     // function print(scholarDetails){
 

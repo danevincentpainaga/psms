@@ -28,6 +28,7 @@ angular.module('psmsApp')
       'addScholarsService',
       'printContract',
       '$mdSidenav',
+      '$http',
     function (
       $scope,
       $rootScope,
@@ -44,7 +45,8 @@ angular.module('psmsApp')
       swalert,
       addScholarsService,
       printContract,
-      $mdSidenav) {
+      $mdSidenav,
+      $http) {
 
     var ac = this;
     ac.gender_list = ['Male', 'Female'];
@@ -54,6 +56,7 @@ angular.module('psmsApp')
     ac.scholars = [];
     ac.buttonText = 'Save';
     ac.hide_load_more = true;
+    ac.suffix = "NONE";
 
     $scope.$watch('ac.scholar_lastname', debounce(function() {
       ac.scholars_loaded = false;
@@ -111,6 +114,7 @@ angular.module('psmsApp')
           firstname: ac.firstname.toUpperCase(),
           lastname: ac.lastname.toUpperCase(),
           middlename: (ac.middlename || "").toUpperCase(),
+          suffix: ac.suffix === 'NONE'? null : ac.suffix.toUpperCase(),
           academicyear_semester_contract: academicContractDetails.academic_year_semester,
           addressId: ac.addressId,
           address: ac.fulladdress,
@@ -133,6 +137,7 @@ angular.module('psmsApp')
             firstname: (ac.f_firstname || "").toUpperCase(),
             lastname: (ac.search_flastname || "").toUpperCase(),
             middlename: (ac.f_middlename || "").toUpperCase(),
+            suffix: (ac.suffix || "").toUpperCase(),
             occupation: ""
           },
           mother_details:{ 
@@ -285,6 +290,21 @@ angular.module('psmsApp')
       ac.academic_year = academicContractDetails.academic_year_semester.academic_year;
     }
 
+    function loadSuffix(){
+      $http.get('/assets/suffix.json', {
+        headers: {
+          "Accept": "application/json"
+        }
+      }).then(response => {
+        console.log(response);
+        ac.suffix_list = response.data;
+      }, err => {
+        console.log(err);
+      });
+    }
+
+    loadSuffix();
     hasSemester();
+
 
 }]);

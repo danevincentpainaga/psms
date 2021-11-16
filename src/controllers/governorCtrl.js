@@ -32,8 +32,10 @@ angular.module('psmsApp')
 			firstname: gov.firstname,
 			initial: gov.initial,
 			lastname: gov.lastname,
-			suffix: gov.suffix
+			suffix: gov.suffix? gov.suffix : "",
 		}
+
+		debugger;
 
 		governorService.updateGovernor(governor).then(response => {
 			console.log(response);
@@ -43,6 +45,7 @@ angular.module('psmsApp')
 		}, err => {
 			console.log(err);
 			swalert.dialogBox(err.data.message, 'error', 'Failed');
+			gov.updating = false;
 			gov.enabled = false;
 		});
 	}
@@ -53,11 +56,14 @@ angular.module('psmsApp')
 
 	function getGovernoDetails(){
 		governorService.getGovernorDetails().then(response=>{
-			let gov_details = JSON.parse(response.data.governor);
-			gov.firstname = gov_details.firstname;
-			gov.initial = gov_details.initial;
-			gov.lastname = gov_details.lastname;
-			gov.suffix = gov_details.suffix;
+			if(response.data){
+				let gov_details = JSON.parse(response.data.governor);
+				gov.firstname = gov_details.firstname;
+				gov.initial = gov_details.initial;
+				gov.lastname = gov_details.lastname;
+				gov.suffix = gov_details.suffix;
+				gov.governor_loaded = true;
+			}
 			gov.governor_loaded = true;
 		}, err=>{
 			console.log(err);

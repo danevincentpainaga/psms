@@ -33,16 +33,23 @@ app.filter('fatherDetails', function(){
     if (details) {
       
       let parent_details = typeof details === 'object'? details : JSON.parse(details);
+      let suffix = parent_details.suffix? ", "+parent_details.suffix : "";
+      let middlename = parent_details.middlename? " "+parent_details.middlename : "";
 
-      if (parent_details.firstname && parent_details.lastname && !parent_details.middlename) {
-        return parent_details.firstname+" "+parent_details.lastname;
+      if(!parent_details.firstname && !parent_details.lastname && !parent_details.middlename){
+        return 'NONE';
       }
 
-      if (parent_details.firstname && parent_details.lastname && parent_details.middlename) {
-        return parent_details.firstname+" "+parent_details.middlename+" "+parent_details.lastname;
-      }
+      return parent_details.firstname+middlename+" "+parent_details.lastname+suffix;
+      // if (parent_details.firstname && parent_details.lastname && !parent_details.middlename) {
+      //   return parent_details.firstname+" "+parent_details.lastname+suffix;
+      // }
 
-      return 'NONE';
+      // if (parent_details.firstname && parent_details.lastname && parent_details.middlename) {
+      //   return parent_details.firstname+middlename+" "+parent_details.lastname+suffix;
+      // }
+
+      // return 'NONE';
     }
   }
 
@@ -108,10 +115,21 @@ app.filter('formatAddress', function(){
   }
 });
 
+app.filter('formatName', function(){
+  return function(value){
+    let suffix = value.suffix? ", "+value.suffix : "";
+    let middlename = value.middlename? " "+value.middlename : "";
+    let newVal = value.lastname+', '+value.firstname+middlename+suffix;
+    return newVal;
+  }
+});
+
 app.filter('trim', function(){
   return function(value){
-    let scholar = value.lastname+value.firstname+value.middlename;
-    let newVal = value.lastname+', '+value.firstname+' '+value.middlename;
+    let suffix = value.suffix? ", "+value.suffix : "";
+    let middlename = value.middlename? " "+value.middlename : "";
+    let scholar = value.lastname+value.firstname+middlename+suffix;
+    let newVal = value.lastname+', '+value.firstname+middlename+suffix;
     if (scholar.length > 33) {
       return newVal.slice(0, 33)+'...';
     }
@@ -121,7 +139,9 @@ app.filter('trim', function(){
 
 app.filter('concatName', function(){
   return function(value){
-    return value.firstname+' '+value.middlename+' '+value.lastname;
+    let suffix = value.suffix? ", "+value.suffix : "";
+    let middlename = value.middlename? " "+value.middlename : "";
+    return value.firstname+middlename+' '+value.lastname+suffix;
   }
 });
 

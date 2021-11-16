@@ -64,7 +64,7 @@
               <md-list-item class="md-2-line" ng-repeat="scholar in ac.scholars track by $index" ng-if="ac.scholars_loaded">
                 <img ng-src="{{ scholar.photo | checkScholarPhoto }}" class="md-avatar scholar-image" alt="" />
                 <div class="md-list-item-text">
-                  <h4>{{scholar.lastname}},&nbsp;{{scholar.firstname}}&nbsp;{{scholar.middlename}}.</h4>
+                  <h4>{{ scholar | formatName }}</h4>
                   <p>{{ scholar.school.school_name }} - {{ scholar.degree }}</p>
                 </div>
                 <span ng-if="$index===ac.selectedIndex" style="margin: 7px 0px;">opening..</span>
@@ -127,6 +127,13 @@
                       <label>Middlename</label>
                       <input type="text" ng-model="ac.middlename" accept-only-letters>
                     </md-input-container>
+                    <md-input-container flex-gt-md="7">
+                      <label>Suffix</label>
+                      <md-select ng-model="ac.suffix" required>
+                        <md-option value="NONE">NONE</md-option>
+                        <md-option ng-repeat="suff in ac.suffix_list" ng-value="suff.suffix"><em>{{suff.suffix}}</em></md-option>
+                      </md-select>
+                    </md-input-container>
                 </div>
                 <div layout-xs="column" layout-gt-xs="column" layout-gt-sm="column" layout-gt-md="row">
                   <div style="display: flex;width: 100%;position: relative;">
@@ -154,7 +161,7 @@
                       </md-not-found>
                     </md-autocomplete>
                   </div>
-                  <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="20">
+                  <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="15">
                     <label>Date of Birth</label>
                     <input type="text" name="date_of_birth" ng-model="ac.date_of_birth" ng-change="ac.selectedDateOfBirth(ac.date_of_birth)" minlength="10" add-double-slashes-directive autocomplete="off" required/>
                   </md-input-container>
@@ -170,7 +177,7 @@
                   </md-input-container>
                 </div>
                 <div layout-xs="column" layout-gt-xs="column" layout-gt-sm="column" layout-gt-md="row">
-                  <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="20" style="padding-right:10px">
+                  <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="15" style="padding-right:10px">
                     <label>Civil status</label>
                     <md-select ng-model="ac.civil_status" required>
                       <md-option ng-repeat="civil_status in ac.civil_status_list" ng-value="civil_status"><em>{{ civil_status }}</em></md-option>
@@ -235,7 +242,7 @@
                       <md-option value="VI"><em>6th year</em></md-option>
                     </md-select>
                   </md-input-container>
-                  <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="15">
+                  <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="20">
                     <label>section</label>
                     <input ng-model="ac.section" required>
                   </md-input-container>
@@ -243,7 +250,7 @@
                     <label>ID NO.</label>
                     <input ng-model="ac.student_id_number" required>
                   </md-input-container>
-                  <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="20" required>
+                  <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="10" required>
                     <label>IP.</label>
                     <md-select ng-model="ac.IP" required>
                       <md-option ng-repeat="ip_option in ac.IP_list" ng-value="ip_option"><em>{{ ip_option }}</em></md-option>
@@ -285,6 +292,13 @@
                 <md-input-container flex>
                   <label>Middlename</label>
                   <input type="text" ng-model="ac.f_middlename" accept-only-letters>
+                </md-input-container>
+                <md-input-container flex-gt-md="7">
+                  <label>Suffix</label>
+                  <md-select ng-model="ac.suffix" required>
+                    <md-option value="NONE">NONE</md-option>
+                    <md-option ng-repeat="suff in ac.suffix_list" ng-value="suff.suffix"><em>{{suff.suffix}}</em></md-option>
+                  </md-select>
                 </md-input-container>
               </div>    
               <p>Mother's Details</p>

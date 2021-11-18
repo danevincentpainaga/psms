@@ -28,7 +28,6 @@ angular.module('psmsApp')
       'addScholarsService',
       'printContract',
       '$mdSidenav',
-      '$http',
     function (
       $scope,
       $rootScope,
@@ -45,24 +44,24 @@ angular.module('psmsApp')
       swalert,
       addScholarsService,
       printContract,
-      $mdSidenav,
-      $http) {
+      $mdSidenav) {
 
     var ac = this;
     ac.gender_list = ['Male', 'Female'];
-    ac.civil_status_list = ['SINGLE', 'MARRIED', 'WIDOWED', 'DIVORCED'];
+    ac.civil_status_list = addScholarsService.civilStatus();
+    ac.year_levels = addScholarsService.yearLevels();
     ac.IP_list = ['YES', 'NO'];
     ac.list_of_schools = [];
     ac.scholars = [];
-    ac.buttonText = 'Save';
     ac.hide_load_more = true;
     ac.suffix = "NONE";
-
+    ac.father_suffix = "NONE";
+    
     $scope.$watch('ac.scholar_lastname', debounce(function() {
       ac.scholars_loaded = false;
       ac.scholars = [];
       let show = ac.scholar_lastname ? true : false; 
-      getNewUndergraduateScholars({ searched: ac.scholar_lastname }, ac.toPage = null);
+      getNewUndergraduateScholars(null, ac.scholar_lastname);
     }, 500), true);
 
     ac.changeView = function(){
@@ -75,7 +74,7 @@ angular.module('psmsApp')
         ac.hide_load_more = true;
         return;
       }
-      getNewUndergraduateScholars({ searched: ac.scholar_lastname }, ac.toPage);
+      getNewUndergraduateScholars(ac.toPage, ac.scholar_lastname);
     }
 
     ac.clear = function(){
@@ -107,7 +106,7 @@ angular.module('psmsApp')
         return;
       }
 
-      ac.buttonText = 'Saving...';
+      // ac.buttonText = 'Saving...';
       ac.saving = true;
     
         let scholar_details = {
@@ -137,7 +136,7 @@ angular.module('psmsApp')
             firstname: (ac.f_firstname || "").toUpperCase(),
             lastname: (ac.search_flastname || "").toUpperCase(),
             middlename: (ac.f_middlename || "").toUpperCase(),
-            suffix: (ac.suffix || "").toUpperCase(),
+            suffix: ac.father_suffix === 'NONE'? "" : ac.father_suffix.toUpperCase(),
             occupation: ""
           },
           mother_details:{ 
@@ -249,22 +248,21 @@ angular.module('psmsApp')
     function storeNewScholarDetails(scholarDetails){
         scholarApiService.storeNewScholarDetails(scholarDetails).then(response => {
         ac.clear();
-        ac.buttonText = 'Save';
         ac.saving = false;
         swalert.toastInfo('Scholar saved!', 'success', 'top-right');
         printContract.print(scholarDetails, ac, academicContractDetails.governor);
-        getNewUndergraduateScholars({ searched: undefined }, null );
+        getNewUndergraduateScholars();
       }, err => {
-        ac.buttonText = 'Save';
         ac.saving = false;
         swalert.toastInfo(err.data.message,  'error', 'top-right');
         console.log(err);
       });
     }
 
-    function getNewUndergraduateScholars(searched, url){
-       ac.load_busy = true;
-       scholarApiService.getNewUndergraduateScholars(searched, url).then(response => {
+    function getNewUndergraduateScholars(url = null, searchedValue = undefined){
+        let searched = { searched: searchedValue };
+        ac.load_busy = true;
+        scholarApiService.getNewUndergraduateScholars(searched, url).then(response => {
         console.log(response.data);
         hideLoadMore(response.data.next_page_url);
         ac.toPage = response.data.next_page_url;
@@ -277,30 +275,21 @@ angular.module('psmsApp')
     }
 
     function hideLoadMore(next_page_url){
-      if (next_page_url === null) {
-        ac.hide_load_more = true;
-      }
-      else{
-        ac.hide_load_more = false;
-      }
-    }
-
-    function hasSemester(){
-      ac.semester = academicContractDetails.academic_year_semester.semester;
-      ac.academic_year = academicContractDetails.academic_year_semester.academic_year;
+      ac.hide_load_more = next_page_url === null? true : false;
     }
 
     function loadSuffix(){
-      $http.get('/assets/suffix.json', {
-        headers: {
-          "Accept": "application/json"
-        }
-      }).then(response => {
+      addScholarsService.getSuffix().then(response => {
         console.log(response);
         ac.suffix_list = response.data;
       }, err => {
         console.log(err);
       });
+    }
+
+    function hasSemester(){
+      ac.semester = academicContractDetails.academic_year_semester.semester;
+      ac.academic_year = academicContractDetails.academic_year_semester.academic_year;
     }
 
     loadSuffix();

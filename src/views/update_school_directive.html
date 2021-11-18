@@ -18,7 +18,7 @@
             </md-input-container>
           </div>
           <div style="display: flex; justify-content: center;margin-top: 3em;">
-            <md-button class="md-raised md-primary" style="min-width: 45%;" ng-click="up.update()" ng-disabled="schoolForm.$invalid || up.updating">Update</md-button>
+            <md-button class="md-raised md-primary" style="min-width: 45%;" ng-click="up.update()" ng-disabled="schoolForm.$invalid || up.updating">{{ up.updating ? 'Updating...' : 'Update' }}</md-button>
             <md-button class="md-raised" style="min-width: 45%;" ng-click="up.cancelEditing()">Cancel</md-button>
           </div>
         </form>

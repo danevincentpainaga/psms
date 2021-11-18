@@ -9,24 +9,65 @@
  */ 
 
 var app = angular.module('psmsApp');
-app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$window', '$location', '$timeout', '$mdSidenav', 'schoolApiService', 'addressApiService', 'scholarApiService', 'academicContractDetails', 'debounce', 'moment', 'swalert', 'addScholarsService',
-  function ($scope, $rootScope, $cookies, $window, $location, $timeout, $mdSidenav, schoolApiService, addressApiService, scholarApiService, academicContractDetails, debounce, moment, swalert, addScholarsService) {
+app.controller('addMastersDoctorateCtrl',
+  [
+    '$scope',
+    '$rootScope',
+    '$cookies',
+    '$window',
+    '$location',
+    '$timeout',
+    'schoolApiService',
+    'addressApiService',
+    'scholarApiService',
+    'academicContractDetails',
+    'debounce',
+    'moment',
+    'swalert',
+    'addScholarsService',
+    'printContract',
+    '$mdSidenav',
+  function (
+    $scope,
+    $rootScope,
+    $cookies,
+    $window,
+    $location,
+    $timeout,
+    schoolApiService,
+    addressApiService,
+    scholarApiService,
+    academicContractDetails,
+    debounce,
+    moment,
+    swalert,
+    addScholarsService,
+    printContract,
+    $mdSidenav) {
 
   var md = this;
+  md.gender_list = ['Male', 'Female'];
+  md.civil_status_list = addScholarsService.civilStatus();
+  md.year_levels = addScholarsService.yearLevels();
+  md.IP_list = ['YES', 'NO'];
   md.list_of_schools = [];
   md.scholars = [];
   md.degrees = ['Masters', 'Doctorate'];
   md.degree = "";
-  md.buttonText = 'Save';
   md.hide_load_more = true;
-
+  md.suffix = "NONE";
+  md.father_suffix = "NONE";
 
   $scope.$watch('md.scholar_lastname', debounce(function() {
     md.scholars_loaded = false;
     md.scholars = [];
     let show = md.scholar_lastname ? true : false; 
-    getNewMastersDoctorateScholars({ searched: md.scholar_lastname }, md.toPage = null);
+    getNewMastersDoctorateScholars(null, md.scholar_lastname);
   }, 500), true);
+
+  md.changeView = function(){
+    md.displayview = md.displayview ? false : true;
+  }
 
   md.loadmore = function(){
     md.hide_load_more = true;
@@ -34,7 +75,7 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
       md.hide_load_more = true;
       return;
     }
-    getNewMastersDoctorateScholars({ searched: md.scholar_lastname }, md.toPage);
+    getNewMastersDoctorateScholars(md.toPage, md.scholar_lastname);
   }
 
   md.clear = function(){
@@ -68,19 +109,24 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
         return;
       }
 
-        md.buttonText = 'Saving...';
         md.saving = true;
 
         let scholar_details = {
           firstname: md.firstname.toUpperCase(),
           lastname: md.lastname.toUpperCase(),
           middlename: (md.middlename || "").toUpperCase(),
+          suffix: md.suffix === 'NONE'? null : md.suffix.toUpperCase(),
+          academicyear_semester_contract: academicContractDetails.academic_year_semester,
           addressId: md.addressId,
+          address: md.fulladdress,
           date_of_birth: md.date_of_birth,
           age: md.age,
           gender: md.gender,
+          civil_status: md.civil_status,
           schoolId: md.schoolId,
+          school: md.school,
           courseId: md.courseId,
+          course: md.course,
           section: md.section.toUpperCase(),
           year_level: md.year_level.toUpperCase(),
           student_id_number: md.student_id_number.toUpperCase(),
@@ -92,6 +138,7 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
             firstname: (md.f_firstname || "").toUpperCase(),
             lastname: (md.search_flastname || "").toUpperCase(),
             middlename: (md.f_middlename || "").toUpperCase(),
+            suffix: md.father_suffix === 'NONE'? "" : md.father_suffix.toUpperCase(),
             occupation: ""
           },
           mother_details:{ 
@@ -113,11 +160,13 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
 
   md.print = function(scholarDetails, idx){
     md.selectedIndex = idx;
-    print(scholarDetails);
+    printContract.print(scholarDetails, md, academicContractDetails.governor);
   }
 
   md.selectedDegree = function(){
     md.degree_has_selected = md.degree ?  true : false;
+    md.search_course = "";
+    md.courseId = "";
   }
 
   md.selectedSchoolChange = function(school){
@@ -169,7 +218,7 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
   }
 
   md.courseSearchQuery = function(searched){
-    return addScholarsService.getCourses({searched: searched,  degree: JSON.stringify( ['Masters', 'Doctorate'])});
+    return addScholarsService.getCourses({searched: searched,  degree: JSON.stringify( [md.degree])});
   }
 
   md.schoolSearchQuery = function(searched){
@@ -179,7 +228,7 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
   md.addressSearchQuery = function(searched){
     return addScholarsService.getAddresses(searched).then(response => {
       for (var i = 0; i < response.length; i++) {
-        Object.assign(response[i], { address: response[i].address+' '+response[i].municipality+', ANTIQUE' });
+        Object.assign(response[i], { fulladdress: response[i].address+' '+response[i].municipality+', ANTIQUE' });
       }
       return response;
     });
@@ -206,28 +255,26 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
 
   function storeNewScholarDetails(scholarDetails){
      scholarApiService.storeNewScholarDetails(scholarDetails).then(response => {
-      md.scholars = [];
       md.clear();
-      swalert.toastInfo('Scholar saved!', 'success', 'top-right');
-      md.buttonText = 'Save';
       md.saving = false;
-      print(scholarDetails);
-      getNewMastersDoctorateScholars({ searched: md.scholar_lastname }, md.toPage);
+      swalert.toastInfo('Scholar saved!', 'success', 'top-right');
+      printContract.print(scholarDetails, md, academicContractDetails.governor);
+      getNewMastersDoctorateScholars();
     }, err => {
       console.log(err);
       md.saving = false;
-      md.buttonText = 'Save';
       swalert.toastInfo(err.data.message,  'error', 'top-right');
     });
   }
 
-  function getNewMastersDoctorateScholars(searched, url){  
-     md.load_busy = true;
-     scholarApiService.getNewMastersDoctorateScholars(searched, url).then(response => {
+  function getNewMastersDoctorateScholars(url = null, searchedValue = undefined){
+      let searched = { searched: searchedValue };
+      md.load_busy = true;
+      scholarApiService.getNewMastersDoctorateScholars(searched, url).then(response => {
       console.log(response.data);
       hideLoadMore(response.data.next_page_url);
       md.toPage = response.data.next_page_url;
-      md.scholars = [...md.scholars, ...response.data.data];
+      md.scholars = url? [...md.scholars, ...response.data.data] : response.data.data;
       md.scholars_loaded = true;
       md.load_busy = false;
     }, err => {
@@ -235,41 +282,25 @@ app.controller('addMastersDoctorateCtrl',['$scope', '$rootScope', '$cookies', '$
     }); 
   }
 
-  function print(scholarDetails){
-
-    const pdfMake = require("pdfmake/build/pdfmake");
-    const pdfFonts = require("pdfmake/build/vfs_fonts");
-    pdfMake.vfs = pdfFonts.pdfMake.vfs;
-
-
-    let docDefinition = {
-        content: [
-          {text: 'NAME: '+scholarDetails.firstname.toUpperCase()+" "+scholarDetails.lastname.toUpperCase()+", "+scholarDetails.middlename.toUpperCase()},
-        ]
-      };
-
-    let pdfDocGenerator = pdfMake.createPdf(docDefinition);
-    pdfDocGenerator.print({}, window.frames['printPdf']);
-    
-    pdfDocGenerator.getDataUrl((dataUrl) => {
-      $timeout(()=>{ md.selectedIndex = undefined }, 1000);
-    });
+  function hideLoadMore(next_page_url){
+    md.hide_load_more = next_page_url === null? true : false;
   }
 
-  function hideLoadMore(next_page_url){
-    if (next_page_url === null) {
-      md.hide_load_more = true;
-    }
-    else{
-      md.hide_load_more = false;
-    }
+  function loadSuffix(){
+    addScholarsService.getSuffix().then(response => {
+      console.log(response);
+      md.suffix_list = response.data;
+    }, err => {
+      console.log(err);
+    });
   }
 
   function hasSemester(){
       md.semester = academicContractDetails.academic_year_semester.semester;
       md.academic_year = academicContractDetails.academic_year_semester.academic_year;
   }
-
+  
+  loadSuffix();
   hasSemester();
 
 }]);

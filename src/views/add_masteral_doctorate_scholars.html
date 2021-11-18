@@ -156,6 +156,13 @@
                       <label>Middlename</label>
                       <input ng-model="md.middlename" ng-disabled="!md.degree_has_selected" accept-only-letters>
                     </md-input-container>
+                    <md-input-container flex-gt-md="7">
+                      <label>Suffix</label>
+                      <md-select ng-model="md.suffix" required>
+                        <md-option value="NONE">NONE</md-option>
+                        <md-option ng-repeat="suff in md.suffix_list" ng-value="suff.suffix"><em>{{suff.suffix}}</em></md-option>
+                      </md-select>
+                    </md-input-container>
                 </div>
                 <div layout-xs="column" layout-gt-xs="column" layout-gt-sm="column" layout-gt-md="row">
                   <div style="display: flex;width: 100%;position: relative;">
@@ -163,18 +170,18 @@
                       md-input-name="autocompleteAddress"
                       md-input-minlength="1"
                       md-no-cache="md.noCache"
-                      md-selected-item="md.address"
+                      md-selected-item="md.fulladdress"
                       md-search-text="md.search_address"
                       md-delay="500"
                       md-selected-item-change="md.selectedAddressChange(address)"
                       md-items="address in md.addressSearchQuery(md.search_address)"
-                      md-item-text="address.address"
+                      md-item-text="address.fulladdress"
                       md-autoselect="true"
                       md-escape-options="clear"
                       md-require-match=""
                       md-floating-label="Address" ng-disabled="!md.degree_has_selected">
                       <md-item-template>
-                        <span md-highlight-text="md.search_address" md-highlight-flags="^i">{{address.address}}</span>
+                        <span md-highlight-text="md.search_address" md-highlight-flags="^i">{{address.fulladdress}}</span>
                       </md-item-template>
                       <md-not-found>
                         No address matching "{{md.search_address}}" were found.
@@ -198,6 +205,12 @@
                   </md-input-container>
                 </div>
                 <div layout-xs="column" layout-gt-xs="column" layout-gt-sm="column" layout-gt-md="row">
+                  <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="15" style="padding-right:10px">
+                    <label>Civil status</label>
+                    <md-select ng-model="md.civil_status" required ng-disabled="!md.degree_has_selected">>
+                      <md-option ng-repeat="civil_status in md.civil_status_list" ng-value="civil_status"><em>{{ civil_status }}</em></md-option>
+                    </md-select>
+                  </md-input-container>
                   <md-autocomplete flex
                     md-input-name="autocompleteSchool"
                     md-input-minlength="1"
@@ -240,28 +253,23 @@
                       No address matching "{{md.search_course}}" were found.
                     </md-not-found>
                   </md-autocomplete>
-                  <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="15">
-                    <label>section</label>
-                    <input ng-model="md.section" ng-disabled="!md.degree_has_selected">
-                  </md-input-container>
                 </div>
                 <div layout-xs="column" layout-gt-xs="column" layout-gt-sm="column" layout-gt-md="row">
                   <md-input-container flex>
                     <label>Year level.</label>
                     <md-select ng-model="md.year_level" ng-disabled="!md.degree_has_selected">
-                      <md-option value="I"><em>1st year</em></md-option>
-                      <md-option value="II"><em>2nd year</em></md-option>
-                      <md-option value="III"><em>3rd year</em></md-option>
-                      <md-option value="IV"><em>4th year</em></md-option>
-                      <md-option value="V"><em>5th year</em></md-option>
-                      <md-option value="VI"><em>6th year</em></md-option>
+                      <md-option ng-repeat="yl in md.year_levels" ng-value="yl.value"><em>{{ yl.display }}</em></md-option>
                     </md-select>
+                  </md-input-container>
+                  <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="30">
+                    <label>section</label>
+                    <input ng-model="md.section" ng-disabled="!md.degree_has_selected">
                   </md-input-container>
                   <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="30">
                     <label>ID NO.</label>
                     <input type="text" ng-model="md.student_id_number" ng-disabled="!md.degree_has_selected">
                   </md-input-container>
-                  <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="20">
+                  <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="10">
                     <label>IP.</label>
                     <md-select ng-model="md.IP" ng-disabled="!md.degree_has_selected">
                       <md-option value="YES"><em>YES</em></md-option>
@@ -305,6 +313,13 @@
                   <label>Middlename</label>
                   <input type="text" ng-model="md.f_middlename" ng-disabled="!md.degree_has_selected">
                 </md-input-container>
+                <md-input-container flex-gt-md="7">
+                  <label>Suffix</label>
+                  <md-select ng-model="md.father_suffix" required>
+                    <md-option value="NONE">NONE</md-option>
+                    <md-option ng-repeat="suff in md.suffix_list" ng-value="suff.suffix"><em>{{suff.suffix}}</em></md-option>
+                  </md-select>
+                </md-input-container>
               </div>    
               <p>Mother's Details</p>
               <div layout-xs="column" layout-gt-xs="column" layout-gt-sm="column" layout-gt-md="row">
@@ -342,7 +357,7 @@
               </div>
             </md-card-content>
             <div style="width: 100%;text-align: right;padding-bottom: 10px;">
-              <md-button class="md-raised md-primary" ng-click="md.saveNewMasterDoctorateDetails()" ng-disabled="!md.scholar_details.$valid || md.saving">{{ md.buttonText }}</md-button>
+              <md-button class="md-raised md-primary" ng-click="md.saveNewMasterDoctorateDetails()" ng-disabled="!md.scholar_details.$valid || md.saving">{{ md.saving ? 'Saving...' : 'Save' }}</md-button>
               <md-button class="md-raised" ng-click="md.clear()" ng-disabled="md.saving">Clear</md-button>
             </div>
           </md-card>  

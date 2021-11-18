@@ -42,7 +42,7 @@ angular.module('psmsApp')
     function getListOfSchool(searched){
        schoolApiService.getListOfSchool(searched).then(response => {
         s.disable_linear_loader = true;
-        s.school_list_loaded = true;
+        s.searching = false;
         s.hide_spinner = true;
         s.list_of_schools = response.data;
       }, err => {
@@ -51,13 +51,10 @@ angular.module('psmsApp')
 
     }
 
-    $scope.$watch('s.searched_school', debounce(function() {
-
-      let schoolName = { searched_school: s.searched_school };
-
-      s.school_list_loaded = false;
-      getListOfSchool(schoolName);
-
+    $scope.$watch('s.searched_school', debounce(function(n, o) {
+        let schoolName = { searched_school: s.searched_school };
+        s.searching = true;
+        getListOfSchool(schoolName);
     }, 500), true);
 
     s.showDialog = function (ev) {

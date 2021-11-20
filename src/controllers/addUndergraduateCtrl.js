@@ -106,7 +106,6 @@ angular.module('psmsApp')
         return;
       }
 
-      // ac.buttonText = 'Saving...';
       ac.saving = true;
     
         let scholar_details = {

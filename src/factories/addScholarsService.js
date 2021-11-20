@@ -63,6 +63,7 @@ angular.module('psmsApp')
 					ctrl.middlename = "";
 					ctrl.addressId = "";
 					ctrl.address = "";
+					ctrl.search_address = "";
 					ctrl.school = "";
 					ctrl.date_of_birth = "";
 					ctrl.age = "";

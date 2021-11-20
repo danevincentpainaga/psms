@@ -239,7 +239,7 @@ angular.module('psmsApp').
           font: 'TimesNewRoman',
           fontSize: 12,
         },
-        pageSize: 'Folio',
+        pageSize: 'FOLIO',
       };
 
       return pdfMake.createPdf(docDefinition, null, fonts, pdfMake.vfs);;

@@ -15,9 +15,9 @@
         <md-card-header-text flex-xs="100" flex-sm="100" flex-gt-md="40">
           <div layout="row">
             <div flex style="display: flex;justify-content: flex-end;">
-              <md-input-container flex style="margin-bottom: 0px;" ng-if="ec.binded_copy.degree !== 'Undergraduate'">
+              <md-input-container flex style="margin-bottom: 0px;" ng-if="ec.degree !== 'Undergraduate'">
                 <label>Select degree</label>
-                <md-select ng-model="ec.binded_copy.degree" ng-disabled="!ec.primary_details" >
+                <md-select ng-model="ec.degree" ng-disabled="!ec.primary_details" >
                   <md-option value="Masters"><em>Masters</em></md-option>
                   <md-option value="Doctorate"><em>Doctorate</em></md-option>
                 </md-select>
@@ -25,54 +25,60 @@
             </div>
             <div flex-xs="100" flex-sm="100" flex-gt-md="35" style="display: flex;justify-content: flex-end;">
               <div layout="column"style="text-align: right;">
-                <span class="md-subhead" style="color: #008300;">AY - {{ ec.binded_copy.academicyear_semester_contract.academic_year }}</span>
-                <span class="md-subhead">{{ ec.binded_copy.academicyear_semester_contract.semester }}</span> 
+                <span class="md-subhead" style="color: #008300;">AY - {{ ec.academicyear_semester_contract.academic_year }}</span>
+                <span class="md-subhead">{{ ec.academicyear_semester_contract.semester }}</span> 
               </div>
             </div>
           </div>
         </md-card-header-text>
       </md-card-header>
       <md-card-content style="padding: 0px 16px;" >
-        <form name="primaryDetailsForm">
+        <form name="ec.primaryDetailsForm">
           <div layout="row" layout-xs="column" style="margin-bottom: 15px;">
               <div flex="13" class="image-holder">
                 <div class="file-input">
                   <button ng-click="ec.editPhoto()">edit</button>
                 </div>
                 <div layout="column" class="file-image">
-                  <img ng-src="{{ ec.binded_copy.photo | checkScholarPhoto }}" style="border-radius: 1em;">
+                  <img ng-src="{{ ec.photo | checkScholarPhoto }}" style="border-radius: 1em;">
                 </div>
               </div>
               <md-input-container flex="" style="margin-top: 50px;margin-bottom: 0px;">
                 <label>Firstname</label>
-                <input type="text" ng-model="ec.binded_copy.firstname" uppercase ng-disabled="!ec.primary_details" required>
+                <input type="text" ng-model="ec.firstname" uppercase ng-disabled="!ec.primary_details" required>
               </md-input-container>
               <md-input-container flex=""  style="margin-top: 50px;margin-bottom: 0px;">
                 <label>Lastname</label>
-                <input ng-model="ec.binded_copy.lastname" uppercase ng-disabled="!ec.primary_details" required>
+                <input ng-model="ec.lastname" uppercase ng-disabled="!ec.primary_details" required>
               </md-input-container>
-
               <md-input-container flex=""  style="margin-top: 50px;margin-bottom: 0px;">
                 <label>Middlename</label>
-                <input ng-model="ec.binded_copy.middlename" uppercase ng-disabled="!ec.primary_details">
+                <input ng-model="ec.middlename" uppercase ng-disabled="!ec.primary_details">
               </md-input-container>
           </div>
           <div layout="row" layout-xs="column">
+            <md-input-container flex-gt-md="7">
+              <label>Suffix</label>
+              <md-select ng-model="ec.suffix" ng-disabled="!ec.primary_details" required>
+                <md-option value="NONE">NONE</md-option>
+                <md-option ng-repeat="suff in ec.suffix_list" ng-value="suff.suffix"><em>{{suff.suffix}}</em></md-option>
+              </md-select>
+            </md-input-container>
             <md-input-container flex>
               <label>Address</label>
               <input ng-model="ec.newaddress" ng-click="ec.showAddressModal()" ng-disabled="!ec.primary_details" disable-input required>
             </md-input-container>
-            <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="20">
+            <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="10">
               <label>Date of Birth</label>
-              <input type="text" ng-model="ec.binded_copy.date_of_birth" add-double-slashes-directive ng-disabled="!ec.primary_details"/>
+              <input type="text" name="date_of_birth" ng-model="ec.date_of_birth" add-double-slashes-directive ng-disabled="!ec.primary_details"/>
             </md-input-container>
             <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="10">
               <label>Age</label>
               <input ng-model="ec.displayedAge" disabled required>
             </md-input-container>
-            <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="20">
+            <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="10">
               <label>Gender</label>
-              <md-select ng-model="ec.binded_copy.gender" ng-disabled="!ec.primary_details" required>
+              <md-select ng-model="ec.gender" ng-disabled="!ec.primary_details" required>
                 <md-option ng-repeat="gender in ec.gender_list" ng-value="gender"><em>{{gender}}</em></md-option>
               </md-select>
             </md-input-container>
@@ -80,15 +86,15 @@
           <div layout="row" layout-xs="column">
             <md-input-container flex>
               <label>School</label>
-              <input ng-model="ec.binded_copy.school.school_name" ng-click="ec.showSchoolModal()" ng-disabled="!ec.primary_details" disable-input required>
+              <input ng-model="ec.school_name" ng-click="ec.showSchoolModal()" ng-disabled="!ec.primary_details" disable-input required>
             </md-input-container>
             <md-input-container flex>
               <label>Course</label>
-              <input ng-model="ec.binded_copy.course.course" ng-click="ec.showCourseModal()" ng-disabled="!ec.primary_details" disable-input required>
+              <input ng-model="ec.course" ng-click="ec.showCourseModal()" ng-disabled="!ec.primary_details" disable-input required>
             </md-input-container>
             <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="15">
               <label>Civil status</label>
-              <md-select ng-model="ec.binded_copy.civil_status" ng-disabled="!ec.primary_details" required>
+              <md-select ng-model="ec.civil_status" ng-disabled="!ec.primary_details" required>
                 <md-option ng-repeat="civil_status in ec.civil_status_list" ng-value="civil_status"><em>{{ civil_status }}</em></md-option>
               </md-select>
             </md-input-container>
@@ -96,35 +102,35 @@
           <div layout="row" layout-xs="column">
             <md-input-container flex>
               <label>Year level.</label>
-              <md-select ng-model="ec.binded_copy.year_level" ng-disabled="!ec.primary_details" required>
-                <md-option ng-repeat="year_level in ec.year_level_list" ng-value="year_level"><em>{{ year_level | formatYear }}</em></md-option>
+              <md-select ng-model="ec.year_level" ng-disabled="!ec.primary_details" required>
+                <md-option ng-repeat="yl in ec.year_levels" ng-value="yl.value"><em>{{ yl.display }}</em></md-option>
               </md-select>
             </md-input-container>
             <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="15">
               <label>section</label>
-              <input ng-model="ec.binded_copy.section" uppercase ng-disabled="!ec.primary_details" required>
+              <input ng-model="ec.section" uppercase ng-disabled="!ec.primary_details" required>
             </md-input-container>
             <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="30">
               <label>ID NO.</label>
-              <input ng-model="ec.binded_copy.student_id_number" uppercase ng-disabled="!ec.primary_details" required>
+              <input ng-model="ec.student_id_number" uppercase ng-disabled="!ec.primary_details" required>
             </md-input-container>
-            <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="20">
+            <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="10">
               <label>IP.</label>
-              <md-select ng-model="ec.binded_copy.IP" ng-disabled="!ec.primary_details" required>
+              <md-select ng-model="ec.IP" ng-disabled="!ec.primary_details" required>
                 <md-option ng-repeat="ip_option in ec.IP_list" ng-value="ip_option"><em>{{ ip_option }}</em></md-option>
               </md-select>
             </md-input-container>
           </div>
-        </form>
       </md-card-content>
       <div style="width: 100%;text-align: right;">
-        <md-button class="md-raised md-primary" ng-click="ec.updateScholarPrimaryDetails()" ng-if="ec.primary_details" ng-disabled="primaryDetailsForm.$invalid || !primaryDetailsForm.$dirty || ec.updatingPrimaryDetails">{{ ec.primaryButtonText }}</md-button>
+        <md-button class="md-raised md-primary" ng-click="ec.updateScholarPrimaryDetails()" ng-if="ec.primary_details" ng-disabled="ec.primaryDetailsForm.$invalid || !ec.primaryDetailsForm.$dirty || ec.updatingPrimaryDetails">{{ ec.primaryButtonText }}</md-button>
         <md-button class="md-raised" ng-click="ec.enableDisablePrimaryDetails()">{{ ec.enablePrimaryButtonText }}</md-button>
       </div>
+    </form>
     </md-card>
     <md-card style="margin: 5px 0px;">
       <md-card-content style="padding: 15px 16px 0px 16px;">
-        <form name="parentsDetailsForm">
+        <form name="ec.parentsDetailsForm">
           <p>Father's Details</p>
           <div layout="row" layout-xs="column">
             <md-autocomplete flex class="uppercase"
@@ -157,6 +163,13 @@
             </md-input-container>
           </div> 
           <div layout="row" layout-xs="column">
+            <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="7">
+              <label>Suffix</label>
+              <md-select ng-model="ec.father_suffix" ng-disabled="!ec.parents_details" required>
+                <md-option value="NONE">NONE</md-option>
+                <md-option ng-repeat="suff in ec.suffix_list" ng-value="suff.suffix"><em>{{suff.suffix}}</em></md-option>
+              </md-select>
+            </md-input-container>
              <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="50">
               <label>Occupation</label>
               <input type="text" ng-model="ec.f_occupation" uppercase ng-disabled="!ec.parents_details">
@@ -202,7 +215,7 @@
         </form>
       </md-card-content>
       <div style="width: 100%;text-align: right;">
-        <md-button class="md-raised md-primary" ng-click="ec.updateScholarParentsDetails()" ng-if="ec.parents_details" ng-disabled="parentsDetailsForm.$invalid || !parentsDetailsForm.$dirty || ec.updatingParentsDetails">{{ ec.parentsButtonText }}</md-button>
+        <md-button class="md-raised md-primary" ng-click="ec.updateScholarParentsDetails()" ng-if="ec.parents_details" ng-disabled="ec.parentsDetailsForm.$invalid || !ec.parentsDetailsForm.$dirty || ec.updatingParentsDetails">{{ ec.parentsButtonText }}</md-button>
         <md-button class="md-raised" ng-click="ec.enableDisableParentsDetails()">{{ ec.enableParentsButtonText }}</md-button>
       </div>
     </md-card>  

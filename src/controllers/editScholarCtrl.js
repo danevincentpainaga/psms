@@ -99,8 +99,6 @@ angular.module('psmsApp')
     ec.getTheFiles = function(file){
       var formdata = new FormData();
       // formdata.append('file', file[0]);
-      formdata.append('scholar_id', ec.copy.scholar_id);
-      ec.new_photo = formdata;
       console.log(file[0]);
 
       // fileReader.readAsDataUrl(file[0], $scope)
@@ -119,7 +117,9 @@ angular.module('psmsApp')
           ec.result_photo = resizedImage.dataurl;
           ec.image_selected = true;
           $scope.$apply(ec.image_selected);
+          formdata.append('scholar_id', ec.copy.scholar_id);
           formdata.append('file', resizedImage.newfile);
+          ec.new_photo = formdata;
           console.log(resizedImage.newfile)
       }).catch(function (err) {
           console.error(err);
@@ -320,12 +320,13 @@ angular.module('psmsApp')
     function uploadProfilePic(image){
       scholarApiService.uploadProfilePic(image).then(response => {
         ec.image_selected = false;
+        ec.photo = response.data;
         ec.binded_copy.photo = response.data;
         ec.updating = false;
         ec.updatePhotoBtnText = 'Update';
-        swalert.toastInfo('Profile updated', 'success', 'top-right');
+        swalert.dialogBox('Photo updated', 'success', 'Success');
       }, err => {
-        swalert.toastInfo(err.data, 'error', 'top-right');
+        swalert.dialogBox(err.data, 'error', 'Success');
       });
     }
 
@@ -338,6 +339,7 @@ angular.module('psmsApp')
         ec.newaddress = $filter('formatAddress')(scholar.address);
 
         //primary
+        ec.photo = scholar.photo;
         ec.scholar_id = scholar.scholar_id;
         ec.student_id_number = scholar.student_id_number;
         ec.degree = scholar.degree;

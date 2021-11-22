@@ -49,7 +49,7 @@ angular.module('psmsApp')
         $location.path('/');
       }, err =>{
         console.log(err);
-      })
+      });
     }
 
 }]);
@@ -384,7 +384,9 @@ angular.module('psmsApp').directive('showChangeView', ['$window', function($wind
 angular.module('psmsApp').directive('currencyFormatter', ['$filter', function ($filter) {
 
     var formatter = function (num) {
-      return $filter('currency')(num, '', 2);
+      if(num){
+        return $filter('currency')(num, '', 2);
+      }
     };
 
     return {

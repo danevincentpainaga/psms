@@ -296,6 +296,7 @@ angular.module('psmsApp')
         ec.updatingPrimaryDetails = false;
         ec.primary_details = false;
         swalert.dialogBox('Scholar updated!', 'success', 'Success');
+        ec.primaryDetailsForm.$setPristine();
       }, err => {
         ec.primaryButtonText = 'Update';
         swalert.dialogBox(err.data.message, 'error', 'Failed');
@@ -311,6 +312,7 @@ angular.module('psmsApp')
         ec.updatingParentsDetails = false;
         ec.parents_details = false;
         swalert.dialogBox('Parents details updated!', 'success', 'Success');
+        ec.parentsDetailsForm.$setPristine();
       }, err => {
         ec.parentsButtonText = 'Update';
         swalert.dialogBox(err.data.message, 'error', 'Failed');
@@ -319,6 +321,7 @@ angular.module('psmsApp')
 
     function uploadProfilePic(image){
       scholarApiService.uploadProfilePic(image).then(response => {
+        console.log(response);
         ec.image_selected = false;
         ec.photo = response.data;
         ec.binded_copy.photo = response.data;
@@ -326,6 +329,7 @@ angular.module('psmsApp')
         ec.updatePhotoBtnText = 'Update';
         swalert.dialogBox('Photo updated', 'success', 'Success');
       }, err => {
+        console.log(err);
         swalert.dialogBox(err.data, 'error', 'Success');
       });
     }

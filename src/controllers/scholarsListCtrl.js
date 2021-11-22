@@ -41,7 +41,6 @@ angular.module('psmsApp')
     sc.selected_page = 1;
 
     $scope.$watch('sc.scholar_lastname', debounce(function(n, o) {
-        sc.scholars_loaded = false;
         getScholars(true);
     }, 500), true);
 
@@ -58,25 +57,21 @@ angular.module('psmsApp')
     }
 
     sc.selectedStatus = function(selected){
-      sc.scholars_loaded = false;
       sc.selected_status = selected == 'Status'? undefined : selected;
       getScholars();
     }
 
     sc.selectedContractStatus = function(selected){
-      sc.scholars_loaded = false;
       sc.selected_contract_status = selected == 'Contract status'? undefined : selected;
       getScholars();
     }
 
     sc.selectedDegree = function(selected){
-      sc.scholars_loaded = false;
       sc.selected_degree = selected == 'Degree'? undefined : selected;
       getScholars();
     }
 
     sc.selectedMunicipality = function(selected){
-      sc.scholars_loaded = false;
       sc.selected_municipality = selected;
       getScholars();
     }
@@ -94,12 +89,12 @@ angular.module('psmsApp')
       };
 
        scholarApiService.getScholars(searched, page).then(response => {
-        console.log(response.data);
-        sc.scholars = response.data.data;
-        sc.scholars_loaded = true;
-        sc.hide_spinner = true;
-        sc.pages = new Array(Math.ceil(response.data.total / response.data.per_page));
-        sc.selected_page = response.data.current_page;
+          console.log(response.data);
+          sc.scholars = response.data.data;
+          sc.scholars_loaded = true;
+          sc.hide_spinner = true;
+          sc.pages = new Array(Math.ceil(response.data.total / response.data.per_page));
+          sc.selected_page = response.data.current_page;
       }, err => {
         console.log(err);
       });
@@ -121,25 +116,6 @@ angular.module('psmsApp')
     sc.selectPage = function(pageNum){
       getScholars(pageNum);
     }
-    // function print(scholarDetails){
-
-    //   const pdfMake = require("pdfmake/build/pdfmake");
-    //   const pdfFonts = require("pdfmake/build/vfs_fonts");
-    //   pdfMake.vfs = pdfFonts.pdfMake.vfs;
-
-    //   let docDefinition = {
-    //       content: [
-    //         {text: 'NAME: '+scholarDetails.firstname.toUpperCase()+" "+scholarDetails.lastname.toUpperCase()+", "+scholarDetails.middlename.toUpperCase()},
-    //       ]
-    //     };
-
-    //   let pdfDocGenerator = pdfMake.createPdf(docDefinition);
-    //   pdfDocGenerator.print({}, window.frames['printPdf']);
-      
-    //   pdfDocGenerator.getDataUrl((dataUrl) => {
-    //     $timeout(()=>{ sc.selectedIndex = undefined }, 1000);
-    //   });
-    // }
 
     getMunicipalities();
 

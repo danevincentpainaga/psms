@@ -16,7 +16,7 @@
               <md-menu-item class="md-indent">
                 <md-icon class="material-icons">save</md-icon>
                 <md-button ng-click="md.saveNewMasterDoctorateDetails()" ng-disabled="!md.scholar_details.$valid || md.saving">
-                  {{ md.buttonText }}
+                  {{ ac.saving ? 'Saving...' : 'Save' }}
                 </md-button>
               </md-menu-item>
               <md-menu-item class="md-indent">
@@ -149,12 +149,12 @@
                       <input type="text" ng-model="md.firstname" ng-disabled="!md.degree_has_selected" accept-only-letters required>
                     </md-input-container>
                     <md-input-container flex>
-                      <label>Lastname</label>
-                      <input ng-model="md.lastname" ng-disabled="!md.degree_has_selected" accept-only-letters required>
-                    </md-input-container>
-                    <md-input-container flex>
                       <label>Middlename</label>
                       <input ng-model="md.middlename" ng-disabled="!md.degree_has_selected" accept-only-letters>
+                    </md-input-container>
+                    <md-input-container flex>
+                      <label>Lastname</label>
+                      <input ng-model="md.lastname" ng-disabled="!md.degree_has_selected" accept-only-letters required>
                     </md-input-container>
                     <md-input-container flex-gt-md="7">
                       <label>Suffix</label>
@@ -207,7 +207,7 @@
                 <div layout-xs="column" layout-gt-xs="column" layout-gt-sm="column" layout-gt-md="row">
                   <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="15" style="padding-right:10px">
                     <label>Civil status</label>
-                    <md-select ng-model="md.civil_status" required ng-disabled="!md.degree_has_selected">>
+                    <md-select ng-model="md.civil_status" required ng-disabled="!md.degree_has_selected">
                       <md-option ng-repeat="civil_status in md.civil_status_list" ng-value="civil_status"><em>{{ civil_status }}</em></md-option>
                     </md-select>
                   </md-input-container>

@@ -210,28 +210,28 @@ angular.module('psmsApp')
       },
       updateAcademicYearList: function(){
          academicSemesterYearApiService.updateAcademicYearList({ 
-          asc_id: c.asc_id,
-          semester: c.semester,
-          academic_year: c.academic_year_from+'-'+c.academic_year_to,
-          undergraduate_amount: c.undergraduate_amount,
-          masteral_doctorate_amount: c.masteral_doctorate_amount
+            asc_id: c.asc_id,
+            semester: c.semester,
+            academic_year: c.academic_year_from+'-'+c.academic_year_to,
+            undergraduate_amount: c.undergraduate_amount,
+            masteral_doctorate_amount: c.masteral_doctorate_amount
          })
          .then(response => {
             console.log(response.data);
             getAcademicYearList();
-            swalert.toastInfo(response.data.message, 'success', 'top', 4000);
+            swalert.dialogBox(response.data.message, 'success', 'Success');
         }, err => {
           console.log(err);
-          swalert.toastInfo(err.data.message, 'error', 'top');
+          swalert.dialogBox(err.data.message, 'error', 'Failed');
         });
       },
       closeContract: function(){
          academicContractService.closeContract().then(response => {
           c.showOpenContractBtn = true;
           getAcademicYearList();
-          swalert.toastInfo(response.data.message, 'success', 'top', 4000);
+          swalert.dialogBox(response.data.message, 'success', 'Success');
         }, err => {
-          swalert.toastInfo(err.data.message, 'error', 'top');
+          swalert.dialogBox(err.data.message, 'error', 'Failed');
         });
       },
       setContract: function(){

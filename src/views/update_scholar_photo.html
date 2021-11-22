@@ -12,7 +12,7 @@
             <md-card-content class="edit-photo">
               <div class="edit-photo-holder">
                 <div>
-                  <input type="file" ng-files="ec.getTheFiles($files)" class="top_1em">
+                  <input type="file" ng-files="ec.getTheFiles($files)" accept=".png, .jpg, .jpeg" class="top_1em">
                 </div>
                 <div layout="column" class="file-image">
                   <img ng-src="{{ ec.result_photo | checkPhoto }}">

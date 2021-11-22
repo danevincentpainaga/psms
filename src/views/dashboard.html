@@ -21,7 +21,7 @@
 	                    	<div>Undergraduate</div>
 	                    </div>
 	                    <div>
-	                    	<span>{{ dc.undergraduate_total }}</span>
+	                    	<span>{{ dc.undergraduate_total | currency : '' : 0 }}</span>
 	                    </div>
 	                </div>
 	            </div>
@@ -34,7 +34,7 @@
 	                    	<div>Master's</div>
 	                    </div>
 	                    <div>
-	                    	<span>{{ dc.masters_total }}</span>
+	                    	<span>{{ dc.masters_total | currency : '' : 0 }}</span>
 	                    </div>
 	                </div>
 	            </div>
@@ -47,7 +47,7 @@
 	                    	<div>Doctorate</div>
 	                    </div>
 	                    <div>
-	                    	<span>{{ dc.doctorate_total }}</span>
+	                    	<span>{{ dc.doctorate_total | currency : '' : 0 }}</span>
 	                    </div>
 	                </div>
 	            </div>
@@ -70,25 +70,25 @@
 					    <p>
 					    	<span>Pre-Approved</span>
 					    </p>
-					    <span  color-contract-status="Pre-Approved">{{ status.pre_approved }}</span>
+					    <span  color-contract-status="Pre-Approved">{{ status.pre_approved | currency : '' : 0 }}</span>
 					  </md-list-item>
 					  <md-list-item class="secondary-button-padding">
 					    <p>
 					    	<span>Approved</span>
 					    </p>
-					    <span color-contract-status="Approved">{{ status.approved }}</span>
+					    <span color-contract-status="Approved">{{ status.approved | currency : '' : 0 }}</span>
 					  </md-list-item>
 					  <md-list-item class="secondary-button-padding">
 					    <p>
 					    	<span>Pending</span>
 					    </p>
-					    <span color-contract-status="Pending">{{ status.pending }}</span>
+					    <span color-contract-status="Pending">{{ status.pending | currency : '' : 0 }}</span>
 					  </md-list-item>
 					  <md-list-item class="secondary-button-padding">
 					    <p>
 					    	<span>In-Active</span>
 					    </p>
-					    <span color-contract-status="In-Active">{{ status.in_active }}</span>
+					    <span color-contract-status="In-Active">{{ status.in_active | currency : '' : 0 }}</span>
 					  </md-list-item>
 	                </div>
 	            </div>

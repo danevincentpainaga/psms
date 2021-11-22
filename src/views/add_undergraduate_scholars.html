@@ -16,7 +16,7 @@
               <md-menu-item class="md-indent">
                 <md-icon class="material-icons">save</md-icon>
                 <md-button ng-click="ac.saveNewUndergraduateDetails()" ng-disabled="!ac.scholar_details.$valid || ac.saving">
-                  {{ac.buttonText}}
+                  {{ ac.saving ? 'Saving...' : 'Save' }}
                 </md-button>
               </md-menu-item>
               <md-menu-item class="md-indent">
@@ -120,12 +120,12 @@
                       <input type="text" ng-model="ac.firstname" autocomplete="off"  accept-only-letters required>
                     </md-input-container>
                     <md-input-container flex>
-                      <label>Lastname</label>
-                      <input type="text" ng-model="ac.lastname" accept-only-letters required>
-                    </md-input-container>
-                    <md-input-container flex>
                       <label>Middlename</label>
                       <input type="text" ng-model="ac.middlename" accept-only-letters>
+                    </md-input-container>
+                    <md-input-container flex>
+                      <label>Lastname</label>
+                      <input type="text" ng-model="ac.lastname" accept-only-letters required>
                     </md-input-container>
                     <md-input-container flex-gt-md="7">
                       <label>Suffix</label>

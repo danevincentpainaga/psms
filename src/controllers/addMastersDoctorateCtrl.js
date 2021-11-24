@@ -65,6 +65,15 @@ app.controller('addMastersDoctorateCtrl',
     getNewMastersDoctorateScholars(null, md.scholar_lastname);
   }, 500), true);
 
+  md.fullScreen = function(){
+    md.isFullScreened = md.isFullScreened ? false : true;
+    if(md.isFullScreened){
+      document.documentElement.webkitRequestFullscreen();
+    }else{
+      document.exitFullscreen();
+    }
+  }
+
   md.changeView = function(){
     md.displayview = md.displayview ? false : true;
   }

@@ -155,8 +155,8 @@ angular
     .state('renew_scholars', {
       url: '/renew_scholars',
       templateUrl: renew_scholars_view,
-      controller: 'addUndergraduateCtrl',
-      controllerAs: 'ac',
+      controller: 'renewScholarsCtrl',
+      controllerAs: 'rc',
       resolve:{
         academicContractDetails: ['academicContractService', 'validateContractStatusService', function(academicContractService, validateContractStatusService){
           return academicContractService.getAcademicContractDetails().then(response => {

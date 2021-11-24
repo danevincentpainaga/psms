@@ -33,9 +33,9 @@
             </button>
             <md-menu-content>
               <md-menu-item class="md-indent">
-                <md-icon class="material-icons">fullscreen</md-icon>
-                <md-button ng-click="ac.changeView()">
-                  Full screen
+                <md-icon class="material-icons">{{ ac.isFullScreened ? 'fullscreen_exit' : 'fullscreen' }}</md-icon>
+                <md-button ng-click="ac.fullScreen()">
+                  {{ ac.isFullScreened ? 'Exit Full screen' : 'Full screen' }}
                 </md-button>
               </md-menu-item>
               <md-menu-item class="md-indent" ng-if="ac.isMobile">

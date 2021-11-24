@@ -363,6 +363,8 @@ angular.module('psmsApp')
         ec.year_level =  scholar.year_level;
         ec.civil_status =  scholar.civil_status;
         ec.IP =  scholar.IP;
+        ec.academic_year = scholar.academicyear_semester_contract.academic_year;
+        ec.semester = scholar.academicyear_semester_contract.semester;
 
         // parents
         ec.search_flastname = father.lastname;

@@ -25,8 +25,8 @@
             </div>
             <div flex-xs="100" flex-sm="100" flex-gt-md="35" style="display: flex;justify-content: flex-end;">
               <div layout="column"style="text-align: right;">
-                <span class="md-subhead" style="color: #008300;">AY - {{ ec.academicyear_semester_contract.academic_year }}</span>
-                <span class="md-subhead">{{ ec.academicyear_semester_contract.semester }}</span> 
+                <span class="md-subhead" style="color: #008300;">AY - {{ ec.academic_year }}</span>
+                <span class="md-subhead">{{ ec.semester }}</span> 
               </div>
             </div>
           </div>
@@ -48,12 +48,12 @@
                 <input type="text" ng-model="ec.firstname" uppercase ng-disabled="!ec.primary_details" required>
               </md-input-container>
               <md-input-container flex=""  style="margin-top: 50px;margin-bottom: 0px;">
-                <label>Lastname</label>
-                <input ng-model="ec.lastname" uppercase ng-disabled="!ec.primary_details" required>
-              </md-input-container>
-              <md-input-container flex=""  style="margin-top: 50px;margin-bottom: 0px;">
                 <label>Middlename</label>
                 <input ng-model="ec.middlename" uppercase ng-disabled="!ec.primary_details">
+              </md-input-container>
+              <md-input-container flex=""  style="margin-top: 50px;margin-bottom: 0px;">
+                <label>Lastname</label>
+                <input ng-model="ec.lastname" uppercase ng-disabled="!ec.primary_details" required>
               </md-input-container>
           </div>
           <div layout="row" layout-xs="column">

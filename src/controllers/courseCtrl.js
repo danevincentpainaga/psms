@@ -14,7 +14,7 @@ angular.module('psmsApp')
 
 	var cc = this;
 	cc.isUpdating = false;
-	cc.degrees = ['Undergraduate', 'Masters', 'Doctorate'];
+	// cc.degrees = ['Undergraduate', 'Masters', 'Doctorate'];
 
 	$scope.$watch('cc.searched_course', debounce(function(){
 		cc.searching = true;

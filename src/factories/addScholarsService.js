@@ -84,6 +84,8 @@ angular.module('psmsApp')
 					ctrl.search_maidenname = "";
 					ctrl.m_firstname = "";
 					ctrl.m_middlename = "";
+					ctrl.suffix = "NONE";
+					ctrl.father_suffix = "NONE";
 				},
 				civilStatus: function(){
 					return ['SINGLE', 'MARRIED', 'WIDOWED', 'DIVORCED'];

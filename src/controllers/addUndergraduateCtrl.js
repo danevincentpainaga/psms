@@ -64,6 +64,15 @@ angular.module('psmsApp')
       getNewUndergraduateScholars(null, ac.scholar_lastname);
     }, 500), true);
 
+    ac.fullScreen = function(){
+      ac.isFullScreened = ac.isFullScreened ? false : true;
+      if(ac.isFullScreened){
+        document.documentElement.webkitRequestFullscreen();
+      }else{
+        document.exitFullscreen();
+      }
+    }
+
     ac.changeView = function(){
       ac.displayview = ac.displayview ? false : true;
     }

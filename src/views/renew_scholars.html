@@ -15,24 +15,25 @@
       <div flex="0" flex-gt-sm="25"></div>
       <div flex class="fading-up">
         <section style="margin-top: 1em;">
-          <div layout="row" layout-xs="column" ng-hide="ac.displayview && ac.isMobile">
+          <div layout="row" layout-xs="column">
             <md-content flex layout-padding>
               <md-list flex>
                 <div style="display: flex;" layout-xs="row">
                   <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="50">
                     <label>Search</label>
-                    <input type="text" ng-model="ac.scholar_lastname">
+                    <input type="text" ng-model="rc.scholar_lastname" ng-disabled="!rc.degree">
+                    <md-progress-circular class="md-hue-2" md-diameter="15px" style="position: absolute;right: 0px;top: 10px;" ng-if="rc.searching"></md-progress-circular>
                   </md-input-container>
                   <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="50">
                     <label>Select degree</label>
-                    <md-select ng-model="ac.degree" ng-change="ac.selectedDegree()">
+                    <md-select ng-model="rc.degree">
                       <md-option ng-value="degree" ng-repeat="degree in access_degree"><em>{{ degree }}</em></md-option>
                     </md-select>
                   </md-input-container>
                 </div>
-                <md-subheader class="md-no-sticky">Udergraduate list</md-subheader>
+                <md-subheader class="md-no-sticky">{{ rc.scholars.length > 0 ? rc.degree : 'Empty' }} list</md-subheader>
                 <div class="renew-scholar-list">
-                  <md-list-item class="md-2-line" ng-repeat="scholar in ac.scholars track by $index" ng-if="ac.scholars_loaded">
+                  <md-list-item class="md-2-line" ng-repeat="scholar in rc.scholars track by $index" >
                     <img ng-src="{{ scholar.photo | checkScholarPhoto }}" class="md-avatar scholar-image" alt="" />
                     <div class="md-list-item-text">
                       <h4>{{scholar.lastname}},&nbsp;{{scholar.firstname}}&nbsp;{{scholar.middlename}}.</h4>
@@ -44,21 +45,18 @@
                       </md-button>
                       <md-menu-content width="2">
                         <md-menu-item>
-                          <md-button ng-click="ac.edit(scholar)">
+                          <md-button ng-click="rc.edit(scholar)">
                             Edit
                           </md-button>
                         </md-menu-item>
                         <md-menu-item>
-                          <md-button ng-click="ac.print(scholar, $index)">
+                          <md-button ng-click="rc.print(scholar, $index)">
                             Renew
                           </md-button>
                         </md-menu-item>
                       </md-menu-content>
                     </md-menu>
                   </md-list-item>
-                  <div layout="row" layout-sm="column" layout-align="space-around" style="margin-top: 10px;" ng-if="ac.load_busy">
-                    <md-progress-circular md-diameter="25px"></md-progress-circular>
-                  </div>
                 </div>
               </md-list>
             </md-content>

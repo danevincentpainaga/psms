@@ -83,6 +83,15 @@ angular.module('psmsApp').factory('scholarApiService', ['$http', '$cookies', '$r
         }
       });
     },
+    getNotRenewedScholar: function(searched_details){
+      return $http.get(baseUrl+'api/scholars/getNotRenewedScholar', {
+        params: searched_details,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization : 'Bearer '+ $rootScope.token
+        }
+      });
+    },
     getDegrees: function(){
       return $http.get(baseUrl+'api/scholars/getDegrees', {
         headers: {

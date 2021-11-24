@@ -62,3 +62,4 @@ require('../controllers/editScholarCtrl');
 require('../controllers/addressCtrl');
 require('../controllers/courseCtrl');
 require('../controllers/governorCtrl');
+require('../controllers/renewScholarsCtrl');

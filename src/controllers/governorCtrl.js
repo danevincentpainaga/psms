@@ -57,7 +57,7 @@ angular.module('psmsApp')
 	function getGovernoDetails(){
 		governorService.getGovernorDetails().then(response=>{
 			if(response.data){
-				let gov_details = JSON.parse(response.data.governor);
+				let gov_details = response.data.governor;
 				gov.firstname = gov_details.firstname;
 				gov.initial = gov_details.initial;
 				gov.lastname = gov_details.lastname;

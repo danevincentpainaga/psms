@@ -33,7 +33,7 @@
                 </div>
                 <md-subheader class="md-no-sticky">{{ rc.scholars.length > 0 ? rc.degree : 'Empty' }} list</md-subheader>
                 <div class="renew-scholar-list">
-                  <md-list-item class="md-2-line" ng-repeat="scholar in rc.scholars track by $index" >
+                  <md-list-item class="md-2-line" ng-repeat="scholar in rc.scholars" >
                     <img ng-src="{{ scholar.photo | checkScholarPhoto }}" class="md-avatar scholar-image" alt="" />
                     <div class="md-list-item-text">
                       <h4>{{scholar.lastname}},&nbsp;{{scholar.firstname}}&nbsp;{{scholar.middlename}}.</h4>
@@ -50,7 +50,7 @@
                           </md-button>
                         </md-menu-item>
                         <md-menu-item>
-                          <md-button ng-click="rc.print(scholar, $index)">
+                          <md-button ng-click="rc.renew(scholar)">
                             Renew
                           </md-button>
                         </md-menu-item>
@@ -67,5 +67,6 @@
     </div>
   </div>
 </div>
+<edit-scholar scholar="rc.scholar_to_edit"></edit-scholar>
 
 

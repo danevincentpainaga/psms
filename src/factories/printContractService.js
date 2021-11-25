@@ -37,7 +37,7 @@ angular.module('psmsApp').
   }
 
   self.contract = function(scholarDetails, gov){
-      let governor = $filter('formatGovernor')(JSON.parse(gov));
+      let governor = $filter('formatGovernor')(gov);
 
       let fonts = {
         TimesNewRoman: {

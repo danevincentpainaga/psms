@@ -65,17 +65,6 @@ angular.module('psmsApp')
                 `Request failed: ${err.data.message}`
               );
             });
-
-            // return $q(function(resolve, reject) {
-            //   setTimeout(function() {
-            //     resolve(
-            //       {
-            //         username: document.getElementById('swal-supervisor-username').value,
-            //         password: document.getElementById('swal-supervisor-password').value
-            //       }
-            //     );
-            //   }, 1000);
-            // });
           }
         });
       };

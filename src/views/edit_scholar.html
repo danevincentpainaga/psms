@@ -135,7 +135,6 @@
           <div layout="row" layout-xs="column">
             <md-autocomplete flex class="uppercase"
               md-input-name="autocompleteFatherLastname"
-              required="true"
               md-input-minlength="1"
               md-no-cache="ec.noCache"
               md-selected-item="ec.father"
@@ -155,7 +154,7 @@
             </md-autocomplete>
             <md-input-container flex="">
               <label>Firstname</label>
-              <input type="text" ng-model="ec.f_firstname" uppercase ng-disabled="!ec.parents_details" required>
+              <input type="text" ng-model="ec.f_firstname" uppercase ng-disabled="!ec.parents_details">
             </md-input-container>
             <md-input-container flex="">
               <label>Middlename</label>
@@ -165,7 +164,7 @@
           <div layout="row" layout-xs="column">
             <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="7">
               <label>Suffix</label>
-              <md-select ng-model="ec.father_suffix" ng-disabled="!ec.parents_details" required>
+              <md-select ng-model="ec.father_suffix" ng-disabled="!ec.parents_details">
                 <md-option value="NONE">NONE</md-option>
                 <md-option ng-repeat="suff in ec.suffix_list" ng-value="suff.suffix"><em>{{suff.suffix}}</em></md-option>
               </md-select>

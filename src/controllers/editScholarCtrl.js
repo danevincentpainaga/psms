@@ -170,7 +170,7 @@ angular.module('psmsApp')
         ) {
 
           ec.updatingPrimaryDetails = true;
-          ec.primaryButtonText = 'Updating...';
+          // ec.primaryButtonText = 'Updating...';
 
           let primary_scholar_details = {
             scholar_id: ec.binded_copy.scholar_id,
@@ -190,9 +190,14 @@ angular.module('psmsApp')
             year_level: ec.year_level,
             civil_status: ec.civil_status,
             IP: ec.IP,
+            // mother_details:{
+            //   firstname: ec.m_firstname.toUpperCase(), 
+            //   maiden_name: ec.search_maidenname.toUpperCase(), 
+            //   middlename: (ec.m_middlename || "").toUpperCase(), 
+            // },
           }
 
-          updateScholarDetails(primary_scholar_details);
+          showSupervisorsApproval(primary_scholar_details, 'updatingPrimaryDetails', updateScholarDetails);
       }
       else{
           swalert.toastInfo('please complete the form', 'error', 'top-right');
@@ -204,7 +209,7 @@ angular.module('psmsApp')
       if (ec.m_firstname && ec.search_maidenname) {
 
         ec.updatingParentsDetails = true;
-        ec.parentsButtonText = 'Updating...';
+        // ec.parentsButtonText = 'Updating...';
         
         let parentsDetails = {
           scholar_id: ec.copy.scholar_id,
@@ -223,7 +228,8 @@ angular.module('psmsApp')
           },
         }
 
-        updateScholarParentsDetails(parentsDetails);
+        // updateScholarParentsDetails(parentsDetails);
+        showSupervisorsApproval(parentsDetails, 'updatingParentsDetails', updateScholarParentsDetails);
       }
       else{
           swalert.toastInfo('Mother details is required', 'error', 'top-right');
@@ -292,13 +298,14 @@ angular.module('psmsApp')
        scholarApiService.updateScholarDetails(scholarDetails).then(response => {
         ec.binded_copy.updated_at = response.data;
         updatePrimaryDetails(scholarDetails);
-        ec.primaryButtonText = 'Update';
+        // ec.primaryButtonText = 'Update';
         ec.updatingPrimaryDetails = false;
         ec.primary_details = false;
         swalert.dialogBox('Scholar updated!', 'success', 'Success');
         ec.primaryDetailsForm.$setPristine();
       }, err => {
-        ec.primaryButtonText = 'Update';
+        // ec.primaryButtonText = 'Update';
+        ec.updatingPrimaryDetails = false;
         swalert.dialogBox(err.data.message, 'error', 'Failed');
       });
     }
@@ -308,13 +315,14 @@ angular.module('psmsApp')
         ec.binded_copy.father_details = response.data.father_details;
         ec.binded_copy.mother_details = response.data.mother_details;
         ec.binded_copy.updated_at = response.data.updated_at;
-        ec.parentsButtonText = 'Update';
+        // ec.parentsButtonText = 'Update';
         ec.updatingParentsDetails = false;
         ec.parents_details = false;
         swalert.dialogBox('Parents details updated!', 'success', 'Success');
         ec.parentsDetailsForm.$setPristine();
       }, err => {
-        ec.parentsButtonText = 'Update';
+        // ec.parentsButtonText = 'Update';
+        ec.updatingParentsDetails = false;
         swalert.dialogBox(err.data.message, 'error', 'Failed');
       });
     }
@@ -430,6 +438,35 @@ angular.module('psmsApp')
           });
         }
       });
+    }
+
+    async function showSupervisorsApproval(details, updating, method){
+      const result = await swalert.supervisorsApproval();
+      console.log(result);
+      if (result.isConfirmed) {
+        method(details);
+        // scholarApiService.updateScholarDetails(scholarDetails).then(response => {
+        //   console.log(response);
+        //   ec.binded_copy.updated_at = response.data;
+        //   updatePrimaryDetails(scholarDetails);
+        //   ec.primaryButtonText = 'Update';
+        //   ec.updatingPrimaryDetails = false;
+        //   ec.primary_details = false;
+        //   swalert.dialogBox('Scholar updated!', 'success', 'Success');
+        //   ec.primaryDetailsForm.$setPristine();
+        //   ec[updating] = false;
+        // }, err => {
+        //   console.log(err);
+        //   if(err.data.exist){
+        //     swalert.dialogBox(err.data.message,  'error', 'Failed');
+        //   }
+        //   ec[updating] = false;
+        // });
+      }
+      if(result.isDismissed){
+        ec[updating] = false;
+      }
+      $scope.$apply(ec[updating]);
     }
 
     ec.resizeImage = function (settings) {

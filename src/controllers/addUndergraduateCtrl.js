@@ -284,7 +284,6 @@ angular.module('psmsApp')
         }, err => {
           console.log(err);
           if(err.data.exist){
-            console.log(err);
             swalert.dialogBox(err.data.message,  'error', 'Failed');
           }
         });

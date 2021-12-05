@@ -1,31 +1,85 @@
+const { result } = require('lodash');
 var Swal = require('sweetalert2');
 angular.module('psmsApp')
-  .factory('swalert', ['$timeout', function($timeout){
-    return{
-      toastInfo: function(message, nofitificationType, position, timeExpire){
-        let time;
-        timeExpire != undefined ? time = timeExpire : time = false;
+  .factory('swalert', ['$timeout', '$q', 'authApiService', function($timeout, $q, authApiService){
+      var self = this;
+      self.toastInfo = function(message, nofitificationType, position, timeExpire){
+        
+        let progress = timeExpire != undefined ? true : false;
         const Toast = Swal.mixin({
           toast: true,
           position: position,
           showConfirmButton: false,
-          timer: timeExpire
+          timer: timeExpire,
+          timerProgressBar: progress,
         });
 
         Toast.fire({
           icon: nofitificationType,
           title: message
         });
-      },
-      dialogBox: function(message, icon, title){
+      };
+      self.dialogBox = function(message, icon, title){
         Swal.fire({
           position: 'center',
           icon: icon,
           title: title,
           text: message,
+          allowOutsideClick: false,
+          allowEscapeKey: false
         });
-      },
-      confirm: function(obj, method, title, message, icontype, timeout, ctrl){
+      };
+      self.promptMessageForSupervisor = function(message, icon, title){
+        return Swal.fire({
+          position: 'center',
+          icon: icon,
+          title: title,
+          text: message,
+          allowOutsideClick: false,
+          allowEscapeKey: false
+        });
+      };
+      self.supervisorsApproval = function(){
+        return Swal.fire({
+          title: 'Supervisor\'s Approval',
+          html:
+          '<label>Email</label><input type="email" id="swal-supervisor-email" class="swal2-input">' +
+          '<label>Password</label><input type="password" id="swal-supervisor-password" class="swal2-input">',
+          focusConfirm: false,
+          showCancelButton: true,
+          confirmButtonText: 'Proceed',
+          showLoaderOnConfirm: true,
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+          showLoaderOnConfirm: true,
+          preConfirm: () => {
+            let credentials = {
+              email: document.getElementById('swal-supervisor-email').value,
+              password: document.getElementById('swal-supervisor-password').value
+            };
+            
+            return authApiService.supervisorsApproval(credentials).then(response =>{
+              return response.data;
+            }, err => {
+              Swal.showValidationMessage(
+                `Request failed: ${err.data.message}`
+              );
+            });
+
+            // return $q(function(resolve, reject) {
+            //   setTimeout(function() {
+            //     resolve(
+            //       {
+            //         username: document.getElementById('swal-supervisor-username').value,
+            //         password: document.getElementById('swal-supervisor-password').value
+            //       }
+            //     );
+            //   }, 1000);
+            // });
+          }
+        });
+      };
+      self.confirm = function(obj, method, title, message, icontype, timeout, ctrl){
         Swal.fire({
           title: title,
           text: message,
@@ -49,8 +103,8 @@ angular.module('psmsApp')
             }
           }
         });
-      },
-      deleteInfo: function(obj, method){
+      };
+      self.deleteInfo = function(obj, method){
         Swal.fire({
           title: 'Are you sure?',
           text: "You won't be able to revert this",
@@ -64,6 +118,7 @@ angular.module('psmsApp')
             method(obj);
           }
         });
-      },
-    }
+      };
+    
+      return self;
 }]);

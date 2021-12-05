@@ -68,5 +68,15 @@ angular.module('psmsApp')
         }
       });
     },
+    supervisorsApproval: function(credentials){
+      return $http({
+        method:'POST',
+        url: baseUrl+'api/supervisorsApproval',
+        data: credentials,
+        headers: {
+          Authorization : 'Bearer '+ $rootScope.token
+        }
+      });
+    },
   }
 }]);

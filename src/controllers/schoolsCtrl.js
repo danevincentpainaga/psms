@@ -8,7 +8,7 @@
  * Controller of the psmsApp
  */ 
 
-const addd_school = require('../views/add_school_dialog.tmpl.html');
+const add_school = require('../views/add_school_dialog.tmpl.html');
 
 angular.module('psmsApp')
   .controller('schoolsCtrl',
@@ -61,7 +61,7 @@ angular.module('psmsApp')
       $mdDialog.show({
         controller: 'addSchoolCtrl',
         controllerAs: 'as',
-        templateUrl: addd_school,
+        templateUrl: add_school,
         parent: angular.element(document.body),
         targetEvent: ev,
         clickOutsideToClose: true,

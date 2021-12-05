@@ -7,8 +7,8 @@ angular.module('psmsApp').factory('exportScholarsApiService', ['$http', '$rootSc
   return{
     getScholarsToExport: function(){
       return $http.get(baseUrl+'api/export/getScholarsToExport', {
+        responseType: "blob",
         headers: {
-          "Content-Type": "application/json",
           Authorization : 'Bearer '+ $rootScope.token
         }
       });

@@ -155,7 +155,7 @@
                   <md-tooltip>Edit</md-tooltip>
                   edit
                 </md-icon>
-                <md-icon class="material-icons" style="font-size: 17px; box-sizing: border-box;padding: 3px;cursor: pointer;outline-style: none;" hide-btn-actions="{{ ay.state }}">
+                <md-icon ng-if="sc.allowDelete(scholar)"class="material-icons" style="font-size: 17px; box-sizing: border-box;padding: 3px;cursor: pointer;outline-style: none;" hide-btn-actions="{{ ay.state }}">
                   <md-tooltip>Delete</md-tooltip>
                   close
                 </md-icon>

@@ -178,6 +178,14 @@ app.controller('exportScholarsCtrl',['$scope', '$filter', '$timeout', 'schoolApi
     exportService.exportNormal(ex.filteredGrid, ex);
   }
 
+
+  const s2ab = (s) => {
+    var buf = new ArrayBuffer(s.length);
+    var view = new Uint8Array(buf);
+    for (var i = 0; i !== s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+    return buf;
+  };
+
   function getScholarsToExport(){
 
     //  let searched = { 
@@ -198,14 +206,44 @@ app.controller('exportScholarsCtrl',['$scope', '$filter', '$timeout', 'schoolApi
     //     academic_year: ex.academic_year,
     //     IP: ex.IP,
     // };
+    var FileSaver = require('file-saver');
 
     exportScholarsApiService.getScholarsToExport().then(response => {
-      console.log(response);
-      splitArrayOfChunks(response.data);
+      console.log(response.data);
+      // var link = document.createElement('a');
+      // link.href = 'http://127.0.0.1:8000/storage/'+response.data;
+      // link.download = response.data;
+      // document.body.appendChild(link);
+      // link.click();
+      // document.body.removeChild(link);
 
+      // splitArrayOfChunks(response.data);
+      // var a = document.createElement("a");
+      // var blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;' });
+      // FileSaver.saveAs(blob, "invoices.xlsx");
+      // a.href = fileURL;
+      // a.download = 'scholars.xlsx';
+      // a.click();
       ex.scholars_loaded = true;
-      // ex.hide_spinner = true;
+      ex.hide_spinner = true;
+      // var contentDisposition = response.headers('Content-Disposition');
+      // const fileNameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+      // const matches = fileNameRegex.exec(contentDisposition);
+      // console.log(contentDisposition);
+      // var filename = (matches != null && matches[1] ? matches[1] : 'salary.xlsx');
 
+      // // The actual download
+      var blob = new Blob([response.data], {
+          type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+      });
+      var link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.download = 'invoices.xlsx';
+
+      document.body.appendChild(link);
+
+      link.click();
+      document.body.removeChild(link);
     }, err => {
       console.log(err);
     });    

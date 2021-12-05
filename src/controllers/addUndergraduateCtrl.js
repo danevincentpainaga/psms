@@ -255,16 +255,40 @@ angular.module('psmsApp')
 
     function storeNewScholarDetails(scholarDetails){
         scholarApiService.storeNewScholarDetails(scholarDetails).then(response => {
+        console.log(response);
         ac.clear();
         ac.saving = false;
-        swalert.toastInfo('Scholar saved!', 'success', 'top-right');
+        swalert.dialogBox('Scholar saved!', 'success', 'Success');
         printContract.print(scholarDetails, ac, academicContractDetails.governor);
         getNewUndergraduateScholars();
       }, err => {
-        ac.saving = false;
-        swalert.toastInfo(err.data.message,  'error', 'top-right');
+        if(err.data.exist){
+          showPrompt(err.data.message, scholarDetails);
+          return;
+        }
+        swalert.dialogBox(err.data.message,  'error', 'Failed');
         console.log(err);
       });
+    }
+
+    async function showPrompt(message, scholarDetails){
+      await swalert.promptMessageForSupervisor(message,  'error', 'Failed');
+      const result = await swalert.supervisorsApproval();
+      console.log(result);
+      if (result.isConfirmed) {
+        scholarApiService.storeNewScholarBySupervisorsApproval(scholarDetails).then(response => {
+          ac.clear();
+          ac.saving = false;
+          swalert.dialogBox('Scholar saved!', 'success', 'Success');
+          printContract.print(scholarDetails, ac, academicContractDetails.governor);
+        }, err => {
+          console.log(err);
+          if(err.data.exist){
+            console.log(err);
+            swalert.dialogBox(err.data.message,  'error', 'Failed');
+          }
+        });
+      }
     }
 
     function getNewUndergraduateScholars(url = null, searchedValue = undefined){

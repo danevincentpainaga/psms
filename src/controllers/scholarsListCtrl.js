@@ -113,6 +113,10 @@ angular.module('psmsApp')
       return scholar.contract_status === 'Approved';
     }
 
+    sc.allowDelete = function(scholar){
+      return scholar.contract_status === 'In-Active';
+    }
+
     sc.selectPage = function(pageNum){
       getScholars(pageNum);
     }

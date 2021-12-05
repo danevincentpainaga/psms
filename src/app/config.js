@@ -216,7 +216,7 @@ angular
             $rootScope.access_degree =  JSON.parse(response.data.degree_access).indexOf("*") > -1? ['Masters', 'Doctorate', 'Undergraduate'] :  JSON.parse(response.data.degree_access);
             $rootScope.username = response.data.name;
 
-            if (response.data.user_type === 'SuperAdmin') {
+            if (response.data.user_type === 'Supervisor') {
               $rootScope.contractAccess = true;
               $rootScope.userAccountAccess = true;
               $rootScope.importAccess = true;

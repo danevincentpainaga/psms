@@ -14,6 +14,17 @@ angular.module('psmsApp').factory('scholarApiService', ['$http', '$cookies', '$r
         }
       });
     },
+    storeNewScholarBySupervisorsApproval: function(scholar_details){
+      return $http({
+        method:'POST',
+        url: baseUrl+'api/scholars/storeNewScholarBySupervisorsApproval',
+        data: scholar_details,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization : 'Bearer '+ $rootScope.token
+        }
+      });
+    },
     renewScholar: function(scholar_details){
       return $http({
         method:'POST',

@@ -13,7 +13,7 @@
                 <md-input-container flex="15">
                   <label>Degree</label>
                   <md-select ng-model="ic.degree" ng-disabled="ic.isChecking" required>
-                    <md-option ng-value="degree" ng-repeat="degree in access_degree"><em>{{ degree }}</em></md-option>
+                    <md-option ng-value="degree" ng-repeat="degree in $root.access_degree"><em>{{ degree }}</em></md-option>
                   </md-select>
                 </md-input-container>
                 <md-input-container flex="20">

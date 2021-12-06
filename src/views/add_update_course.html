@@ -17,7 +17,7 @@
               <md-input-container>
                 <label>Select degree</label>
                 <md-select ng-model="cc.selected_degree" required>
-                  <md-option ng-value="degree" ng-repeat="degree in access_degree"><em>{{ degree }}</em></md-option>
+                  <md-option ng-value="degree" ng-repeat="degree in $root.access_degree"><em>{{ degree }}</em></md-option>
                 </md-select>
               </md-input-container>
             </div>

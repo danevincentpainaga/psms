@@ -10,6 +10,7 @@
 
 angular.module('psmsApp')
   .controller('editScholarCtrl', [
+      '$rootScope',
       '$scope',
       '$mdDialog',
       '$mdSidenav',
@@ -19,6 +20,7 @@ angular.module('psmsApp')
       'moment',
       '$filter',
     function (
+      $rootScope,
       $scope,
       $mdDialog,
       $mdSidenav,
@@ -40,6 +42,7 @@ angular.module('psmsApp')
     ec.IP_list = ['YES', 'NO'];
 
     $scope.$watch('scholar', function(n, o){
+      ec.checkbox = false;
       if (o === undefined) {
         ec.copy = angular.copy(n);
       }
@@ -60,6 +63,12 @@ angular.module('psmsApp')
         ec.primaryDetailsForm.date_of_birth.$setValidity("date_of_birth", true);
       }
     }, true);
+
+    ec.degreeChange = function(){
+      ec.course = '';
+      ec.courseId = '';
+      ec.primaryDetailsForm.$setDirty();
+    }
 
     ec.closeModal = function(){
       $mdDialog.hide();
@@ -284,6 +293,8 @@ angular.module('psmsApp')
     }
 
     ec.showCourseModal = function(){
+      ec.coursename = '';
+      ec.courses = [];
       showDialog('#myCourseDialog');
     }
 
@@ -343,6 +354,7 @@ angular.module('psmsApp')
     }
 
     function fillEditScholar(scholar){
+      console.log($rootScope.access_degree);
         console.log(scholar);
         ec.binded_copy = scholar;
         let father = typeof scholar.father_details === 'object'? scholar.father_details : JSON.parse(scholar.father_details);

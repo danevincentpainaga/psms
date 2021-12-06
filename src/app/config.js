@@ -213,6 +213,7 @@ angular
 
           return authApiService.getAuthenticatedUser().then(response=>{
             console.log(response);
+            $rootScope.user_type = response.data.user_type;
             $rootScope.access_degree =  JSON.parse(response.data.degree_access).indexOf("*") > -1? ['Masters', 'Doctorate', 'Undergraduate'] :  JSON.parse(response.data.degree_access);
             $rootScope.username = response.data.name;
 

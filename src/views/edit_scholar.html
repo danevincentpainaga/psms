@@ -15,11 +15,11 @@
         <md-card-header-text flex-xs="100" flex-sm="100" flex-gt-md="40">
           <div layout="row">
             <div flex style="display: flex;justify-content: flex-end;">
-              <md-input-container flex style="margin-bottom: 0px;" ng-if="ec.degree !== 'Undergraduate'">
+              <input type="checkbox" ng-model="ec.checkbox" ng-true-value="true" ng-false-value="false" style="margin-top: 30px;" />
+              <md-input-container flex style="margin-bottom: 0px;" ng-if="$root.user_type !== 'User'">
                 <label>Select degree</label>
-                <md-select ng-model="ec.degree" ng-disabled="!ec.primary_details" >
-                  <md-option value="Masters"><em>Masters</em></md-option>
-                  <md-option value="Doctorate"><em>Doctorate</em></md-option>
+                <md-select ng-model="ec.degree" ng-change="ec.degreeChange()" ng-disabled="!ec.checkbox">
+                  <md-option ng-value="degree" ng-repeat="degree in $root.access_degree"><em>{{ degree }}</em></md-option>
                 </md-select>
               </md-input-container>
             </div>

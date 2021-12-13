@@ -3,6 +3,15 @@ import { baseUrl } from '../apiServices/baseUrl';
 angular.module('psmsApp').factory('scholarApiService', ['$http', '$cookies', '$rootScope', '$q', function($http, $cookies, $rootScope, $q){
 
   return{
+    validateScholarName: function(scholar_details){
+      return $http.get(baseUrl+'api/scholars/validateScholarName', {
+        params: scholar_details,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization : 'Bearer '+ $rootScope.token
+        }
+      });
+    },
     storeNewScholarDetails: function(scholar_details){
       return $http({
         method:'POST',

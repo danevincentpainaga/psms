@@ -29,14 +29,16 @@ angular.module('psmsApp')
           allowEscapeKey: false
         });
       };
-      self.promptMessageForSupervisor = function(message, icon, title){
+      self.promptMessageForSupervisor = function(message, icon, title, showCancelButton = false){
         return Swal.fire({
           position: 'center',
           icon: icon,
           title: title,
           text: message,
+          confirmButtonText: 'Proceed',
           allowOutsideClick: false,
-          allowEscapeKey: false
+          allowEscapeKey: false,
+          showCancelButton: showCancelButton
         });
       };
       self.supervisorsApproval = function(){
@@ -47,7 +49,7 @@ angular.module('psmsApp')
           '<label>Password</label><input type="password" id="swal-supervisor-password" class="swal2-input">',
           focusConfirm: false,
           showCancelButton: true,
-          confirmButtonText: 'Proceed',
+          confirmButtonText: 'Submit',
           showLoaderOnConfirm: true,
           allowOutsideClick: false,
           allowEscapeKey: false,
@@ -58,6 +60,13 @@ angular.module('psmsApp')
               password: document.getElementById('swal-supervisor-password').value
             };
             
+            if(!credentials.email || !credentials.password){
+              Swal.showValidationMessage(
+                'Request failed: Please complete the form'
+              );
+              return; 
+            }
+
             return authApiService.supervisorsApproval(credentials).then(response =>{
               return response.data;
             }, err => {

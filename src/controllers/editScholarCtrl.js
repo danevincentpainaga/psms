@@ -1,5 +1,7 @@
 'use strict';
 
+import { data } from "jquery";
+
 /**
  * @ngdoc function
  * @name psmsApp.controller:editScholarCtrl
@@ -42,7 +44,6 @@ angular.module('psmsApp')
     ec.IP_list = ['YES', 'NO'];
 
     $scope.$watch('scholar', function(n, o){
-      ec.checkbox = false;
       if (o === undefined) {
         ec.copy = angular.copy(n);
       }
@@ -65,9 +66,16 @@ angular.module('psmsApp')
     }, true);
 
     ec.degreeChange = function(){
-      ec.course = '';
-      ec.courseId = '';
-      ec.primaryDetailsForm.$setDirty();
+      if(ec.degree === ec.copy.degree){
+        ec.course = ec.copy.course.course;
+        ec.courseId = ec.copy.courseId;    
+      } 
+      else
+      {
+        ec.course = '';
+        ec.courseId = '';
+        ec.primaryDetailsForm.$setDirty();
+      }
     }
 
     ec.closeModal = function(){
@@ -198,15 +206,14 @@ angular.module('psmsApp')
             section: ec.section.toUpperCase(),
             year_level: ec.year_level,
             civil_status: ec.civil_status,
-            IP: ec.IP,
-            // mother_details:{
-            //   firstname: ec.m_firstname.toUpperCase(), 
-            //   maiden_name: ec.search_maidenname.toUpperCase(), 
-            //   middlename: (ec.m_middlename || "").toUpperCase(), 
-            // },
+            IP: ec.IP
           }
 
-          showSupervisorsApproval(primary_scholar_details, 'updatingPrimaryDetails', updateScholarDetails);
+          scholarApiService.validateScholarName(primary_scholar_details).then(response => {
+            showSupervisorsApproval(primary_scholar_details, 'updatingPrimaryDetails', updateScholarDetails, response.data.exist, response.data.message);
+          }, err =>{
+            console.log(err);
+          });
       }
       else{
           swalert.toastInfo('please complete the form', 'error', 'top-right');
@@ -246,6 +253,7 @@ angular.module('psmsApp')
     }
 
     ec.close = function(){
+      ec.checkbox = false;
       ec.primaryDetailsForm.$setPristine();
       ec.parentsDetailsForm.$setPristine();
     	$scope.scholar = undefined;
@@ -452,32 +460,26 @@ angular.module('psmsApp')
       });
     }
 
-    async function showSupervisorsApproval(details, updating, method){
-      const result = await swalert.supervisorsApproval();
-      console.log(result);
-      if (result.isConfirmed) {
-        method(details);
-        // scholarApiService.updateScholarDetails(scholarDetails).then(response => {
-        //   console.log(response);
-        //   ec.binded_copy.updated_at = response.data;
-        //   updatePrimaryDetails(scholarDetails);
-        //   ec.primaryButtonText = 'Update';
-        //   ec.updatingPrimaryDetails = false;
-        //   ec.primary_details = false;
-        //   swalert.dialogBox('Scholar updated!', 'success', 'Success');
-        //   ec.primaryDetailsForm.$setPristine();
-        //   ec[updating] = false;
-        // }, err => {
-        //   console.log(err);
-        //   if(err.data.exist){
-        //     swalert.dialogBox(err.data.message,  'error', 'Failed');
-        //   }
-        //   ec[updating] = false;
-        // });
+    async function showSupervisorsApproval(details, updating, method, exist = false, message = "", ){
+      let proceed;
+      if(exist){
+        proceed = await swalert.promptMessageForSupervisor(message,  'error', 'Scholar name exist', true);
       }
-      if(result.isDismissed){
+
+      if (proceed.isConfirmed) {
+        const result = await swalert.supervisorsApproval();
+        if (result.isConfirmed) {
+          method(details);
+        }
+        if(result.isDismissed){
+          ec[updating] = false;
+        }
+      }
+
+      if(proceed.isDismissed){
         ec[updating] = false;
       }
+
       $scope.$apply(ec[updating]);
     }
 

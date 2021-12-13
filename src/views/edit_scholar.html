@@ -15,7 +15,7 @@
         <md-card-header-text flex-xs="100" flex-sm="100" flex-gt-md="40">
           <div layout="row">
             <div flex style="display: flex;justify-content: flex-end;">
-              <input type="checkbox" ng-model="ec.checkbox" ng-true-value="true" ng-false-value="false" style="margin-top: 30px;" />
+              <input type="checkbox" ng-model="ec.checkbox" ng-checked="ec.checkbox" ng-true-value="true" ng-false-value="false" style="margin-top: 30px;" />
               <md-input-container flex style="margin-bottom: 0px;" ng-if="$root.user_type !== 'User'">
                 <label>Select degree</label>
                 <md-select ng-model="ec.degree" ng-change="ec.degreeChange()" ng-disabled="!ec.checkbox">

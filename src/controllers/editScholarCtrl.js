@@ -34,8 +34,6 @@ angular.module('psmsApp')
 
     var ec = this;
     ec.updatePhotoBtnText = 'Update';
-    ec.primaryButtonText = 'Update';
-    ec.parentsButtonText = 'Update';
     ec.enablePrimaryButtonText = 'Enable';
     ec.enableParentsButtonText = 'Enable';
     ec.gender_list = ['Male', 'Female'];
@@ -181,13 +179,12 @@ angular.module('psmsApp')
     ec.updateScholarPrimaryDetails = function(){
 
       if (
-            ec.binded_copy.firstname && ec.binded_copy.lastname && ec.binded_copy.middlename && ec.binded_copy.addressId && moment.validateDate(ec.binded_copy.date_of_birth) 
-            && ec.age && ec.binded_copy.gender && ec.binded_copy.schoolId && ec.binded_copy.courseId && ec.binded_copy.section && ec.binded_copy.year_level && ec.binded_copy.student_id_number
-            && ec.binded_copy.IP
+            ec.firstname && ec.lastname && ec.middlename && ec.addressId && moment.validateDate(ec.date_of_birth) 
+            && ec.age && ec.gender && ec.schoolId && ec.courseId && ec.section && ec.year_level && ec.student_id_number
+            && ec.IP && ec.degree, ec.civil_status
         ) {
 
           ec.updatingPrimaryDetails = true;
-          // ec.primaryButtonText = 'Updating...';
 
           let primary_scholar_details = {
             scholar_id: ec.binded_copy.scholar_id,
@@ -225,7 +222,6 @@ angular.module('psmsApp')
       if (ec.m_firstname && ec.search_maidenname) {
 
         ec.updatingParentsDetails = true;
-        // ec.parentsButtonText = 'Updating...';
         
         let parentsDetails = {
           scholar_id: ec.copy.scholar_id,
@@ -244,7 +240,6 @@ angular.module('psmsApp')
           },
         }
 
-        // updateScholarParentsDetails(parentsDetails);
         showSupervisorsApproval(parentsDetails, 'updatingParentsDetails', updateScholarParentsDetails);
       }
       else{
@@ -317,13 +312,13 @@ angular.module('psmsApp')
        scholarApiService.updateScholarDetails(scholarDetails).then(response => {
         ec.binded_copy.updated_at = response.data;
         updatePrimaryDetails(scholarDetails);
-        // ec.primaryButtonText = 'Update';
+        ec.updating = false;
         ec.updatingPrimaryDetails = false;
         ec.primary_details = false;
         swalert.dialogBox('Scholar updated!', 'success', 'Success');
         ec.primaryDetailsForm.$setPristine();
       }, err => {
-        // ec.primaryButtonText = 'Update';
+        ec.updating = false;
         ec.updatingPrimaryDetails = false;
         swalert.dialogBox(err.data.message, 'error', 'Failed');
       });
@@ -331,16 +326,18 @@ angular.module('psmsApp')
 
     function updateScholarParentsDetails(parentsDetails){
       scholarApiService.updateScholarParentsDetails(parentsDetails).then(response => {
+        console.log(response);
         ec.binded_copy.father_details = response.data.father_details;
         ec.binded_copy.mother_details = response.data.mother_details;
         ec.binded_copy.updated_at = response.data.updated_at;
-        // ec.parentsButtonText = 'Update';
+        ec.updating = false;
         ec.updatingParentsDetails = false;
         ec.parents_details = false;
         swalert.dialogBox('Parents details updated!', 'success', 'Success');
         ec.parentsDetailsForm.$setPristine();
       }, err => {
-        // ec.parentsButtonText = 'Update';
+        console.log(err);
+        ec.updating = false;
         ec.updatingParentsDetails = false;
         swalert.dialogBox(err.data.message, 'error', 'Failed');
       });
@@ -362,7 +359,6 @@ angular.module('psmsApp')
     }
 
     function fillEditScholar(scholar){
-      console.log($rootScope.access_degree);
         console.log(scholar);
         ec.binded_copy = scholar;
         let father = typeof scholar.father_details === 'object'? scholar.father_details : JSON.parse(scholar.father_details);
@@ -461,26 +457,34 @@ angular.module('psmsApp')
     }
 
     async function showSupervisorsApproval(details, updating, method, exist = false, message = "", ){
-      let proceed;
-      if(exist){
-        proceed = await swalert.promptMessageForSupervisor(message,  'error', 'Scholar name exist', true);
-      }
-
-      if (proceed.isConfirmed) {
+      
+      async function superVisor(){
         const result = await swalert.supervisorsApproval();
         if (result.isConfirmed) {
+          ec.updating = true;
           method(details);
         }
         if(result.isDismissed){
           ec[updating] = false;
+          $scope.$apply(ec[updating]);
         }
       }
-
-      if(proceed.isDismissed){
-        ec[updating] = false;
+      
+      if(exist){
+        const proceed = await swalert.promptMessageForSupervisor(message,  'error', 'Scholar name exist', true);
+        if (proceed.isConfirmed) {
+          superVisor();
+        }
+        if(proceed.isDismissed){
+          ec[updating] = false;
+          $scope.$apply(ec[updating]);
+        }
       }
-
-      $scope.$apply(ec[updating]);
+      else
+      {
+        superVisor();
+      }
+      
     }
 
     ec.resizeImage = function (settings) {

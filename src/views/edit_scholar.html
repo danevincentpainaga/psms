@@ -1,3 +1,9 @@
+<div class="posting-message" ng-if="ec.updating" >
+  <div class="lds-ring">
+    <span style="font-weight: 300;">Updating...</span>
+    <div></div><div></div><div></div><div></div>
+  </div>
+</div>
 <md-sidenav class="md-sidenav-right" md-component-id="editScholar" md-whiteframe="5" md-disable-close-events style="min-width: 70%;position: fixed;">
   <md-toolbar class="md-theme-light" style="min-height: 35px;max-height: 35px;">
     <md-icon class="material-icons" ng-click="ec.close()" style="position: absolute;left: 7px;top: 5px; cursor: pointer; background-color: #616dc3;">close</md-icon>
@@ -123,7 +129,7 @@
           </div>
       </md-card-content>
       <div style="width: 100%;text-align: right;">
-        <md-button class="md-raised md-primary" ng-click="ec.updateScholarPrimaryDetails()" ng-if="ec.primary_details" ng-disabled="ec.primaryDetailsForm.$invalid || !ec.primaryDetailsForm.$dirty || ec.updatingPrimaryDetails">{{ ec.primaryButtonText }}</md-button>
+        <md-button class="md-raised md-primary" ng-click="ec.updateScholarPrimaryDetails()" ng-if="ec.primary_details" ng-disabled="ec.primaryDetailsForm.$invalid || !ec.primaryDetailsForm.$dirty || ec.updatingPrimaryDetails">Update</md-button>
         <md-button class="md-raised" ng-click="ec.enableDisablePrimaryDetails()">{{ ec.enablePrimaryButtonText }}</md-button>
       </div>
     </form>
@@ -214,7 +220,7 @@
         </form>
       </md-card-content>
       <div style="width: 100%;text-align: right;">
-        <md-button class="md-raised md-primary" ng-click="ec.updateScholarParentsDetails()" ng-if="ec.parents_details" ng-disabled="ec.parentsDetailsForm.$invalid || !ec.parentsDetailsForm.$dirty || ec.updatingParentsDetails">{{ ec.parentsButtonText }}</md-button>
+        <md-button class="md-raised md-primary" ng-click="ec.updateScholarParentsDetails()" ng-if="ec.parents_details" ng-disabled="ec.parentsDetailsForm.$invalid || !ec.parentsDetailsForm.$dirty || ec.updatingParentsDetails">Update</md-button>
         <md-button class="md-raised" ng-click="ec.enableDisableParentsDetails()">{{ ec.enableParentsButtonText }}</md-button>
       </div>
     </md-card>  

@@ -1,4 +1,10 @@
 <ng-include src="'/header.html'"></ng-include> 
+<div class="posting-message" ng-if="ac.saving" >
+  <div class="lds-ring">
+    <span style="font-weight: 300;">Saving</span>
+    <div></div><div></div><div></div><div></div>
+  </div>
+</div>
 <div class="undergraduate fading" show-change-view mobile="ac.isMobile">
   <md-toolbar class="md-menu-toolbar">
     <div layout="row">

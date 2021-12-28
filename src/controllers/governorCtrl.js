@@ -9,9 +9,20 @@
  */ 
 
 angular.module('psmsApp')
-.controller('governorCtrl', ['$scope', 'governorService', 'swalert', function ($scope, governorService, swalert) {
+.controller('governorCtrl',
+	[
+		'$scope',
+		'governorService',
+		'addScholarsService',
+		'swalert',
+	function (
+		$scope,
+		governorService,
+		addScholarsService,
+		swalert) {
 
     var gov = this;
+	gov.suffix = "NONE";
 	// gov.sufffixes = ['JR', 'SR', 'VII', 'VI', 'V', 'IV', 'III', 'II', 'I'];
 
 	$scope.$watch('gov.initial', function(n, o){
@@ -34,9 +45,7 @@ angular.module('psmsApp')
 			lastname: gov.lastname,
 			suffix: gov.suffix? gov.suffix : "",
 		}
-
-		debugger;
-
+		
 		governorService.updateGovernor(governor).then(response => {
 			console.log(response);
 			gov.updating = false;
@@ -61,15 +70,24 @@ angular.module('psmsApp')
 				gov.firstname = gov_details.firstname;
 				gov.initial = gov_details.initial;
 				gov.lastname = gov_details.lastname;
-				gov.suffix = gov_details.suffix;
+				gov.suffix = gov_details.suffix? gov_details.suffix.toUpperCase() : 'NONE';
 				gov.governor_loaded = true;
 			}
 			gov.governor_loaded = true;
 		}, err=>{
 			console.log(err);
-		})
+		});
+	}
+
+	function loadSuffix(){
+		addScholarsService.getSuffix().then(response => {
+		  gov.suffix_list = response.data;
+		}, err => {
+		  console.log(err);
+		});
 	}
 
 	getGovernoDetails();
+	loadSuffix();
 
 }]);

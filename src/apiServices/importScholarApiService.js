@@ -3,6 +3,15 @@ import { baseUrl } from '../apiServices/baseUrl';
 angular.module('psmsApp').factory('importScholarApiService', ['$http', '$cookies', '$rootScope', '$q', function($http, $cookies, $rootScope, $q){
 
   return{
+    getScholarsWithCount: function(degree){
+      return $http.get(baseUrl+'api/import/getScholarsWithCount', {
+        params: degree,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization : 'Bearer '+ $rootScope.token
+        }
+      });
+    },
     getAllScholars: function(degree){
       return $http.get(baseUrl+'api/import/getAllScholars', {
         params: degree,

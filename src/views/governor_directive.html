@@ -24,7 +24,10 @@
             </md-input-container>
             <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="10" style="margin: 17px 0px 0px 0px;">
               <label>Suffix</label>
-              <input type="text" ng-model="gov.suffix" ng-disabled="!gov.enabled" accept-only-letters uppercase autocomplete="off">
+              <md-select ng-model="gov.suffix" ng-disabled="!gov.enabled" required>
+                <md-option value="NONE">NONE</md-option>
+                <md-option ng-repeat="suff in gov.suffix_list" ng-value="suff.suffix"><em>{{suff.suffix}}</em></md-option>
+              </md-select>
             </md-input-container>
           </div>
           <md-button class="md-raised md-primary" ng-click="gov.updateGovernor()" ng-if="gov.enabled" ng-disabled="gov.updating || governorForm.$invalid" style="margin: 0px;">{{ gov.updating? 'Updating...' : 'Update' }}</md-button>

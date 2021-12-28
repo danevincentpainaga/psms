@@ -79,13 +79,15 @@ angular.module('psmsApp')
 
 	function storeAddress(address_details){
 		addressApiService.storeAddress(address_details).then(response => {
+			console.log(response);
 			ad.addresses.push(response.data);
 			clearInputs();
 			ad.saving_updating = false;
 			swalert.dialogBox('Address saved.', 'success',  'successful');
 		}, err => {
 			console.log(err);
-			swalert.dialogBox(err.data, 'error', 'Failed');
+			swalert.dialogBox(err.data.message, 'error', 'Failed');
+			ad.saving_updating = false;
 		})
 	}
 
@@ -100,26 +102,26 @@ angular.module('psmsApp')
 			swalert.dialogBox('Address updated.', 'success',  'successful');
 		}, err => {
 			console.log(err);
-			swalert.dialogBox(err.data, 'error', 'Failed');
-		})
+			swalert.dialogBox(err.data.message, 'error', 'Failed');
+			ad.saving_updating = false;
+		});
 	}
 
 	function getMunicipalities(){
-		municipalitiesApiService.getMunicipalities()
-		  .then(response=>{
-		    ad.municipalities = response.data;
-		  }, err=> {
-		    console.log(err);
-		  });
+		municipalitiesApiService.getMunicipalities().then(response=>{
+			ad.municipalities = response.data;
+		}, err=> {
+			console.log(err);
+		});
 	}
 
 	function getAddresses(searched){
 		addressApiService.getAddresses({searched: searched}).then(response=>{
-		  ad.addresses = response.data;
-		  ad.searching = false;
-		  ad.address_list_loaded = true;
+			ad.addresses = response.data;
+			ad.searching = false;
+			ad.address_list_loaded = true;
 		}, err => {
-		  console.log(err);
+			console.log(err);
 		});
 	}
 

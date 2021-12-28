@@ -217,7 +217,7 @@ app.controller('exportScholarsCtrl',['$scope', '$filter', '$timeout', 'schoolApi
       // link.click();
       // document.body.removeChild(link);
 
-      // splitArrayOfChunks(response.data);
+      splitArrayOfChunks(response.data);
       // var a = document.createElement("a");
       // var blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;' });
       // FileSaver.saveAs(blob, "invoices.xlsx");
@@ -233,17 +233,17 @@ app.controller('exportScholarsCtrl',['$scope', '$filter', '$timeout', 'schoolApi
       // var filename = (matches != null && matches[1] ? matches[1] : 'salary.xlsx');
 
       // // The actual download
-      var blob = new Blob([response.data], {
-          type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-      });
-      var link = document.createElement('a');
-      link.href = window.URL.createObjectURL(blob);
-      link.download = 'invoices.xlsx';
+      // var blob = new Blob([response.data], {
+      //     type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+      // });
+      // var link = document.createElement('a');
+      // link.href = window.URL.createObjectURL(blob);
+      // link.download = 'invoices.xlsx';
 
-      document.body.appendChild(link);
+      // document.body.appendChild(link);
 
-      link.click();
-      document.body.removeChild(link);
+      // link.click();
+      // document.body.removeChild(link);
     }, err => {
       console.log(err);
     });    

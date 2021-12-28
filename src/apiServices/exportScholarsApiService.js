@@ -5,13 +5,21 @@ angular.module('psmsApp').factory('exportScholarsApiService', ['$http', '$rootSc
   // var baseUrl = "/";
 
   return{
+    // getScholarsToExport: function(){
+    //   return $http.get(baseUrl+'api/export/getScholarsToExport', {
+    //     responseType: "blob",
+    //     headers: {
+    //       Authorization : 'Bearer '+ $rootScope.token
+    //     }
+    //   });
+    // },
     getScholarsToExport: function(){
       return $http.get(baseUrl+'api/export/getScholarsToExport', {
-        responseType: "blob",
         headers: {
+          Accept: "application/json",
           Authorization : 'Bearer '+ $rootScope.token
         }
       });
     },
-	}
+  }
 }]);

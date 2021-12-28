@@ -1,5 +1,7 @@
 'use strict';
 
+const { result } = require("lodash");
+
 /**
  * @ngdoc function
  * @name psmsApp.controller:importScholarsCtrl
@@ -47,6 +49,8 @@ var app = angular.module('psmsApp');
   var scholar_status = ['NEW', 'OLD'];
   var ip = ['YES', 'NO'];
   var gender = ['Male', 'Female'];
+  var page = 0;
+  var scholar_count = 0;
   ic.total_errors = 0;
 
   $scope.$watchGroup(['ic.degree', 'ic.municipality'], function(n, o){
@@ -201,7 +205,7 @@ var app = angular.module('psmsApp');
             addError("Error: Empty scholar name", idx);
             return;
           }
-
+          
           let fname = validateLettersSpaces(value.Firstname, "Firstname", idx);
           let lname = validateLettersSpaces(value.Lastname, "Lastname", idx);
           let mname = validateLettersSpaces(value.Middlename, "Middlename", idx);
@@ -210,8 +214,11 @@ var app = angular.module('psmsApp');
             console.log('Hit');
             return;
           }
+          let mother_middlename = value.Mother_middlename? value.Mother_middlename : "";
+          let middlename = value.Middlename? value.Middlename : "";
+          let row = (value.Firstname+value.Lastname+middlename+value.Mother_firstname+value.Mother_maiden_name+value.Mother_middlename).toLowerCase();
 
-          if (checkedItem.indexOf(concatAndLower(value)) > -1) return;
+          if (checkedItem.indexOf(row) > -1) return;
 
           // if (concatAndLower(value) === undefined) {
           //   ic.gridOptions.data[idx].error.push("Error: Empty scholar name");
@@ -219,7 +226,8 @@ var app = angular.module('psmsApp');
           //   return;
           // }
 
-          checkedItem.push(concatAndLower(value));
+          // checkedItem.push(concatAndLower(value));
+          checkedItem.push(row);
 
           checkDuplicate(value, ic.imported_scholars, idx);
 
@@ -282,19 +290,22 @@ var app = angular.module('psmsApp');
   }
 
   function validateImportedScholars(){
-      $q.all([importScholarApiService.getAllScholars({degree: ic.degree}), importScholarApiService.getAddresses({municipality: ic.municipality}), schoolApiService.getListOfSchool(), importScholarApiService.getCourses({degree: ic.degree}), academicContractService.getAcademicContractDetails()]).then(response=>{
-        
+      // $q.all([importScholarApiService.getScholarsWithCount({degree: ic.degree}), importScholarApiService.getAddresses({municipality: ic.municipality}), schoolApiService.getListOfSchool(), importScholarApiService.getCourses({degree: ic.degree}), academicContractService.getAcademicContractDetails()]).then(response=>{
+      $q.all([importScholarApiService.getAddresses({municipality: ic.municipality}), schoolApiService.getListOfSchool(), importScholarApiService.getCourses({degree: ic.degree}), academicContractService.getAcademicContractDetails()]).then(response=>{
+        console.log(response);
+
         $mdSidenav('importScholars').toggle();
 
         ic.imported_scholars.forEach(function(val, i){
           $timeout(()=>{
             validateScholarsName(response, val, i);
             if (i === ic.imported_scholars.length -1) {
-              ic.progress_value = 100;
-              ic.checking_in = 'Finished';
-              ic.check_finished = true;
+              // ic.progress_value = 0;
+              checkIfScholarExist();
+              // ic.checking_in = 'Finished';
+              // ic.check_finished = true;
               ic.gridApi.core.notifyDataChange( uiGridConstants.dataChange.COLUMN );
-              swalert.toastInfo('Check Finished', 'success', 'top-right');
+              // swalert.toastInfo('Check Finished', 'success', 'top-right');
             }
           });
         });
@@ -323,19 +334,19 @@ var app = angular.module('psmsApp');
       // validateLettersSpaces(scholarsObj.Firstname, "Firstname", idx);
       // validateLettersSpaces(scholarsObj.Middlename, "Middlename", idx);
 
-      const result = response[0].data.find(item => {
+      // const result = response[0].data.find(item => {
 
-        if (trimAndLower(item.lastname) === trimAndLower(scholarsObj.Lastname) && trimAndLower(item.firstname) === trimAndLower(scholarsObj.Firstname) && trimAndLower(item.middlename) === trimAndLower(scholarsObj.Middlename)) {
-            addError("Error: Scholar already exist", idx);
-            return true;
-        }
+      //   if (trimAndLower(item.lastname) === trimAndLower(scholarsObj.Lastname) && trimAndLower(item.firstname) === trimAndLower(scholarsObj.Firstname) && trimAndLower(item.middlename) === trimAndLower(scholarsObj.Middlename)) {
+      //       addError("Error: Scholar already exist", idx);
+      //       return true;
+      //   }
 
-      });
+      // });
 
-      if (result) {
-        ic.progress_value = Math.ceil(idx / total * 100) -1;
-        return;
-      }
+      // if (result) {
+      //   ic.progress_value = Math.ceil(idx / total * 100) -1;
+      //   return;
+      // }
 
       validate(scholar_status, scholarsObj.Status, "Error: Invalid status", idx);
       validate(ip, scholarsObj.IP, "Error: Invalid IP", idx);
@@ -345,10 +356,10 @@ var app = angular.module('psmsApp');
       validateFather(scholarsObj, idx);
       validateMother(scholarsObj, idx);
 
-      validateAddress(response[1].data, scholarsObj, idx);
-      validateSchool(response[2].data, scholarsObj, idx);
-      validateCourse(response[3].data, scholarsObj, idx);
-      validateContractDetails(response[4].data, scholarsObj, idx);
+      validateAddress(response[0].data, scholarsObj, idx);
+      validateSchool(response[1].data, scholarsObj, idx);
+      validateCourse(response[2].data, scholarsObj, idx);
+      validateContractDetails(response[3].data, scholarsObj, idx);
 
       if (!scholarsObj.Degree) {
         addError("Error: Degree is empty", idx);
@@ -490,6 +501,46 @@ var app = angular.module('psmsApp');
     }
   }
 
+  function checkIfScholarExist(){
+    importScholarApiService.getScholarsWithCount({ degree: ic.degree, page: page }).then(response => {
+      console.log(response);
+      const numberOfPages = Math.ceil(response.data.count / 2);  
+      response.data.scholars.forEach(function(val, i){
+        const result = ic.imported_scholars.findIndex(value => {
+          if(trimAndLower(value.Firstname+value.Lastname+value.Middlename+value.Mother_firstname+value.Mother_maiden_name+value.Mother_middlename) === trimAndLower(val.firstname+val.lastname+val.middlename+val.mother_details.firstname+val.mother_details.maiden_name+val.mother_details.middlename)){
+            return true;
+          }
+        });
+
+        if (result > -1) {
+          addError("Error: Scholar already exist", result);
+        }
+        
+        scholar_count++;
+        ic.progress_value = Math.ceil(scholar_count / response.data.count * 100) -1;
+        
+        if(i === response.data.scholars.length -1){
+          if(page !== numberOfPages -1){
+            page++;
+            checkIfScholarExist()
+          }
+          else{
+            ic.checking_in = 'Finished';
+            ic.check_finished = true;
+            ic.gridApi.core.notifyDataChange( uiGridConstants.dataChange.COLUMN );
+            swalert.toastInfo('Check Finished', 'success', 'top-right');
+            ic.progress_value = 100;
+            page = 0;
+            scholar_count = 0;
+          }
+        }
+        console.log(i, numberOfPages, page, scholar_count);
+      });
+    }, err =>{
+      swalert.dialogBox(err.data.message, 'error', 'Failed');
+    });
+  }
+
   function upperCase(value){
     if (typeof value === 'string'){
       return value.toUpperCase();
@@ -569,7 +620,7 @@ var app = angular.module('psmsApp');
   }
 
   function trimAndLower(value){
-    return (value || "").toString().trim().toLowerCase()
+    return (value || "").replace('undefined', '').toString().trim().toLowerCase();
   }
 
   function importScholarsData(imported_data){

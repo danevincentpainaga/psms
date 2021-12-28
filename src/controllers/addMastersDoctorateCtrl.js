@@ -266,13 +266,13 @@ app.controller('addMastersDoctorateCtrl',
      scholarApiService.storeNewScholarDetails(scholarDetails).then(response => {
       md.clear();
       md.saving = false;
-      swalert.toastInfo('Scholar saved!', 'success', 'top-right');
+      swalert.dialogBox('Scholar saved!', 'success', 'Success');
       printContract.print(scholarDetails, md, academicContractDetails.governor);
       getNewMastersDoctorateScholars();
     }, err => {
       console.log(err);
       md.saving = false;
-      swalert.toastInfo(err.data.message,  'error', 'top-right');
+      swalert.dialogBox(err.data.message,  'error', 'Failed');
     });
   }
 

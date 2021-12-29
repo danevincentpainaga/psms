@@ -45,6 +45,7 @@ var app = angular.module('psmsApp');
     ) {
 
   var ic = this;
+  ic.checking_in = 'Checking:';
   var year_level = ['I', 'II', 'III', 'IV', 'V', 'VI'];
   var scholar_status = ['NEW', 'OLD'];
   var ip = ['YES', 'NO'];
@@ -66,7 +67,7 @@ var app = angular.module('psmsApp');
   });
 
   // ic.myData = [];
-  ic.scholars_to_upload = [];
+  // ic.scholars_to_upload = [];
   ic.progress_value = 0;
   ic.importBtn = 'Import to database';
 
@@ -158,9 +159,10 @@ var app = angular.module('psmsApp');
   }
 
   ic.cancel = function(){
-    ic.scholars_to_upload = [];
+    // ic.scholars_to_upload = [];
     ic.check_finished = false;
     ic.gridOptions.data = [];
+    ic.imported_scholars = [];
     ic.progress_value = 0;
     ic.total_errors = 0;
     ic.isChecking = false;
@@ -171,18 +173,59 @@ var app = angular.module('psmsApp');
 
   ic.importToDatabase = function(){
 
+    ic.imported_scholars = [];
+
     if (ic.total_errors > 0) {
       swalert.dialogBox('Imported data has '+ ic.total_errors +' Errors', 'error', 'Cannot import');
       return;
     }
 
+    for (let i = 0; i < ic.gridOptions.data.length; i++) {
+      const value = ic.gridOptions.data[i];
+      if(value.error.length === 0){
+        let fdetails = {
+          firstname: upperCase((value.Father_firstname || "")),
+          lastname: upperCase((value.Father_lastname || "")),
+          middlename: upperCase((value.Father_middlename || null)),
+        };
+        let mdetails = { 
+            firstname: upperCase((value.Mother_firstname)), 
+            maiden_name: upperCase((value.Mother_maiden_name)), 
+            middlename: upperCase((value.Mother_middlename || null)), 
+        };
+
+        let scholar = {
+            student_id_number: upperCase(value['Student ID NO']),
+            lastname: upperCase(value.Lastname),
+            firstname: upperCase(value.Firstname),
+            middlename: upperCase(value.Middlename || null),
+            addressId: value.Address,
+            date_of_birth: value['Date of Birth'],
+            age: addScholarsService.calcAge(value['Date of Birth']),
+            gender: value.Gender,
+            schoolId: value.School,
+            courseId: value.Course,
+            section: upperCase(value.Section),
+            year_level: value['Year level'],
+            IP: value.IP,
+            father_details: fdetails,
+            mother_details: mdetails,
+            degree: value.Degree,
+            scholar_status: value.Status,
+            contract_id: value.contract_id
+        };
+        ic.imported_scholars.push(scholar);
+      }
+    }
+
+    console.log(ic.imported_scholars);
+    
     let imported_data = {
-      scholars: ic.scholars_to_upload,
+      scholars: ic.imported_scholars,
       error: ic.total_errors
     };
-
+    
     swalert.confirm(imported_data, importScholarsData, 'Proceed to import?', 'You can\'t cancel once imported.', 'warning', 500, ic);
-
   }
 
   ic.checkImportedScholars = function(){
@@ -195,7 +238,7 @@ var app = angular.module('psmsApp');
 
       $timeout(()=>{
 
-        ic.checking_in = "Duplicate values";
+        ic.checking_in = "Checking: Duplicate values";
 
         ic.imported_scholars.forEach(function(value, idx){
 
@@ -214,9 +257,8 @@ var app = angular.module('psmsApp');
             console.log('Hit');
             return;
           }
-          let mother_middlename = value.Mother_middlename? value.Mother_middlename : "";
-          let middlename = value.Middlename? value.Middlename : "";
-          let row = (value.Firstname+value.Lastname+middlename+value.Mother_firstname+value.Mother_maiden_name+value.Mother_middlename).toLowerCase();
+          
+          let row = trimAndLower(value.Firstname+value.Lastname+value.Middlename+value.Mother_firstname+value.Mother_maiden_name+value.Mother_middlename);
 
           if (checkedItem.indexOf(row) > -1) return;
 
@@ -290,29 +332,24 @@ var app = angular.module('psmsApp');
   }
 
   function validateImportedScholars(){
-      // $q.all([importScholarApiService.getScholarsWithCount({degree: ic.degree}), importScholarApiService.getAddresses({municipality: ic.municipality}), schoolApiService.getListOfSchool(), importScholarApiService.getCourses({degree: ic.degree}), academicContractService.getAcademicContractDetails()]).then(response=>{
-      $q.all([importScholarApiService.getAddresses({municipality: ic.municipality}), schoolApiService.getListOfSchool(), importScholarApiService.getCourses({degree: ic.degree}), academicContractService.getAcademicContractDetails()]).then(response=>{
-        console.log(response);
+    $q.all([importScholarApiService.getAddresses({municipality: ic.municipality}), schoolApiService.getListOfSchool(), importScholarApiService.getCourses({degree: ic.degree}), academicContractService.getAcademicContractDetails()]).then(response=>{
+      console.log(response);
+      $mdSidenav('importScholars').toggle();
 
-        $mdSidenav('importScholars').toggle();
-
-        ic.imported_scholars.forEach(function(val, i){
-          $timeout(()=>{
-            validateScholarsName(response, val, i);
-            if (i === ic.imported_scholars.length -1) {
-              // ic.progress_value = 0;
-              checkIfScholarExist();
-              // ic.checking_in = 'Finished';
-              // ic.check_finished = true;
-              ic.gridApi.core.notifyDataChange( uiGridConstants.dataChange.COLUMN );
-              // swalert.toastInfo('Check Finished', 'success', 'top-right');
-            }
-          });
+      ic.imported_scholars.forEach(function(val, i){
+        $timeout(()=>{
+          validateScholarsName(response, val, i);
+          if (i === ic.imported_scholars.length -1) {
+            ic.progress_value = 0;
+            ic.gridApi.core.notifyDataChange( uiGridConstants.dataChange.COLUMN );
+            ic.checking_in = 'Fetching data...';
+            checkIfScholarExist();
+          }
         });
-
-      }, err=> {
-        console.log(err);
       });
+    }, err=> {
+      console.log(err);
+    });
   }
 
   function validateScholarsName(response, scholarsObj, idx){
@@ -328,28 +365,10 @@ var app = angular.module('psmsApp');
         return;
       };
 
-      ic.checking_in = scholarsObj.Lastname+" "+scholarsObj.Firstname+", "+scholarsObj.Middlename;
-
-      // validateLettersSpaces(scholarsObj.Lastname, "Lastname", idx);
-      // validateLettersSpaces(scholarsObj.Firstname, "Firstname", idx);
-      // validateLettersSpaces(scholarsObj.Middlename, "Middlename", idx);
-
-      // const result = response[0].data.find(item => {
-
-      //   if (trimAndLower(item.lastname) === trimAndLower(scholarsObj.Lastname) && trimAndLower(item.firstname) === trimAndLower(scholarsObj.Firstname) && trimAndLower(item.middlename) === trimAndLower(scholarsObj.Middlename)) {
-      //       addError("Error: Scholar already exist", idx);
-      //       return true;
-      //   }
-
-      // });
-
-      // if (result) {
-      //   ic.progress_value = Math.ceil(idx / total * 100) -1;
-      //   return;
-      // }
+      ic.checking_in = 'Checking Format: '+ (scholarsObj.Lastname || "")+" "+(scholarsObj.Firstname || "")+", "+(scholarsObj.Middlename || "");
 
       validate(scholar_status, scholarsObj.Status, "Error: Invalid status", idx);
-      validate(ip, scholarsObj.IP, "Error: Invalid IP", idx);
+      validate(ip, scholarsObj.IP, "Error: Invalid IP", idx) ;
       validate(year_level, scholarsObj['Year level'], "Error: Invalid Year level", idx);
       validate(gender, scholarsObj.Gender, "Error: Invalid Gender", idx);
 
@@ -381,42 +400,7 @@ var app = angular.module('psmsApp');
         addError("Error: Invalid Date of Birth", idx);
       }
 
-      let fdetails = {
-          firstname: upperCase((scholarsObj.Father_firstname || "")),
-          lastname: upperCase((scholarsObj.Father_lastname || "")),
-          middlename: upperCase((scholarsObj.Father_middlename || null)),
-      };
-      let mdetails = { 
-          firstname: upperCase((scholarsObj.Mother_firstname)), 
-          maiden_name: upperCase((scholarsObj.Mother_maiden_name)), 
-          middlename: upperCase((scholarsObj.Mother_middlename || null)), 
-      };
-
-      let scholar = {
-          student_id_number: upperCase(scholarsObj['Student ID NO']),
-          lastname: upperCase(scholarsObj.Lastname),
-          firstname: upperCase(scholarsObj.Firstname),
-          middlename: upperCase(scholarsObj.Middlename || null),
-          addressId: scholarsObj.Address,
-          date_of_birth: scholarsObj['Date of Birth'],
-          age: addScholarsService.calcAge(scholarsObj['Date of Birth']),
-          gender: scholarsObj.Gender,
-          schoolId: scholarsObj.School,
-          courseId: scholarsObj.Course,
-          section: upperCase(scholarsObj.Section),
-          year_level: scholarsObj['Year level'],
-          IP: scholarsObj.IP,
-          father_details: JSON.stringify(fdetails),
-          mother_details: JSON.stringify(mdetails),
-          degree: scholarsObj.Degree,
-          scholar_status: scholarsObj.Status,
-          contract_id: scholarsObj.contract_id
-      };
-
-      ic.scholars_to_upload.push(scholar);
-
       ic.progress_value = Math.ceil(idx / total * 100) -1;
-
   }
 
   function validateAddress(addressesArray, scholarsObj, idx){
@@ -516,25 +500,25 @@ var app = angular.module('psmsApp');
           addError("Error: Scholar already exist", result);
         }
         
+        ic.checking_in = 'Checking Duplicate: '+ (val.lastname || "")+" "+(val.firstname || "")+", "+(val.middlename || "");
         scholar_count++;
         ic.progress_value = Math.ceil(scholar_count / response.data.count * 100) -1;
-        
+
         if(i === response.data.scholars.length -1){
           if(page !== numberOfPages -1){
             page++;
             checkIfScholarExist()
           }
           else{
-            ic.checking_in = 'Finished';
-            ic.check_finished = true;
             ic.gridApi.core.notifyDataChange( uiGridConstants.dataChange.COLUMN );
-            swalert.toastInfo('Check Finished', 'success', 'top-right');
             ic.progress_value = 100;
             page = 0;
             scholar_count = 0;
+            ic.checking_in = 'Checking: Finished';
+            ic.check_finished = true;
+            swalert.toastInfo('Check Finished', 'success', 'top-right');
           }
         }
-        console.log(i, numberOfPages, page, scholar_count);
       });
     }, err =>{
       swalert.dialogBox(err.data.message, 'error', 'Failed');
@@ -628,6 +612,7 @@ var app = angular.module('psmsApp');
       ic.check_finished = false;
       swalert.dialogBox('Import successful!', 'success', 'Success');
       ic.show_spinner = false;
+      imported_data = {};
     }, err => {
       console.log(err);
       ic.check_finished = false;

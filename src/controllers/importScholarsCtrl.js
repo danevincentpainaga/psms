@@ -361,7 +361,7 @@ var app = angular.module('psmsApp');
       ic.show_spinner = false;
 
       if (!scholarsObj.Lastname || !scholarsObj.Firstname) {
-        ic.progress_value = Math.ceil(idx / total * 100) -1;
+        ic.progress_value = Math.ceil(idx / total * 100);
         return;
       };
 
@@ -400,7 +400,7 @@ var app = angular.module('psmsApp');
         addError("Error: Invalid Date of Birth", idx);
       }
 
-      ic.progress_value = Math.ceil(idx / total * 100) -1;
+      ic.progress_value = Math.ceil(idx / total * 100);
   }
 
   function validateAddress(addressesArray, scholarsObj, idx){

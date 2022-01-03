@@ -12,32 +12,52 @@
   </md-toolbar>
   <div layout="column">
     <div layout="row">
-      <div flex="0" flex-gt-sm="25"></div>
+      <div flex="0" flex-gt-sm="20"></div>
       <div flex class="fading-up">
         <section style="margin-top: 1em;">
           <div layout="row" layout-xs="column">
             <md-content flex layout-padding>
               <md-list flex>
-                <div style="display: flex;" layout-xs="row">
-                  <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="50">
-                    <label>Search</label>
-                    <input type="text" ng-model="rc.scholar_lastname" ng-disabled="!rc.degree">
-                    <md-progress-circular class="md-hue-2" md-diameter="15px" style="position: absolute;right: 0px;top: 10px;" ng-if="rc.searching"></md-progress-circular>
-                  </md-input-container>
-                  <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="50">
-                    <label>Select degree</label>
-                    <md-select ng-model="rc.degree">
-                      <md-option ng-value="degree" ng-repeat="degree in access_degree"><em>{{ degree }}</em></md-option>
-                    </md-select>
-                  </md-input-container>
-                </div>
+                <form ng-submit="rc.onSubmit()">
+                  <div style="display: flex;" layout-xs="row">
+                      <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="15">
+                        <label>Type</label>
+                        <md-select ng-model="rc.searchType">
+                          <md-option ng-value="type" ng-repeat="type in rc.type"><em>{{ type }}</em></md-option>
+                        </md-select>
+                      </md-input-container>
+                      <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="20">
+                        <label>Select degree</label>
+                        <md-select ng-model="rc.degree">
+                          <md-option ng-value="degree" ng-repeat="degree in access_degree"><em>{{ degree }}</em></md-option>
+                        </md-select>
+                      </md-input-container>
+                      <md-input-container flex-xs="100" flex-sm="100" flex-gt-md="65">
+                        <label>Search</label>
+                        <input type="text" ng-model="rc.scholar_name" ng-disabled="!rc.degree">
+                        <md-progress-circular class="md-hue-2" md-diameter="15px" style="position: absolute;right: 0px;top: 10px;" ng-if="rc.searching"></md-progress-circular>
+                      </md-input-container>
+                      <div>
+                        <button type="submit"
+                          class="md-raised md-warn"
+                          style="color: #ffff;
+                                padding: 5px;
+                                background-color: rgb(63, 86, 221);
+                                border: none;
+                                border-radius: 3px;
+                                margin: 23px 0px 0px 0px;">
+                          Search
+                        </button>
+                      </div>
+                  </div>
+                </form>
                 <md-subheader class="md-no-sticky">{{ rc.scholars.length > 0 ? rc.degree : 'Empty' }} list</md-subheader>
                 <div class="renew-scholar-list">
                   <md-list-item class="md-2-line" ng-repeat="scholar in rc.scholars" >
                     <img ng-src="{{ scholar.photo | checkScholarPhoto }}" class="md-avatar scholar-image" alt="" />
                     <div class="md-list-item-text">
-                      <h4>{{scholar.lastname}},&nbsp;{{scholar.firstname}}&nbsp;{{scholar.middlename}}.</h4>
-                      <p>{{ scholar.school.school_name }} - {{ scholar.degree }}</p>
+                      <h4>{{ scholar | formatName }}</h4>
+                      <p>{{ scholar.school.school_name }} - {{ scholar.student_id_number }}, {{ scholar.degree }}</p>
                     </div>
                     <md-menu>
                       <md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdMenu.open($event)" style="padding: 0px;margin: 0;">
@@ -63,7 +83,7 @@
           </div>
         </section>
       </div>
-      <div flex="0" flex-gt-sm="25"></div>
+      <div flex="0" flex-gt-sm="20"></div>
     </div>
   </div>
 </div>

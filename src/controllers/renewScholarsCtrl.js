@@ -27,15 +27,23 @@ angular.module('psmsApp').controller('renewScholarsCtrl',
         swalert) {
 
     var rc = this;
+    rc.type = ['Name', 'Student ID'];
 
-    $scope.$watch('rc.scholar_lastname', debounce(function(n, o) {
-        if(n){
-            getNotRenewedScholar(n);
-        }
-        else{
+    rc.onSubmit = function(){
+        if(!rc.searchType || !rc.scholar_name || !rc.degree) return;
+        rc.scholars = [];
+        rc.searching = true;
+        scholarApiService.getNotRenewedScholar({ searched_name: rc.scholar_name, degree: rc.degree, type: rc.searchType }).then(response => {
+            console.log(response);
+            rc.scholars = response.data.data;
+            rc.searching = false;
+        }, err => {
             rc.scholars = [];
-        }
-    }, 500), true);
+            rc.searching = false;
+            console.log(err);
+            swalert.dialogBox(err.data.message, 'error', 'Failed');
+        });
+    }
 
     rc.edit = function(scholarDetails){
         rc.scholar_to_edit = scholarDetails;
@@ -63,17 +71,6 @@ angular.module('psmsApp').controller('renewScholarsCtrl',
         }, err => {
             console.log(err);
             swalert.dialogBox(err.data.message, 'error', 'Failed');
-        });
-    }
-
-    function getNotRenewedScholar(searched){
-        rc.searching = true;
-        scholarApiService.getNotRenewedScholar({ searched_name: searched, degree: rc.degree }).then(response => {
-            console.log(response);
-            rc.scholars = response.data.data;
-            rc.searching = false;
-        }, err => {
-            console.log(err);
         });
     }
 

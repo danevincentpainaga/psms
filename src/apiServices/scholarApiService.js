@@ -45,6 +45,17 @@ angular.module('psmsApp').factory('scholarApiService', ['$http', '$cookies', '$r
         }
       });
     },
+    revertScholar: function(scholar_details){
+      return $http({
+        method:'POST',
+        url: baseUrl+'api/scholars/revertScholar',
+        data: scholar_details,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization : 'Bearer '+ $rootScope.token
+        }
+      });
+    },
     updateScholarDetails: function(scholar_details){
       return $http({
         method:'POST',

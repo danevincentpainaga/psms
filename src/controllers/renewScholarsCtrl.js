@@ -28,12 +28,23 @@ angular.module('psmsApp').controller('renewScholarsCtrl',
 
     var rc = this;
     rc.type = ['Name', 'Student ID'];
+    rc.tabStatus = 'Pending';
+
+    rc.onSelectStatus = function(status){
+        rc.scholars = [];
+        rc.tabStatus = status;
+        reset();
+    }
+
+    rc.revert = function(scholarDetails){
+        swalert.renewConfirmation(renewOrRevert({ scholar_id: scholarDetails.scholar_id, isActive: scholarDetails.isActive }, scholarDetails).revertScholar, 'Revert scholar?');
+    }
 
     rc.onSubmit = function(){
-        if(!rc.searchType || !rc.scholar_name || !rc.degree) return;
-        rc.scholars = [];
+        if(!rc.searchType || !rc.scholar_name || !rc.degree || rc.searching) return;
         rc.searching = true;
-        scholarApiService.getNotRenewedScholar({ searched_name: rc.scholar_name, degree: rc.degree, type: rc.searchType }).then(response => {
+        rc.scholars = [];
+        scholarApiService.getNotRenewedScholar({ searched_name: rc.scholar_name, degree: rc.degree, type: rc.searchType, contract_status: rc.tabStatus }).then(response => {
             console.log(response);
             rc.scholars = response.data.data;
             rc.searching = false;
@@ -57,21 +68,54 @@ angular.module('psmsApp').controller('renewScholarsCtrl',
             contract_id: academicContractDetails.activated_contract_id,
             last_renewed: academicContractDetails.ascId
         }
+        swalert.renewConfirmation(renewOrRevert(details, scholarDetails).renewScholar, 'Renew scholar?');
+    }
 
-        scholarApiService.renewScholar(details).then(response => {
-            Object.assign(scholarDetails, { 
-                contract_status: 'Pre-Approved',
-                academicyear_semester_contract: academicContractDetails.academic_year_semester,
-                contract_id: academicContractDetails.activated_contract_id,
-                last_renewed: academicContractDetails.ascId
-            });
-            swalert.dialogBox(response.data.message, 'success', 'Success');
-            printContract.print(scholarDetails, rc, academicContractDetails.governor);
-            console.log(response);
-        }, err => {
-            console.log(err);
-            swalert.dialogBox(err.data.message, 'error', 'Failed');
-        });
+    rc.print = function(scholarDetails, idx){
+        rc.selectedIndex = idx;
+        printContract.print(scholarDetails, rc, academicContractDetails.governor);
+    }   
+
+    function renewOrRevert(details, scholarDetails){
+        return {
+            renewScholar: function(){
+                rc.show_spinner = true;
+                scholarApiService.renewScholar(details).then(response => {
+                    rc.scholars.splice(rc.scholars.indexOf(scholarDetails), 1);
+                    rc.show_spinner = false;
+                    reset();
+                    swalert.dialogBox(response.data.message, 'success', 'Success');
+                    printContract.print(scholarDetails, rc, academicContractDetails.governor);
+                    console.log(response);
+                }, err => {
+                    console.log(err);
+                    rc.show_spinner = false;
+                    swalert.dialogBox(err.data.message, 'error', 'Failed');
+                });
+            },
+            revertScholar: function(){
+                rc.show_spinner = true;
+                scholarApiService.revertScholar(details).then(response => {
+                    rc.show_spinner = false;
+                    reset();
+                    rc.scholars.splice(rc.scholars.indexOf(scholarDetails), 1);
+                    swalert.dialogBox(response.data.message, 'success', 'Success');
+                    console.log(response);
+                }, err => {
+                    console.log(err);
+                    rc.show_spinner = false;
+                    swalert.dialogBox(err.data.message, 'error', 'Failed');
+                });
+            }
+        }
+    }
+
+    function reset(){
+        rc.searchType = '';
+        rc.degree = '';
+        rc.scholar_name = '';
+        rc.renewForm.$setPristine();
+        rc.renewForm.$setUntouched();
     }
 
     function hasSemester(){

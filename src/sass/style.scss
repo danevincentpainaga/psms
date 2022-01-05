@@ -752,3 +752,9 @@ th,
   width: 315px !important;
   font-size: 12px !important;
 }
+button:disabled {
+  cursor: not-allowed;
+}
+.md-button.md-raised[disabled] {
+  cursor: not-allowed;
+}

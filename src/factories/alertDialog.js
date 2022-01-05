@@ -117,6 +117,22 @@ angular.module('psmsApp')
           }
         });
       };
+      self.renewConfirmation = function(data, message){
+        Swal.fire({
+          title: message,
+          icon: 'info',
+          showCancelButton: true,
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+          confirmButtonText: 'Yes',
+          cancelButtonColor: '#d33',
+          cancelButtonText: 'No'
+        }).then((result) => {
+          if (result.value) {
+            data();
+          }
+        });
+      };
     
       return self;
 }]);

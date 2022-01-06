@@ -283,25 +283,24 @@ md-list-item.md-2-line, md-list-item.md-2-line > .md-no-style {
   background-color: #ff4040;
 }
 
-.custom-nav{
-    display: flex;
-    justify-content: flex-end;
-    border-bottom: 1px solid #dee2e6;
-    margin: 0px;
-    flex-wrap: wrap;
-    padding-left: 0;
-    margin-bottom: 0;
-    list-style: none;
-    margin: 3px 5px 0px 5px;
-    font-size: 13px;
+@mixin scholars-list($margin, $flex-content) {
+  display: flex;
+  justify-content: $flex-content;
+  border-bottom: 1px solid #dee2e6;
+  margin: 0px;
+  flex-wrap: wrap;
+  padding-left: 0;
+  list-style: none;
+  margin: $margin;
+  font-size: 13px;
   li{
-      .active{
-        text-decoration: none;
-        color: #495057;
-        background-color: #fff;
-        border-color: #c8d0d8 #c2c7cc #fff;
-      }
-
+    cursor: pointer;
+    .active{
+      text-decoration: none;
+      color: #495057;
+      background-color: #fff;
+      border-color: #c8d0d8 #c2c7cc #fff;
+    }
     a{
       text-decoration: none;
       border: 1px solid #c8c8c8;
@@ -312,6 +311,14 @@ md-list-item.md-2-line, md-list-item.md-2-line > .md-no-style {
       border-bottom: 0px;
     }
   }
+}
+
+.custom-nav{
+    @include scholars-list(3px 5px 0px 5px, flex-end)
+}
+
+.renew-nav{
+  @include scholars-list(3px 0px 3px 0px, flex-start);
 }
 
 .grid {
@@ -620,10 +627,10 @@ th,
         h4{
           margin: 0px !important;
           color: black !important;
-          font-size: 13px !important;
+          font-size: 11px !important;
         }
         p{
-          font-size: 12px !important;
+          font-size: 10px !important;
         }
       }
     }

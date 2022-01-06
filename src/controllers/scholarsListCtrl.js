@@ -18,6 +18,7 @@ angular.module('psmsApp')
     'addressApiService',
     'scholarApiService',
     'municipalitiesApiService',
+    'academicContractDetails',
     'printContract',
     'debounce',
     function (
@@ -29,6 +30,7 @@ angular.module('psmsApp')
       addressApiService,
       scholarApiService,
       municipalitiesApiService,
+      academicContractDetails,
       printContract,
       debounce) {
 
@@ -46,7 +48,7 @@ angular.module('psmsApp')
 
     sc.print = function(scholarDetails, idx){
       sc.selectedIndex = idx;
-      printContract.print(scholarDetails, sc);
+      printContract.print(scholarDetails, sc, academicContractDetails.governor);
     }
 
     sc.edit = function(scholarDetails){
@@ -110,7 +112,7 @@ angular.module('psmsApp')
     }
 
     sc.allowPrint = function(scholar){
-      return scholar.contract_status === 'Approved';
+      return (scholar.contract_status === 'Approved' || scholar.contract_status === 'Pre-Approved');
     }
 
     sc.allowDelete = function(scholar){
@@ -121,7 +123,13 @@ angular.module('psmsApp')
       getScholars(pageNum);
     }
 
+    function hasSemester(){
+      sc.semester = academicContractDetails.academic_year_semester.semester;
+      sc.academic_year = academicContractDetails.academic_year_semester.academic_year;
+    }
+
     getMunicipalities();
+    hasSemester();
 
 }]);
 

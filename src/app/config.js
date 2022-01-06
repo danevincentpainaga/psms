@@ -60,6 +60,24 @@ angular
       templateUrl: scholars_list_view,
       controller: 'scholarsListCtrl',
       controllerAs: 'sc',
+      resolve:{
+        academicContractDetails: ['academicContractService', '$state', '$mdDialog', function(academicContractService, $state, $mdDialog){
+          return academicContractService.getAcademicContractDetails().then(response => {
+            return response.data[0];
+          }, err=> {
+            $mdDialog.show(
+              $mdDialog.alert()
+                .parent(angular.element(document.body))
+                .clickOutsideToClose(true)
+                .title('ERROR!')
+                .textContent('Failed to load route')
+                .ariaLabel('Access failed')
+                .ok('Okay')
+            );
+            $state.go($state.$current.name);
+          });
+        }]
+      },
       Authenticated: true,
     })
     .state('add_undergraduate_scholars', {

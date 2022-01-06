@@ -33,6 +33,7 @@ angular.module('psmsApp').controller('renewScholarsCtrl',
     rc.onSelectStatus = function(status){
         rc.scholars = [];
         rc.tabStatus = status;
+        rc.loaded = false;
         reset();
     }
 
@@ -42,15 +43,18 @@ angular.module('psmsApp').controller('renewScholarsCtrl',
 
     rc.onSubmit = function(){
         if(!rc.searchType || !rc.scholar_name || !rc.degree || rc.searching) return;
+        rc.loaded = false;
         rc.searching = true;
         rc.scholars = [];
         scholarApiService.getNotRenewedScholar({ searched_name: rc.scholar_name, degree: rc.degree, type: rc.searchType, contract_status: rc.tabStatus }).then(response => {
             console.log(response);
             rc.scholars = response.data.data;
             rc.searching = false;
+            rc.loaded = true;
         }, err => {
             rc.scholars = [];
             rc.searching = false;
+            rc.loaded = true;
             console.log(err);
             swalert.dialogBox(err.data.message, 'error', 'Failed');
         });

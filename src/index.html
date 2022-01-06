@@ -12,10 +12,10 @@
     <!-- <script src="http://ui-grid.info/docs/grunt-scripts/excel-builder.dist.js"></script> -->
 </head>
 
-<body ng-cloak ng-controller="mainCtrl">
+<body style="background: #efefef !important;" ng-cloak ng-controller="mainCtrl">
 	
 	<md-progress-linear md-mode="indeterminate" ng-if="route_loader"></md-progress-linear>
-	<div ui-view="" style="background: #efefef !important;height: 100%;overflow: auto;"></div>  
+	<div ui-view="" style="height: 100%;overflow: auto;"></div>  
     <iframe id="printPdf" name="printPdf" title="printPdf" style="display: none;"></iframe>
   
 </html>

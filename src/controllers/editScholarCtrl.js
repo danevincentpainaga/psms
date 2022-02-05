@@ -1,6 +1,7 @@
 'use strict';
 
 import { data } from "jquery";
+import { debounce } from "lodash";
 
 /**
  * @ngdoc function
@@ -425,7 +426,7 @@ angular.module('psmsApp')
     }
 
     function runIfHasScholar(){
-      $scope.$watch('ec.schoolname', function(n, o){
+      $scope.$watch('ec.schoolname', debounce(function(n, o){
         if (n) {
           addScholarsService.getListOfSchool({searched_school: n}).then(response=>{
             ec.schools = response;
@@ -433,9 +434,9 @@ angular.module('psmsApp')
             console.log(err);
           });
         }
-      });
+      }, 500), true);
 
-      $scope.$watch('ec.addressname', function(n, o){
+      $scope.$watch('ec.addressname', debounce(function(n, o){
         if (n) {
           addScholarsService.getAddresses(n).then(response=>{
             ec.addresses = response;
@@ -443,9 +444,9 @@ angular.module('psmsApp')
             console.log(err);
           });
         }
-      });
+      }, 500), true);
 
-      $scope.$watch('ec.coursename', function(n, o){
+      $scope.$watch('ec.coursename', debounce(function(n, o){
         if (n) {
           addScholarsService.getCourses({ searched: n, degree: JSON.stringify([ec.degree]) }).then(response=>{
             ec.courses = response;
@@ -453,7 +454,7 @@ angular.module('psmsApp')
             console.log(err);
           });
         }
-      });
+      }, 500), true);
     }
 
     async function showSupervisorsApproval(details, updating, method, exist = false, message = "", ){

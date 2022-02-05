@@ -156,7 +156,7 @@ app.filter('displayAmount', function(){
 
 app.filter('formatGovernor', function(){
   return function(gov){
-    let suffix = gov.suffix? (", "+gov.suffix) : "";
+    let suffix = gov.suffix !== 'NONE'? (", "+gov.suffix) : "";
     return gov.firstname +" "+ gov.initial +". "+ gov.lastname + suffix;
   }
 });

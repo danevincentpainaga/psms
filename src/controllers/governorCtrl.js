@@ -23,7 +23,6 @@ angular.module('psmsApp')
 
     var gov = this;
 	gov.suffix = "NONE";
-	// gov.sufffixes = ['JR', 'SR', 'VII', 'VI', 'V', 'IV', 'III', 'II', 'I'];
 
 	$scope.$watch('gov.initial', function(n, o){
 		if(n){

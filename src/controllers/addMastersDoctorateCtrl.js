@@ -297,7 +297,6 @@ app.controller('addMastersDoctorateCtrl',
 
   function loadSuffix(){
     addScholarsService.getSuffix().then(response => {
-      console.log(response);
       md.suffix_list = response.data;
     }, err => {
       console.log(err);

@@ -52,6 +52,8 @@ app.controller('updateSchoolCtrl',
       $scope.$emit('successful_update_emit_from_updateSchoolCtrl');
     }, err => {
       console.log(err);
+      up.updating = false;
+      swalert.dialogBox(err.data.message, 'error', 'Failed');
     });
   }
 

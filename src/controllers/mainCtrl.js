@@ -55,31 +55,6 @@ angular.module('psmsApp')
 }]);
 
 angular
-.module('psmsApp').directive('printDoc',[ function(){
-
-    var docDefinition = {
-      content: [
-        'First paragraph',
-        'Another paragraph, this time a little bit longer to make sure, this line will be divided into at least two lines'
-      ]
-    };
-
-  return{
-    restrict:'A',
-    link: function(scope, elem, atrrs){
-      elem.on('click', function(){
-        // pdfMake.createPdf(docDefinition).open({}, window.frames['printPdf']);
-        // setTimeout(function() {
-        //     window.frames['printPdf'].focus();
-        //     window.frames['printPdf'].print();
-        // }, 500)
-        pdfMake.createPdf(docDefinition).print({}, window.frames['printPdf']);
-      })
-    }
-  }
-}]);
-
-angular
   .module('psmsApp').directive('resizeDiv', ['$window', function ($window) {
     return function (scope, element, attrs) {
 
@@ -390,22 +365,22 @@ angular.module('psmsApp').directive('currencyFormatter', ['$filter', function ($
     };
 
     return {
-    restrict: 'A',
-    require: 'ngModel',
-    link: function (scope, element, attr, ngModel) {
-      ngModel.$parsers.push(function (str) {
-      return str ? Number(str) : '';
-      });
-      ngModel.$formatters.push(formatter);
+      restrict: 'A',
+      require: 'ngModel',
+      link: function (scope, element, attr, ngModel) {
+        ngModel.$parsers.push(function (str) {
+        return str ? Number(str) : '';
+        });
+        ngModel.$formatters.push(formatter);
 
-      element.bind('blur', function() {
-        element.val(formatter(ngModel.$modelValue))
-      });
-      element.bind('focus', function () {
-        element.val(ngModel.$modelValue);
-      });
-    }
-  };
+        element.bind('blur', function() {
+          element.val(formatter(ngModel.$modelValue))
+        });
+        element.bind('focus', function () {
+          element.val(ngModel.$modelValue);
+        });
+      }
+    };
 }]);
 
 angular.module('psmsApp').directive('uppercase', function() {

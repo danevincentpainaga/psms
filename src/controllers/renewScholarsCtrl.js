@@ -37,8 +37,20 @@ angular.module('psmsApp').controller('renewScholarsCtrl',
         reset();
     }
 
+    rc.renew = function(scholarDetails){
+        if(scholarDetails.contract_status !== 'In-Active' && scholarDetails.contract_status !== 'Pending') return;
+        if(scholarDetails.contract_status === 'In-Active'){
+            showSupervisorsApproval(scholarDetails, 'Renew scholar?', renewOrRevert({ scholar_id: scholarDetails.scholar_id }, scholarDetails).renewScholar);
+        }
+        else{
+            swalert.renewConfirmation(renewOrRevert({ scholar_id: scholarDetails.scholar_id }, scholarDetails).renewScholar, 'Renew scholar?');
+        }
+    }
+
     rc.revert = function(scholarDetails){
-        swalert.renewConfirmation(renewOrRevert({ scholar_id: scholarDetails.scholar_id, isActive: scholarDetails.isActive }, scholarDetails).revertScholar, 'Revert scholar?');
+        if(scholarDetails.contract_status === 'Pre-Approved'){
+            showSupervisorsApproval(scholarDetails, 'Revert scholar?', renewOrRevert({ scholar_id: scholarDetails.scholar_id, isActive: scholarDetails.isActive }, scholarDetails).revertScholar);
+        }
     }
 
     rc.onSubmit = function(){
@@ -65,31 +77,28 @@ angular.module('psmsApp').controller('renewScholarsCtrl',
         $mdSidenav('editScholar').toggle();
     }
 
-    rc.renew = function(scholarDetails){
-        console.log(scholarDetails);
-        let details = {
-            scholar_id: scholarDetails.scholar_id,
-            contract_id: academicContractDetails.activated_contract_id,
-            last_renewed: academicContractDetails.ascId
-        }
-        swalert.renewConfirmation(renewOrRevert(details, scholarDetails).renewScholar, 'Renew scholar?');
-    }
-
     rc.print = function(scholarDetails, idx){
         rc.selectedIndex = idx;
         printContract.print(scholarDetails, rc, academicContractDetails.governor);
-    }   
+    }
+
+    async function showSupervisorsApproval(scholarDetails, message, method){
+        const result = await swalert.supervisorsApproval();
+        if (result.isConfirmed) {
+            swalert.renewConfirmation(method, message);
+        }
+    }
 
     function renewOrRevert(details, scholarDetails){
         return {
             renewScholar: function(){
                 rc.show_spinner = true;
                 scholarApiService.renewScholar(details).then(response => {
-                    rc.scholars.splice(rc.scholars.indexOf(scholarDetails), 1);
-                    rc.show_spinner = false;
-                    reset();
-                    swalert.dialogBox(response.data.message, 'success', 'Success');
                     printContract.print(scholarDetails, rc, academicContractDetails.governor);
+                    rc.show_spinner = false;
+                    swalert.dialogBox(response.data.message, 'success', 'Success');
+                    rc.scholars.splice(rc.scholars.indexOf(scholarDetails), 1);
+                    reset();
                     console.log(response);
                 }, err => {
                     console.log(err);

@@ -2,8 +2,6 @@ import { baseUrl } from '../apiServices/baseUrl';
 
 angular.module('psmsApp')
   .factory('academicSemesterYearApiService', ['$http', '$cookies', '$rootScope', '$q', function($http, $cookies, $rootScope, $q){
-	 
-  // var baseUrl = "/";
 
   return{
    getAcademicYearList: function(){

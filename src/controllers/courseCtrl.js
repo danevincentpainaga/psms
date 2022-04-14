@@ -9,8 +9,18 @@
  */ 
 
 angular.module('psmsApp')
-.controller('courseCtrl',['$scope', 'municipalitiesApiService', 'courseApiService', 'debounce', 'swalert', '$mdSidenav',
-	function ($scope, municipalitiesApiService, courseApiService, debounce, swalert, $mdSidenav) {
+.controller('courseCtrl',[
+		'$scope',
+		'courseApiService',
+		'debounce',
+		'swalert',
+		'$mdSidenav',
+	function (
+		$scope,
+		courseApiService,
+		debounce,
+		swalert,
+		$mdSidenav) {
 
 	var cc = this;
 	cc.isUpdating = false;

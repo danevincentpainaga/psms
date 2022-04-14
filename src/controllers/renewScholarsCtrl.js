@@ -34,7 +34,7 @@ angular.module('psmsApp').controller('renewScholarsCtrl',
         rc.scholars = [];
         rc.tabStatus = status;
         rc.loaded = false;
-        reset();
+        // reset();
     }
 
     rc.renew = function(scholarDetails){

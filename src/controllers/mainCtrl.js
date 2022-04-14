@@ -265,6 +265,22 @@ angular.module('psmsApp').directive('acceptOnlyLetters', function() {
     };
 });
 
+angular.module('psmsApp').directive('validateInput', function() {
+  return {
+      restrict : 'A',
+      link : function(scope, elem, attrs, ctrl) {
+        let regex = /^[0-9a-zA-Z\s.-]*$/;
+        elem.bind('keypress', function(event){
+          if (!regex.test(event.key)) {
+            event.preventDefault();
+          }
+        });
+        elem.bind('paste', function(event){
+          event.preventDefault();
+        });
+      }
+  };
+});
 
 angular.module('psmsApp').directive('acceptOnlyNumbers', function() {
     return {

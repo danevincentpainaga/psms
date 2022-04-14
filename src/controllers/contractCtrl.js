@@ -13,22 +13,16 @@ angular.module('psmsApp')
     '$scope',
     'academicSemesterYearApiService',
     'academicContractService',
-    'debounce',
-    'moment',
     'swalert',
     '$mdSidenav',
     '$mdDialog',
-    '$filter',
     function (
       $scope,
       academicSemesterYearApiService,
       academicContractService,
-      debounce,
-      moment,
       swalert,
       $mdSidenav,
-      $mdDialog,
-      $filter) {
+      $mdDialog,) {
 
     var c = this;
 

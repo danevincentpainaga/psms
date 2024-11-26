@@ -35,7 +35,7 @@
     "node-sass": "^4.14.1",
     "pdfmake": "^0.1.70",
     "sweetalert2": "^10.13.0",
-    "xlsx": "^0.16.9"
+    "xlsx": "^0.17.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
